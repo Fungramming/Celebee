@@ -18,9 +18,9 @@ const instructions = Platform.select({
 });
 
 export default class App extends Component {
-  // componentDidMount() {
-  //   SplashScreen.hide()
-  // }
+  componentDidMount() {
+    SplashScreen.hide();
+  }
   
   render() {
     return (
@@ -29,7 +29,6 @@ export default class App extends Component {
         barStyle="light-content"
         backgroundColor="#722784"
       />
-        <Image source="/assets/logo_white.png" />
         <Text style={styles.welcome}>Welcome to React Native!</Text>
         <Text style={styles.instructions}>To get started, edit App.js</Text>
         <Text style={styles.instructions}>{instructions}</Text>
