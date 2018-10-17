@@ -6,16 +6,15 @@ import {
   Button
 } from "react-native";
 import {Icon} from 'native-base';
+import MainScreen from './MainScreen'
 
-import { NavigationActions } from 'react-navigation';
-
-// const navigateAction = NavigationActions.navigate({
-//   routeName: 'Login',
-//   params: {},
-
-//   // navigate can have a nested navigate action that will be run inside the child router
-//   action: NavigationActions.navigate({ routeName: 'Login' }),
-// });
+// const MyRouter = {
+//   getStateForAction: (action, state) => ({}),
+//   getActionForPathAndParams: (path, params) => null,
+//   getPathAndParamsForState: (state) => null,
+//   getComponentForState: (state) => MyScreen,
+//   getComponentForRouteName: (routeName) => MyScreen,
+// };
 
 class Login extends Component {
 
@@ -23,9 +22,9 @@ class Login extends Component {
     header: null
   }
   
-  render() {
-    // const { navigate } = this.props.navigation;
+  // static router = MyRouter;
 
+  render() {
     return (
       <View style={styles.container}>
         <Text>로그인 페이지</Text>
