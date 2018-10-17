@@ -4,16 +4,15 @@ import {
   View,
   Text,
   StyleSheet,
-  TouchableOpacity,
-  StatusBar
+  TouchableOpacity
 } from "react-native";
 
 import Home from './AppTapNavigator/Home'
 import Schedule from './AppTapNavigator/Schedule'
 import MyPage from './AppTapNavigator/MyPage'
 import { Container, Content, Icon, Thumbnail, Header, Left, Right, Body } from 'native-base';
+import {NativeRouter, Switch, Route} from 'react-router-native'
 
-import {createMaterialTopTabNavigator} from 'react-navigation'
 
 class MainScreen extends Component {
   static navigationOptions = {
@@ -21,24 +20,25 @@ class MainScreen extends Component {
   }
   
   render() {
-    return (      
-      <Container>
-        <Header backgroundColor="#eeeeee">
-          <Left>
-            <TouchableOpacity>
-              <Icon name="md-person" style={{paddingLeft: 10}} onPress={() => this.props.navigation.navigate('MyPageTab')} />
-            </TouchableOpacity>
-          </Left>
-          <Body><Text>Celebee</Text></Body>
-          <Right>
-            <TouchableOpacity>
-              <Icon name="md-send" style={{paddingRight: 10}}/>
-            </TouchableOpacity>
-          </Right>
-        </Header>
-        {/* <AppTabNavigator /> */}
-        <MyPage></MyPage>
-      </Container>
+    return (
+      <NativeRouter>
+        <Container>
+          <Header>
+            <Left>
+              <TouchableOpacity>
+                <Icon name="ios-person" style={{paddingLeft: 10}} onPress={() => this.props.navigation.navigate('MyPageTab')} />
+              </TouchableOpacity>
+            </Left>
+            <Body><Text>Celebee</Text></Body>
+            <Right>
+              <TouchableOpacity>
+                <Icon name="ios-send" style={{paddingRight: 10}}/>
+              </TouchableOpacity>
+            </Right>
+          </Header>
+          <AppTabNavigator />
+        </Container>
+      </NativeRouter>
     );
   }
 }

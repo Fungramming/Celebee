@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text,TextInput, View, StyleSheet } from 'react-native'
+import { Text,TextInput, View, StyleSheet, Icon } from 'react-native'
 
 export default class UserProfile extends Component {
   render() {
@@ -7,6 +7,7 @@ export default class UserProfile extends Component {
       <View style={styles.container}>
         <Text style={styles.photo}></Text>
         <TextInput style={styles.nickName}></TextInput>
+        <Icon android="md-menu"></Icon>
       </View>
     )
   }

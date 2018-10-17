@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Text, View,StyleSheet, Dimensions } from 'react-native'
-import MyProfile from '../MyProfile'
+import MyProfile from '../components/MyProfile'
 
 
 export default class MyPage extends Component {
