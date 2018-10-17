@@ -4,12 +4,7 @@ import MyProfile from '../components/MyProfile'
 
 
 export default class MyPage extends Component {
-  constructor(){
-    super(props)
-    this.state = {
 
-    }
-  }
   render() {
     return (
       <View style={styles.constainer}>
