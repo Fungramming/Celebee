@@ -4,7 +4,7 @@ import SplashScreen from 'react-native-splash-screen';
 import AppIntroSlider from 'react-native-app-intro-slider';
 
 import Login from './src/screens/Login'
-
+import MainScreen from './src/screens/MainScreen'
 export default class App extends Component {
   constructor(props) {
     super(props);
@@ -33,8 +33,8 @@ export default class App extends Component {
             barStyle="dark-content"
             backgroundColor="#dedede"
           />
-          {/* <Mypage></Mypage> */}
-          <Login />
+          {/* <Login /> */}
+          <MainScreen/>
         </View>
       );
     } else {

@@ -7,12 +7,9 @@ import {
   TouchableOpacity
 } from "react-native";
 
-import Home from './AppTapNavigator/Home'
-import Schedule from './AppTapNavigator/Schedule'
-import MyPage from './AppTapNavigator/MyPage'
 import { Container, Content, Icon, Thumbnail, Header, Left, Right, Body } from 'native-base';
 import {NativeRouter, Switch, Route} from 'react-router-native'
-
+import MyPageTab from './MyPage'
 
 class MainScreen extends Component {
   static navigationOptions = {
@@ -23,59 +20,25 @@ class MainScreen extends Component {
     return (
       <NativeRouter>
         <Container>
-          <Header>
+          <Header style={{backgroundColor:"#eeeeee"}}>
             <Left>
               <TouchableOpacity>
-                <Icon name="ios-person" style={{paddingLeft: 10}} onPress={() => this.props.navigation.navigate('MyPageTab')} />
+                <Icon name="ios-person" android="md-person"  style={{paddingLeft: 10}} onPress={() => this.props.navigation.navigate('MyPageTab')} />
               </TouchableOpacity>
             </Left>
             <Body><Text>Celebee</Text></Body>
             <Right>
               <TouchableOpacity>
-                <Icon name="ios-send" style={{paddingRight: 10}}/>
+                <Icon name="ios-send" android="md-send" style={{paddingRight: 3}}/>
               </TouchableOpacity>
             </Right>
           </Header>
-          <AppTabNavigator />
+          <MyPageTab></MyPageTab>
         </Container>
       </NativeRouter>
     );
   }
 }
-
-const AppTabNavigator =  createMaterialTopTabNavigator({
-  HomeTab: {
-    screen: Home
-  },
-  ScheduleTab: {
-    screen: Schedule
-  },
-  MyPageTab: {
-    screen: MyPage
-  },
-}, {
-  // animationEnable: true,
-  // swipeEnabled: true,
-  tabBarPosition: 'bottom',
-  tabBarOptions: {
-    style: {
-      height: 65,
-      backgroundColor: '#f2f2f2',
-      ...Platform.select({
-        android:{
-          backgroundColor: 'white'
-        }
-      })
-    },
-    indicatorStyle: {
-      height: 0,
-    },
-    activeTintColor: '#000',
-    inactiveTintColor: '#d1cece',
-    showLabel: true,
-    showIcon: true
-  }
-})
 
 export default MainScreen;
 
