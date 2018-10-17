@@ -4,7 +4,8 @@ import {
   View,
   Text,
   StyleSheet,
-  TouchableOpacity
+  TouchableOpacity,
+  StatusBar
 } from "react-native";
 
 import Home from './AppTapNavigator/Home'
@@ -20,22 +21,23 @@ class MainScreen extends Component {
   }
   
   render() {
-    return (
+    return (      
       <Container>
-        <Header>
+        <Header backgroundColor="#eeeeee">
           <Left>
             <TouchableOpacity>
-              <Icon name="ios-person" style={{paddingLeft: 10}} onPress={() => this.props.navigation.navigate('MyPageTab')} />
+              <Icon name="md-person" style={{paddingLeft: 10}} onPress={() => this.props.navigation.navigate('MyPageTab')} />
             </TouchableOpacity>
           </Left>
           <Body><Text>Celebee</Text></Body>
           <Right>
             <TouchableOpacity>
-              <Icon name="ios-send" style={{paddingRight: 10}}/>
+              <Icon name="md-send" style={{paddingRight: 10}}/>
             </TouchableOpacity>
           </Right>
         </Header>
-        <AppTabNavigator />
+        {/* <AppTabNavigator /> */}
+        <MyPage></MyPage>
       </Container>
     );
   }

@@ -14,7 +14,7 @@ export default class UserProfile extends Component {
 
 const styles = StyleSheet.create({
     container:{
-        padding: 30,
+        padding: 15,
         flex:1,
         flexDirection: 'row',
     },  

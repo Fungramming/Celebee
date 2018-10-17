@@ -1,33 +1,28 @@
-import React, { Component } from "react";
-import { 
-  View,
-  Text,
-  StyleSheet
-} from "react-native";
-import { Container, Content, Icon, Thumbnail, Header, Left, Right, Body } from 'native-base';
+import React, { Component } from 'react'
+import { Text, View,StyleSheet, Dimensions } from 'react-native'
+import MyProfile from '../MyProfile'
 
-class MyPage extends Component {
-  static navigationOptions = {
-    title: '마이페이지',
-    tabIcon: () => {
-      <Icon name="ios-person" size={30} />
-    }
-  }
-  
+
+export default class MyPage extends Component {
+
   render() {
     return (
-      <View style={styles.container}>
-        <Text>MyPage</Text>
+      <View style={styles.constainer}>
+        <MyProfile></MyProfile>
       </View>
-    );
+    )
   }
 }
-export default MyPage;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center'
+  constainer: {
+    borderColor: 'white',
+    borderWidth: 2,
+    backgroundColor: 'white',
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height,
+    paddingTop: 10,
+    flex:1,
+    alignItems: 'flex-start'
   }
-});
+})

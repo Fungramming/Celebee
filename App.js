@@ -5,7 +5,6 @@ import AppIntroSlider from 'react-native-app-intro-slider';
 
 import Login from './src/components/Login'
 import MainScreen from './src/components/MainScreen'
-import Mypage from './src/screens/MyPage'
 
 export default class App extends Component {
   constructor(props) {
@@ -30,12 +29,7 @@ export default class App extends Component {
   render() {
     if(this.state.showRealApp) {
       return (
-        <View style={styles.container}>
-          <StatusBar 
-            barStyle="dark-content"
-            backgroundColor="#f2f2f2"
-          />
-          {/* <Mypage></Mypage> */}
+        <View style={styles.container}>       
           <MainScreen />
         </View>
       );
