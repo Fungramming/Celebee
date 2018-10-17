@@ -4,78 +4,61 @@ import {
   View,
   Text,
   StyleSheet,
-  TouchableOpacity
+  TouchableOpacity,
+  StatusBar
 } from "react-native";
+import { Container, Content, Icon, Thumbnail, Header, Left, Right, Body } from 'native-base';
 
 import Home from './Home'
 import Schedule from './Schedule'
 import MyPage from './MyPage'
-import { Container, Content, Icon, Thumbnail, Header, Left, Right, Body } from 'native-base';
-import {NativeRouter, Switch, Route} from 'react-router-native'
+import BottomNavigation from '../BottomNavigation'
 
-
+// import {NativeRouter, Switch, Route} from 'react-router-native'
+// import {createMaterialTopTabNavigator} from 'react-navigation';
+// import {createBottomTabNavigator} from 'react-navigation';
 class MainScreen extends Component {
-  static navigationOptions = {
-    header: null
+  goToMyPage = () => {
+    this.props.navigation.navigate('MyPage')
   }
-  
+
+  static navigationOptions = {
+    headerLeft: 
+    <TouchableOpacity onPress={this.goToMyPage}>
+        <Icon name="ios-person" style={{paddingLeft: 24}} />
+    </TouchableOpacity>,
+    title: 'Celebee',
+    headerRight: 
+    <TouchableOpacity>
+      <Icon name="ios-send" style={{paddingRight: 24}}/>
+    </TouchableOpacity>,
+  }
+
   render() {
     return (
-      <NativeRouter>
-        <Container>
-          <Header>
-            <Left>
-              <TouchableOpacity>
-                <Icon name="ios-person" style={{paddingLeft: 10}} onPress={() => this.props.navigation.navigate('MyPageTab')} />
-              </TouchableOpacity>
-            </Left>
-            <Body><Text>Celebee</Text></Body>
-            <Right>
-              <TouchableOpacity>
-                <Icon name="ios-send" style={{paddingRight: 10}}/>
-              </TouchableOpacity>
-            </Right>
-          </Header>
-          <AppTabNavigator />
-        </Container>
-      </NativeRouter>
+      <Container>
+        <StatusBar 
+          barStyle="dark-content"
+          backgroundColor="#f2f2f2"
+        />
+        {/* <Header>
+          <Left>
+            <TouchableOpacity>
+              <Icon name="ios-person" style={{paddingLeft: 10}} />
+            </TouchableOpacity>
+          </Left>
+          <Body><Text>Celebee</Text></Body>
+          <Right>
+            <TouchableOpacity>
+              <Icon name="ios-send" style={{paddingRight: 10}}/>
+            </TouchableOpacity>
+          </Right>
+        </Header> */}
+        <BottomNavigation />
+      </Container>
     );
   }
 }
-
-const AppTabNavigator =  createMaterialTopTabNavigator({
-  HomeTab: {
-    screen: Home
-  },
-  ScheduleTab: {
-    screen: Schedule
-  },
-  MyPageTab: {
-    screen: MyPage
-  },
-}, {
-  // animationEnable: true,
-  // swipeEnabled: true,
-  tabBarPosition: 'bottom',
-  tabBarOptions: {
-    style: {
-      height: 65,
-      backgroundColor: '#f2f2f2',
-      ...Platform.select({
-        android:{
-          backgroundColor: 'white'
-        }
-      })
-    },
-    indicatorStyle: {
-      height: 0,
-    },
-    activeTintColor: '#000',
-    inactiveTintColor: '#d1cece',
-    showLabel: true,
-    showIcon: true
-  }
-})
 
 export default MainScreen;
 

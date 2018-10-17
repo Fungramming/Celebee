@@ -3,9 +3,10 @@ import {Platform, StyleSheet, Text, View, Image, StatusBar} from 'react-native';
 import SplashScreen from 'react-native-splash-screen';
 import AppIntroSlider from 'react-native-app-intro-slider';
 
+import {createStackNavigator} from 'react-navigation';
 import Login from './src/screens/Login'
-import MainScreen from './src/components/MainScreen'
-import Mypage from './src/screens/MyPage'
+import MainScreen from './src/screens/MainScreen'
+import MyPage from './src/screens/MyPage'
 
 export default class App extends Component {
   constructor(props) {
@@ -30,14 +31,14 @@ export default class App extends Component {
   render() {
     if(this.state.showRealApp) {
       return (
-        <View style={styles.container}>
-          <StatusBar 
-            barStyle="dark-content"
-            backgroundColor="#f2f2f2"
-          />
-          {/* <Mypage></Mypage> */}
-          <Login />
-        </View>
+        // <View>
+        //   <StatusBar 
+        //     barStyle="light-content"
+        //     backgroundColor="#f2f2f2"
+        //   />
+        //   {/* <Mypage></Mypage> */}
+        // </View>
+        <AppStackNavigator />
       );
     } else {
       return (
@@ -163,3 +164,15 @@ const slides = [
     backgroundColor: '#722784',    
   },
 ];
+
+const AppStackNavigator = createStackNavigator({
+  Login: {
+    screen: Login,
+  },
+  Main: {
+    screen: MainScreen,
+  },
+  MyPage: {
+    screen: MyPage,
+  },
+});

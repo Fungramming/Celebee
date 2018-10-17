@@ -7,27 +7,23 @@ import {
 } from "react-native";
 import {Icon} from 'native-base';
 import MainScreen from './MainScreen'
+import { NativeRouter, Route, Link } from 'react-router-native'
 
 class Login extends Component {
-
-  // static navigationOptions = ({navigation}) => {
-  //   header: null
-  // }
-
+  
+  goToMain = () => {
+    this.props.navigation.navigate('Main')
+  }
+  
   render() {
     return (
       <View style={styles.container}>
-        <Text>로그인 페이지</Text>
-        <Switch>
-          {/* <Icon name="ios-person" title="페이스북">페이스북</Icon>
-          <Icon name="ios-person" title="구글">구글</Icon>
-          <Icon name="ios-person" title="카카오톡">카카오톡</Icon> */}
-          <Route exact path="/mainScreen" component={MainScreen}>
-            <Icon name="ios-person" onPress={() => this.props.navigation.native('Home')}title="페이스북">페이스북</Icon>
-          </Route>
-          <Icon name="ios-person" onPress={() => this.props.navigation.native('Home')}title="구글">구글</Icon>
-          <Icon name="ios-person" onPress={() => this.props.navigation.native('Home')}title="카카오톡">카카오톡</Icon>
-        </Switch>
+        <View style={styles.nav}>
+          <Text>로그인</Text>
+          <Button title="Facebook" onPress={this.goToMain}>Facebook</Button>
+          <Button title="Google" onPress={this.goToMain}>Google</Button>
+          <Button title="Kakao" onPress={this.goToMain}>Kakao</Button>
+        </View>
       </View>
     );
   }
@@ -39,5 +35,5 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center'
-  }
+  },
 });
