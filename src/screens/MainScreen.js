@@ -7,9 +7,9 @@ import {
   TouchableOpacity
 } from "react-native";
 
-import Home from './AppTapNavigator/Home'
-import Schedule from './AppTapNavigator/Schedule'
-import MyPage from './AppTapNavigator/MyPage'
+import Home from './Home'
+import Schedule from './Schedule'
+import MyPage from './MyPage'
 import { Container, Content, Icon, Thumbnail, Header, Left, Right, Body } from 'native-base';
 import {NativeRouter, Switch, Route} from 'react-router-native'
 
