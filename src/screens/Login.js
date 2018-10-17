@@ -3,28 +3,46 @@ import {
   View,
   Text,
   StyleSheet,
-  Button
+  StatusBar
 } from "react-native";
-import {Icon} from 'native-base';
+import { Container, Header, Content, Body, Icon, Button } from 'native-base';
 import MainScreen from './MainScreen'
 import { NativeRouter, Route, Link } from 'react-router-native'
 
+const login = 'Login'
 class Login extends Component {
-  
+
+  static navigationOptions = {
+    header: null
+  }
+
   goToMain = () => {
     this.props.navigation.navigate('Main')
   }
   
   render() {
     return (
-      <View style={styles.container}>
-        <View style={styles.nav}>
-          <Text>로그인</Text>
-          <Button title="Facebook" onPress={this.goToMain}>Facebook</Button>
-          <Button title="Google" onPress={this.goToMain}>Google</Button>
-          <Button title="Kakao" onPress={this.goToMain}>Kakao</Button>
+      <Container style={styles.container}>
+        <StatusBar 
+          barStyle="light-content"
+        />
+
+        <View style={styles.loginTextView}>
+          <Text style={styles.loginText}>로그인</Text>
         </View>
-      </View>
+
+        <View style={{flex: 2}}>
+          <Button full rounded primary style={styles.F_btn} onPress={this.goToMain}>
+            <Text style={{color:'#fff', fontSize: 16}}>페이스북계정으로 로그인</Text>
+          </Button>
+          <Button full rounded primary style={styles.G_btn} onPress={this.goToMain}>
+            <Text style={{color:'#000', fontSize: 16}}>구글로계정으로 로그인</Text>
+          </Button>
+          <Button full rounded primary style={styles.K_btn} onPress={this.goToMain}>
+            <Text style={{color:'#000', fontSize: 16}}>카카오계정으로 로그인</Text>
+          </Button>
+        </View>
+      </Container>
     );
   }
 }
@@ -33,7 +51,33 @@ export default Login;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center'
+    paddingLeft: 24,
+    paddingRight: 24,
+    backgroundColor: '#722784'
   },
+  loginTextView: {
+    flex:4,
+    alignSelf: 'stretch' ,
+    marginTop: 70
+  },
+  loginText: {
+    fontSize: 40,
+    fontWeight: 'bold',
+    color: '#fff',
+  },
+  F_btn: {
+    marginTop: 10,
+    backgroundColor: '#365899',
+    borderRadius: 15,
+  },
+  G_btn: {
+    marginTop: 10,
+    backgroundColor: '#fff',
+    borderRadius: 15,
+  },
+  K_btn: {
+    marginTop: 10,
+    backgroundColor: '#F1D905',
+    borderRadius: 15,
+  }
 });

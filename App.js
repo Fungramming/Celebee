@@ -7,6 +7,7 @@ import {createStackNavigator} from 'react-navigation';
 import Login from './src/screens/Login'
 import MainScreen from './src/screens/MainScreen'
 import MyPage from './src/screens/MyPage'
+import SelectIdol from './src/screens/SelectIdol'
 
 export default class App extends Component {
   constructor(props) {
@@ -59,25 +60,6 @@ export default class App extends Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#fff',
-    // backgroundColor: '#722784',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-    color: '#fff',
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#fff',
-    marginBottom: 5,
-  },
-
   // Slider
   image: {
     width: 200,
@@ -175,4 +157,8 @@ const AppStackNavigator = createStackNavigator({
   MyPage: {
     screen: MyPage,
   },
+  SelectIdol: {
+    screen: SelectIdol,
+  },
+
 });
