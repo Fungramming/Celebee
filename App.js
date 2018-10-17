@@ -5,13 +5,7 @@ import AppIntroSlider from 'react-native-app-intro-slider';
 
 import Login from './src/components/Login'
 import MainScreen from './src/components/MainScreen'
-
-// const instructions = Platform.select({
-//   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
-//   android:
-//     'Double tap R on your keyboard to reload,\n' +
-//     'Shake or press menu button for dev menu',
-// });
+import Mypage from './src/screens/MyPage'
 
 export default class App extends Component {
   constructor(props) {
@@ -36,7 +30,14 @@ export default class App extends Component {
   render() {
     if(this.state.showRealApp) {
       return (
-        <MainScreen />
+        <View style={styles.container}>
+          <StatusBar 
+            barStyle="dark-content"
+            backgroundColor="#f2f2f2"
+          />
+          {/* <Mypage></Mypage> */}
+          <MainScreen />
+        </View>
       );
     } else {
       return (
@@ -53,7 +54,6 @@ export default class App extends Component {
         />
       )
     }
-    
   }
 }
 
