@@ -3,7 +3,7 @@ import {Platform, StyleSheet, Text, View, Image, StatusBar} from 'react-native';
 import SplashScreen from 'react-native-splash-screen';
 import AppIntroSlider from 'react-native-app-intro-slider';
 
-import Login from './src/components/Login'
+import Login from './src/screens/Login'
 import MainScreen from './src/components/MainScreen'
 import Mypage from './src/screens/MyPage'
 
@@ -36,7 +36,7 @@ export default class App extends Component {
             backgroundColor="#f2f2f2"
           />
           {/* <Mypage></Mypage> */}
-          <MainScreen />
+          <Login />
         </View>
       );
     } else {
