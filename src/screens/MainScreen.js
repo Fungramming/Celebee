@@ -25,12 +25,12 @@ class MainScreen extends Component {
   static navigationOptions = {
     headerLeft: 
     <TouchableOpacity onPress={this.goToMyPage}>
-        <Icon name="ios-person" android="md-person" style={{paddingLeft: 24}} />
+      <Icon name="ios-person" style={{paddingLeft: 24}} />
     </TouchableOpacity>,
     title: 'Celebee',
     headerRight: 
     <TouchableOpacity>
-      <Icon name="ios-send" android="md-send" style={{paddingRight: 24}}/>
+      <Icon name="ios-send" style={{paddingRight: 24}}/>
     </TouchableOpacity>,
   }
 

@@ -4,10 +4,10 @@ import { Text, View, ListView, StyleSheet, Dimensions,TouchableOpacity } from 'r
 class IdolCard extends Component {
     render() {
         return (
-           <TouchableOpacity style={styles.idolCard}>
-               <Text style={styles.idolPhoto}></Text>
-               <Text style={styles.idolName}>{this.props.name}</Text>
-           </TouchableOpacity>
+            <TouchableOpacity style={styles.idolCard}>
+                <Text style={styles.idolPhoto}></Text>
+                <Text style={styles.idolName}>{this.props.name}</Text>
+            </TouchableOpacity>
         )
     }
 }
@@ -20,23 +20,23 @@ export default class MyIdol extends Component {
             idols : ds.cloneWithRows(['BTS','뉴이스트','트와이스','세븐틴','엑소','워너원','비투비'])            
         }
     }
-  render() {
-    return (
-      <View style={styles.myIdol}>
-        <Text style={styles.subTitle}>내 아이돌</Text>
-        <ListView
-            horizontal="true"
-            showsHorizontalScrollIndicator={false}
-            dataSource={this.state.idols}
-            renderRow={(rowData)=><IdolCard name={rowData}></IdolCard>}
-        >            
-        </ListView>
-        <TouchableOpacity style={styles.editBtn}>
-            <Text >편집</Text>
-        </TouchableOpacity>
-      </View>
-    )
-  }
+    render() {
+        return (
+            <View style={styles.myIdol}>
+            <Text style={styles.subTitle}>내 아이돌</Text>
+            <ListView
+                horizontal="true"
+                showsHorizontalScrollIndicator={false}
+                dataSource={this.state.idols}
+                renderRow={(rowData)=><IdolCard name={rowData}></IdolCard>}
+            >            
+            </ListView>
+            <TouchableOpacity style={styles.editBtn}>
+                <Text>편집</Text>
+            </TouchableOpacity>
+            </View>
+        )
+    }
 }
 
 const styles = StyleSheet.create({

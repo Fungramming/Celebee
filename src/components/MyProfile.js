@@ -54,11 +54,11 @@ export default class MyProfile extends Component {
           style={styles.photo}
           source={{uri: this.state.avatarSource}}
           />         
-          <Icon type="Feather" style={styles.photoIcon} ios='ios-camera' android="md-camera"></Icon>
+          <Icon type="Feather" style={styles.photoIcon} name="md-camera"></Icon>
         </TouchableOpacity>
         <TextInput style={styles.nickName}></TextInput>
         <TouchableOpacity style={styles.settingBtn}>
-          <Icon style={styles.settingBtnIcon}ios='ios-settings' android="md-settings"/>          
+          <Icon style={styles.settingBtnIcon} name="md-settings"/>          
         </TouchableOpacity>
       </View>
     )
