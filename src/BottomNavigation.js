@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Platform, Text, View, StyleSheet, Image} from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons'
-
+// import {Icon} from 'native-base'
+import Icon from 'react-native-vector-icons/AntDesign';
 import {createBottomTabNavigator} from 'react-navigation';
 import {createMaterialTopTabNavigator} from 'react-navigation';
 import Login from './screens/Login'
@@ -9,13 +9,14 @@ import Home from './screens/Home'
 import Schedule from './screens/Schedule'
 import MyPage from './screens/MyPage'
 
+
 export default createBottomTabNavigator({
   Home: {
     screen: Home,
     navigationOptions: {
       tabBarLabel: 'Home',
       tabBarIcon: ({ tintColor }) => (
-        <Icon name="ios-home" color={tintColor} size={24}/>
+        <Icon name="cloud" size={30} color="#900" />
       )
     }
   },

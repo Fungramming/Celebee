@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Text,TextInput, View, StyleSheet,TouchableOpacity, Dimensions, Image } from 'react-native'
-import { Icon } from 'native-base';
 import ImagePicker from 'react-native-image-picker';
+import Icon from 'react-native-vector-icons/Feather';
 // const FilePickerManager = require('NativeModules').FilePickerManager;
 const options = {
   title: '사진 등록',
@@ -15,7 +15,6 @@ const options = {
 export default class MyProfile extends Component {
   constructor(){
     super()
-    // this._onEditPhoto = this._onEditPhoto.bind(this);
     this.state = {
       avatarSource : "https://techcrunch.com/wp-content/uploads/2018/05/snap-dollar-eyes_preview.png?w=730&crop=1"
     }
@@ -24,9 +23,6 @@ export default class MyProfile extends Component {
   _onEditPhoto = () => {
     var _this = this;
 
-    // ImagePicker.launchImageLibrary(options, (response) => {
-    //   // Same code as in above section!
-    // });
     ImagePicker.showImagePicker(options, (response) => {
       console.log('Response = ', response);
     
@@ -50,23 +46,6 @@ export default class MyProfile extends Component {
     });
   }
 
-  // onPressLearnMore(){
-  //   FilePickerManager.showFilePicker(null, (response) => {
-  //     console.log('Response = ', response);
-    
-  //     if (response.didCancel) {
-  //       console.log('User cancelled file picker');
-  //     }
-  //     else if (response.error) {
-  //       console.log('FilePickerManager Error: ', response.error);
-  //     }
-  //     else {
-  //       this.setState({
-  //         file: response
-  //       });
-  //     }
-  //   });
-  // }
   render() {
     return (
       <View style={styles.myProfileBox}>
@@ -74,15 +53,13 @@ export default class MyProfile extends Component {
           <Image
           style={styles.photo}
           source={{uri: this.state.avatarSource}}
-        />         
-          <Icon style={styles.photoIcon}ios='ios-camera' android="md-camera"></Icon>
+          />         
+          <Icon type="Feather" style={styles.photoIcon} ios='ios-camera' android="md-camera"></Icon>
         </TouchableOpacity>
-        <TextInput style={styles.nickName}></TextInput>
         <TextInput style={styles.nickName}></TextInput>
         <TouchableOpacity style={styles.settingBtn}>
           <Icon style={styles.settingBtnIcon}ios='ios-settings' android="md-settings"/>          
         </TouchableOpacity>
-        {/* <Button  title="Upload Image" color="#841584" accessibilityLabel="Learn more about this purple button" /> */}
       </View>
     )
   }
