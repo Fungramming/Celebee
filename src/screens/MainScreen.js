@@ -9,14 +9,11 @@ import {
 } from "react-native";
 import { Container, Content, Icon, Thumbnail, Header, Left, Right, Body } from 'native-base';
 
-import Home from './Home'
+import News from './News'
 import Schedule from './Schedule'
 import MyPage from './MyPage'
 import BottomNavigation from '../BottomNavigation'
 
-// import {NativeRouter, Switch, Route} from 'react-router-native'
-// import {createMaterialTopTabNavigator} from 'react-navigation';
-// import {createBottomTabNavigator} from 'react-navigation';
 class MainScreen extends Component {
   goToMyPage = () => {
     this.props.navigation.navigate('MyPage')

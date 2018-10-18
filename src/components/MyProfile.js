@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Text,TextInput, View, StyleSheet,TouchableOpacity, Dimensions, Image } from 'react-native'
 import ImagePicker from 'react-native-image-picker';
-import Icon from 'react-native-vector-icons/Feather';
+import Icon from 'react-native-vector-icons/AntDesign';
 // const FilePickerManager = require('NativeModules').FilePickerManager;
 const options = {
   title: '사진 등록',
@@ -54,11 +54,11 @@ export default class MyProfile extends Component {
           style={styles.photo}
           source={{uri: this.state.avatarSource}}
           />         
-          <Icon type="Feather" style={styles.photoIcon} name="md-camera"></Icon>
+          <Icon style={styles.photoIcon} name="camera"></Icon>
         </TouchableOpacity>
         <TextInput style={styles.nickName}></TextInput>
         <TouchableOpacity style={styles.settingBtn}>
-          <Icon style={styles.settingBtnIcon} name="md-settings"/>          
+          <Icon style={styles.settingBtnIcon} name="setting"/>          
         </TouchableOpacity>
       </View>
     )

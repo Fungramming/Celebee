@@ -5,27 +5,27 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import {createBottomTabNavigator} from 'react-navigation';
 import {createMaterialTopTabNavigator} from 'react-navigation';
 import Login from './screens/Login'
-import Home from './screens/Home'
+import News from './screens/News'
 import Schedule from './screens/Schedule'
 import MyPage from './screens/MyPage'
 
 
 export default createBottomTabNavigator({
-  Home: {
-    screen: Home,
-    navigationOptions: {
-      tabBarLabel: 'Home',
-      tabBarIcon: ({ tintColor }) => (
-        <Icon name="cloud" size={30} color="#900" />
-      )
-    }
-  },
   Schedule: {
     screen: Schedule,
     navigationOptions: {
-      tabBarLabel: 'Schedule',
+      tabBarLabel: '스케줄',
       tabBarIcon: ({ tintColor }) => (
-        <Icon name="ios-calendar" color={tintColor} size={24}/>
+        <Icon name="calendar" size={30} color={tintColor}/>
+      )
+    }
+  },
+  News: {
+    screen: News,
+    navigationOptions: {
+      tabBarLabel: '뉴스',
+      tabBarIcon: ({ tintColor }) => (
+        <Icon name="filetext1" color={tintColor} size={24}/>
       )
     }
   },
@@ -34,7 +34,7 @@ export default createBottomTabNavigator({
     navigationOptions: {
       tabBarLabel: 'MyPage',
       tabBarIcon: ({ tintColor }) => (
-        <Icon name="ios-person" color={tintColor} size={24}/>
+        <Icon name="user" color={tintColor} size={24}/>
       )
     }
   },
@@ -55,10 +55,10 @@ export default createBottomTabNavigator({
 })
 
 // export default createMaterialTopTabNavigator({
-//   Home: {
-//     screen: Home,
+//   News: {
+//     screen: News,
 //     navigationOptions: {
-//       tabBarLabel: 'Home',
+//       tabBarLabel: 'News',
 //       tabBarIcon: ({ tintColor }) => (
 //         <Icon name="ios-search" color={tintColor} size={24}/>
 //       )
