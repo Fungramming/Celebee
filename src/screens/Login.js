@@ -6,8 +6,6 @@ import {
   StatusBar
 } from "react-native";
 import { Container, Header, Content, Body, Icon, Button } from 'native-base';
-import MainScreen from './MainScreen'
-import { NativeRouter, Route, Link } from 'react-router-native'
 
 const login = 'Login'
 class Login extends Component {
@@ -17,7 +15,8 @@ class Login extends Component {
   }
 
   goToMain = () => {
-    this.props.navigation.navigate('Main')
+    this.props.navigation.navigate('SelectIdol')
+    // this.props.navigation.navigate('Main')
   }
   
   render() {

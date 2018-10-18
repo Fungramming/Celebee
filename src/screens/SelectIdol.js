@@ -1,69 +1,75 @@
 import React, { Component } from 'react'
-import { Text, StyleSheet, View, ScrollView, TouchableOpacity } from 'react-native'
-// import Icon from 'react-native-vector-icons/Ionicons'
-import { Container, Content, Icon, Thumbnail, Header, Left, Right, Body, Button } from 'native-base';
+import { Text, StyleSheet, View, ListView, ScrollView, TouchableOpacity, StatusBar, Button } from 'react-native'
+import { Container, Content, Icon, Thumbnail, Header, Left, Right, Body,} from 'native-base';
+import SelectIdolList from '../components/SelectIdolList'
+
+// class IdolCard extends Component {
+//   render() {
+//       return (
+//         <TouchableOpacity style={styles.idolCard}>
+//           <Text style={styles.idolPhoto}></Text>
+//           <Text style={styles.idolName}>{this.props.name}</Text>
+//         </TouchableOpacity>
+//       )
+//   }
+// }
 
 class SelectIdol extends Component {
+  constructor(props) {
+    super(props);
+    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    this.state = {
+        idols : ds.cloneWithRows(['BTS','뉴이스트','트와이스','세븐틴','엑소','워너원','비투비', 'BTS','뉴이스트','트와이스','세븐틴','엑소','워너원','비투비', 'BTS','뉴이스트','트와이스','세븐틴','엑소','워너원','비투비'])            
+    }
+  }
+
+  goToMain = () => {
+    // this.props.navigation.navigate('SelectIdol')
+    this.props.navigation.navigate('Main')
+  }
+
+  static navigationOptions = {
+    header: null
+  }
+  
   render() {
     return (
       <Container style={styles.container}>
+        <StatusBar 
+          barStyle="dark-content"
+        />
         <View style={styles.headerTextWrap}>
           <Text style={styles.headerText}>좋아하는 아이돌을 팔로우해보세요!</Text>
           <Text style={styles.headerText}>스케쥴과 클립, 뉴스까지 받아보실 수 있습니다.</Text>
         </View>
 
-        <Content>
-          <View style={{flex: 1}}>
-            <ScrollView 
-              // horizontal={true}
-              showsVerticalScrollIndicator={false}
-              contentContainerStyle={{
-                alignItems: 'flex-start',
-                // paddingStart: 24,
-                // paddingEnd: 24
-              }}
-            >
-              <View style={styles.SelectHeaderTextWrap}>
-                <Left style={{backgroundColor: 'yellow'}}>
-                  <Text style={styles.SelectHeaderText}>내 최애 아이돌 선택하기</Text>
-                </Left>
-                <Right>
-                  <Text>선택완료</Text>
-                </Right>
-                <Text>인기순</Text>
-                <Text>가나다순</Text>
-              </View>
-
-              <Text>좋아하는 아이돌을 팔로우해보세요! 좋아하는 아이돌을 팔로우해보세요!</Text>
-              <Text>스케쥴과 클립, 뉴스까지 받아보실 수 있습니다. 좋아하는 아이돌을 팔로우해보세요!</Text>
-              <Text>좋아하는 아이돌을 팔로우해보세요! 좋아하는 아이돌을 팔로우해보세요!</Text>
-              <Text>스케쥴과 클립, 뉴스까지 받아보실 수 있습니다. 좋아하는 아이돌을 팔로우해보세요!</Text>
-              <Text>좋아하는 아이돌을 팔로우해보세요! 좋아하는 아이돌을 팔로우해보세요!</Text>
-              <Text>스케쥴과 클립, 뉴스까지 받아보실 수 있습니다. 좋아하는 아이돌을 팔로우해보세요!</Text>
-              <Text>좋아하는 아이돌을 팔로우해보세요! 좋아하는 아이돌을 팔로우해보세요!</Text>
-              <Text>스케쥴과 클립, 뉴스까지 받아보실 수 있습니다. 좋아하는 아이돌을 팔로우해보세요!</Text>
-              <Text>좋아하는 아이돌을 팔로우해보세요! 좋아하는 아이돌을 팔로우해보세요!</Text>
-              <Text>스케쥴과 클립, 뉴스까지 받아보실 수 있습니다. 좋아하는 아이돌을 팔로우해보세요!</Text>
-              <Text>좋아하는 아이돌을 팔로우해보세요! 좋아하는 아이돌을 팔로우해보세요!</Text>
-              <Text>스케쥴과 클립, 뉴스까지 받아보실 수 있습니다. 좋아하는 아이돌을 팔로우해보세요!</Text>
-              <Text>좋아하는 아이돌을 팔로우해보세요! 좋아하는 아이돌을 팔로우해보세요!</Text>
-              <Text>스케쥴과 클립, 뉴스까지 받아보실 수 있습니다. 좋아하는 아이돌을 팔로우해보세요!</Text>
-              <Text>좋아하는 아이돌을 팔로우해보세요! 좋아하는 아이돌을 팔로우해보세요!</Text>
-              <Text>스케쥴과 클립, 뉴스까지 받아보실 수 있습니다. 좋아하는 아이돌을 팔로우해보세요!</Text>
-              <Text>좋아하는 아이돌을 팔로우해보세요! 좋아하는 아이돌을 팔로우해보세요!</Text>
-              <Text>스케쥴과 클립, 뉴스까지 받아보실 수 있습니다. 좋아하는 아이돌을 팔로우해보세요!</Text>
-              <Text>좋아하는 아이돌을 팔로우해보세요! 좋아하는 아이돌을 팔로우해보세요!</Text>
-              <Text>스케쥴과 클립, 뉴스까지 받아보실 수 있습니다. 좋아하는 아이돌을 팔로우해보세요!</Text>
-              <Text>좋아하는 아이돌을 팔로우해보세요! 좋아하는 아이돌을 팔로우해보세요!</Text>
-              <Text>스케쥴과 클립, 뉴스까지 받아보실 수 있습니다. 좋아하는 아이돌을 팔로우해보세요!</Text>
-              <Text>좋아하는 아이돌을 팔로우해보세요! 좋아하는 아이돌을 팔로우해보세요!</Text>
-              <Text>스케쥴과 클립, 뉴스까지 받아보실 수 있습니다. 좋아하는 아이돌을 팔로우해보세요!</Text>
-            </ScrollView>
+        <View style={styles.selectHeaderTextWrap}>
+          <Text>
+            <Text style={styles.selectHeaderText}>내 최애 아이돌 선택하기</Text>
+          </Text>
+          <View style={{flexDirection: 'row'}}>
+            <Text style={styles.selectFilterText}>인기순</Text>
+            <Text style={styles.selectFilterText}>가나다순</Text>
           </View>
+        </View>
+
+        <Content>
+          <ListView 
+            // horizontal={true}
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={{
+              alignItems: 'flex-start',
+              // paddingStart: 24,
+              // paddingEnd: 24
+            }}
+            dataSource={this.state.idols}
+            renderRow={(rowData)=><SelectIdolList name={rowData}></SelectIdolList>}
+          >
+          </ListView>
         </Content>
-        <Button full rounded style={styles.SelectBtn}>
-          <Text style={{color:'#fff', fontSize: 18}}>선택완료</Text>
-        </Button>
+        <View style={styles.selectBtn}>
+          <Button title="선택완료" onPress={this.goToMain}/>
+        </View>
       </Container>
     );
   }
@@ -87,17 +93,21 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginTop: 15
   },
-  SelectHeaderTextWrap: {
-    flex: 1,
+  selectHeaderTextWrap: {
+    marginTop: 15,
   },
-  SelectHeaderText: {
-    fontSize: 18,
+  selectHeaderText: {
+    fontSize: 20,
     fontWeight: 'bold',
   },
-  SelectBtn: {
+  selectFilterText: {
+    paddingRight: 15,
+    paddingTop: 15,
+    paddingBottom: 15,
+    fontSize: 12,
+  },
+  selectBtn: {
     marginTop: 15,
     marginBottom: 30,
-    backgroundColor: '#722784',
-    borderRadius: 15,
   },
 });

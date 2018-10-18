@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
     },
     photo: {
       backgroundColor: '#dedede',
-      borderRadius: 50,
+      borderRadius: 40,
       marginRight: 20,
       width: 80,
       height: 80
