@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {Platform, Text, View, StyleSheet, Image} from 'react-native';
-// import {Icon} from 'native-base'
 import Icon from 'react-native-vector-icons/AntDesign';
 import {createBottomTabNavigator} from 'react-navigation';
 import {createMaterialTopTabNavigator} from 'react-navigation';

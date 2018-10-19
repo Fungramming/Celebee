@@ -56,7 +56,7 @@ export default class MyProfile extends Component {
           />         
           <Icon style={styles.photoIcon} name="camera"></Icon>
         </TouchableOpacity>
-        <TextInput style={styles.nickName}></TextInput>
+        <TextInput style={styles.nickName}>닉네임자리</TextInput>
         <TouchableOpacity style={styles.settingBtn}>
           <Icon style={styles.settingBtnIcon} name="setting"/>          
         </TouchableOpacity>
@@ -89,15 +89,16 @@ const styles = StyleSheet.create({
     },
     nickName: {
       borderColor: '#dedede',
-      borderWidth: 2,
-      padding: 10,
-      width: 200,
+      borderBottomWidth: 1,
+      fontSize: 18,
+      padding: 5,
+      width: 160,
       height: 40
     },
     settingBtn: {
       marginLeft: 'auto',
     },
     settingBtnIcon: {
-      fontSize: 32
+      fontSize: 24
     }
 })
