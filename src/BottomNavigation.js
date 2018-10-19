@@ -28,15 +28,15 @@ export default createBottomTabNavigator({
       )
     }
   },
-  MyPage: {
-    screen: MyPage,
-    navigationOptions: {
-      tabBarLabel: 'MyPage',
-      tabBarIcon: ({ tintColor }) => (
-        <Icon name="user" color={tintColor} size={24}/>
-      )
-    }
-  },
+  // MyPage: {
+  //   screen: MyPage,
+  //   navigationOptions: {
+  //     tabBarLabel: 'MyPage',
+  //     tabBarIcon: ({ tintColor }) => (
+  //       <Icon name="user" color={tintColor} size={24}/>
+  //     )
+  //   }
+  // },
 },{
   tabBarOptions: {
     activeTintColor: '#722784',
