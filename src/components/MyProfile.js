@@ -13,13 +13,23 @@ const options = {
 
 
 export default class MyProfile extends Component {
-  constructor(){
-    super()
+  constructor(props){
+    super(props)
     this.state = {
+      inputNickName : "",
       avatarSource : "https://techcrunch.com/wp-content/uploads/2018/05/snap-dollar-eyes_preview.png?w=730&crop=1"
     }
   }
+  _handleInputChange = (e) => {
+    const {value} = e.target;
+    this.setState({
+      inputNickName : value
+    })
 
+  }
+  _changeNickName = () => {
+    alert("CHANGE NICKNAME")
+  }
   _onEditPhoto = () => {
     var _this = this;
 
@@ -56,7 +66,15 @@ export default class MyProfile extends Component {
           />         
           <Icon style={styles.photoIcon} name="camera"></Icon>
         </TouchableOpacity>
-        <TextInput style={styles.nickName}></TextInput>
+        <TextInput 
+            style={styles.nickName} 
+            onChangeText={()=>this._handleInputChange} 
+            value={this.state.text}
+            maxLength = {40}>
+        </TextInput>
+        <TouchableOpacity style={styles.settingBtn} onPress={()=> this._changeNickName}>
+          <Icon style={styles.settingBtnIcon} name="setting"/>          
+        </TouchableOpacity>
         <TouchableOpacity style={styles.settingBtn}>
           <Icon style={styles.settingBtnIcon} name="setting"/>          
         </TouchableOpacity>
