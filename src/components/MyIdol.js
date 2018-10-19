@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
-import { Text, View, ListView, StyleSheet, Dimensions,TouchableOpacity } from 'react-native'
+import { Text, View, ListView, StyleSheet, Dimensions,TouchableOpacity, Image } from 'react-native'
 
 class IdolCard extends Component {
     render() {
         return (
-            <TouchableOpacity style={styles.idolCard}>
-                <Text style={styles.idolPhoto}></Text>
+            <View style={styles.idolCard}>
+                <Image style={styles.idolPhoto} />
                 <Text style={styles.idolName}>{this.props.name}</Text>
-            </TouchableOpacity>
+            </View>
         )
     }
 }
@@ -25,6 +25,7 @@ export default class MyIdol extends Component {
             <View style={styles.myIdol}>
             <Text style={styles.subTitle}>내 아이돌</Text>
             <ListView
+                style={{paddingLeft: 5}}
                 horizontal="true"
                 showsHorizontalScrollIndicator={false}
                 dataSource={this.state.idols}
@@ -42,7 +43,8 @@ export default class MyIdol extends Component {
 const styles = StyleSheet.create({
     myIdol: {
         height: 180,
-        width: Dimensions.get('window').width
+        width: Dimensions.get('window').width,
+        // paddingLeft: 15
     },
     subTitle : {
         marginLeft: 15,
@@ -56,14 +58,14 @@ const styles = StyleSheet.create({
     idolCard: {
         justifyContent: 'flex-start',
         alignItems: 'center',
-        marginHorizontal: 5
+        marginHorizontal: 1
     },
     idolPhoto: {
         backgroundColor: '#dedede',
-        borderRadius: 50,
+        borderRadius: 33,
         marginBottom:10,
-        width: 70,
-        height: 70
+        width: 65,
+        height: 65
     },
     idolName: {
         width: 80,

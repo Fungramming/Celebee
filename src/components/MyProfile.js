@@ -107,15 +107,16 @@ const styles = StyleSheet.create({
     },
     nickName: {
       borderColor: '#dedede',
-      borderWidth: 2,
-      padding: 10,
-      width: 200,
+      borderBottomWidth: 1,
+      fontSize: 18,
+      padding: 5,
+      width: 160,
       height: 40
     },
     settingBtn: {
       marginLeft: 'auto',
     },
     settingBtnIcon: {
-      fontSize: 32
+      fontSize: 24
     }
 })

@@ -151,14 +151,13 @@ const AppStackNavigator = createStackNavigator({
   Login: {
     screen: Login,
   },
-  Main: {
-    screen: MainScreen,
-  },
-  MyPage: {
-    screen: MyPage,
-  },
   SelectIdol: {
     screen: SelectIdol,
   },
-
+  Main: {
+    screen: MainScreen,
+  },
+  // MyPage: {
+  //   screen: MyPage,
+  // },
 });
