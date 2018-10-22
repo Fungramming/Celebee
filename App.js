@@ -146,12 +146,13 @@ const slides = [
   },
 ];
 
+
 const AppStackNavigator = createStackNavigator({
   AppTabNavigator: {
     screen: BottomNavigation,
     navigationOptions: ({ navigation }) => ({
       // header: null
-      title: 'Celebee',
+      // headerTitle: 'Celebee',
       headerLeft: (
         <TouchableOpacity onPress={() => navigation.navigate('MyPage')}>
           <View style={{ paddingHorizontal: 20 }}>
@@ -165,13 +166,15 @@ const AppStackNavigator = createStackNavigator({
     screen: MyPage,
     navigationOptions: ({ navigation }) => ({
       // header: null
+      headerStyle: {
+        
+      }
     })
   },
 });
 
 AppStackNavigator.navigationOptions = ({ navigation }) => {
   let { routeName } = navigation.state.routes[navigation.state.index];
-
   // You can do whatever you like here to pick the title based on the route name
   let headerTitle = routeName;
 

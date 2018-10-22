@@ -13,6 +13,7 @@ export default createBottomTabNavigator({
   Schedule: {
     screen: Schedule,
     navigationOptions: {
+      initialRouteName: '스케쥴',
       tabBarLabel: '스케줄',
       tabBarIcon: ({ tintColor }) => (
         <Icon name="calendar" size={30} color={tintColor}/>
@@ -22,6 +23,7 @@ export default createBottomTabNavigator({
   News: {
     screen: News,
     navigationOptions: {
+      initialRouteName: '뉴스',
       tabBarLabel: '뉴스',
       tabBarIcon: ({ tintColor }) => (
         <Icon name="filetext1" color={tintColor} size={24}/>
