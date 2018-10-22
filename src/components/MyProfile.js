@@ -12,23 +12,21 @@ export default class MyProfile extends Component {
 
   render() {
     return (
+      <TouchableOpacity >
       <View style={styles.myProfileBox}>
-        <TouchableOpacity>
           <Image
-          style={styles.photo}
-          source={{uri: this.state.avatarSource}}
+            style={styles.photo}
+            source={{uri: this.state.avatarSource}}
           />         
-        </TouchableOpacity>
-        <View>
-          <Text style={styles.nickName}>{this.state.nickName}</Text>
-          <TouchableOpacity style={styles.settingBtn}>
-            <Text>프로필 수정</Text>
-          </TouchableOpacity>
-        </View>
-        {/* <TouchableOpacity style={styles.settingBtn}>
-          <Icon style={styles.settingBtnIcon} name="setting"/>          
-        </TouchableOpacity> */}
+          <View>
+            <Text style={styles.nickName}>{this.state.nickName}</Text>
+              <Text style={styles.settingBtn}>프로필 수정</Text>
+          </View>
+          {/* <TouchableOpacity style={styles.settingBtn}>
+            <Icon style={styles.settingBtnIcon} name="setting"/>          
+          </TouchableOpacity> */}
       </View>
+      </TouchableOpacity>
     )
   }
 }
