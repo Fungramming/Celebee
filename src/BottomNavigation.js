@@ -7,6 +7,7 @@ import Login from './screens/Login'
 import News from './screens/News'
 import Schedule from './screens/Schedule'
 import MyPage from './screens/MyPage'
+import EditMyProfile from './screens/EditMyProfile'
 
 
 export default createBottomTabNavigator({
@@ -30,15 +31,25 @@ export default createBottomTabNavigator({
       )
     }
   },
-  // MyPage: {
-  //   screen: MyPage,
-  //   navigationOptions: {
-  //     tabBarLabel: 'MyPage',
-  //     tabBarIcon: ({ tintColor }) => (
-  //       <Icon name="user" color={tintColor} size={24}/>
-  //     )
-  //   }
-  // },
+  MyPage: {
+    screen: MyPage,
+    navigationOptions: {
+      tabBarLabel: 'MyPage',
+      tabBarIcon: ({ tintColor }) => (
+        <Icon name="user" color={tintColor} size={24}/>
+      )
+    }
+  },
+  EditMyProfile: {
+    screen: EditMyProfile,
+    navigationOptions: {
+      tabBarLabel: 'MyPage',
+      tabBarIcon: ({ tintColor }) => (
+        <Icon name="user" color={tintColor} size={24}/>
+      )
+    }
+  },
+  
 },{
   tabBarOptions: {
     header: null,
