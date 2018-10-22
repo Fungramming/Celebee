@@ -1,17 +1,13 @@
-import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View, Image, StatusBar} from 'react-native';
-import SplashScreen from 'react-native-splash-screen';
+import React, { Component } from "react";
+import { 
+  View,
+  Text,
+  StyleSheet
+} from "react-native";
 import AppIntroSlider from 'react-native-app-intro-slider';
+import Login from './screens/Login'
 
-import {createStackNavigator, createSwitchNavigator} from 'react-navigation';
-import Login from './src/screens/Login'
-import MainScreen from './src/screens/MainScreen'
-import MyPage from './src/screens/MyPage'
-import SelectIdol from './src/screens/SelectIdol'
-import Schedule from './src/screens/Schedule'
-// import AppIntroSlider from './src/AppIntroSlider'
-
-export default class App extends Component {
+class AppIntroSlider extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -34,14 +30,7 @@ export default class App extends Component {
   render() {
     if(this.state.showRealApp) {
       return (
-        // <View>
-        //   <StatusBar 
-        //     barStyle="light-content"
-        //     backgroundColor="#f2f2f2"
-        //   />
-        //   {/* <Mypage></Mypage> */}
-        // </View>
-        <AppStackNavigator />
+        <Login />
       );
     } else {
       return (
@@ -60,6 +49,7 @@ export default class App extends Component {
     }
   }
 }
+export default AppIntroSlider;
 
 const styles = StyleSheet.create({
   // Slider
@@ -148,37 +138,3 @@ const slides = [
     backgroundColor: '#722784',    
   },
 ];
-
-const AppStackNavigator = createStackNavigator({
-  Login: {
-    screen: Login,
-  },
-  SelectIdol: {
-    screen: SelectIdol,
-  },
-  Main: {
-    screen: MainScreen,
-  },
-  // MyPage: {
-  //   screen: MyPage,
-  // },
-});
-
-// const AuthStackNavigator = createStackNavigator({
-//   Login: {
-//     screen: Login,
-//   },
-//   Intro: {
-//     screen: SelectIdol,
-//   },
-//   Main: {
-//     screen: MainScreen,
-//   },
-//   // MyPage: {
-//   //   screen: MyPage,
-//   // },
-// });
-
-// export default createSwitchNavigator({
-  
-// })

@@ -22,15 +22,15 @@ import BottomNavigation from '../BottomNavigation'
 // }
 class MainScreen extends Component {
 
-  // static navigationOptions = {
+  static navigationOptions = {
   //   headerLeft: <MypageIcon />,
   //   title: 'Celebee',
   //   headerRight: 
   //   <TouchableOpacity>
   //     <Icon name="notification" size={25} style={{paddingRight: 24}}/>
   //   </TouchableOpacity>,
-  //     // header: null
-  // }
+      header: null
+  }
 
   render() {
     return (
