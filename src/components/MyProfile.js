@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Text, View, StyleSheet,TouchableOpacity, Dimensions, Image } from 'react-native'
 import ImagePicker from 'react-native-image-picker';
 import Icon from 'react-native-vector-icons/AntDesign';
-// const FilePickerManager = require('NativeModules').FilePickerManager;
+
 const options = {
   title: '사진 등록',
   storageOptions: {
