@@ -1,16 +1,5 @@
 import React, { Component } from 'react'
 import { Text, View, StyleSheet,TouchableOpacity, Dimensions, Image } from 'react-native'
-import ImagePicker from 'react-native-image-picker';
-import Icon from 'react-native-vector-icons/AntDesign';
-
-const options = {
-  title: '사진 등록',
-  storageOptions: {
-    skipBackup: true,
-    path: 'images',
-  },
-};
-
 
 export default class MyProfile extends Component {
   constructor(props){
@@ -19,39 +8,12 @@ export default class MyProfile extends Component {
       nickName : "celebee1004",
       avatarSource : "https://techcrunch.com/wp-content/uploads/2018/05/snap-dollar-eyes_preview.png?w=730&crop=1"
     }
-  }
-
- 
-  _onEditPhoto = () => {
-    var _this = this;
-
-    ImagePicker.showImagePicker(options, (response) => {
-      console.log('Response = ', response);
-    
-      if (response.didCancel) {
-        console.log('User cancelled image picker');
-      } else if (response.error) {
-        console.log('ImagePicker Error: ', response.error);
-      } else if (response.customButton) {
-        console.log('User tapped custom button: ', response.customButton);
-      } else {
-        const source = { uri: response.uri };
-    
-        // You can also display the image using data:
-        // const source = { uri: 'data:image/jpeg;base64,' + response.data };
-    
-        _this.setState({
-          avatarSource: source.uri,
-        });
-        alert(source.uri)
-      }
-    });
-  }
+  }  
 
   render() {
     return (
       <View style={styles.myProfileBox}>
-        <TouchableOpacity onPress={this._onEditPhoto.bind(this)}>
+        <TouchableOpacity>
           <Image
           style={styles.photo}
           source={{uri: this.state.avatarSource}}
