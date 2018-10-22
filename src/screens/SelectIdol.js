@@ -24,8 +24,7 @@ class SelectIdol extends Component {
   }
 
   goToMain = () => {
-    // this.props.navigation.navigate('SelectIdol')
-    this.props.navigation.push('Main')
+    this.props.navigation.navigate('AppTabNavigator')
   }
 
   static navigationOptions = {

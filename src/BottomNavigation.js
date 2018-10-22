@@ -39,10 +39,11 @@ export default createBottomTabNavigator({
   // },
 },{
   tabBarOptions: {
+    header: null,
     activeTintColor: '#722784',
     inactiveTintColor: '#d1cece',
     style: {
-      height: 55,
+      height: 65,
       backgroundColor: '#f2f2f2',
       borderTopWidth: 0,
       shadowOffset: {width: 5, height: 3},

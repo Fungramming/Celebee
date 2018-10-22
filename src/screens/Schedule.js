@@ -1,40 +1,49 @@
 import React, { Component } from "react";
-import { Platform, View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import { Container, Content, Icon, Thumbnail, Header, Left, Right, Body } from 'native-base';
-import TopBar from '../components/TopBar'
-import {createMaterialTopTabNavigator} from 'react-navigation';
-import MyPage from './MyPage'
+import { Platform, View, Text, StyleSheet, TouchableOpacity, TextInput } from "react-native";
+import { Container, Content, Thumbnail, Header, Left, Right, Body, Title } from 'native-base';
+import Icon from 'react-native-vector-icons/AntDesign';
 
-class MypageIcon extends Component {
-  goToMyPage = () => {
-    this.props.navigation.navigate('MyPage')
-    alert('mypage')
-  }
-  render() {
-    // const { navigate } = this.props.navigation;
-    return (
-      <TouchableOpacity 
-        // onPress={() => navigate('MyPage')}
-      >
-        <Icon name="user" size={25} style={{paddingLeft: 24}} />
-      </TouchableOpacity>
-    )
-  }
-}
+// class MypageIcon extends Component {
+//   constructor(props){
+//     super(props) 
+//   }
+//   goToMyPage = () => {
+//     this.props.navigation.navigate('MyPage')
+//     alert('mypage')
+//   }
+  
+//   render() {
+//     return (
+//       <Container style={styles.container}>
+//         <Header>
+//           <Left>
+//             <TouchableOpacity onPress={() => this.props.navigation.navigate('MyPage')}>
+//               <Icon name="user" size={25} style={{paddingLeft: 20}} />
+//             </TouchableOpacity>
+//           </Left>
+//           <Title>스케쥴</Title>
+//           <Right>
+//             <TouchableOpacity>
+//               <Icon name="user" size={25} style={{paddingRight: 20}} />
+//             </TouchableOpacity>
+//           </Right>
+//         </Header>
+//       </Container>
+//     );
+//   }
+// }
 
 class Schedule extends Component {
-  // static navigationOptions = {
-  //   title: '스케쥴',
-  //   tabIcon: ({tintColor}) => {
-  //     <Icon name="ios-person" size={30} style={{color: tintColor}} />
-  //   }
-  // }
   render() {
     return (
       <View style={styles.container}>
-        <TopBar />
-        {/* <TopTab /> */}
         {/* <MypageIcon/> */}
+        <Text style={{position: "absolute", top: 0}}>스케쥴</Text>
+        <TouchableOpacity onPress={() => this.props.navigation.navigate('MyPage')}>
+          <View style={{ paddingHorizontal: 10 }}>
+            <Icon name="user" size={350} />
+          </View>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -44,59 +53,7 @@ export default Schedule;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // alignItems: 'center',
-    // justifyContent: 'center'
+    alignItems: 'center',
+    justifyContent: 'center'
   }
 });
-
-const TopTab = createMaterialTopTabNavigator({
-  // News: {
-  //   screen: News,
-  //   navigationOptions: {
-  //     tabBarLabel: 'News',
-  //     tabBarIcon: ({ tintColor }) => (
-  //       <Icon name="ios-search" color={tintColor} size={24}/>
-  //     )
-  //   }
-  // },
-  Schedule: {
-    screen: Schedule,
-    navigationOptions: {
-      tabBarLabel: 'Schedule',
-      tabBarIcon: ({ tintColor }) => (
-        <Icon name="ios-heart" color={tintColor} size={24}/>
-      )
-    }
-  },
-  // MyPage: {
-  //   screen: MyPage,
-  //   navigationOptions: {
-  //     tabBarLabel: 'MyPage',
-  //     tabBarIcon: ({ tintColor }) => (
-  //       <Icon name="ios-heart" color={tintColor} size={24}/>
-  //     )
-  //   }
-  // },
-}, {
-  // animationEnable: true,
-  // swipeEnabled: true,
-  // tabBarPosition: 'bottom',
-  tabBarOptions: {
-    style: {
-      height: 65,
-      backgroundColor: '#f2f2f2',
-      ...Platform.select({
-        android:{
-          backgroundColor: 'white'
-        }
-      })
-    },
-    indicatorStyle: {
-      height: 0,
-    },
-    activeTintColor: '#000',
-    inactiveTintColor: '#d1cece',
-    showLabel: true,
-    showIcon: true
-  },
-})

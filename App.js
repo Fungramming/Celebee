@@ -1,15 +1,16 @@
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View, Image, StatusBar} from 'react-native';
+import {Platform, StyleSheet, Text, View, Image, StatusBar, TouchableOpacity } from 'react-native';
+
 import SplashScreen from 'react-native-splash-screen';
 import AppIntroSlider from 'react-native-app-intro-slider';
+import Icon from 'react-native-vector-icons/AntDesign';
 
-import {createStackNavigator, createSwitchNavigator} from 'react-navigation';
+import {createStackNavigator, createSwitchNavigator, createBottomTabNavigator, createDrawerNavigator} from 'react-navigation';
 import Login from './src/screens/Login'
-import MainScreen from './src/screens/MainScreen'
 import MyPage from './src/screens/MyPage'
 import SelectIdol from './src/screens/SelectIdol'
 import Schedule from './src/screens/Schedule'
-// import AppIntroSlider from './src/AppIntroSlider'
+import BottomNavigation from './src/BottomNavigation'
 
 export default class App extends Component {
   constructor(props) {
@@ -32,16 +33,12 @@ export default class App extends Component {
   }
   
   render() {
+    // return(
+    //   <AppSwichNavigator />
+    // )
     if(this.state.showRealApp) {
       return (
-        // <View>
-        //   <StatusBar 
-        //     barStyle="light-content"
-        //     backgroundColor="#f2f2f2"
-        //   />
-        //   {/* <Mypage></Mypage> */}
-        // </View>
-        <AppStackNavigator />
+        <AppSwichNavigator />
       );
     } else {
       return (
@@ -150,35 +147,43 @@ const slides = [
 ];
 
 const AppStackNavigator = createStackNavigator({
-  Login: {
-    screen: Login,
+  AppTabNavigator: {
+    screen: BottomNavigation,
+    navigationOptions: ({ navigation }) => ({
+      // header: null
+      title: 'Celebee',
+      headerLeft: (
+        <TouchableOpacity onPress={() => navigation.navigate('MyPage')}>
+          <View style={{ paddingHorizontal: 20 }}>
+            <Icon name="user" size={24} />
+          </View>
+        </TouchableOpacity>
+      )
+    })
   },
-  SelectIdol: {
-    screen: SelectIdol,
+  MyPage: {
+    screen: MyPage,
+    navigationOptions: ({ navigation }) => ({
+      // header: null
+    })
   },
-  Main: {
-    screen: MainScreen,
-  },
-  // MyPage: {
-  //   screen: MyPage,
-  // },
 });
 
-// const AuthStackNavigator = createStackNavigator({
-//   Login: {
-//     screen: Login,
-//   },
-//   Intro: {
-//     screen: SelectIdol,
-//   },
-//   Main: {
-//     screen: MainScreen,
-//   },
-//   // MyPage: {
-//   //   screen: MyPage,
-//   // },
-// });
+AppStackNavigator.navigationOptions = ({ navigation }) => {
+  let { routeName } = navigation.state.routes[navigation.state.index];
 
-// export default createSwitchNavigator({
-  
-// })
+  // You can do whatever you like here to pick the title based on the route name
+  let headerTitle = routeName;
+
+  return {
+    headerTitle,
+  };
+};
+
+const AppSwichNavigator = createSwitchNavigator({
+  Login: Login,
+  // IntroSlider: IntroSlider,
+  SelectIdol: SelectIdol,
+  App: AppStackNavigator,
+  Schedule: Schedule,
+})
