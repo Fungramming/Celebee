@@ -93,5 +93,6 @@ const styles = StyleSheet.create({
     },
     nickNameInput: {
         borderBottomWidth: StyleSheet.hairlineWidth,
+        fontSize: 18
     }
 })
