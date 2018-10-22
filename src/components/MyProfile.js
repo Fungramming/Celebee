@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text,TextInput, View, StyleSheet,TouchableOpacity, Dimensions, Image } from 'react-native'
+import { Text, View, StyleSheet,TouchableOpacity, Dimensions, Image } from 'react-native'
 import ImagePicker from 'react-native-image-picker';
 import Icon from 'react-native-vector-icons/AntDesign';
 // const FilePickerManager = require('NativeModules').FilePickerManager;
@@ -16,20 +16,12 @@ export default class MyProfile extends Component {
   constructor(props){
     super(props)
     this.state = {
-      inputNickName : "",
+      nickName : "celebee1004",
       avatarSource : "https://techcrunch.com/wp-content/uploads/2018/05/snap-dollar-eyes_preview.png?w=730&crop=1"
     }
   }
-  _handleInputChange = (e) => {
-    const {value} = e.target;
-    this.setState({
-      inputNickName : value
-    })
 
-  }
-  _changeNickName = () => {
-    alert("CHANGE NICKNAME")
-  }
+ 
   _onEditPhoto = () => {
     var _this = this;
 
@@ -64,20 +56,16 @@ export default class MyProfile extends Component {
           style={styles.photo}
           source={{uri: this.state.avatarSource}}
           />         
-          <Icon style={styles.photoIcon} name="camera"></Icon>
         </TouchableOpacity>
-        <TextInput 
-            style={styles.nickName} 
-            onChangeText={()=>this._handleInputChange} 
-            value={this.state.text}
-            maxLength = {40}>
-        </TextInput>
-        <TouchableOpacity style={styles.settingBtn} onPress={()=> this._changeNickName}>
+        <View>
+          <Text style={styles.nickName}>{this.state.nickName}</Text>
+          <TouchableOpacity style={styles.settingBtn}>
+            <Text>프로필 수정</Text>
+          </TouchableOpacity>
+        </View>
+        {/* <TouchableOpacity style={styles.settingBtn}>
           <Icon style={styles.settingBtnIcon} name="setting"/>          
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.settingBtn}>
-          <Icon style={styles.settingBtnIcon} name="setting"/>          
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
     )
   }
@@ -85,7 +73,7 @@ export default class MyProfile extends Component {
 
 const styles = StyleSheet.create({
     myProfileBox:{
-      paddingHorizontal: 15,
+      paddingHorizontal: 24,
       width: Dimensions.get('window').width,
       height: 125,
       flexDirection: 'row',
@@ -100,21 +88,19 @@ const styles = StyleSheet.create({
     },
     photo: {
       backgroundColor: '#dedede',
-      borderRadius: 40,
-      marginRight: 20,
-      width: 80,
-      height: 80
+      borderRadius: 28,
+      marginRight: 10,
+      width: 74,
+      height: 74
     },
     nickName: {
-      borderColor: '#dedede',
-      borderBottomWidth: 1,
-      fontSize: 18,
       padding: 5,
       width: 160,
-      height: 40
+      height: 40,
+      fontSize: 25,
     },
     settingBtn: {
-      marginLeft: 'auto',
+      padding: 5
     },
     settingBtnIcon: {
       fontSize: 24

@@ -7,6 +7,7 @@ import Login from './screens/Login'
 import News from './screens/News'
 import Schedule from './screens/Schedule'
 import MyPage from './screens/MyPage'
+import EditMyProfile from './screens/EditMyProfile'
 
 
 export default createBottomTabNavigator({
@@ -37,6 +38,16 @@ export default createBottomTabNavigator({
   //     )
   //   }
   // },
+  EditMyProfile: {
+    screen: EditMyProfile,
+    navigationOptions: {
+      tabBarLabel: 'MyPage',
+      tabBarIcon: ({ tintColor }) => (
+        <Icon name="user" color={tintColor} size={24}/>
+      )
+    }
+  },
+  
 },{
   tabBarOptions: {
     activeTintColor: '#722784',
