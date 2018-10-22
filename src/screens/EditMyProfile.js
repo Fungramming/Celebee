@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { Text, View, StyleSheet,TouchableOpacity, Dimensions, Image, TextInput } from 'react-native'
+import { Platform, Text, View, StyleSheet,TouchableOpacity, Dimensions, Image, TextInput, StatusBar } from 'react-native'
+import { SafeAreaView } from 'react-navigation';
 import ImagePicker from 'react-native-image-picker';
 import Icon from 'react-native-vector-icons/AntDesign';
 
@@ -47,7 +48,7 @@ export default class EditMyProfile extends Component {
     }  
   render() {
     return (
-      <View>
+      <View style={{backgroundColor: '#fff', height: Dimensions.get('window').height}}>
         <View style={styles.photoBox}>
             <TouchableOpacity onPress={this._onEditPhoto.bind(this)}>
                 <Image
@@ -93,6 +94,10 @@ const styles = StyleSheet.create({
     },
     nickNameInput: {
         borderBottomWidth: StyleSheet.hairlineWidth,
-        fontSize: 18
+        marginTop: 10,
+        paddingLeft: 5,
+        paddingBottom: 5,
+        fontSize: 18,
+        borderColor: 'black'
     }
 })

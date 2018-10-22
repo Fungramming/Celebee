@@ -9,8 +9,10 @@ import {createStackNavigator, createSwitchNavigator, createBottomTabNavigator, c
 import Login from './src/screens/Login'
 import MyPage from './src/screens/MyPage'
 import SelectIdol from './src/screens/SelectIdol'
-import Schedule from './src/screens/Schedule'
 import BottomNavigation from './src/BottomNavigation'
+import EditMyProfile from './src/screens/EditMyProfile'
+import EditIdol from './src/screens/EditIdol'
+import Setting from './src/screens/Setting'
 
 export default class App extends Component {
   constructor(props) {
@@ -155,7 +157,7 @@ const AppStackNavigator = createStackNavigator({
       // headerTitle: 'Celebee',
       headerLeft: (
         <TouchableOpacity onPress={() => navigation.navigate('MyPage')}>
-          <View style={{ paddingHorizontal: 20 }}>
+          <View style={{ paddingHorizontal: 10 }}>
             <Icon name="user" size={24} />
           </View>
         </TouchableOpacity>
@@ -167,9 +169,25 @@ const AppStackNavigator = createStackNavigator({
     navigationOptions: ({ navigation }) => ({
       // header: null
       headerStyle: {
-        
-      }
+        // marginHorizontal: 25
+      },
+      headerRight: (
+        <TouchableOpacity onPress={() => navigation.navigate('Setting')}>
+          <View style={{ paddingHorizontal: 10 }}>
+            <Icon name="setting" size={24} />
+          </View>
+        </TouchableOpacity>
+      )
     })
+  },
+  EditMyProfile: {
+    screen: EditMyProfile
+  },
+  EditIdol: {
+    screen: EditIdol
+  },
+  Setting: {
+    screen: Setting
   },
 });
 
@@ -188,5 +206,4 @@ const AppSwichNavigator = createSwitchNavigator({
   // IntroSlider: IntroSlider,
   SelectIdol: SelectIdol,
   App: AppStackNavigator,
-  Schedule: Schedule,
 })

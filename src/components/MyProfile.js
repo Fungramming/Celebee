@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View, StyleSheet,TouchableOpacity, Dimensions, Image } from 'react-native'
+import { Text, View, StyleSheet, TouchableOpacity, Dimensions, Image } from 'react-native'
 
 export default class MyProfile extends Component {
   constructor(props){
@@ -12,21 +12,16 @@ export default class MyProfile extends Component {
 
   render() {
     return (
-      <TouchableOpacity >
       <View style={styles.myProfileBox}>
-          <Image
-            style={styles.photo}
-            source={{uri: this.state.avatarSource}}
-          />         
-          <View>
-            <Text style={styles.nickName}>{this.state.nickName}</Text>
-              <Text style={styles.settingBtn}>프로필 수정</Text>
-          </View>
-          {/* <TouchableOpacity style={styles.settingBtn}>
-            <Icon style={styles.settingBtnIcon} name="setting"/>          
-          </TouchableOpacity> */}
+        <Image
+          style={styles.photo}
+          source={{uri: this.state.avatarSource}}
+        />         
+        <View>
+          <Text style={styles.nickName}>{this.state.nickName}</Text>
+          <Text style={styles.settingBtn}>프로필 수정</Text>
+        </View>
       </View>
-      </TouchableOpacity>
     )
   }
 }
@@ -38,7 +33,7 @@ const styles = StyleSheet.create({
       height: 125,
       flexDirection: 'row',
       justifyContent: 'flex-start',
-      alignItems:'center'        
+      alignItems:'center',
     },  
     photoIcon: {
       position: 'absolute',
@@ -62,7 +57,4 @@ const styles = StyleSheet.create({
     settingBtn: {
       padding: 5
     },
-    settingBtnIcon: {
-      fontSize: 24
-    }
 })

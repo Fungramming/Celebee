@@ -13,8 +13,8 @@ class IdolCard extends Component {
 }
 
 export default class MyIdol extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
         this.state = {
             idols : ds.cloneWithRows(['BTS','뉴이스트','트와이스','세븐틴','엑소','워너원','비투비'])            
@@ -32,9 +32,9 @@ export default class MyIdol extends Component {
                 renderRow={(rowData)=><IdolCard name={rowData}></IdolCard>}
             >            
             </ListView>
-            <TouchableOpacity style={styles.editBtn}>
+            {/* <TouchableOpacity style={styles.editBtn}>
                 <Text>편집</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
             </View>
         )
     }
