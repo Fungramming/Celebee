@@ -23,18 +23,15 @@ export default class MyIdol extends Component {
     render() {
         return (
             <View style={styles.myIdol}>
-            <Text style={styles.subTitle}>내 아이돌</Text>
-            <ListView
-                style={{paddingLeft: 5}}
-                horizontal="true"
-                showsHorizontalScrollIndicator={false}
-                dataSource={this.state.idols}
-                renderRow={(rowData)=><IdolCard name={rowData}></IdolCard>}
-            >            
-            </ListView>
-            {/* <TouchableOpacity style={styles.editBtn}>
-                <Text>편집</Text>
-            </TouchableOpacity> */}
+                <Text style={styles.subTitle}>내 아이돌</Text>
+                <ListView
+                    style={{paddingLeft: 5}}
+                    horizontal="true"
+                    showsHorizontalScrollIndicator={false}
+                    dataSource={this.state.idols}
+                    renderRow={(rowData)=><IdolCard name={rowData}></IdolCard>}
+                >            
+                </ListView>
             </View>
         )
     }

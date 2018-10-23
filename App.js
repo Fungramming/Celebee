@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View, Image, StatusBar, TouchableOpacity } from 'react-native';
+import {Platform, StyleSheet, Text, View, Image, StatusBar, TouchableOpacity, Button } from 'react-native';
 
 import SplashScreen from 'react-native-splash-screen';
 import AppIntroSlider from 'react-native-app-intro-slider';
@@ -181,10 +181,17 @@ const AppStackNavigator = createStackNavigator({
     })
   },
   EditMyProfile: {
-    screen: EditMyProfile
+    screen: EditMyProfile,
+    navigationOptions: ({ navigation }) => ({
+      headerRight: (
+        <TouchableOpacity>
+          <Button title="완료" style={{ paddingHorizontal: 10 }} onPress={() => navigation.goBack()} />
+        </TouchableOpacity>
+      )
+    })
   },
   EditIdol: {
-    screen: EditIdol
+    screen: EditIdol,
   },
   Setting: {
     screen: Setting

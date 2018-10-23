@@ -11,11 +11,6 @@ export default class MyPage extends Component {
         <TouchableOpacity onPress={() => this.props.navigation.navigate('EditMyProfile')}>
           <MyProfile></MyProfile>
         </TouchableOpacity>
-        {/* <View style={styles.settingBtn}>
-          <TouchableOpacity onPress={() => this.props.navigation.navigate('Setting')}>
-            <Icon style={styles.settingBtnIcon} name="setting" size={24}/>          
-          </TouchableOpacity>
-        </View> */}
         <View style={styles.idolSettingBtn}>
           <TouchableOpacity onPress={() => this.props.navigation.navigate('EditIdol')}>
             <Text>편집</Text>
