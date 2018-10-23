@@ -1,20 +1,20 @@
 import React, { Component } from 'react'
-import { Text, View, ListView, StyleSheet, Dimensions,TouchableOpacity } from 'react-native'
+import { Text, View, ListView, StyleSheet, Dimensions,TouchableOpacity, Image } from 'react-native'
 
 class IdolCard extends Component {
     render() {
         return (
-            <TouchableOpacity style={styles.idolCard}>
-                <Text style={styles.idolPhoto}></Text>
+            <View style={styles.idolCard}>
+                <Image style={styles.idolPhoto} />
                 <Text style={styles.idolName}>{this.props.name}</Text>
-            </TouchableOpacity>
+            </View>
         )
     }
 }
 
 export default class MyIdol extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
         this.state = {
             idols : ds.cloneWithRows(['BTS','뉴이스트','트와이스','세븐틴','엑소','워너원','비투비'])            
@@ -23,17 +23,15 @@ export default class MyIdol extends Component {
     render() {
         return (
             <View style={styles.myIdol}>
-            <Text style={styles.subTitle}>내 아이돌</Text>
-            <ListView
-                horizontal="true"
-                showsHorizontalScrollIndicator={false}
-                dataSource={this.state.idols}
-                renderRow={(rowData)=><IdolCard name={rowData}></IdolCard>}
-            >            
-            </ListView>
-            <TouchableOpacity style={styles.editBtn}>
-                <Text>편집</Text>
-            </TouchableOpacity>
+                <Text style={styles.subTitle}>내 아이돌</Text>
+                <ListView
+                    style={{paddingLeft: 5}}
+                    horizontal="true"
+                    showsHorizontalScrollIndicator={false}
+                    dataSource={this.state.idols}
+                    renderRow={(rowData)=><IdolCard name={rowData}></IdolCard>}
+                >            
+                </ListView>
             </View>
         )
     }
@@ -42,7 +40,8 @@ export default class MyIdol extends Component {
 const styles = StyleSheet.create({
     myIdol: {
         height: 180,
-        width: Dimensions.get('window').width
+        width: Dimensions.get('window').width,
+        // paddingLeft: 15
     },
     subTitle : {
         marginLeft: 15,
@@ -56,14 +55,14 @@ const styles = StyleSheet.create({
     idolCard: {
         justifyContent: 'flex-start',
         alignItems: 'center',
-        marginHorizontal: 5
+        marginHorizontal: 1
     },
     idolPhoto: {
         backgroundColor: '#dedede',
-        borderRadius: 50,
+        borderRadius: 33,
         marginBottom:10,
-        width: 70,
-        height: 70
+        width: 65,
+        height: 65
     },
     idolName: {
         width: 80,

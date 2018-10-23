@@ -1,24 +1,18 @@
 import React, { Component } from "react";
-import { 
-  View,
-  Text,
-  StyleSheet
-} from "react-native";
-import { Container, Content, Icon, Thumbnail, Header, Left, Right, Body } from 'native-base';
-
+import { Platform, View, Text, StyleSheet, TouchableOpacity, TextInput } from "react-native";
+import { Container, Content, Thumbnail, Header, Left, Right, Body, Title } from 'native-base';
+import Icon from 'react-native-vector-icons/AntDesign';
 
 class Schedule extends Component {
-  static navigationOptions = {
-    title: '스케쥴',
-    tabIcon: ({tintColor}) => {
-      <Icon name="ios-person" size={30} style={{color: tintColor}} />
-    }
-  }
-  
   render() {
     return (
       <View style={styles.container}>
-        <Text>Schedule</Text>
+        <Text style={{position: "absolute", top: 0}}>스케쥴</Text>
+        <TouchableOpacity onPress={() => this.props.navigation.navigate('MyPage')}>
+          <View style={{ paddingHorizontal: 10 }}>
+            <Icon name="user" size={350} />
+          </View>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -29,6 +23,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    backgroundColor: '#fff'
   }
 });

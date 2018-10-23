@@ -24,8 +24,7 @@ class SelectIdol extends Component {
   }
 
   goToMain = () => {
-    // this.props.navigation.navigate('SelectIdol')
-    this.props.navigation.navigate('Main')
+    this.props.navigation.navigate('AppTabNavigator')
   }
 
   static navigationOptions = {
@@ -38,22 +37,23 @@ class SelectIdol extends Component {
         <StatusBar 
           barStyle="dark-content"
         />
-        <View style={styles.headerTextWrap}>
-          <Text style={styles.headerText}>좋아하는 아이돌을 팔로우해보세요!</Text>
-          <Text style={styles.headerText}>스케쥴과 클립, 뉴스까지 받아보실 수 있습니다.</Text>
-        </View>
-
-        <View style={styles.selectHeaderTextWrap}>
-          <Text>
-            <Text style={styles.selectHeaderText}>내 최애 아이돌 선택하기</Text>
-          </Text>
-          <View style={{flexDirection: 'row'}}>
-            <Text style={styles.selectFilterText}>인기순</Text>
-            <Text style={styles.selectFilterText}>가나다순</Text>
-          </View>
-        </View>
-
         <Content>
+
+          <View style={styles.headerTextWrap}>
+            <Text style={styles.headerText}>좋아하는 아이돌을 팔로우해보세요!</Text>
+            <Text style={styles.headerText}>스케쥴과 클립, 뉴스까지 받아보실 수 있습니다.</Text>
+          </View>
+
+          <View style={styles.selectHeaderTextWrap}>
+            <Text>
+              <Text style={styles.selectHeaderText}>내 최애 아이돌 선택하기</Text>
+            </Text>
+            <View style={{flexDirection: 'row'}}>
+              <Text style={styles.selectFilterText}>인기순</Text>
+              <Text style={styles.selectFilterText}>가나다순</Text>
+            </View>
+          </View>
+
           <ListView 
             // horizontal={true}
             showsVerticalScrollIndicator={false}
@@ -68,7 +68,7 @@ class SelectIdol extends Component {
           </ListView>
         </Content>
         <View style={styles.selectBtn}>
-          <Button title="선택완료" onPress={this.goToMain}/>
+          <Button title="선택완료" onPress={() => this.goToMain()}/>
         </View>
       </Container>
     );
@@ -86,15 +86,15 @@ const styles = StyleSheet.create({
     flex: 0.2,
     alignItems: 'flex-start',
     justifyContent: 'center',
-    marginTop: 30,
+    marginTop: 60,
   },
   headerText: {
     fontSize: 15,
     fontWeight: 'bold',
-    marginTop: 15
+    marginTop: 5
   },
   selectHeaderTextWrap: {
-    marginTop: 15,
+    marginTop: 35,
   },
   selectHeaderText: {
     fontSize: 20,
@@ -102,8 +102,8 @@ const styles = StyleSheet.create({
   },
   selectFilterText: {
     paddingRight: 15,
-    paddingTop: 15,
-    paddingBottom: 15,
+    paddingTop: 20,
+    paddingBottom: 20,
     fontSize: 12,
   },
   selectBtn: {

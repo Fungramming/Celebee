@@ -7,13 +7,13 @@ import {
 } from "react-native";
 import { Container, Content, Icon, Thumbnail, Header, Left, Right, Body } from 'native-base';
 
-class Home extends Component {
+class News extends Component {
 
   render() {
     return (
       <Container>
         <View style={styles.container}>
-          <Text>Home</Text>
+          <Text>News</Text>
         </View>
       </Container>
     );
@@ -21,7 +21,7 @@ class Home extends Component {
 }
 
 
-export default Home;
+export default News;
 
 const styles = StyleSheet.create({
   container: {

@@ -1,21 +1,27 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet, Image } from "react-native";
+import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { Button } from 'native-base';
 
 class SelectIdolList extends Component {
-  // constructor(props) {
-  //   super(props);
-  //   const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-  //   this.state = {
-  //       idols : ds.cloneWithRows(['BTS','뉴이스트','트와이스','세븐틴','엑소','워너원','비투비'])            
-  //   }
-  // }
+  state = {
+    toggle: true
+  }
+
+  _onPress() {
+    const newState = !this.state.toggle;
+    this.setState({toggle: newState})
+  }
 
   render() {
+
+    const {toggle} = this.state;
+    const textValue = toggle ? "팔로우" : "팔로잉";
+    const buttonBg = toggle ? styles.followBtn : styles.followingBtn
+
     return (
       <View style={styles.container}>
         <View style={styles.idolCard}>
-          <Image 
+          <Image
             source={require("../../assets/user.png")}
             style={styles.idolPhoto}
           />
@@ -24,9 +30,9 @@ class SelectIdolList extends Component {
             <Text style={styles.followingNum}>198,734명이 팔로우 합니다.</Text>
           </View>
           <View>
-            <Button full rounded primary style={styles.followingBtn} onPress={this.goToMain}>
-              <Text style={{color:'#fff', fontSize: 16}}>팔로잉</Text>
-            </Button>
+            <TouchableOpacity style={buttonBg} onPress={ () => this._onPress() }>
+              <Text style={{color:'#fff', fontSize: 16}}>{textValue}</Text>
+            </TouchableOpacity>
           </View>
         </View>
       </View>
@@ -63,16 +69,27 @@ const styles = StyleSheet.create({
   idolName: {
     fontSize: 19,
     fontWeight: '600',
-    marginBottom: 10
+    marginBottom: 5
   },
   followingNum: {
     fontSize: 12,
   },
   followingBtn: {
-    marginTop: 10,
+    marginTop: 12,
     paddingLeft: 18,
     paddingRight: 18,
+    paddingTop: 11,
+    paddingBottom: 11,
     backgroundColor: '#722784',
-    borderRadius: 10,
+    borderRadius: 5,
+  },
+  followBtn: {
+    marginTop: 12,
+    paddingLeft: 18,
+    paddingRight: 18,
+    paddingTop: 11,
+    paddingBottom: 11,
+    backgroundColor: '#dedede',
+    borderRadius: 5,
   }
 });

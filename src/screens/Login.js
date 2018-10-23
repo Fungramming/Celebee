@@ -7,16 +7,10 @@ import {
 } from "react-native";
 import { Container, Header, Content, Body, Icon, Button } from 'native-base';
 
-const login = 'Login'
 class Login extends Component {
-
-  static navigationOptions = {
-    header: null
-  }
-
   goToMain = () => {
     this.props.navigation.navigate('SelectIdol')
-    // this.props.navigation.navigate('Main')
+    console.log('this.props.navigation.state.routeName :', this.props.navigation.state.routeName);
   }
   
   render() {
@@ -31,13 +25,13 @@ class Login extends Component {
         </View>
 
         <View style={{flex: 2}}>
-          <Button full rounded primary style={styles.F_btn} onPress={this.goToMain}>
+          <Button full rounded primary style={styles.F_btn} onPress={() => this.goToMain()}>
             <Text style={{color:'#fff', fontSize: 16}}>페이스북계정으로 로그인</Text>
           </Button>
-          <Button full rounded primary style={styles.G_btn} onPress={this.goToMain}>
+          <Button full rounded primary style={styles.G_btn} onPress={() => this.goToMain()}>
             <Text style={{color:'#000', fontSize: 16}}>구글로계정으로 로그인</Text>
           </Button>
-          <Button full rounded primary style={styles.K_btn} onPress={this.goToMain}>
+          <Button full rounded primary style={styles.K_btn} onPress={() => this.goToMain()}>
             <Text style={{color:'#000', fontSize: 16}}>카카오계정으로 로그인</Text>
           </Button>
         </View>
