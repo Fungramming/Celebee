@@ -13,6 +13,10 @@ const options = {
   };
 
 export default class EditMyProfile extends Component {
+    // static navigationOptions = {
+    //     headerTitle: '프로필 수정'
+    // }
+
     constructor(props){
         super(props)
         this.state = {

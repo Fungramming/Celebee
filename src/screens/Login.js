@@ -10,7 +10,7 @@ import { Container, Header, Content, Body, Icon, Button } from 'native-base';
 class Login extends Component {
   goToMain = () => {
     this.props.navigation.navigate('SelectIdol')
-    console.log('this.props.navigation.state.routeName :', this.props.navigation.state.routeName);
+    // console.log('this.props.navigation.state :', this.props.navigation.state);
   }
   
   render() {

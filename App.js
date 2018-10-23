@@ -15,6 +15,7 @@ import EditIdol from './src/screens/EditIdol'
 import Setting from './src/screens/Setting'
 
 export default class App extends Component {
+
   constructor(props) {
     super(props);
     this.state = {
@@ -35,9 +36,6 @@ export default class App extends Component {
   }
   
   render() {
-    // return(
-    //   <AppSwichNavigator />
-    // )
     if(this.state.showRealApp) {
       return (
         <AppSwichNavigator />
@@ -148,15 +146,14 @@ const slides = [
   },
 ];
 
-
 const AppStackNavigator = createStackNavigator({
   AppTabNavigator: {
     screen: BottomNavigation,
     navigationOptions: ({ navigation }) => ({
       // header: null
-      // headerTitle: 'Celebee',
       headerLeft: (
         <TouchableOpacity onPress={() => navigation.navigate('MyPage')}>
+        {/* <TouchableOpacity onPress={() => navigation.navigate('MyPage')}> */}
           <View style={{ paddingHorizontal: 10 }}>
             <Icon name="user" size={24} />
           </View>
@@ -166,8 +163,11 @@ const AppStackNavigator = createStackNavigator({
   },
   MyPage: {
     screen: MyPage,
+    // path: 'people/:name',
     navigationOptions: ({ navigation }) => ({
       // header: null
+      // headerTitle: navigation.state.routeName,
+      headerTitle: '마이페이지',
       headerStyle: {
         // marginHorizontal: 25
       },
@@ -183,6 +183,7 @@ const AppStackNavigator = createStackNavigator({
   EditMyProfile: {
     screen: EditMyProfile,
     navigationOptions: ({ navigation }) => ({
+      headerTitle: '프로필 수정',
       headerRight: (
         <TouchableOpacity>
           <Button title="완료" style={{ paddingHorizontal: 10 }} onPress={() => navigation.goBack()} />
@@ -192,9 +193,24 @@ const AppStackNavigator = createStackNavigator({
   },
   EditIdol: {
     screen: EditIdol,
+    navigationOptions: ({ navigation }) => ({
+      headerRight: (
+        <TouchableOpacity>
+          <Button title="완료" style={{ paddingHorizontal: 10 }} onPress={() => navigation.goBack()} />
+        </TouchableOpacity>
+      )
+    })
   },
   Setting: {
-    screen: Setting
+    screen: Setting,
+    navigationOptions: ({ navigation }) => ({
+      headerTitle: '환경설정',
+      headerRight: (
+        <TouchableOpacity>
+          <Button title="완료" style={{ paddingHorizontal: 10 }} onPress={() => navigation.goBack()} />
+        </TouchableOpacity>
+      )
+    })
   },
 });
 

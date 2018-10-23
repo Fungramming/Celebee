@@ -61,8 +61,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#dedede',
         borderRadius: 33,
         marginBottom:10,
-        width: 65,
-        height: 65
+        width: 60,
+        height: 60
     },
     idolName: {
         width: 80,
