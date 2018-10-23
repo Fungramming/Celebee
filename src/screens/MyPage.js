@@ -4,9 +4,6 @@ import MyProfile from '../components/MyProfile'
 import MyIdol from '../components/MyIdol'
 import Icon from 'react-native-vector-icons/AntDesign';
 
-import { StackActions } from 'react-navigation';
-import { NavigationActions } from 'react-navigation';
-
 export default class MyPage extends Component {
   // static navigationOptions = {
   //   headerTitle: '마이페이지'

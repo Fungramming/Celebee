@@ -91,8 +91,7 @@ const slides = [
     text: '셀레비 어플입니다.',
     image: require('./assets/logo_white.png'),
     imageStyle: styles.image,
-    // backgroundColor: '#20d2bb',
-    backgroundColor: '#722784',    
+    backgroundColor: '#722784', 
   },
   {
     key: 's2',
@@ -101,8 +100,7 @@ const slides = [
     text: '셀레비 어플입니다.',
     image: require('./assets/logo_white.png'),
     imageStyle: styles.image,
-    // backgroundColor: '#febe29',
-    backgroundColor: '#722784',    
+    backgroundColor: '#722784',
   },
   {
     key: 's3',
@@ -111,8 +109,7 @@ const slides = [
     text: '셀레비 어플입니다.',
     image: require('./assets/logo_white.png'),
     imageStyle: styles.image,
-    // backgroundColor: '#22bcb5',
-    backgroundColor: '#722784',    
+    backgroundColor: '#722784', 
   },
   {
     key: 's4',
@@ -121,8 +118,7 @@ const slides = [
     text: '셀레비 어플입니다.',
     image: require('./assets/logo_white.png'),
     imageStyle: styles.image,
-    // backgroundColor: '#3395ff',
-    backgroundColor: '#722784',    
+    backgroundColor: '#722784',
   },
   {
     key: 's5',
@@ -131,8 +127,7 @@ const slides = [
     text: '셀레비 어플입니다.',
     image: require('./assets/logo_white.png'),
     imageStyle: styles.image,
-    // backgroundColor: '#f6437b',
-    backgroundColor: '#722784',    
+    backgroundColor: '#722784',
   },
   {
     key: 's6',
@@ -141,8 +136,7 @@ const slides = [
     text: '셀레비 어플입니다.',
     image: require('./assets/logo_white.png'),
     imageStyle: styles.image,
-    // backgroundColor: '#febe29',
-    backgroundColor: '#722784',    
+    backgroundColor: '#722784',
   },
 ];
 
@@ -163,7 +157,6 @@ const AppStackNavigator = createStackNavigator({
   },
   MyPage: {
     screen: MyPage,
-    // path: 'people/:name',
     navigationOptions: ({ navigation }) => ({
       // header: null
       // headerTitle: navigation.state.routeName,
@@ -214,19 +207,8 @@ const AppStackNavigator = createStackNavigator({
   },
 });
 
-AppStackNavigator.navigationOptions = ({ navigation }) => {
-  let { routeName } = navigation.state.routes[navigation.state.index];
-  // You can do whatever you like here to pick the title based on the route name
-  let headerTitle = routeName;
-
-  return {
-    headerTitle,
-  };
-};
-
 const AppSwichNavigator = createSwitchNavigator({
   Login: Login,
-  // IntroSlider: IntroSlider,
   SelectIdol: SelectIdol,
   App: AppStackNavigator,
 })
