@@ -1,5 +1,17 @@
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View, Image, StatusBar, TouchableOpacity } from 'react-native';
+import { Provider } from 'react-redux';
+import {createStore, applyMiddleware, combineReducers, compose} from 'redux';
+import thunkMiddleware from 'redux-thunk';
+import createLogger from 'redux-logger'
+import {
+  Platform, 
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  StatusBar,
+  TouchableOpacity 
+} from 'react-native';
 
 import SplashScreen from 'react-native-splash-screen';
 import AppIntroSlider from 'react-native-app-intro-slider';
