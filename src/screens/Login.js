@@ -7,31 +7,54 @@ import {
 } from "react-native";
 import { Container, Header, Content, Body, Icon, Button } from 'native-base';
 
-import FBSDK, { LoginManager } from 'react-native-fbsdk'
+import FBSDK, { LoginManager, AccessToken } from 'react-native-fbsdk'
+import firebase from 'firebase'
+
+const config = {
+  apiKey: 'AIzaSyDI0yDEw3xg9eCQphgJbf95_RCIOPVlKH0',
+  authDomain: 'celebee-a44f9.firebaseapp.com/',
+  databaseURL: 'https://celebee-a44f9.firebaseio.com/'
+}
+
+const firebaseRef = firebase.initializeApp(config)
 
 class Login extends Component {
-  
-  _fbAuth() {
-    LoginManager.logInWithReadPermissions(['public_profile']).then(
-      function(result) {
-          if (result.isCancelled) {
-            // alert('Login cancelled');
-          } else {
-            alert('Login success with permissions: ' +result.grantedPermissions.toString());
-          }
-      },
-      function(error) {
-          alert('Login fail with error: ' + error);
-      },
-      function() {
-        this.props.navigation.navigate('SelectIdol')
-      }
-    );
+  constructor(props) {
+    super(props)
   }
 
   goToMain = () => {
     this.props.navigation.navigate('SelectIdol')
     // console.log('this.props.navigation.state :', this.props.navigation.state);
+  }
+
+  _fbAuth() {
+    var _this = this;
+    
+    LoginManager.logInWithReadPermissions(['public_profile', 'email']).then(
+      function(result) {
+          if (result.isCancelled) {
+            // alert('Login cancelled');
+          } else {
+
+            AccessToken.getCurrentAccessToken().then((accessTokenData) => {
+              const credential = firebase.auth.FacebookAuthProvider.credential(accessTokenData.accessToken)
+              firebase.auth().signInAndRetrieveDataWithCredential(credential).then((result) => {
+                // promise was succesful
+                _this.props.navigation.navigate('SelectIdol')
+              }, (error) => {
+                // promise was rejected
+                console.log(error)
+              })
+            }, (error => {
+              console.log('Some error occured: ' + error);
+            }))
+          }
+      },
+      function(error) {
+          alert('Login fail with error: ' + error);
+      },
+    );
   }
   
   render() {
@@ -46,7 +69,7 @@ class Login extends Component {
         </View>
 
         <View style={{flex: 2}}>
-          <Button full rounded primary style={styles.F_btn} onPress={this._fbAuth}>
+          <Button full rounded primary style={styles.F_btn} onPress={this._fbAuth.bind(this)}>
             <Text style={{color:'#fff', fontSize: 16}}>페이스북계정으로 로그인</Text>
           </Button>
           <Button full rounded primary style={styles.G_btn} onPress={() => this.goToMain()}>
