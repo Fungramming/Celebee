@@ -32,7 +32,7 @@ export default class App extends Component {
   }
   
   componentDidMount() {
-    SplashScreen.hide();
+    // SplashScreen.hide();
   }
   
   render() {

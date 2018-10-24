@@ -1,49 +1,31 @@
-const FBSDK = require('react-native-fbsdk');
-const {LoginButton, ShareDialog} = FBSDK;
-
 import React, { Component } from "react";
 import { 
   View,
   Text,
   StyleSheet,
   StatusBar,
-  TouchableHighlight,
 } from "react-native";
 import { Container, Header, Content, Body, Icon, Button } from 'native-base';
 
+import FBSDK, { LoginManager } from 'react-native-fbsdk'
+
 class Login extends Component {
   
-  constructor(props) {
-    super(props);
-    const shareLinkContent = {
-    contentType: 'link',
-    contentUrl: 'https://www.facebook.com/',
-    };
-
-    this.state = {
-    shareLinkContent: shareLinkContent,
-    };
-  }
-
-  shareLinkWithShareDialog() {
-    var tmp = this;
-    ShareDialog.canShow(this.state.shareLinkContent)
-    .then(function(canShow) {
-        if (canShow) {
-        return ShareDialog.show(tmp.state.shareLinkContent);
-        }
-    })
-    .then(
-        function(result) {
-        if (result.isCancelled) {
-            alert('Share cancelled');
-        } else {
-            alert('Share success with postId: ' + result.postId);
-        }
-        },
-        function(error) {
-        alert('Share fail with error: ' + error);
-        },
+  _fbAuth() {
+    LoginManager.logInWithReadPermissions(['public_profile']).then(
+      function(result) {
+          if (result.isCancelled) {
+            // alert('Login cancelled');
+          } else {
+            alert('Login success with permissions: ' +result.grantedPermissions.toString());
+          }
+      },
+      function(error) {
+          alert('Login fail with error: ' + error);
+      },
+      function() {
+        this.props.navigation.navigate('SelectIdol')
+      }
     );
   }
 
@@ -64,17 +46,9 @@ class Login extends Component {
         </View>
 
         <View style={{flex: 2}}>
-          <View style={styles.container}>
-            <LoginButton />
-            <TouchableHighlight
-            style={styles.share}
-            onPress={this.shareLinkWithShareDialog.bind(this)}>
-            <Text style={styles.shareText}>Share link with ShareDialog</Text>
-            </TouchableHighlight>
-          </View>
-          {/* <Button full rounded primary style={styles.F_btn} onPress={() => this.goToMain()}>
+          <Button full rounded primary style={styles.F_btn} onPress={this._fbAuth}>
             <Text style={{color:'#fff', fontSize: 16}}>페이스북계정으로 로그인</Text>
-          </Button> */}
+          </Button>
           <Button full rounded primary style={styles.G_btn} onPress={() => this.goToMain()}>
             <Text style={{color:'#000', fontSize: 16}}>구글로계정으로 로그인</Text>
           </Button>
@@ -108,16 +82,16 @@ const styles = StyleSheet.create({
   F_btn: {
     marginTop: 10,
     backgroundColor: '#365899',
-    borderRadius: 15,
+    borderRadius: 8,
   },
   G_btn: {
     marginTop: 10,
     backgroundColor: '#fff',
-    borderRadius: 15,
+    borderRadius: 8,
   },
   K_btn: {
     marginTop: 10,
     backgroundColor: '#F1D905',
-    borderRadius: 15,
+    borderRadius: 8,
   }
 });
