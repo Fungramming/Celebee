@@ -1,13 +1,52 @@
+const FBSDK = require('react-native-fbsdk');
+const {LoginButton, ShareDialog} = FBSDK;
+
 import React, { Component } from "react";
 import { 
   View,
   Text,
   StyleSheet,
-  StatusBar
+  StatusBar,
+  TouchableHighlight,
 } from "react-native";
 import { Container, Header, Content, Body, Icon, Button } from 'native-base';
 
 class Login extends Component {
+  
+  constructor(props) {
+    super(props);
+    const shareLinkContent = {
+    contentType: 'link',
+    contentUrl: 'https://www.facebook.com/',
+    };
+
+    this.state = {
+    shareLinkContent: shareLinkContent,
+    };
+  }
+
+  shareLinkWithShareDialog() {
+    var tmp = this;
+    ShareDialog.canShow(this.state.shareLinkContent)
+    .then(function(canShow) {
+        if (canShow) {
+        return ShareDialog.show(tmp.state.shareLinkContent);
+        }
+    })
+    .then(
+        function(result) {
+        if (result.isCancelled) {
+            alert('Share cancelled');
+        } else {
+            alert('Share success with postId: ' + result.postId);
+        }
+        },
+        function(error) {
+        alert('Share fail with error: ' + error);
+        },
+    );
+  }
+
   goToMain = () => {
     this.props.navigation.navigate('SelectIdol')
     // console.log('this.props.navigation.state :', this.props.navigation.state);
@@ -25,9 +64,17 @@ class Login extends Component {
         </View>
 
         <View style={{flex: 2}}>
-          <Button full rounded primary style={styles.F_btn} onPress={() => this.goToMain()}>
+          <View style={styles.container}>
+            <LoginButton />
+            <TouchableHighlight
+            style={styles.share}
+            onPress={this.shareLinkWithShareDialog.bind(this)}>
+            <Text style={styles.shareText}>Share link with ShareDialog</Text>
+            </TouchableHighlight>
+          </View>
+          {/* <Button full rounded primary style={styles.F_btn} onPress={() => this.goToMain()}>
             <Text style={{color:'#fff', fontSize: 16}}>페이스북계정으로 로그인</Text>
-          </Button>
+          </Button> */}
           <Button full rounded primary style={styles.G_btn} onPress={() => this.goToMain()}>
             <Text style={{color:'#000', fontSize: 16}}>구글로계정으로 로그인</Text>
           </Button>
