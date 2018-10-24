@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Platform, Text, View, StyleSheet,TouchableOpacity, Dimensions, Image, TextInput, StatusBar } from 'react-native'
 import { SafeAreaView } from 'react-navigation';
 import { connect } from 'react-redux'
-import { updateName } from '../actions/user'
+import { updateName } from '../actions/users'
 
 import ImagePicker from 'react-native-image-picker';
 import Icon from 'react-native-vector-icons/AntDesign';
@@ -30,12 +30,22 @@ class EditMyProfile extends Component {
             return;
           }
           this.props.update(this.state.userName);
+          console.log("state",this.state)
+        console.log("props",this.props)
     }
     onChangeName = (value) => {
         this.setState({
             userName: value
         })
-        console.log(this.state)
+        console.log("state",this.state)
+        console.log("props",this.props)
+    }
+    onInputFocus = () => {
+        console.log(1)
+        console.log(this)
+    }
+    clearText = () => {
+        this._textInput.setNativeProps({text: ''});
     }
     onEditPhoto = () => {
         var _this = this;
@@ -58,7 +68,6 @@ class EditMyProfile extends Component {
             _this.setState({
                 avatarSource: source.uri,
             });
-            alert(source.uri)
             }
         });
     }
@@ -77,9 +86,20 @@ class EditMyProfile extends Component {
         </View>  
         <View style={styles.nameBox}>
             <Text style={styles.userName}>사용자 이름</Text>
-            <TextInput style={styles.nameInput} value = { this.state.userName } onChangeText = {this.onChangeName}></TextInput>        
+            <View>
+                <TextInput 
+                    ref={component => this._textInput = component}
+                    style={styles.nameInput} 
+                    value = { this.state.userName } 
+                    onFocus = { this.onInputFocus }
+                    onChangeText = {this.onChangeName}>
+                </TextInput>   
+                <TouchableOpacity style={styles.closeCircle} onPress={this.clearText}>
+                    <Icon name="closecircleo"></Icon>
+                </TouchableOpacity>     
+            </View>
         </View>
-        <TouchableOpacity onPress={this.onSubmitProfile}>
+        <TouchableOpacity style={styles.submitButton} onPress={this.onSubmitProfile}>
             <Text>SUBMIT</Text>
         </TouchableOpacity>
       </View>
@@ -119,12 +139,23 @@ const styles = StyleSheet.create({
         paddingBottom: 5,
         fontSize: 18,
         borderColor: 'black'
+    },
+    closeCircle: {
+        position: "absolute",
+        top: 28,
+        right: 0,
+        fontSize: 15
+    },
+    submitButton: {
+        position: "absolute",
+        top: 0,
+        right: 0
     }
 })
 
 const mapStateToProps = state => {
     return {
-        userName: state.users.userName,   // Mount 될때 initialState 를 가져옴 , this.props 로. users 는 actios 에서의 users.js 의 이름
+        userName: state.user.userName,   // Mount 될때 initialState 를 가져옴 , this.props 로. users 는 actios 에서의 users.js 의 이름
     }
 }
 
