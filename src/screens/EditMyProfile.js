@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import { Platform, Text, View, StyleSheet,TouchableOpacity, Dimensions, Image, TextInput, StatusBar } from 'react-native'
+import {Button,Platform, Text, View, StyleSheet,TouchableOpacity, Dimensions, Image, TextInput, StatusBar } from 'react-native'
 import { SafeAreaView } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation';
 import { connect } from 'react-redux'
 import { updateName } from '../actions/users'
 
@@ -15,7 +16,7 @@ const options = {
       path: 'images',
     },
   };
-class EditMyProfile extends Component {
+class EditMyProfile extends Component {    
     constructor(props){
         super(props)
         this.state = {
@@ -23,28 +24,40 @@ class EditMyProfile extends Component {
             avatarSource : "https://techcrunch.com/wp-content/uploads/2018/05/snap-dollar-eyes_preview.png?w=730&crop=1"
         }
     }
-
-
+    
+    static navigationOptions =  ({navigation}) => {
+        const {params = {}} = navigation.state;
+        return {
+            headerRight: (
+            <TouchableOpacity onPress={params.handleSubmit}>
+              <View style={{ paddingHorizontal: 15 }}>
+                <Icon name="setting" size={14} />
+              </View>
+            </TouchableOpacity>
+          )
+        }
+    };
+   
+    componentDidMount() {
+        this.props.navigation.setParams({ handleSubmit: this.onSubmitProfile.bind(this) });      
+    }
     onSubmitProfile = () => {
         if(this.state.userName.trim() === '') {
             return;
-          }
-          this.props.update(this.state.userName);
-          console.log("state",this.state)
-        console.log("props",this.props)
+        }
+        this.props.update(this.state.userName);
+        this.props.navigation.goBack()
     }
     onChangeName = (value) => {
         this.setState({
             userName: value
         })
-        console.log("state",this.state)
-        console.log("props",this.props)
-    }
-    onInputFocus = () => {
-        console.log(1)
-        console.log(this)
+        console.log(this.state.userName)
     }
     clearText = () => {
+        this.setState({
+            userName: ''
+        })
         this._textInput.setNativeProps({text: ''});
     }
     onEditPhoto = () => {
@@ -99,7 +112,7 @@ class EditMyProfile extends Component {
                 </TouchableOpacity>     
             </View>
         </View>
-        <TouchableOpacity style={styles.submitButton} onPress={this.onSubmitProfile}>
+        <TouchableOpacity  ref={component => this.submit = component} style={styles.submitButton} onPress={this.onSubmitProfile}>
             <Text>SUBMIT</Text>
         </TouchableOpacity>
       </View>
@@ -148,8 +161,8 @@ const styles = StyleSheet.create({
     },
     submitButton: {
         position: "absolute",
-        top: 0,
-        right: 0
+        top: -10,
+        right: 0,
     }
 })
 

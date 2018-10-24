@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { Provider } from 'react-redux';
 import {createStore, applyMiddleware, combineReducers, compose} from 'redux';
+
 import thunkMiddleware from 'redux-thunk';
 import createLogger from 'redux-logger'
 import {
@@ -40,8 +41,8 @@ export default class App extends Component {
 
   _onSkip = () => {
     this.setState({ showRealApp: true });
-  }
-  
+  }  
+
   componentDidMount() {
     SplashScreen.hide();
   }
@@ -192,8 +193,9 @@ const AppStackNavigator = createStackNavigator({
       )
     })
   },
-  EditMyProfile: {
-    screen: EditMyProfile
+  EditMyProfile: 
+  {
+    screen: EditMyProfile,    
   },
   EditIdol: {
     screen: EditIdol
