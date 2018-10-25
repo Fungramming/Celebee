@@ -28,6 +28,7 @@
     "jest": "23.6.0",
     "metro-react-native-babel-preset": "0.48.1",
     "react-devtools": "^3.4.0",
+    "react-native-debugger-open": "^0.3.17",
     "react-test-renderer": "16.6.0-alpha.8af6728",
     "schedule": "^0.4.0"
   },
