@@ -5,17 +5,16 @@ import MyIdol from '../components/MyIdol'
 import Icon from 'react-native-vector-icons/AntDesign';
 
 export default class MyPage extends Component {
+  // static navigationOptions = {
+  //   headerTitle: '마이페이지'
+  // };
+  
   render() {
     return (
       <View style={styles.constainer}>
         <TouchableOpacity onPress={() => this.props.navigation.navigate('EditMyProfile')}>
           <MyProfile></MyProfile>
         </TouchableOpacity>
-        {/* <View style={styles.settingBtn}>
-          <TouchableOpacity onPress={() => this.props.navigation.navigate('Setting')}>
-            <Icon style={styles.settingBtnIcon} name="setting" size={24}/>          
-          </TouchableOpacity>
-        </View> */}
         <View style={styles.idolSettingBtn}>
           <TouchableOpacity onPress={() => this.props.navigation.navigate('EditIdol')}>
             <Text>편집</Text>

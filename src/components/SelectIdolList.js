@@ -57,8 +57,8 @@ const styles = StyleSheet.create({
       borderRadius: 38,
       marginBottom: 10,
       marginRight: 15,
-      width: 75,
-      height: 75
+      width: 73,
+      height: 73
   },
   idolTextGroup: {
     flexDirection: 'column',
