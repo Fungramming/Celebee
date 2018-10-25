@@ -4,8 +4,11 @@ import {
   Text,
   StyleSheet,
   StatusBar,
+  ActivityIndicator
 } from "react-native";
 import { Container, Header, Content, Body, Icon, Button } from 'native-base';
+
+import { GoogleSignin } from 'react-native-google-signin';
 
 import FBSDK, { LoginManager, AccessToken } from 'react-native-fbsdk'
 import firebase from 'firebase'
@@ -21,6 +24,12 @@ const firebaseRef = firebase.initializeApp(config)
 class Login extends Component {
   constructor(props) {
     super(props)
+  }
+
+  componentDidMount() {
+    GoogleSignin.configure({
+      iosClientId: '212649232198-0u4vbcte8eub8kplhil8u9svh62rrasd.apps.googleusercontent.com', // only for iOS
+    })
   }
 
   goToMain = () => {
@@ -39,7 +48,8 @@ class Login extends Component {
 
             AccessToken.getCurrentAccessToken().then((accessTokenData) => {
               const credential = firebase.auth.FacebookAuthProvider.credential(accessTokenData.accessToken)
-              firebase.auth().signInAndRetrieveDataWithCredential(credential).then((result) => {
+              console.log('credential :', credential);
+              return firebase.auth().signInAndRetrieveDataWithCredential(credential).then((result) => {
                 // promise was succesful
                 _this.props.navigation.navigate('SelectIdol')
               }, (error) => {
@@ -57,6 +67,23 @@ class Login extends Component {
     );
   }
   
+  onLoginGoggle = () => {
+    var _this = this;
+
+    GoogleSignin.signIn().then((data) => {
+      // create a new firebase credential with the token
+      const credential = firebase.auth.GoogleAuthProvider.credential(data.idToken, data.accessToken)
+      return firebase.auth().signInAndRetrieveDataWithCredential(credential)
+    }).then((currentUser) => {
+      // console.log(`Google Login with user : ${JSON.stringify(currentUser.toJSON())}`)
+      <ActivityIndicator/>
+      console.log('currentUser.credential.accessToken :', currentUser.credential.accessToken);
+      console.log('currentUser :', currentUser);
+      _this.props.navigation.navigate('SelectIdol')
+    }).catch((error) => {
+      console.log(`Login fail with error: ${error}`);
+    })
+  }
   render() {
     return (
       <Container style={styles.container}>
@@ -72,7 +99,7 @@ class Login extends Component {
           <Button full rounded primary style={styles.F_btn} onPress={this._fbAuth.bind(this)}>
             <Text style={{color:'#fff', fontSize: 16}}>페이스북계정으로 로그인</Text>
           </Button>
-          <Button full rounded primary style={styles.G_btn} onPress={() => this.goToMain()}>
+          <Button full rounded primary style={styles.G_btn} onPress={this.onLoginGoggle.bind(this)}>
             <Text style={{color:'#000', fontSize: 16}}>구글로계정으로 로그인</Text>
           </Button>
           <Button full rounded primary style={styles.K_btn} onPress={() => this.goToMain()}>
