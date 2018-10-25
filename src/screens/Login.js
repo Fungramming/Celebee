@@ -8,9 +8,9 @@ import {
 } from "react-native";
 import { Container, Header, Content, Body, Icon, Button } from 'native-base';
 
-import { GoogleSignin } from 'react-native-google-signin';
+import { GoogleSignin, GoogleSigninButton } from 'react-native-google-signin';
 
-import FBSDK, { LoginManager, AccessToken } from 'react-native-fbsdk'
+import FBSDK, { LoginButton, LoginManager, AccessToken } from 'react-native-fbsdk'
 import firebase from 'firebase'
 
 const config = {
@@ -47,15 +47,20 @@ class Login extends Component {
           } else {
 
             AccessToken.getCurrentAccessToken().then((accessTokenData) => {
+              
               const credential = firebase.auth.FacebookAuthProvider.credential(accessTokenData.accessToken)
-              console.log('credential :', credential);
               return firebase.auth().signInAndRetrieveDataWithCredential(credential).then((result) => {
                 // promise was succesful
+                console.log('result :', result);
                 _this.props.navigation.navigate('SelectIdol')
               }, (error) => {
                 // promise was rejected
                 console.log(error)
               })
+
+              // console.log('accessTokenData :', accessTokenData);
+              // _this.props.navigation.navigate('SelectIdol')
+
             }, (error => {
               console.log('Some error occured: ' + error);
             }))
@@ -67,11 +72,12 @@ class Login extends Component {
     );
   }
   
-  onLoginGoggle = () => {
+  _onLoginGoggle = () => {
     var _this = this;
 
     GoogleSignin.signIn().then((data) => {
       // create a new firebase credential with the token
+      console.log('data :', data);
       const credential = firebase.auth.GoogleAuthProvider.credential(data.idToken, data.accessToken)
       return firebase.auth().signInAndRetrieveDataWithCredential(credential)
     }).then((currentUser) => {
@@ -96,10 +102,35 @@ class Login extends Component {
         </View>
 
         <View style={{flex: 2}}>
+          {/* <LoginButton
+            onLoginFinished={
+              (error, result) => {
+                if (error) {
+                  console.log("login has error: " + result.error);
+                } else if (result.isCancelled) {
+                  console.log("login is cancelled.");
+                } else {
+                  AccessToken.getCurrentAccessToken().then(
+                    (data) => {
+                      console.log(data.accessToken.toString())
+                      this.props.navigation.navigate('SelectIdol')
+                    }
+                  )
+                }
+              }
+            }
+            onLogoutFinished={() => console.log("logout.")}/> */}
           <Button full rounded primary style={styles.F_btn} onPress={this._fbAuth.bind(this)}>
             <Text style={{color:'#fff', fontSize: 16}}>페이스북계정으로 로그인</Text>
           </Button>
-          <Button full rounded primary style={styles.G_btn} onPress={this.onLoginGoggle.bind(this)}>
+          {/* <GoogleSigninButton
+            style={{ height: 55 }}
+            size={GoogleSigninButton.Size.Wide}
+            color={GoogleSigninButton.Color.White}
+            onPress={this._onLoginGoggle.bind(this)}
+            // disabled={this.state.isSigninInProgress}
+          /> */}
+          <Button full rounded primary style={styles.G_btn} onPress={this._onLoginGoggle.bind(this)}>
             <Text style={{color:'#000', fontSize: 16}}>구글로계정으로 로그인</Text>
           </Button>
           <Button full rounded primary style={styles.K_btn} onPress={() => this.goToMain()}>
