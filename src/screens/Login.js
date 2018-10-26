@@ -6,8 +6,7 @@ import {
   StatusBar,
 } from "react-native";
 import { Container, Header, Content, Body, Icon, Button } from 'native-base';
-
-import FBSDK, { LoginButton, LoginManager, AccessToken } from 'react-native-fbsdk'
+import FBSDK, { LoginManager, AccessToken } from 'react-native-fbsdk'
 import firebase from 'firebase'
 
 const config = {
@@ -38,6 +37,7 @@ class Login extends Component {
         }
         else {
           alert('Login success with permissions: ' + result.grantedPermissions.toString());
+          console.log(AccessToken)
           console.log(result)
           // this.login();
         }
@@ -60,23 +60,9 @@ class Login extends Component {
         </View>
 
         <View style={{flex: 2}}>
-        <LoginButton
-          onLoginFinished={
-            (error, result) => {
-              if (error) {
-                console.log("login has error: " + result.error);
-              } else if (result.isCancelled) {
-                console.log("login is cancelled.");
-              } else {
-                AccessToken.getCurrentAccessToken().then(
-                  (data) => {
-                    console.log(data.accessToken.toString())
-                  }
-                )
-              }
-            }
-          }
-          onLogoutFinished={() => console.log("logout.")}/>
+          <Button full rounded primary style={styles.G_btn} onPress={() => this._fbAuth()}>
+            <Text style={{color:'#000', fontSize: 16}}>구글로계정으로 로그인</Text>
+          </Button>
           <Button full rounded primary style={styles.G_btn} onPress={() => this.goToMain()}>
             <Text style={{color:'#000', fontSize: 16}}>구글로계정으로 로그인</Text>
           </Button>
