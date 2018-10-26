@@ -137,6 +137,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-kakao-logins')
     compile project(':react-native-google-signin')
     compile project(':react-native-vector-icons')
     compile project(':react-native-splash-screen')

@@ -8,8 +8,8 @@ import {
 } from "react-native";
 import { Container, Header, Content, Body, Icon, Button } from 'native-base';
 
+import RNKakaoLogins from 'react-native-kakao-logins'
 import { GoogleSignin, GoogleSigninButton } from 'react-native-google-signin';
-
 import FBSDK, { LoginButton, LoginManager, AccessToken } from 'react-native-fbsdk'
 import firebase from 'firebase'
 
@@ -90,6 +90,21 @@ class Login extends Component {
       console.log(`Login fail with error: ${error}`);
     })
   }
+
+  _onLoginKakao = () => {
+    var _this = this;
+
+    RNKakaoLogins.login((error,result) => {
+      if (error) {
+        Alert.alert('error: ', error )
+        return
+      }
+      Alert.alert('result: ', result)
+      _this.props.navigation.navigate('SelectIdol')
+    })
+
+  }
+
   render() {
     return (
       <Container style={styles.container}>
@@ -133,7 +148,7 @@ class Login extends Component {
           <Button full rounded primary style={styles.G_btn} onPress={this._onLoginGoggle.bind(this)}>
             <Text style={{color:'#000', fontSize: 16}}>구글로계정으로 로그인</Text>
           </Button>
-          <Button full rounded primary style={styles.K_btn} onPress={() => this.goToMain()}>
+          <Button full rounded primary style={styles.K_btn} onPress={this._onLoginKakao.bind(this)}>
             <Text style={{color:'#000', fontSize: 16}}>카카오계정으로 로그인</Text>
           </Button>
         </View>
