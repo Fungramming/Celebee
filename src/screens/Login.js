@@ -6,16 +6,8 @@ import {
   StatusBar,
 } from "react-native";
 import { Container, Header, Content, Body, Icon, Button } from 'native-base';
-import FBSDK, { LoginManager, AccessToken } from 'react-native-fbsdk'
+import { LoginManager, AccessToken } from 'react-native-fbsdk'
 import firebase from 'firebase'
-
-const config = {
-  apiKey: 'AIzaSyDI0yDEw3xg9eCQphgJbf95_RCIOPVlKH0',
-  authDomain: 'celebee-a44f9.firebaseapp.com/',
-  databaseURL: 'https://celebee-a44f9.firebaseio.com/'
-}
-
-const firebaseRef = firebase.initializeApp(config)
 
 class Login extends Component {
   constructor(props) {
@@ -30,22 +22,31 @@ class Login extends Component {
   _fbAuth() {
     var _this = this;
     
-    LoginManager.logInWithReadPermissions(['public_profile']).then(
+    LoginManager.logInWithReadPermissions(['public_profile', 'user_friends', 'email'])
+    .then(
       (result) => {
         if (result.isCancelled) {
-          alert('Login cancelled');
-        }
-        else {
-          alert('Login success with permissions: ' + result.grantedPermissions.toString());
-          console.log(AccessToken)
-          console.log(result)
-          // this.login();
+          Alert.alert('Whoops!', 'You cancelled the sign in.');
+        } else {
+          AccessToken.getCurrentAccessToken()
+            .then((data) => {
+              console.log(data.accessToken)
+              const credential = firebase.auth.FacebookAuthProvider.credential(data.accessToken);
+              console.log(credential)
+              firebase.auth().signInAndRetrieveDataWithCredential(credential)
+                .then(
+                  console.log('1')
+                )
+                .catch((error) => {
+                  console.log(error.message);
+                });
+            });
         }
       },
-      function (error) {
-        alert('Login fail with error: ' + error);
-      }
-    ).catch((error) => console.error(error)); // error handling for promise
+      (error) => {
+        Alert.alert('Sign in error', error);
+      },
+    );
   }
   
   render() {
@@ -61,7 +62,7 @@ class Login extends Component {
 
         <View style={{flex: 2}}>
           <Button full rounded primary style={styles.G_btn} onPress={() => this._fbAuth()}>
-            <Text style={{color:'#000', fontSize: 16}}>구글로계정으로 로그인</Text>
+            <Text style={{color:'#000', fontSize: 16}}>페이스북계정으로 로그인</Text>
           </Button>
           <Button full rounded primary style={styles.G_btn} onPress={() => this.goToMain()}>
             <Text style={{color:'#000', fontSize: 16}}>구글로계정으로 로그인</Text>
