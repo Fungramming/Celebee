@@ -10,14 +10,6 @@ import { Container, Header, Content, Body, Icon, Button } from 'native-base';
 import FBSDK, { LoginManager, AccessToken } from 'react-native-fbsdk'
 import firebase from 'firebase'
 
-const config = {
-  apiKey: 'AIzaSyDI0yDEw3xg9eCQphgJbf95_RCIOPVlKH0',
-  authDomain: 'celebee-a44f9.firebaseapp.com/',
-  databaseURL: 'https://celebee-a44f9.firebaseio.com/'
-}
-
-const firebaseRef = firebase.initializeApp(config)
-
 class Login extends Component {
   constructor(props) {
     super(props)
