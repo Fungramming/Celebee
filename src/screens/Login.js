@@ -9,6 +9,16 @@ import { Container, Header, Content, Body, Icon, Button } from 'native-base';
 import { LoginManager, AccessToken } from 'react-native-fbsdk'
 import firebase from 'firebase'
 
+var config = {
+  apiKey: "AIzaSyDI0yDEw3xg9eCQphgJbf95_RCIOPVlKH0",
+  authDomain: "celebee-a44f9.firebaseapp.com",
+  databaseURL: "https://celebee-a44f9.firebaseio.com",
+  projectId: "celebee-a44f9",
+  storageBucket: "celebee-a44f9.appspot.com",
+  messagingSenderId: "212649232198"
+};
+firebase.initializeApp(config);
+
 class Login extends Component {
   constructor(props) {
     super(props)
