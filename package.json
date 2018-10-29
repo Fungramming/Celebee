@@ -5,7 +5,8 @@
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "test": "jest",
-    "react-devtools": "react-devtools"
+    "react-devtools": "react-devtools",
+    "postinstall": "rndebugger-open"
   },
   "dependencies": {
     "firebase": "^5.5.5",
@@ -16,12 +17,14 @@
     "react-native-fbsdk": "^0.8.0",
     "react-native-google-signin": "^1.0.0-rc7",
     "react-native-image-picker": "^0.27.1",
-    "react-native-splash-screen": "^3.0.1",
     "react-native-vector-icons": "^6.0.2",
+    "react-native-splash-screen": "^3.1.1",
     "react-navigation": "^2.18.0",
     "react-redux": "^5.0.7",
     "react-router-native": "^4.3.0",
-    "redux": "^4.0.1"
+    "redux": "^4.0.1",
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
     "@babel/runtime": "7.0.0",
@@ -29,6 +32,7 @@
     "jest": "23.6.0",
     "metro-react-native-babel-preset": "0.48.1",
     "react-devtools": "^3.4.0",
+    "react-native-debugger-open": "^0.3.17",
     "react-test-renderer": "16.6.0-alpha.8af6728",
     "schedule": "^0.4.0"
   },

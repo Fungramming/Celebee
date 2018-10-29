@@ -6,24 +6,27 @@ import {
   StatusBar,
   ActivityIndicator
 } from "react-native";
-import { Container, Header, Content, Body, Icon, Button } from 'native-base';
 
-import { GoogleSignin, GoogleSigninButton } from 'react-native-google-signin';
-
-import FBSDK, { LoginButton, LoginManager, AccessToken } from 'react-native-fbsdk'
+import LoadingSpinner from '../components/LoadingSpinner'
 import firebase from 'firebase'
+import { Container, Header, Content, Body, Icon, Button } from 'native-base';
+import { LoginManager, AccessToken } from 'react-native-fbsdk'
+import { GoogleSignin } from 'react-native-google-signin';
 
-const config = {
-  apiKey: 'AIzaSyDI0yDEw3xg9eCQphgJbf95_RCIOPVlKH0',
-  authDomain: 'celebee-a44f9.firebaseapp.com/',
-  databaseURL: 'https://celebee-a44f9.firebaseio.com/'
-}
-
-const firebaseRef = firebase.initializeApp(config)
+var config = {
+  apiKey: "AIzaSyDI0yDEw3xg9eCQphgJbf95_RCIOPVlKH0",
+  authDomain: "celebee-a44f9.firebaseapp.com",
+  databaseURL: "https://celebee-a44f9.firebaseio.com",
+  projectId: "celebee-a44f9",
+  storageBucket: "celebee-a44f9.appspot.com",
+  messagingSenderId: "212649232198"
+};
+firebase.initializeApp(config);
 
 class Login extends Component {
   constructor(props) {
     super(props)
+    state = { animating: true }
   }
 
   componentDidMount() {
@@ -40,36 +43,33 @@ class Login extends Component {
   _fbAuth() {
     var _this = this;
     
-    LoginManager.logInWithReadPermissions(['public_profile', 'email']).then(
-      function(result) {
-          if (result.isCancelled) {
-            // alert('Login cancelled');
-          } else {
-
-            AccessToken.getCurrentAccessToken().then((accessTokenData) => {
-              
-              const credential = firebase.auth.FacebookAuthProvider.credential(accessTokenData.accessToken)
-              return firebase.auth().signInAndRetrieveDataWithCredential(credential).then((result) => {
-                // promise was succesful
-                console.log('result :', result);
+    LoginManager.logInWithReadPermissions(['public_profile', 'email'])
+    .then(
+      (result) => {
+        // <ActivityIndicatorExample/> 
+        if (result.isCancelled) {
+          Alert.alert('Whoops!', 'You cancelled the sign in.');
+        } else {
+          AccessToken.getCurrentAccessToken()
+            .then((data) => {
+              const credential = firebase.auth.FacebookAuthProvider.credential(data.accessToken);
+              firebase.auth().signInAndRetrieveDataWithCredential(credential)
+              .then(() => {
                 _this.props.navigation.navigate('SelectIdol')
-              }, (error) => {
-                // promise was rejected
-                console.log(error)
-              })
-
-              // console.log('accessTokenData :', accessTokenData);
-              // _this.props.navigation.navigate('SelectIdol')
-
-            }, (error => {
-              console.log('Some error occured: ' + error);
-            }))
-          }
+                })
+                .catch((error) => {
+                  console.log(error.message);
+                });
+            });
+        }
       },
-      function(error) {
-          alert('Login fail with error: ' + error);
+      (error) => {
+        Alert.alert('Sign in error', error);
       },
-    );
+      function (error) {
+        alert('Login fail with error: ' + error);
+      }
+    ).catch((error) => console.error(error)); // error handling for promise
   }
   
   _onLoginGoggle = () => {
@@ -101,35 +101,12 @@ class Login extends Component {
           <Text style={styles.loginText}>로그인</Text>
         </View>
 
+        <LoadingSpinner/>
+
         <View style={{flex: 2}}>
-          {/* <LoginButton
-            onLoginFinished={
-              (error, result) => {
-                if (error) {
-                  console.log("login has error: " + result.error);
-                } else if (result.isCancelled) {
-                  console.log("login is cancelled.");
-                } else {
-                  AccessToken.getCurrentAccessToken().then(
-                    (data) => {
-                      console.log(data.accessToken.toString())
-                      this.props.navigation.navigate('SelectIdol')
-                    }
-                  )
-                }
-              }
-            }
-            onLogoutFinished={() => console.log("logout.")}/> */}
-          <Button full rounded primary style={styles.F_btn} onPress={this._fbAuth.bind(this)}>
-            <Text style={{color:'#fff', fontSize: 16}}>페이스북계정으로 로그인</Text>
+          <Button full rounded primary style={styles.G_btn} onPress={this._fbAuth.bind(this)}>
+            <Text style={{color:'#000', fontSize: 16}}>페이스북계정으로 로그인</Text>
           </Button>
-          {/* <GoogleSigninButton
-            style={{ height: 55 }}
-            size={GoogleSigninButton.Size.Wide}
-            color={GoogleSigninButton.Color.White}
-            onPress={this._onLoginGoggle.bind(this)}
-            // disabled={this.state.isSigninInProgress}
-          /> */}
           <Button full rounded primary style={styles.G_btn} onPress={this._onLoginGoggle.bind(this)}>
             <Text style={{color:'#000', fontSize: 16}}>구글로계정으로 로그인</Text>
           </Button>
@@ -137,6 +114,7 @@ class Login extends Component {
             <Text style={{color:'#000', fontSize: 16}}>카카오계정으로 로그인</Text>
           </Button>
         </View>
+        
       </Container>
     );
   }
