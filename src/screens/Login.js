@@ -58,7 +58,10 @@ class Login extends Component {
       (error) => {
         Alert.alert('Sign in error', error);
       },
-    );
+      function (error) {
+        alert('Login fail with error: ' + error);
+      }
+    ).catch((error) => console.error(error)); // error handling for promise
   }
   
   render() {
