@@ -32,7 +32,7 @@ class Login extends Component {
   _fbAuth() {
     var _this = this;
     
-    LoginManager.logInWithReadPermissions(['public_profile', 'user_friends', 'email'])
+    LoginManager.logInWithReadPermissions(['public_profile', 'email'])
     .then(
       (result) => {
         if (result.isCancelled) {
@@ -44,9 +44,9 @@ class Login extends Component {
               const credential = firebase.auth.FacebookAuthProvider.credential(data.accessToken);
               console.log(credential)
               firebase.auth().signInAndRetrieveDataWithCredential(credential)
-                .then(
-                  console.log('1')
-                )
+              .then(() => {
+                _this.props.navigation.navigate('SelectIdol')
+                })
                 .catch((error) => {
                   console.log(error.message);
                 });
@@ -71,7 +71,7 @@ class Login extends Component {
         </View>
 
         <View style={{flex: 2}}>
-          <Button full rounded primary style={styles.G_btn} onPress={() => this._fbAuth()}>
+          <Button full rounded primary style={styles.G_btn} onPress={this._fbAuth.bind(this)}>
             <Text style={{color:'#000', fontSize: 16}}>페이스북계정으로 로그인</Text>
           </Button>
           <Button full rounded primary style={styles.G_btn} onPress={() => this.goToMain()}>
