@@ -1,0 +1,62 @@
+{
+  "project_info": {
+    "project_number": "212649232198",
+    "firebase_url": "https://celebee-a44f9.firebaseio.com",
+    "project_id": "celebee-a44f9",
+    "storage_bucket": "celebee-a44f9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:212649232198:android:51739f140e564b90",
+        "android_client_info": {
+          "package_name": "com.celebee"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "212649232198-4vb4qqkmjm9eqoc6nhcfa8mupckjq1j0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.celebee",
+            "certificate_hash": "b708501a9b1c8ca1f8f4defea97cde04ae95d368"
+          }
+        },
+        {
+          "client_id": "212649232198-nubs1f9uftgojhc5f87r3j6c4cklj3hv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBVtbBGXdtUFHfP5yWbfHfck6bYWECW6h8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "212649232198-nubs1f9uftgojhc5f87r3j6c4cklj3hv.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "212649232198-0u4vbcte8eub8kplhil8u9svh62rrasd.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.reactjs.native.example.Celebee"
+              }
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
