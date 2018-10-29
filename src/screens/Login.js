@@ -6,7 +6,6 @@ import {
   StatusBar,
   ActivityIndicator
 } from "react-native";
-import { Container, Header, Content, Body, Icon, Button } from 'native-base';
 
 import LoadingSpinner from '../components/LoadingSpinner'
 import firebase from 'firebase'
