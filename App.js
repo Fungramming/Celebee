@@ -1,5 +1,18 @@
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View, Image, StatusBar, TouchableOpacity, Button } from 'react-native';
+import { Provider } from 'react-redux';
+import {createStore, applyMiddleware, combineReducers, compose} from 'redux';
+
+import thunkMiddleware from 'redux-thunk';
+import createLogger from 'redux-logger'
+import {
+  Platform, 
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  StatusBar,
+  TouchableOpacity 
+} from 'react-native';
 
 import SplashScreen from 'react-native-splash-screen';
 import AppIntroSlider from 'react-native-app-intro-slider';
@@ -29,8 +42,8 @@ export default class App extends Component {
 
   _onSkip = () => {
     this.setState({ showRealApp: true });
-  }
-  
+  }  
+
   componentDidMount() {
     // SplashScreen.hide();
   }
@@ -173,16 +186,9 @@ const AppStackNavigator = createStackNavigator({
       )
     })
   },
-  EditMyProfile: {
-    screen: EditMyProfile,
-    navigationOptions: ({ navigation }) => ({
-      headerTitle: '프로필 수정',
-      headerRight: (
-        <TouchableOpacity>
-          <Button title="완료" style={{ paddingHorizontal: 10 }} onPress={() => navigation.goBack()} />
-        </TouchableOpacity>
-      )
-    })
+  EditMyProfile: 
+  {
+    screen: EditMyProfile,    
   },
   EditIdol: {
     screen: EditIdol,
