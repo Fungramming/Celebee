@@ -4,7 +4,8 @@ import {
   Text,
   StyleSheet,
   StatusBar,
-  ActivityIndicator
+  ActivityIndicator,
+  Alert
 } from "react-native";
 
 import LoadingSpinner from '../components/LoadingSpinner'
@@ -97,10 +98,12 @@ class Login extends Component {
 
     RNKakaoLogins.login((error,result) => {
       if (error) {
-        Alert.alert('error: ', error )
+        // Alert.alert('error: ', error )
+        console.log('error :', error);
         return
       }
-      Alert.alert('result: ', result)
+      // Alert.alert('result: ', result)
+      console.log('result :', result);
       _this.props.navigation.navigate('SelectIdol')
     })
 
@@ -120,8 +123,8 @@ class Login extends Component {
         <LoadingSpinner/>
 
         <View style={{flex: 2}}>
-          <Button full rounded primary style={styles.G_btn} onPress={this._fbAuth.bind(this)}>
-            <Text style={{color:'#000', fontSize: 16}}>페이스북계정으로 로그인</Text>
+          <Button full rounded primary style={styles.F_btn} onPress={this._fbAuth.bind(this)}>
+            <Text style={{color:'#fff', fontSize: 16}}>페이스북계정으로 로그인</Text>
           </Button>
           <Button full rounded primary style={styles.G_btn} onPress={this._onLoginGoggle.bind(this)}>
             <Text style={{color:'#000', fontSize: 16}}>구글로계정으로 로그인</Text>

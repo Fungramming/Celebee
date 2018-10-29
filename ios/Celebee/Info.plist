@@ -53,7 +53,13 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
+        <!-- 공통 -->
 				<string>kakao8f6aa0665b97ed8f31c4918e3a5bcdeb</string>
+        
+        <!-- 간편로그인 -->
+        <string>kakaokompassauth</string>
+        <string>storykompassauth</string>
+
 			</array>
 		</dict>
 	</array>

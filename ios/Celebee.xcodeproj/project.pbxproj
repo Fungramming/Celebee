@@ -25,6 +25,8 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		140ED2AC1D01E1AD002B40FF /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
+		1A21B8CB2186E2E800CB9B1A /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A21B8CA2186E2E800CB9B1A /* Default-568h@2x.png */; };
+		1A21B8CC2186E38B00CB9B1A /* KakaoOpenSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A26E6762182DDBD009D643F /* KakaoOpenSDK.framework */; };
 		1A31EDA84BD84143B8C6A1F3 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A648D84F431D4C59B3671B31 /* Ionicons.ttf */; };
 		1AA5071A21808C5E007AA070 /* GoogleAuthUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AA5071321808C5D007AA070 /* GoogleAuthUtilities.framework */; };
 		1AA5071B21808C5E007AA070 /* GoogleUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AA5071421808C5D007AA070 /* GoogleUtilities.framework */; };
@@ -436,6 +438,7 @@
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Celebee/main.m; sourceTree = "<group>"; };
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
 		1A1E1642E602413AA1D1E44C /* libRNVectorIcons.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNVectorIcons.a; sourceTree = "<group>"; };
+		1A21B8CA2186E2E800CB9B1A /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		1A26E6762182DDBD009D643F /* KakaoOpenSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = KakaoOpenSDK.framework; sourceTree = "<group>"; };
 		1AA5070D21808BCE007AA070 /* RNGoogleSignin.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNGoogleSignin.xcodeproj; path = "../../.nvm/versions/node/v8.12.0/lib/node_modules/react-native-google-signin/ios/RNGoogleSignin.xcodeproj"; sourceTree = "<group>"; };
 		1AA5071321808C5D007AA070 /* GoogleAuthUtilities.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleAuthUtilities.framework; sourceTree = "<group>"; };
@@ -516,6 +519,7 @@
 				1AA5071F21808C5E007AA070 /* GoogleNetworkingUtilities.framework in Frameworks */,
 				00C302E91ABCBA2D00DB3ED1 /* libRCTNetwork.a in Frameworks */,
 				139105C61AF99C1200B5F7CC /* libRCTSettings.a in Frameworks */,
+				1A21B8CC2186E38B00CB9B1A /* KakaoOpenSDK.framework in Frameworks */,
 				832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */,
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
@@ -831,6 +835,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				1A21B8CA2186E2E800CB9B1A /* Default-568h@2x.png */,
 				1AE58820218028CF0026D836 /* Frameworks */,
 				13B07FAE1A68108700A75B9A /* Celebee */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
@@ -1437,6 +1442,7 @@
 				FDE15972D41F433A864E5BD8 /* SimpleLineIcons.ttf in Resources */,
 				2A85B4422E8F4B35B47414C9 /* Zocial.ttf in Resources */,
 				47D3D9D0AE23438781E7D2CE /* AntDesign.ttf in Resources */,
+				1A21B8CB2186E2E800CB9B1A /* Default-568h@2x.png in Resources */,
 				C6334440E0FF4C0F81D52C1C /* FontAwesome5_Brands.ttf in Resources */,
 				7EA91F57A0DD458BAD798BBB /* FontAwesome5_Regular.ttf in Resources */,
 				1AA5072221808FD5007AA070 /* GoogleService-Info.plist in Resources */,
@@ -1643,9 +1649,10 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../../Documents/FacebookSDK\"",
 					"\"$(SRCROOT)/../../.nvm/versions/node/v8.12.0/lib/node_modules/react-native-google-signin/ios/GoogleSdk\"",
-					"\"$(SRCROOT)/../node_modules/react-native-kakao-logins/ios/Frameworks/kakao-ios-sdk-1.8.2\"",
+					"\"$(SRCROOT)/../node_modules/react-native-kakao-logins/ios/Frameworks\"",
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/New\\ Group",
 					"$(PROJECT_DIR)/New\\ Group",
 					"$(PROJECT_DIR)/New\\ Group",
 					"$(PROJECT_DIR)/New\\ Group",
@@ -1669,6 +1676,7 @@
 				INFOPLIST_FILE = Celebee/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
+					"-all_load",
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
@@ -1688,9 +1696,10 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../../Documents/FacebookSDK\"",
 					"\"$(SRCROOT)/../../.nvm/versions/node/v8.12.0/lib/node_modules/react-native-google-signin/ios/GoogleSdk\"",
-					"\"$(SRCROOT)/../node_modules/react-native-kakao-logins/ios/Frameworks/kakao-ios-sdk-1.8.2\"",
+					"\"$(SRCROOT)/../node_modules/react-native-kakao-logins/ios/Frameworks\"",
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/New\\ Group",
 					"$(PROJECT_DIR)/New\\ Group",
 					"$(PROJECT_DIR)/New\\ Group",
 					"$(PROJECT_DIR)/New\\ Group",
@@ -1714,6 +1723,7 @@
 				INFOPLIST_FILE = Celebee/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
+					"-all_load",
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
