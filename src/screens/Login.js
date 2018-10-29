@@ -40,9 +40,7 @@ class Login extends Component {
         } else {
           AccessToken.getCurrentAccessToken()
             .then((data) => {
-              console.log(data.accessToken)
               const credential = firebase.auth.FacebookAuthProvider.credential(data.accessToken);
-              console.log(credential)
               firebase.auth().signInAndRetrieveDataWithCredential(credential)
               .then(() => {
                 _this.props.navigation.navigate('SelectIdol')
