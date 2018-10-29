@@ -56,8 +56,8 @@ export default class EditMyProfile extends Component {
         <View style={styles.photoBox}>
             <TouchableOpacity onPress={this._onEditPhoto.bind(this)}>
                 <Image
-                style={styles.photo}
-                source={{uri: this.state.avatarSource}}
+                    style={styles.photo}
+                    source={{uri: this.state.avatarSource}}
                 />         
                 <Icon style={styles.photoIcon} name="camera"></Icon>
             </TouchableOpacity>
