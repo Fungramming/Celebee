@@ -5,6 +5,8 @@ import {
   StyleSheet,
   StatusBar,
 } from "react-native";
+
+import LoadingSpinner from '../components/LoadingSpinner'
 import { Container, Header, Content, Body, Icon, Button } from 'native-base';
 import { LoginManager, AccessToken } from 'react-native-fbsdk'
 import firebase from 'firebase'
@@ -22,6 +24,7 @@ firebase.initializeApp(config);
 class Login extends Component {
   constructor(props) {
     super(props)
+    state = { animating: true }
   }
 
   goToMain = () => {
@@ -35,6 +38,7 @@ class Login extends Component {
     LoginManager.logInWithReadPermissions(['public_profile', 'email'])
     .then(
       (result) => {
+        // <ActivityIndicatorExample/> 
         if (result.isCancelled) {
           Alert.alert('Whoops!', 'You cancelled the sign in.');
         } else {
@@ -68,6 +72,8 @@ class Login extends Component {
           <Text style={styles.loginText}>로그인</Text>
         </View>
 
+        <LoadingSpinner/>
+
         <View style={{flex: 2}}>
           <Button full rounded primary style={styles.G_btn} onPress={this._fbAuth.bind(this)}>
             <Text style={{color:'#000', fontSize: 16}}>페이스북계정으로 로그인</Text>
@@ -79,6 +85,7 @@ class Login extends Component {
             <Text style={{color:'#000', fontSize: 16}}>카카오계정으로 로그인</Text>
           </Button>
         </View>
+        
       </Container>
     );
   }
