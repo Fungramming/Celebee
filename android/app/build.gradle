@@ -144,10 +144,7 @@ dependencies {
     implementation "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
     implementation "com.facebook.react:react-native:+"  // From node_modules
 
-<<<<<<< HEAD
     //fbsdk
-=======
->>>>>>> a3d78c2ed1618ed7a22263edaf67062d569f6fe5
     implementation 'com.facebook.android:facebook-android-sdk:4.34.0'
     implementation project(':react-native-fbsdk')
 
