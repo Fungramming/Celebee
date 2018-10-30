@@ -4,7 +4,7 @@ import {
   Text,
   StyleSheet,
   StatusBar,
-  ActivityIndicator
+  ActivityIndicator,
 } from "react-native";
 
 import LoadingSpinner from '../components/LoadingSpinner'
@@ -31,6 +31,9 @@ class Login extends Component {
 
   componentDidMount() {
     GoogleSignin.configure({
+      scopes: ['openid', 'email', 'profile'],
+      shouldFetchBasicProfile: true,
+      clientID: '212649232198-lbuq98lucbvt160c4ft6pkt335414srl.apps.googleusercontent.com',
       iosClientId: '212649232198-0u4vbcte8eub8kplhil8u9svh62rrasd.apps.googleusercontent.com', // only for iOS
     })
   }
@@ -77,39 +80,32 @@ class Login extends Component {
 
     GoogleSignin.signIn().then((data) => {
       // create a new firebase credential with the token
-      console.log('data :', data);
       const credential = firebase.auth.GoogleAuthProvider.credential(data.idToken, data.accessToken)
       return firebase.auth().signInAndRetrieveDataWithCredential(credential)
     }).then((currentUser) => {
       // console.log(`Google Login with user : ${JSON.stringify(currentUser.toJSON())}`)
-      <ActivityIndicator/>
-      console.log('currentUser.credential.accessToken :', currentUser.credential.accessToken);
-      console.log('currentUser :', currentUser);
       _this.props.navigation.navigate('SelectIdol')
     }).catch((error) => {
       console.log(`Login fail with error: ${error}`);
     })
   }
+ 
   render() {
     return (
       <Container style={styles.container}>
         <StatusBar 
           barStyle="light-content"
         />
-
         <View style={styles.loginTextView}>
           <Text style={styles.loginText}>로그인</Text>
         </View>
-
-        <LoadingSpinner/>
-
-        <View style={{flex: 2}}>
-          <Button full rounded primary style={styles.G_btn} onPress={this._fbAuth.bind(this)}>
+        <View style={{flex: 2}}>       
+          <Button full rounded primary style={styles.F_btn} onPress={this._fbAuth.bind(this)}>
             <Text style={{color:'#000', fontSize: 16}}>페이스북계정으로 로그인</Text>
           </Button>
           <Button full rounded primary style={styles.G_btn} onPress={this._onLoginGoggle.bind(this)}>
-            <Text style={{color:'#000', fontSize: 16}}>구글로계정으로 로그인</Text>
-          </Button>
+            <Text style={{color:'#000', fontSize: 16}}>구글계정으로 로그인</Text>
+          </Button>       
           <Button full rounded primary style={styles.K_btn} onPress={() => this.goToMain()}>
             <Text style={{color:'#000', fontSize: 16}}>카카오계정으로 로그인</Text>
           </Button>
