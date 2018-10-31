@@ -6,6 +6,10 @@ import {
 } from "react-native";
 
 class Setting extends Component {
+  // static navigationOptions = {
+  //   headerTitle: '환경설정'
+  // }
+
   render() {
     return (
       <View style={styles.container}>

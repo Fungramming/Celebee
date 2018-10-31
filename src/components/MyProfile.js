@@ -1,15 +1,17 @@
 import React, { Component } from 'react'
 import { Text, View, StyleSheet, TouchableOpacity, Dimensions, Image } from 'react-native'
-
-export default class MyProfile extends Component {
+import {connect} from 'react-redux'
+class MyProfile extends Component {
   constructor(props){
     super(props)
     this.state = {
-      nickName : "celebee1004",
+      userName : this.props.userName,
       avatarSource : "https://techcrunch.com/wp-content/uploads/2018/05/snap-dollar-eyes_preview.png?w=730&crop=1"
     }
   }  
-
+  componentDidMount() {
+    console.log(this.state) 
+}
   render() {
     return (
       <View style={styles.myProfileBox}>
@@ -18,7 +20,7 @@ export default class MyProfile extends Component {
           source={{uri: this.state.avatarSource}}
         />         
         <View>
-          <Text style={styles.nickName}>{this.state.nickName}</Text>
+          <Text style={styles.nickName}>{this.state.userName}</Text>
           <Text style={styles.settingBtn}>프로필 수정</Text>
         </View>
       </View>
@@ -58,3 +60,12 @@ const styles = StyleSheet.create({
       padding: 5
     },
 })
+
+
+const mapStateToProps = state => {
+  return {
+      userName: state.user.userName,   // Mount 될때 initialState 를 가져옴 , this.props 로. users 는 actios 에서의 users.js 의 이름
+  }
+}
+
+export default connect(mapStateToProps)(MyProfile)
