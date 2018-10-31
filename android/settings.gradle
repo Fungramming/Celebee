@@ -1,6 +1,4 @@
 rootProject.name = 'Celebee'
-include ':react-native-fbsdk'
-project(':react-native-fbsdk').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-fbsdk/android')
 include ':react-native-google-signin'
 project(':react-native-google-signin').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-google-signin/android')
 include ':react-native-vector-icons'
@@ -11,5 +9,6 @@ include ':react-native-image-picker'
 project(':react-native-image-picker').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-image-picker/android')
 include ':react-native-fbsdk'
 project(':react-native-fbsdk').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-fbsdk/android')
-
+include ':react-native-kakao-logins'
+project(':react-native-kakao-logins').projectDir = new File(rootProject.projectDir, 	'../node_modules/react-native-kakao-logins/android')
 include ':app'

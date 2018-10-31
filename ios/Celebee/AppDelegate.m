@@ -52,6 +52,6 @@
   // Add any custom logic here.
   return handled || handledGoogle;
 }
-  
-  
+
+
 @end
