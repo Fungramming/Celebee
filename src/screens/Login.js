@@ -30,7 +30,10 @@ firebase.initializeApp(config);
 class Login extends Component {
   constructor(props) {
     super(props)
-    state = { animating: true }
+    state = {
+      userInfo: {}, 
+      animating: true 
+    }
   }
 
   componentDidMount() {
@@ -177,7 +180,11 @@ class Login extends Component {
     );
   }
 }
-
+const mapStateToProps = state => {
+  return {
+      userInfo: state.user.userInfo,   // Mount 될때 initialState 를 가져옴 , this.props 로. users 는 actios 에서의 users.js 의 이름
+  }
+}
 const mapDispatchToProps = dispatch => {
   return {
       init: (userInfo) => {
@@ -186,7 +193,7 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
 
 const styles = StyleSheet.create({
   container: {

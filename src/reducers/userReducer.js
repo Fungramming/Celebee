@@ -7,7 +7,7 @@ const initialState = {
 const userReducer = (state = initialState, action) => {
     switch(action.type) {
         case INIT_USER_INFO:
-            console.log(action.payload)
+            console.log('payload',action.payload)
             return {
                 ...state,
                 userInfo : action.payload
