@@ -12,15 +12,16 @@ import Icon from 'react-native-vector-icons/AntDesign';
 const options = {
     title: '사진 등록',
     storageOptions: {
-      skipBackup: true,
-      path: 'images',
+    skipBackup: true,
+    path: 'images',
     },
-  };
+};
 class EditMyProfile extends Component {    
     constructor(props){
         super(props)
         this.state = {
             userName : this.props.userName,
+            // avatarSource : require('../../assets/logo_white.png'),
             avatarSource : "https://techcrunch.com/wp-content/uploads/2018/05/snap-dollar-eyes_preview.png?w=730&crop=1"
         }
     }
@@ -29,10 +30,11 @@ class EditMyProfile extends Component {
         const {params = {}} = navigation.state;
         return {
             headerRight: (
+            // <TouchableOpacity ref={component => this.submit = component}>
             <TouchableOpacity onPress={params.handleSubmit}>
-              <View style={{ paddingHorizontal: 15 }}>
-                <Icon name="setting" size={14} />
-              </View>
+              {/* <View style={{ paddingHorizontal: 15 }}> */}
+                <Button onPress={this.onSubmitProfile} title="완료"/>
+              {/* </View> */}
             </TouchableOpacity>
           )
         }
@@ -108,11 +110,11 @@ class EditMyProfile extends Component {
                     onChangeText = {this.onChangeName}>
                 </TextInput>   
                 <TouchableOpacity style={styles.closeCircle} onPress={this.clearText}>
-                    <Icon name="closecircleo"></Icon>
+                    <Icon name="closecircleo" size={24}></Icon>
                 </TouchableOpacity>     
             </View>
         </View>
-        <TouchableOpacity  ref={component => this.submit = component} style={styles.submitButton} onPress={this.onSubmitProfile}>
+        <TouchableOpacity ref={component => this.submit = component} style={styles.submitButton} onPress={this.onSubmitProfile}>
             <Text>SUBMIT</Text>
         </TouchableOpacity>
       </View>
@@ -155,7 +157,7 @@ const styles = StyleSheet.create({
     },
     closeCircle: {
         position: "absolute",
-        top: 28,
+        top: 5,
         right: 0,
         fontSize: 15
     },

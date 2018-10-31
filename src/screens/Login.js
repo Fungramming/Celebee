@@ -5,6 +5,7 @@ import {
   StyleSheet,
   StatusBar,
   ActivityIndicator,
+  AsyncStorage,
   Alert
 } from "react-native";
 
@@ -28,7 +29,7 @@ firebase.initializeApp(config);
 class Login extends Component {
   constructor(props) {
     super(props)
-    state = { animating: true }
+    this.state = { isLoading: false }
   }
 
   componentDidMount() {
@@ -40,9 +41,10 @@ class Login extends Component {
     })
   }
 
-  goToMain = () => {
-    this.props.navigation.navigate('SelectIdol')
-    // console.log('this.props.navigation.state :', this.props.navigation.state);
+  // 유저 토근 저장 
+  signIn = async (data) => {
+    await AsyncStorage.setItem('userToken', data)
+    // this.props.navigation.navigate('SelectIdol')
   }
 
   _onLoginFacebook() {
@@ -51,21 +53,30 @@ class Login extends Component {
     LoginManager.logInWithReadPermissions(['public_profile', 'email'])
     .then(
       (result) => {
-        // <ActivityIndicatorExample/> 
         if (result.isCancelled) {
           Alert.alert('Whoops!', 'You cancelled the sign in.');
         } else {
           AccessToken.getCurrentAccessToken()
-            .then((data) => {
-              const credential = firebase.auth.FacebookAuthProvider.credential(data.accessToken);
-              firebase.auth().signInAndRetrieveDataWithCredential(credential)
-              .then(() => {
-                _this.props.navigation.navigate('SelectIdol')
-                })
-                .catch((error) => {
-                  console.log(error.message);
-                });
+          .then((data) => {
+            this.setState({
+              isLoading: true
+            })
+            console.log('data.accessToken :', data.accessToken);
+
+            _this.signIn(data.accessToken)
+
+            const credential = firebase.auth.FacebookAuthProvider.credential(data.accessToken);
+            firebase.auth().signInAndRetrieveDataWithCredential(credential)
+            .then(() => {
+              this.setState({
+                isLoading: false
+              })
+              _this.props.navigation.navigate('SelectIdol')
+            })
+            .catch((error) => {
+              console.log(error.message);
             });
+          });
         }
       },
       (error) => {
@@ -82,10 +93,20 @@ class Login extends Component {
 
     GoogleSignin.signIn().then((data) => {
       // create a new firebase credential with the token
+      console.log('data :', data);
+
+      this.setState({
+        isLoading: true
+      })
+
       const credential = firebase.auth.GoogleAuthProvider.credential(data.idToken, data.accessToken)
       return firebase.auth().signInAndRetrieveDataWithCredential(credential)
     }).then((currentUser) => {
-      // console.log(`Google Login with user : ${JSON.stringify(currentUser.toJSON())}`)
+
+      this.setState({
+        isLoading: false
+      })
+
       _this.props.navigation.navigate('SelectIdol')
     }).catch((error) => {
       console.log(`Login fail with error: ${error}`);
@@ -95,13 +116,15 @@ class Login extends Component {
   _onLoginKakao = () => {
     var _this = this;
 
+    this.setState({
+      isLoading: true
+    })
+
     RNKakaoLogins.login((error,result) => {
       if (error) {
-        // Alert.alert('error: ', error )
         console.log('error :', error);
         return
       }
-      // Alert.alert('result: ', result)
       console.log('result :', result);
       _this.props.navigation.navigate('SelectIdol')
     })
@@ -114,13 +137,16 @@ class Login extends Component {
         <StatusBar 
           barStyle="light-content"
         />
+
         <View style={styles.loginTextView}>
           <Text style={styles.loginText}>로그인</Text>
         </View>
 
-        <LoadingSpinner/>
+        <LoadingSpinner 
+          show={this.state.isLoading}
+        />
 
-        <View style={{flex: 2}}>
+        <View style={styles.loginButtonView}>
           <Button full rounded primary style={styles.F_btn} onPress={this._onLoginFacebook.bind(this)}>
             <Text style={{color:'#fff', fontSize: 16}}>페이스북계정으로 로그인</Text>
           </Button>
@@ -146,7 +172,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#722784'
   },
   loginTextView: {
-    flex:4,
+    flex: 1,
     alignSelf: 'stretch' ,
     marginTop: 70
   },
@@ -154,6 +180,12 @@ const styles = StyleSheet.create({
     fontSize: 40,
     fontWeight: 'bold',
     color: '#fff',
+  },
+  loginButtonView: {
+    flex: 1,
+    alignContent: 'flex-end',
+    justifyContent: 'flex-end',
+    marginBottom: 50
   },
   F_btn: {
     marginTop: 10,

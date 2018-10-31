@@ -2,7 +2,10 @@ import React, { Component } from "react";
 import { 
   View,
   Text,
-  StyleSheet
+  StyleSheet,
+  TouchableOpacity,
+  Button,
+  AsyncStorage
 } from "react-native";
 
 class Setting extends Component {
@@ -10,11 +13,17 @@ class Setting extends Component {
   //   headerTitle: '환경설정'
   // }
 
+  signOut = async () => {
+    AsyncStorage.clear()
+    this.props.navigation.navigate('Logout')
+  }
+
   render() {
     return (
-      <View style={styles.container}>
+      <TouchableOpacity style={styles.container}>
         <Text>Setting</Text>
-      </View>
+        <Text onPress={this.signOut}>로그아웃</Text>
+      </TouchableOpacity>
     );
   }
 }

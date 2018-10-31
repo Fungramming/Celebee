@@ -11,6 +11,7 @@
 #import <React/RCTRootView.h>
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <RNGoogleSignin/RNGoogleSignin.h>
+#import "RNSplashScreen.h"
 
 @implementation AppDelegate
 
@@ -34,7 +35,11 @@
   rootViewController.view = rootView;
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
+  
+  [RNSplashScreen show];
+  
   return YES;
+  
 }
 
 - (BOOL)application:(UIApplication *)application

@@ -11,7 +11,9 @@ import {
   View,
   Image,
   StatusBar,
-  TouchableOpacity 
+  TouchableOpacity,
+  AsyncStorage,
+  Button
 } from 'react-native';
 
 import SplashScreen from 'react-native-splash-screen';
@@ -31,9 +33,18 @@ export default class App extends Component {
 
   constructor(props) {
     super(props);
+    this.loadApp()
     this.state = {
       showRealApp: false,
     };
+  }
+  // AsyncStorage에 유저토큰 값 확인 후 페이지 이동
+
+  loadApp = async () => {
+    const userToken = await AsyncStorage.getItem('userToken')
+
+    console.log('this.props.navigation :', this.props.navigation);
+    this.props.navigation.navigate(userToken ? 'SelectIdol' : null)
   }
 
   _onDone = () => {
@@ -45,7 +56,7 @@ export default class App extends Component {
   }  
 
   componentDidMount() {
-    // SplashScreen.hide();
+    SplashScreen.hide();
   }
   
   render() {
