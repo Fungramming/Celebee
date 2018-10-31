@@ -21,6 +21,7 @@ import AppIntroSlider from 'react-native-app-intro-slider';
 import Icon from 'react-native-vector-icons/AntDesign';
 
 import {createStackNavigator, createSwitchNavigator, createBottomTabNavigator, createDrawerNavigator} from 'react-navigation';
+import AuthValid from './src/screens/AuthValidScreen'
 import Login from './src/screens/Login'
 import MyPage from './src/screens/MyPage'
 import SelectIdol from './src/screens/SelectIdol'
@@ -29,58 +30,58 @@ import EditMyProfile from './src/screens/EditMyProfile'
 import EditIdol from './src/screens/EditIdol'
 import Setting from './src/screens/Setting'
 
-export default class App extends Component {
+// export default class App extends Component {
 
-  constructor(props) {
-    super(props);
-    this.loadApp()
-    this.state = {
-      showRealApp: false,
-    };
-  }
-  // AsyncStorage에 유저토큰 값 확인 후 페이지 이동
+//   constructor(props) {
+//     super(props);
+//     this.loadApp()
+//     this.state = {
+//       showRealApp: false,
+//     };
+//   }
+//   // AsyncStorage에 유저토큰 값 확인 후 페이지 이동
 
-  loadApp = async () => {
-    const userToken = await AsyncStorage.getItem('userToken')
+//   loadApp = async () => {
+//     const userToken = await AsyncStorage.getItem('userToken')
 
-    console.log('this.props.navigation :', this.props.navigation);
-    this.props.navigation.navigate(userToken ? 'SelectIdol' : null)
-  }
+//     console.log('this.props.navigation :', this.props.navigation);
+//     this.props.navigation.navigate(userToken ? 'SelectIdol' : null)
+//   }
 
-  _onDone = () => {
-    this.setState({ showRealApp: true });
-  };
+//   _onDone = () => {
+//     this.setState({ showRealApp: true });
+//   };
 
-  _onSkip = () => {
-    this.setState({ showRealApp: true });
-  }  
+//   _onSkip = () => {
+//     this.setState({ showRealApp: true });
+//   }  
 
-  componentDidMount() {
-    SplashScreen.hide();
-  }
+//   componentDidMount() {
+//     SplashScreen.hide();
+//   }
   
-  render() {
-    if(this.state.showRealApp) {
-      return (
-        <AppSwichNavigator />
-      );
-    } else {
-      return (
-        <AppIntroSlider
-          slides={slides}
-          showSkipButton={true}
-          hideNextButton={true}
-          onDone={this._onDone}
-          onSkip={this._onSkip}
-          bottomButton
-          skipLabel='시작하기'
-          doneLabel='시작하기'
-          buttonStyle={styles.button}
-        />
-      )
-    }
-  }
-}
+//   render() {
+//     if(this.state.showRealApp) {
+//       return (
+//         <AppSwichNavigator />
+//       );
+//     } else {
+//       return (
+//         <AppIntroSlider
+//           slides={slides}
+//           showSkipButton={true}
+//           hideNextButton={true}
+//           onDone={this._onDone}
+//           onSkip={this._onSkip}
+//           bottomButton
+//           skipLabel='시작하기'
+//           doneLabel='시작하기'
+//           buttonStyle={styles.button}
+//         />
+//       )
+//     }
+//   }
+// }
 
 const styles = StyleSheet.create({
   // Slider
@@ -224,7 +225,8 @@ const AppStackNavigator = createStackNavigator({
   },
 });
 
-const AppSwichNavigator = createSwitchNavigator({
+export default AppSwichNavigator = createSwitchNavigator({
+  AuthValid: AuthValid,
   Login: Login,
   SelectIdol: SelectIdol,
   App: AppStackNavigator,
