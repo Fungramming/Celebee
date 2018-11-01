@@ -63,7 +63,6 @@ class Login extends Component {
           userInfo.name = json.name
           userInfo.email = json.email
           this.props.init(userInfo)
-          console.log('face userInfo :', userInfo);  
         })
         .catch(() => {
           reject('ERROR GETTING DATA FROM FACEBOOK')
@@ -78,7 +77,6 @@ class Login extends Component {
         userInfo.name = data.nickname
         userInfo.email = data.email_verified
         this.props.init(userInfo)
-        console.log('kakao userInfo :', userInfo);  
         break;  
     }  
   }

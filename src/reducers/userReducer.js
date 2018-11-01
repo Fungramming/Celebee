@@ -1,7 +1,10 @@
 import { UPDATE_NAME, INIT_USER_INFO } from '../actions/types'
 
 const initialState = {
-    userName: 'celebeeeee 1004'
+    userInfo : {
+        name: '',
+        email: ''
+    }
 }
 
 const userReducer = (state = initialState, action) => {
@@ -15,7 +18,9 @@ const userReducer = (state = initialState, action) => {
         case UPDATE_NAME:
             return {
                 ...state,
-                userName: action.payload
+                userInfo: {
+                    name: action.payload
+                }
             }
         default:
             return state;    
