@@ -5,8 +5,7 @@ class MyProfile extends Component {
   constructor(props){
     super(props)
     this.state = {
-      userName : this.props.userName,
-      avatarSource : "https://techcrunch.com/wp-content/uploads/2018/05/snap-dollar-eyes_preview.png?w=730&crop=1"
+        userName : this.props.userName,
     }
   }  
   componentDidMount() {
@@ -17,7 +16,7 @@ class MyProfile extends Component {
       <View style={styles.myProfileBox}>
         <Image
           style={styles.photo}
-          source={{uri: this.state.avatarSource}}
+          source={require("../../assets/user.png")}
         />         
         <View>
           <Text style={styles.nickName}>{this.state.userName}</Text>
@@ -63,8 +62,9 @@ const styles = StyleSheet.create({
 
 
 const mapStateToProps = state => {
+  
   return {
-      userName: state.user.userName,   // Mount 될때 initialState 를 가져옴 , this.props 로. users 는 actios 에서의 users.js 의 이름
+      userName: state.user.userInfo.name,   // Mount 될때 initialState 를 가져옴 , this.props 로. users 는 actios 에서의 users.js 의 이름
   }
 }
 

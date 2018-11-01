@@ -1,16 +1,26 @@
-import { UPDATE_NAME } from '../actions/types'
+import { UPDATE_NAME, INIT_USER_INFO } from '../actions/types'
 
 const initialState = {
-    userName: 'celebeeeee 1004'
+    userInfo : {
+        name: '',
+        email: ''
+    }
 }
 
 const userReducer = (state = initialState, action) => {
     switch(action.type) {
-        case UPDATE_NAME:
-        console.log(action.payload)
+        case INIT_USER_INFO:
+            console.log('payload',action.payload)
             return {
                 ...state,
-                userName: action.payload
+                userInfo : action.payload
+            }
+        case UPDATE_NAME:
+            return {
+                ...state,
+                userInfo: {
+                    name: action.payload
+                }
             }
         default:
             return state;    

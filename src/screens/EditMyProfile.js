@@ -170,7 +170,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
     return {
-        userName: state.user.userName,   // Mount 될때 initialState 를 가져옴 , this.props 로. users 는 actios 에서의 users.js 의 이름
+        userName: state.user.userInfo.name,   // Mount 될때 initialState 를 가져옴 , this.props 로. users 는 actios 에서의 users.js 의 이름
     }
 }
 
