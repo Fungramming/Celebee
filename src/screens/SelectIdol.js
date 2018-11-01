@@ -7,7 +7,8 @@ class SelectIdol extends Component {
     super(props);
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
-        idols : ds.cloneWithRows(['BTS','뉴이스트','트와이스','세븐틴','엑소','워너원','비투비', 'BTS','뉴이스트','트와이스','세븐틴','엑소','워너원','비투비', 'BTS','뉴이스트','트와이스','세븐틴','엑소','워너원','비투비'])            
+        idols : ds.cloneWithRows(['BTS','뉴이스트','트와이스','세븐틴','엑소','워너원','비투비', 'BTS','뉴이스트','트와이스','세븐틴','엑소','워너원','비투비', 'BTS','뉴이스트','트와이스','세븐틴','엑소','워너원','비투비']),
+        idolList: ''
     }
   }
 
@@ -17,8 +18,11 @@ class SelectIdol extends Component {
   
   getIdolList =() => {
     fetch('http://celebee-env-1.gimjpxetg2.ap-northeast-2.elasticbeanstalk.com/api/v1.0/idols/')
-    .then( (res) => {
-      console.log('res :', res);
+    .then( (res) => res.json() )
+    .then( (json) => {
+      console.log('res :', json.idols);
+      this.setState({idolList: json.idols})
+      console.log('this.state.idolList :', this.state.idolList);
     })
     .catch( (err) => {
       console.log('err :', err);

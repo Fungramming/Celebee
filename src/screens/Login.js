@@ -6,10 +6,13 @@ import {
   StatusBar,
   Alert,
   AsyncStorage,
-  TouchableOpacity
+  TouchableOpacity,
+  AppRegistry,
+  Dimensions,
+  Button,
+  Image
 } from "react-native";
 
-import AppIntroSlider from 'react-native-app-intro-slider';
 import LoadingSpinner from '../components/LoadingSpinner'
 import firebase from 'firebase'
 import RNKakaoLogins from 'react-native-kakao-logins'
@@ -17,6 +20,7 @@ import { LoginManager, AccessToken } from 'react-native-fbsdk'
 import { GoogleSignin } from 'react-native-google-signin';
 import { connect } from "react-redux";
 import { initUserInfo } from "../actions/users";
+import AppIntro from 'react-native-app-intro';
 
 var config = {
   apiKey: "AIzaSyDI0yDEw3xg9eCQphgJbf95_RCIOPVlKH0",
@@ -182,15 +186,12 @@ class Login extends Component {
           <StatusBar 
             barStyle="light-content"
           />
-
           <View style={styles.loginTextView}>
             <Text style={styles.loginText}>로그인</Text>
           </View>
-
           <LoadingSpinner 
             show={this.state.isLoading}
           />
-
           <View style={styles.loginButtonView}>
             <TouchableOpacity style={styles.F_btn} onPress={this._onLoginFacebook.bind(this)}>
               <Text style={{color:'#fff', fontSize: 16, textAlign: 'center',}}>페이스북계정으로 로그인</Text>
@@ -206,18 +207,57 @@ class Login extends Component {
         </View>
       );
     } else {
-      return (
-        <AppIntroSlider
-          slides={slides}
-          showSkipButton={true}
-          hideNextButton={true}
-          onDone={() => this.setState({ showRealApp: true })}
-          onSkip={() => this.setState({ showRealApp: true })}
-          bottomButton
-          skipLabel='시작하기'
-          doneLabel='시작하기'
-          buttonStyle={styles.button}
-        />
+      return (   
+        <View>
+          <AppIntro
+            customStyles={{btnContainer: {padding: 120}}}
+            showSkipButton= {false}
+            showDoneButton= {false}>          
+            <View style={styles.slide}>
+              <View level={30}><Text style={[styles.text,{marginTop: -150}]}>셀</Text></View>
+              <View level={20}>
+                <Image
+                    style={styles.image}
+                    source={require('../../assets/logo_white.png')}
+                />   
+              </View>
+              <View level={10}><Text style={[styles.text,{marginTop: 0}]}>셀레비 어플입니다.</Text></View>
+            </View>
+            <View style={styles.slide}>
+              <View level={30}><Text style={[styles.text,{marginTop: -150}]}>레</Text></View>
+              <View level={20}>
+                <Image
+                    style={styles.image}
+                    source={require('../../assets/logo_white.png')}
+                />   
+              </View>
+              <View level={10}><Text style={[styles.text,{marginTop: 0}]}>셀레비 어플입니다.</Text></View>
+            </View>
+            <View style={styles.slide}>
+              <View level={30}><Text style={[styles.text,{marginTop: -150}]}>비</Text></View>
+              <View level={20}>
+                <Image
+                    style={styles.image}
+                    source={require('../../assets/logo_white.png')}
+                />   
+              </View>
+              <View level={10}><Text style={[styles.text,{marginTop: 0}]}>셀레비 어플입니다.</Text></View>
+            </View>
+            <View style={styles.slide}>
+              <View level={30}><Text style={[styles.text,{marginTop: -150}]}>!</Text></View>
+              <View level={20}>
+                <Image
+                    style={styles.image}
+                    source={require('../../assets/logo_white.png')}
+                />   
+              </View>
+              <View level={10}><Text style={[styles.text,{marginTop: 0}]}>셀레비 어플입니다.</Text></View>
+            </View>
+          </AppIntro>
+          <TouchableOpacity style={styles.button} onPress= {() => this.setState({ showRealApp: true })}>
+            <Text style={styles.text}>시작하기</Text>
+          </TouchableOpacity>
+        </View>
       )
     }
   }
@@ -238,6 +278,7 @@ const mapDispatchToProps = dispatch => {
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
 
 const styles = StyleSheet.create({
+
   container: {
     flex: 1,
     paddingLeft: 24,
@@ -245,6 +286,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#722784'
   },
   image: {
+    marginTop: -70,
+    marginBottom: 50,
     width: 200,
     height: 200,
   },
@@ -294,74 +337,22 @@ const styles = StyleSheet.create({
   button: {
     color: 'white',
     backgroundColor: 'rgba(0,0,0,0.3)',
-    // borderRadius: 15,
-    // margin: -20,
-    // marginTop: -5,
-    marginBottom: 'auto'
+    width: Dimensions.get('window').width,
+    marginTop: -70,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
-  title: {
-    fontSize: 28,
+  slide: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#722784',
+    padding: 15,
+  },
+  text: {
+    color: '#fff',
+    fontSize: 20,
     fontWeight: 'bold',
-    color: 'white',
-    backgroundColor: 'transparent',
-    textAlign: 'center',
-    marginTop: 16,
-},
+    padding: 25
+  }
 });
-
-const slides = [
-  {
-      key: 's1',
-      title: '셀',
-      titleStyle: styles.title,
-      text: '셀레비 어플입니다.',
-      image: require('../../assets/logo_white.png'),
-      imageStyle: styles.image,
-      backgroundColor: '#722784', 
-  },
-  {
-      key: 's2',
-      title: '레',
-      titleStyle: styles.title,
-      text: '셀레비 어플입니다.',
-      image: require('../../assets/logo_white.png'),
-      imageStyle: styles.image,
-      backgroundColor: '#722784',
-  },
-  {
-      key: 's3',
-      title: '비',
-      titleStyle: styles.title,
-      text: '셀레비 어플입니다.',
-      image: require('../../assets/logo_white.png'),
-      imageStyle: styles.image,
-      backgroundColor: '#722784', 
-  },
-  {
-      key: 's4',
-      title: '어',
-      titleStyle: styles.title,
-      text: '셀레비 어플입니다.',
-      image: require('../../assets/logo_white.png'),
-      imageStyle: styles.image,
-      backgroundColor: '#722784',
-  },
-  {
-      key: 's5',
-      title: '플',
-      titleStyle: styles.title,
-      text: '셀레비 어플입니다.',
-      image: require('../../assets/logo_white.png'),
-      imageStyle: styles.image,
-      backgroundColor: '#722784',
-  },
-  {
-      key: 's6',
-      title: '!',
-      titleStyle: styles.title,
-      text: '셀레비 어플입니다.',
-      image: require('../../assets/logo_white.png'),
-      imageStyle: styles.image,
-      backgroundColor: '#722784',
-  },
-];
