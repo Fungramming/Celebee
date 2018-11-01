@@ -10,7 +10,8 @@ import {
   AppRegistry,
   Dimensions,
   Button,
-  Image
+  Image,
+  Platform
 } from "react-native";
 
 import LoadingSpinner from '../components/LoadingSpinner'
@@ -338,9 +339,16 @@ const styles = StyleSheet.create({
     color: 'white',
     backgroundColor: 'rgba(0,0,0,0.3)',
     width: Dimensions.get('window').width,
-    marginTop: -70,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    ...Platform.select({
+      ios: {
+        marginTop: -70,
+      },
+      android: {
+        marginTop: -100,
+      },
+    }),
   },
   slide: {
     flex: 1,
