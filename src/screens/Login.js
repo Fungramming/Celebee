@@ -6,7 +6,9 @@ import {
   StatusBar,
   ActivityIndicator,
   Alert,
-  AsyncStorage
+  AsyncStorage,
+  AppRegistry,
+  Dimensions
 } from "react-native";
 
 import AppIntroSlider from 'react-native-app-intro-slider';
@@ -18,6 +20,8 @@ import { LoginManager, AccessToken } from 'react-native-fbsdk'
 import { GoogleSignin } from 'react-native-google-signin';
 import { connect } from "react-redux";
 import { initUserInfo } from "../actions/users";
+
+import AppIntro from 'react-native-app-intro';
 
 var config = {
   apiKey: "AIzaSyDI0yDEw3xg9eCQphgJbf95_RCIOPVlKH0",
@@ -209,17 +213,47 @@ class Login extends Component {
       );
     } else {
       return (
-        <AppIntroSlider
-          slides={slides}
-          showSkipButton={true}
-          hideNextButton={true}
-          onDone={() => this.setState({ showRealApp: true })}
-          onSkip={() => this.setState({ showRealApp: true })}
-          bottomButton
-          skipLabel='시작하기'
-          doneLabel='시작하기'
-          buttonStyle={styles.button}
-        />
+        // <AppIntroSlider
+        //   slides={slides}
+        //   showSkipButton={true}
+        //   hideNextButton={true}
+        //   onDone={() => this.setState({ showRealApp: true })}
+        //   onSkip={() => this.setState({ showRealApp: true })}
+        //   bottomButton
+        //   skipLabel='시작하기'
+        //   doneLabel='시작하기'
+        //   buttonStyle={styles.button}
+        // />
+        <View>
+          <AppIntro
+            customStyles={{btnContainer: {padding: 120}}}
+            showSkipButton= {false}
+            showDoneButton= {false}>
+            <View style={[styles.slide,{ backgroundColor: '#fa931d' }]}>
+              <View level={10}><Text style={styles.text}></Text></View>
+              <View level={15}><Text style={styles.text}>Page 1</Text></View>
+              <View level={8}><Text style={styles.text}>Page 1</Text></View>
+            </View>
+            <View style={[styles.slide, { backgroundColor: '#a4b602' }]}>
+              <View level={-10}><Text style={styles.text}>Page 2</Text></View>
+              <View level={5}><Text style={styles.text}>Page 2</Text></View>
+              <View level={20}><Text style={styles.text}>Page 2</Text></View>
+            </View>
+            <View style={[styles.slide,{ backgroundColor: '#fa931d' }]}>
+              <View level={8}><Text style={styles.text}>Page 3</Text></View>
+              <View level={0}><Text style={styles.text}>Page 3</Text></View>
+              <View level={-10}><Text style={styles.text}>Page 3</Text></View>
+            </View>
+            <View style={[styles.slide, { backgroundColor: '#a4b602' }]}>
+              <View level={5}><Text style={styles.text}>Page 4</Text></View>
+              <View level={10}><Text style={styles.text}>Page 4</Text></View>
+              <View level={15}><Text style={styles.text}>Page 4</Text></View>
+            </View>
+          </AppIntro>
+          <Button style={styles.button}>
+            <Text style={styles.text}>시작하기</Text>
+          </Button>
+        </View>
       )
     }
   }
@@ -240,6 +274,7 @@ const mapDispatchToProps = dispatch => {
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
 
 const styles = StyleSheet.create({
+
   container: {
     flex: 1,
     paddingLeft: 24,
@@ -283,10 +318,23 @@ const styles = StyleSheet.create({
   button: {
     color: 'white',
     backgroundColor: 'rgba(0,0,0,0.3)',
+    width: Dimensions.get('window').width,
     // borderRadius: 15,
-    margin: -20,
-    marginTop: -5,
-    marginBottom: -5
+    marginTop: -70,
+    justifyContent: 'center',
+  },
+  slide: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#722784',
+    padding: 15,
+  },
+  text: {
+    color: '#fff',
+    fontSize: 20,
+    fontWeight: 'bold',
+    
   }
 });
 
