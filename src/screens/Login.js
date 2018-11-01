@@ -50,7 +50,7 @@ class Login extends Component {
     // console.log('this.props.navigation.state :', this.props.navigation.state);
   }
 
-  initUser = (supplier, data, _this) => {
+  initUser = (supplier, data) => {
     let userInfo = {
       name: '',
       email: ''
@@ -72,9 +72,7 @@ class Login extends Component {
       case "google":
         userInfo.name = data.user.name
         userInfo.email = data.user.email    
-        console.log('this.props :', _this.props);
-        _this.props.init(userInfo)
-        console.log('google userInfo :', userInfo);  
+        this.props.init(userInfo)
         break;        
       case "kakao":
         userInfo.name = data.nickname
@@ -123,7 +121,7 @@ class Login extends Component {
     GoogleSignin.signIn().then((data) => {
       // create a new firebase credential with the token
       const credential = firebase.auth.GoogleAuthProvider.credential(data.idToken, data.accessToken)
-      _this.initUser("google",data, _this)      
+      _this.initUser("google",data)      
       return firebase.auth().signInAndRetrieveDataWithCredential(credential)
     }).then(() => {      
       _this.props.navigation.navigate('SelectIdol')
