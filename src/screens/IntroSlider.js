@@ -27,16 +27,16 @@ export default class IntroSlider extends Component {
             this.setState({ showRealApp: true });
         }  
         
-        componentDidMount() {
-            SplashScreen.hide();
-        }
+        // componentDidMount() {
+        //     SplashScreen.hide();
+        // }
         
         render() {
-            if(this.state.showRealApp) {
-            return (
-                <Login />
-            );
-            } else {
+            // if(this.state.showRealApp) {
+            // return (
+            //     <Login />
+            // );
+            // } else {
                 return (
                     <AppIntroSlider
                         slides={slides}
@@ -50,7 +50,7 @@ export default class IntroSlider extends Component {
                         buttonStyle={styles.button}
                     />
                 )
-            }
+            // }
         }
 }
 

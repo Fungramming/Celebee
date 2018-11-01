@@ -22,6 +22,7 @@ import Icon from 'react-native-vector-icons/AntDesign';
 
 import {createStackNavigator, createSwitchNavigator, createBottomTabNavigator, createDrawerNavigator} from 'react-navigation';
 import AuthValid from './src/screens/AuthValidScreen'
+import IntroSlider from './src/screens/IntroSlider'
 import Login from './src/screens/Login'
 import MyPage from './src/screens/MyPage'
 import SelectIdol from './src/screens/SelectIdol'

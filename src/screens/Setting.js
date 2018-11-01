@@ -15,15 +15,17 @@ class Setting extends Component {
 
   signOut = async () => {
     AsyncStorage.clear()
-    this.props.navigation.navigate('Logout')
+    this.props.navigation.navigate('Login')
   }
 
   render() {
     return (
-      <TouchableOpacity style={styles.container}>
+      <View style={styles.container}>
         <Text>Setting</Text>
-        <Text onPress={this.signOut}>로그아웃</Text>
-      </TouchableOpacity>
+        <TouchableOpacity >
+          <Button title="로그아웃" onPress={this.signOut}/>
+        </TouchableOpacity>
+      </View>
     );
   }
 }

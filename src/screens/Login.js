@@ -9,12 +9,18 @@ import {
   Alert
 } from "react-native";
 
+import SplashScreen from 'react-native-splash-screen';
+import AppIntroSlider from 'react-native-app-intro-slider';
+
 import LoadingSpinner from '../components/LoadingSpinner'
 import firebase from 'firebase'
 import { Container, Header, Content, Body, Icon, Button } from 'native-base';
 import RNKakaoLogins from 'react-native-kakao-logins'
 import { LoginManager, AccessToken } from 'react-native-fbsdk'
 import { GoogleSignin } from 'react-native-google-signin';
+
+// import AuthValid from './AuthValidScreen'
+// import IntroSlider from './IntroSlider'
 
 var config = {
   apiKey: "AIzaSyDI0yDEw3xg9eCQphgJbf95_RCIOPVlKH0",
@@ -29,10 +35,15 @@ firebase.initializeApp(config);
 class Login extends Component {
   constructor(props) {
     super(props)
-    this.state = { isLoading: false }
+    // this.loadApp()
+    this.state = { 
+      isLoading: false,
+      showRealApp: false,
+    }
   }
 
   componentDidMount() {
+    // SplashScreen.hide();
     GoogleSignin.configure({
       scopes: ['openid', 'email', 'profile'],
       shouldFetchBasicProfile: true,
@@ -42,9 +53,8 @@ class Login extends Component {
   }
 
   // 유저 토근 저장 
-  signIn = async (data) => {
+  saveUserToken = async (data) => {
     await AsyncStorage.setItem('userToken', data)
-    // this.props.navigation.navigate('SelectIdol')
   }
 
   _onLoginFacebook() {
@@ -61,16 +71,14 @@ class Login extends Component {
             this.setState({
               isLoading: true
             })
-            console.log('data.accessToken :', data.accessToken);
-
-            _this.signIn(data.accessToken)
-
             const credential = firebase.auth.FacebookAuthProvider.credential(data.accessToken);
             firebase.auth().signInAndRetrieveDataWithCredential(credential)
             .then(() => {
               this.setState({
                 isLoading: false
               })
+              _this.saveUserToken(credential.accessToken)
+              // _this.saveUserToken(data.accessToken)
               _this.props.navigation.navigate('SelectIdol')
             })
             .catch((error) => {
@@ -132,34 +140,50 @@ class Login extends Component {
   }
 
   render() {
-    return (
-      <Container style={styles.container}>
-        <StatusBar 
-          barStyle="light-content"
-        />
+      if(this.state.showRealApp) {
+        return (
+          <Container style={styles.container}>
+            <StatusBar 
+              barStyle="light-content"
+            />
 
-        <View style={styles.loginTextView}>
-          <Text style={styles.loginText}>로그인</Text>
-        </View>
+            <View style={styles.loginTextView}>
+              <Text style={styles.loginText}>로그인</Text>
+            </View>
 
-        <LoadingSpinner 
-          show={this.state.isLoading}
-        />
+            <LoadingSpinner 
+              show={this.state.isLoading}
+            />
 
-        <View style={styles.loginButtonView}>
-          <Button full rounded primary style={styles.F_btn} onPress={this._onLoginFacebook.bind(this)}>
-            <Text style={{color:'#fff', fontSize: 16}}>페이스북계정으로 로그인</Text>
-          </Button>
-          <Button full rounded primary style={styles.G_btn} onPress={this._onLoginGoggle.bind(this)}>
-            <Text style={{color:'#000', fontSize: 16}}>구글로계정으로 로그인</Text>
-          </Button>
-          <Button full rounded primary style={styles.K_btn} onPress={this._onLoginKakao.bind(this)}>         
-            <Text style={{color:'#000', fontSize: 16}}>카카오계정으로 로그인</Text>
-          </Button>
-        </View>
-        
-      </Container>
-    );
+            <View style={styles.loginButtonView}>
+              <Button full rounded primary style={styles.F_btn} onPress={this._onLoginFacebook.bind(this)}>
+                <Text style={{color:'#fff', fontSize: 16}}>페이스북계정으로 로그인</Text>
+              </Button>
+              <Button full rounded primary style={styles.G_btn} onPress={this._onLoginGoggle.bind(this)}>
+                <Text style={{color:'#000', fontSize: 16}}>구글로계정으로 로그인</Text>
+              </Button>
+              <Button full rounded primary style={styles.K_btn} onPress={this._onLoginKakao.bind(this)}>         
+                <Text style={{color:'#000', fontSize: 16}}>카카오계정으로 로그인</Text>
+              </Button>
+            </View>
+            
+          </Container>
+        );
+      } else {
+        return (
+          <AppIntroSlider
+            slides={slides}
+            showSkipButton={true}
+            hideNextButton={true}
+            onDone={() => this.setState({ showRealApp: true })}
+            onSkip={() => this.setState({ showRealApp: true })}
+            bottomButton
+            skipLabel='시작하기'
+            doneLabel='시작하기'
+            buttonStyle={styles.button}
+          />
+        )
+      }
   }
 }
 export default Login;
@@ -201,5 +225,75 @@ const styles = StyleSheet.create({
     marginTop: 10,
     backgroundColor: '#F1D905',
     borderRadius: 8,
+  },
+  image: {
+    width: 200,
+    height: 200,
+  },
+  button: {
+    color: 'white',
+    backgroundColor: 'rgba(0,0,0,0.3)',
+    // borderRadius: 15
+    margin: -20,
+    marginTop: 0,
+    marginBottom: -15,
   }
 });
+
+
+const slides = [
+  {
+      key: 's1',
+      title: '셀',
+      titleStyle: styles.title,
+      text: '셀레비 어플입니다.',
+      image: require('../../assets/logo_white.png'),
+      imageStyle: styles.image,
+      backgroundColor: '#722784', 
+  },
+  {
+      key: 's2',
+      title: '레',
+      titleStyle: styles.title,
+      text: '셀레비 어플입니다.',
+      image: require('../../assets/logo_white.png'),
+      imageStyle: styles.image,
+      backgroundColor: '#722784',
+  },
+  {
+      key: 's3',
+      title: '비',
+      titleStyle: styles.title,
+      text: '셀레비 어플입니다.',
+      image: require('../../assets/logo_white.png'),
+      imageStyle: styles.image,
+      backgroundColor: '#722784', 
+  },
+  {
+      key: 's4',
+      title: '어',
+      titleStyle: styles.title,
+      text: '셀레비 어플입니다.',
+      image: require('../../assets/logo_white.png'),
+      imageStyle: styles.image,
+      backgroundColor: '#722784',
+  },
+  {
+      key: 's5',
+      title: '플',
+      titleStyle: styles.title,
+      text: '셀레비 어플입니다.',
+      image: require('../../assets/logo_white.png'),
+      imageStyle: styles.image,
+      backgroundColor: '#722784',
+  },
+  {
+      key: 's6',
+      title: '!',
+      titleStyle: styles.title,
+      text: '셀레비 어플입니다.',
+      image: require('../../assets/logo_white.png'),
+      imageStyle: styles.image,
+      backgroundColor: '#722784',
+  },
+];
