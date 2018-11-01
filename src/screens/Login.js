@@ -5,7 +5,8 @@ import {
   StyleSheet,
   StatusBar,
   ActivityIndicator,
-  Alert
+  Alert,
+  AsyncStorage
 } from "react-native";
 
 import AppIntroSlider from 'react-native-app-intro-slider';
@@ -109,7 +110,6 @@ class Login extends Component {
                 })
 
                 _this.saveUserToken(credential.accessToken)
-                // _this.saveUserToken(data.accessToken)
                 _this.props.navigation.navigate('SelectIdol')
                 })
                 .catch((error) => {
