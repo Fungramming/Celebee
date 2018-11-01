@@ -10,7 +10,6 @@
   },
   "dependencies": {
     "firebase": "^5.5.5",
-    "native-base": "^2.8.1",
     "react": "16.5.2",
     "react-native": "0.57.1",
     "react-native-app-intro-slider": "^1.0.1",

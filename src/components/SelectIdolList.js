@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
-import { Button } from 'native-base';
 
 class SelectIdolList extends Component {
   state = {

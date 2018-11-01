@@ -1,18 +1,6 @@
 import React, { Component } from 'react'
 import { Text, StyleSheet, View, ListView, ScrollView, TouchableOpacity, StatusBar, Button } from 'react-native'
-import { Container, Content, Icon, Thumbnail, Header, Left, Right, Body,} from 'native-base';
 import SelectIdolList from '../components/SelectIdolList'
-
-// class IdolCard extends Component {
-//   render() {
-//       return (
-//         <TouchableOpacity style={styles.idolCard}>
-//           <Text style={styles.idolPhoto}></Text>
-//           <Text style={styles.idolName}>{this.props.name}</Text>
-//         </TouchableOpacity>
-//       )
-//   }
-// }
 
 class SelectIdol extends Component {
   constructor(props) {
@@ -33,44 +21,43 @@ class SelectIdol extends Component {
   
   render() {
     return (
-      <Container style={styles.container}>
+      <View style={styles.container}>
         <StatusBar 
           barStyle="dark-content"
         />
-        <Content>
 
-          <View style={styles.headerTextWrap}>
-            <Text style={styles.headerText}>좋아하는 아이돌을 팔로우해보세요!</Text>
-            <Text style={styles.headerText}>스케쥴과 클립, 뉴스까지 받아보실 수 있습니다.</Text>
-          </View>
+        <View style={styles.headerTextWrap}>
+          <Text style={styles.headerText}>좋아하는 아이돌을 팔로우해보세요!</Text>
+          <Text style={styles.headerText}>스케쥴과 클립, 뉴스까지 받아보실 수 있습니다.</Text>
+        </View>
+        <Text style={styles.selectHeaderText}>내 최애 아이돌 선택하기</Text>
+        <View style={{flexDirection: 'row'}}>
+          <TouchableOpacity>
+            <Text style={styles.selectFilterText}>인기순</Text>
+          </TouchableOpacity>
+          <TouchableOpacity>
+            <Text style={styles.selectFilterText}>가나다순</Text>
+          </TouchableOpacity>
+        </View>
 
-          <View style={styles.selectHeaderTextWrap}>
-            <Text>
-              <Text style={styles.selectHeaderText}>내 최애 아이돌 선택하기</Text>
-            </Text>
-            <View style={{flexDirection: 'row'}}>
-              <Text style={styles.selectFilterText}>인기순</Text>
-              <Text style={styles.selectFilterText}>가나다순</Text>
-            </View>
-          </View>
+        <ListView 
+          // horizontal={true}
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{
+            alignItems: 'flex-start',
+            // paddingStart: 24,
+            // paddingEnd: 24
+          }}
+          dataSource={this.state.idols}
+          renderRow={ (rowData) => <SelectIdolList name={rowData}></SelectIdolList> }
+        >
+        </ListView>
 
-          <ListView 
-            // horizontal={true}
-            showsVerticalScrollIndicator={false}
-            contentContainerStyle={{
-              alignItems: 'flex-start',
-              // paddingStart: 24,
-              // paddingEnd: 24
-            }}
-            dataSource={this.state.idols}
-            renderRow={(rowData)=><SelectIdolList name={rowData}></SelectIdolList>}
-          >
-          </ListView>
-        </Content>
         <View style={styles.selectBtn}>
           <Button title="선택완료" onPress={() => this.goToMain()}/>
         </View>
-      </Container>
+
+      </View>
     );
   }
 }
@@ -83,9 +70,6 @@ const styles = StyleSheet.create({
     paddingRight: 24,
   },
   headerTextWrap: {
-    flex: 0.2,
-    alignItems: 'flex-start',
-    justifyContent: 'center',
     marginTop: 60,
   },
   headerText: {
@@ -93,12 +77,13 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginTop: 5
   },
-  selectHeaderTextWrap: {
-    marginTop: 35,
-  },
+  // selectHeaderTextWrap: {
+  //   marginTop: 35,
+  // },
   selectHeaderText: {
-    fontSize: 20,
+    fontSize: 22,
     fontWeight: 'bold',
+    marginTop: 20,
   },
   selectFilterText: {
     paddingRight: 15,

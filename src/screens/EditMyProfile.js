@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
 import {Button,Platform, Text, View, StyleSheet,TouchableOpacity, Dimensions, Image, TextInput, StatusBar } from 'react-native'
-import { SafeAreaView } from 'react-navigation';
-import { createStackNavigator } from 'react-navigation';
 import { connect } from 'react-redux'
 import { updateName } from '../actions/users'
 

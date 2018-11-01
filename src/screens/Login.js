@@ -4,15 +4,14 @@ import {
   Text,
   StyleSheet,
   StatusBar,
-  ActivityIndicator,
   Alert,
-  AsyncStorage
+  AsyncStorage,
+  TouchableOpacity
 } from "react-native";
 
 import AppIntroSlider from 'react-native-app-intro-slider';
 import LoadingSpinner from '../components/LoadingSpinner'
 import firebase from 'firebase'
-import { Container, Header, Content, Body, Icon, Button } from 'native-base';
 import RNKakaoLogins from 'react-native-kakao-logins'
 import { LoginManager, AccessToken } from 'react-native-fbsdk'
 import { GoogleSignin } from 'react-native-google-signin';
@@ -155,10 +154,6 @@ class Login extends Component {
   _onLoginKakao = () => {
     var _this = this;
 
-    this.setState({
-      isLoading: true
-    })
-
     RNKakaoLogins.login((error,result) => {
       if (error) {
         // Alert.alert('error: ', error )
@@ -173,6 +168,9 @@ class Login extends Component {
             _this.initUser("kakao", result)
           });
       }
+      this.setState({
+        isLoading: true
+      })
       _this.props.navigation.navigate('SelectIdol')
     })
   }
@@ -180,7 +178,7 @@ class Login extends Component {
   render() {
     if(this.state.showRealApp) {
       return (
-        <Container style={styles.container}>
+        <View style={styles.container}>
           <StatusBar 
             barStyle="light-content"
           />
@@ -194,18 +192,18 @@ class Login extends Component {
           />
 
           <View style={styles.loginButtonView}>
-            <Button full rounded primary style={styles.F_btn} onPress={this._onLoginFacebook.bind(this)}>
-              <Text style={{color:'#fff', fontSize: 16}}>페이스북계정으로 로그인</Text>
-            </Button>
-            <Button full rounded primary style={styles.G_btn} onPress={this._onLoginGoggle.bind(this)}>
-              <Text style={{color:'#000', fontSize: 16}}>구글로계정으로 로그인</Text>
-            </Button>
-            <Button full rounded primary style={styles.K_btn} onPress={this._onLoginKakao.bind(this)}>         
-              <Text style={{color:'#000', fontSize: 16}}>카카오계정으로 로그인</Text>
-            </Button>
+            <TouchableOpacity style={styles.F_btn} onPress={this._onLoginFacebook.bind(this)}>
+              <Text style={{color:'#fff', fontSize: 16, textAlign: 'center',}}>페이스북계정으로 로그인</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.G_btn} onPress={this._onLoginGoggle.bind(this)}>
+              <Text style={{color:'#000', fontSize: 16, textAlign: 'center',}}>구글계정으로 로그인</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.K_btn} onPress={this._onLoginKakao.bind(this)}>         
+              <Text style={{color:'#000', fontSize: 16, textAlign: 'center',}}>카카오계정으로 로그인</Text>
+            </TouchableOpacity>
           </View>
           
-        </Container>
+        </View>
       );
     } else {
       return (
@@ -251,14 +249,15 @@ const styles = StyleSheet.create({
     height: 200,
   },
   loginTextView: {
-    flex: 2,
+    flex: 1,
     alignSelf: 'stretch' ,
     marginTop: 70
   },
   loginButtonView: {
     flex: 1,
     alignContent: 'flex-end',
-    justifyContent: 'flex-end'
+    justifyContent: 'flex-end',
+    marginBottom: 50
   },
   loginText: {
     fontSize: 40,
@@ -266,28 +265,48 @@ const styles = StyleSheet.create({
     color: '#fff',
   },
   F_btn: {
+    alignSelf: 'center',
+    justifyContent: 'center',
+    width: '100%',
+    padding: 15,
     marginTop: 10,
     backgroundColor: '#365899',
-    borderRadius: 8,
+    borderRadius: 6,
   },
   G_btn: {
+    alignSelf: 'center',
+    justifyContent: 'center',
+    width: '100%',
+    padding: 15,
     marginTop: 10,
     backgroundColor: '#fff',
-    borderRadius: 8,
+    borderRadius: 6,
   },
   K_btn: {
+    alignSelf: 'center',
+    justifyContent: 'center',
+    width: '100%',
+    padding: 15,
     marginTop: 10,
     backgroundColor: '#F1D905',
-    borderRadius: 8,
+    borderRadius: 6,
   },
   button: {
     color: 'white',
     backgroundColor: 'rgba(0,0,0,0.3)',
     // borderRadius: 15,
-    margin: -20,
-    marginTop: -5,
-    marginBottom: -5
-  }
+    // margin: -20,
+    // marginTop: -5,
+    marginBottom: 'auto'
+  },
+  title: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    color: 'white',
+    backgroundColor: 'transparent',
+    textAlign: 'center',
+    marginTop: 16,
+},
 });
 
 const slides = [
