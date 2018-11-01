@@ -11,6 +11,20 @@ class SelectIdol extends Component {
     }
   }
 
+  componentDidMount() {
+    this.getIdolList()
+  }
+  
+  getIdolList =() => {
+    fetch('http://celebee-env-1.gimjpxetg2.ap-northeast-2.elasticbeanstalk.com/api/v1.0/idols/')
+    .then( (res) => {
+      console.log('res :', res);
+    })
+    .catch( (err) => {
+      console.log('err :', err);
+    })
+  }
+
   goToMain = () => {
     this.props.navigation.navigate('AppTabNavigator')
   }
