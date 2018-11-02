@@ -2,4 +2,5 @@
     <string name="app_name">Celebee</string>
     <string name="facebook_app_id">2153813784834132</string>
     <string name="fb_login_protocol_scheme">fb2153813784834132</string>
+    <string name="kakao_app_key">8f6aa0665b97ed8f31c4918e3a5bcdeb</string>
 </resources>
