@@ -24,22 +24,21 @@ class EditMyProfile extends Component {
         }
     }
     
-    static navigationOptions =  ({navigation}) => {
+    static navigationOptions =  ({navigation}) => {        
         const {params = {}} = navigation.state;
         return {
             headerRight: (
             // <TouchableOpacity ref={component => this.submit = component}>
             <TouchableOpacity onPress={params.handleSubmit}>
-              {/* <View style={{ paddingHorizontal: 15 }}> */}
-                <Button onPress={this.onSubmitProfile} title="완료"/>
-              {/* </View> */}
+                <Text style={{padding: 10}}>완료</Text>
             </TouchableOpacity>
           )
         }
     };
    
     componentDidMount() {
-        this.props.navigation.setParams({ handleSubmit: this.onSubmitProfile.bind(this) });      
+        this.props.navigation.setParams({ handleSubmit: this.onSubmitProfile.bind(this) });   
+        console.log('this.props :', this.props);   
     }
     onSubmitProfile = () => {
         if(this.state.userName.trim() === '') {
@@ -112,9 +111,6 @@ class EditMyProfile extends Component {
                 </TouchableOpacity>     
             </View>
         </View>
-        <TouchableOpacity ref={component => this.submit = component} style={styles.submitButton} onPress={this.onSubmitProfile}>
-            <Text>SUBMIT</Text>
-        </TouchableOpacity>
       </View>
     )
   }
