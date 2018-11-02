@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, StyleSheet, View, ListView, ScrollView, TouchableOpacity, StatusBar, Button } from 'react-native'
+import { Text, StyleSheet, View, ScrollView, TouchableOpacity, StatusBar, Button, FlatList } from 'react-native'
 import SelectIdolList from '../components/SelectIdolList'
 
 class SelectIdol extends Component {
@@ -8,7 +8,7 @@ class SelectIdol extends Component {
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
         idols : ds.cloneWithRows(['BTS','뉴이스트','트와이스','세븐틴','엑소','워너원','비투비', 'BTS','뉴이스트','트와이스','세븐틴','엑소','워너원','비투비', 'BTS','뉴이스트','트와이스','세븐틴','엑소','워너원','비투비']),
-        idolList: ''
+        idolList: [],
     }
   }
 
@@ -20,9 +20,14 @@ class SelectIdol extends Component {
     fetch('http://celebee-env-1.gimjpxetg2.ap-northeast-2.elasticbeanstalk.com/api/v1.0/idols/')
     .then( (res) => res.json() )
     .then( (json) => {
-      console.log('res :', json.idols);
-      this.setState({idolList: json.idols})
+      // console.log('res :', json.idols);
+      this.setState({ idolList: json.idols })
       console.log('this.state.idolList :', this.state.idolList);
+      // this.state.idolList.map((idol, i) => {
+      //   this.setState({ ...this.state, idolName: idol.idol_name })
+        // this.setState({ ...this.state, idolName: ds.cloneWithRows([idol.idol_name]) })
+        // console.log('this.state.idolName :', this.state.idolName);
+      // })
     })
     .catch( (err) => {
       console.log('err :', err);
@@ -46,7 +51,7 @@ class SelectIdol extends Component {
 
         <View style={styles.headerTextWrap}>
           <Text style={styles.headerText}>좋아하는 아이돌을 팔로우해보세요!</Text>
-          <Text style={styles.headerText}>스케쥴과 클립, 뉴스까지 받아보실 수 있습니다.</Text>
+          <Text style={styles.headerText}>스케줄과 클립, 뉴스까지 받아보실 수 있습니다.</Text>
         </View>
         <Text style={styles.selectHeaderText}>내 최애 아이돌 선택하기</Text>
         <View style={{flexDirection: 'row'}}>
@@ -58,18 +63,13 @@ class SelectIdol extends Component {
           </TouchableOpacity>
         </View>
 
-        <ListView 
-          // horizontal={true}
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{
-            alignItems: 'flex-start',
-            // paddingStart: 24,
-            // paddingEnd: 24
+        <FlatList
+          data={this.state.idolList}
+          renderItem={({item}) => {
+            return <SelectIdolList name={item.idol_name} followNum={item.total_followers}></SelectIdolList>
           }}
-          dataSource={this.state.idols}
-          renderRow={ (rowData) => <SelectIdolList name={rowData}></SelectIdolList> }
-        >
-        </ListView>
+          keyExtractor={(item, index) => index.toString()} >
+        </FlatList>
 
         <View style={styles.selectBtn}>
           <Button title="선택완료" onPress={() => this.goToMain()}/>
