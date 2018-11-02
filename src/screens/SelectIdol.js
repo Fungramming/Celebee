@@ -5,9 +5,9 @@ import SelectIdolList from '../components/SelectIdolList'
 class SelectIdol extends Component {
   constructor(props) {
     super(props);
-    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    // const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
-        idols : ds.cloneWithRows(['BTS','뉴이스트','트와이스','세븐틴','엑소','워너원','비투비', 'BTS','뉴이스트','트와이스','세븐틴','엑소','워너원','비투비', 'BTS','뉴이스트','트와이스','세븐틴','엑소','워너원','비투비']),
+        // idols : ds.cloneWithRows(['BTS','뉴이스트','트와이스','세븐틴','엑소','워너원','비투비', 'BTS','뉴이스트','트와이스','세븐틴','엑소','워너원','비투비', 'BTS','뉴이스트','트와이스','세븐틴','엑소','워너원','비투비']),
         idolList: [],
     }
   }
@@ -20,14 +20,7 @@ class SelectIdol extends Component {
     fetch('http://celebee-env-1.gimjpxetg2.ap-northeast-2.elasticbeanstalk.com/api/v1.0/idols/')
     .then( (res) => res.json() )
     .then( (json) => {
-      // console.log('res :', json.idols);
       this.setState({ idolList: json.idols })
-      console.log('this.state.idolList :', this.state.idolList);
-      // this.state.idolList.map((idol, i) => {
-      //   this.setState({ ...this.state, idolName: idol.idol_name })
-        // this.setState({ ...this.state, idolName: ds.cloneWithRows([idol.idol_name]) })
-        // console.log('this.state.idolName :', this.state.idolName);
-      // })
     })
     .catch( (err) => {
       console.log('err :', err);
@@ -64,6 +57,7 @@ class SelectIdol extends Component {
         </View>
 
         <FlatList
+          showsVerticalScrollIndicator={false}
           data={this.state.idolList}
           renderItem={({item}) => {
             return <SelectIdolList name={item.idol_name} followNum={item.total_followers}></SelectIdolList>
