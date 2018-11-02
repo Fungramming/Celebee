@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, StyleSheet, View, ScrollView, TouchableOpacity, StatusBar, Button, FlatList } from 'react-native'
+import { Text, StyleSheet, View, ScrollView, TouchableOpacity, StatusBar, Button, FlatList, Dimensions } from 'react-native'
 import SelectIdolList from '../components/SelectIdolList'
 
 class SelectIdol extends Component {
@@ -66,9 +66,8 @@ class SelectIdol extends Component {
         </FlatList>
 
         <View style={styles.selectBtn}>
-          <Button title="선택완료" onPress={() => this.goToMain()}/>
+          <Button title="선택완료" color='#fff' onPress={() => this.goToMain()}/>
         </View>
-
       </View>
     );
   }
@@ -104,7 +103,10 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
   selectBtn: {
-    marginTop: 15,
-    marginBottom: 30,
+    marginLeft: -24,
+    paddingTop: 15,
+    paddingBottom: 15,
+    width: Dimensions.get('window').width,
+    backgroundColor: '#722784'
   },
 });

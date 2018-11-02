@@ -52,14 +52,15 @@ const styles = StyleSheet.create({
     myIdol: {
         height: 180,
         width: Dimensions.get('window').width,
-        paddingLeft: 15
+        // paddingLeft: 15
     },
     subTitle : {
         marginLeft: 12,
         marginBottom: 20,
-        width: 80,
+        width: 100,
         fontWeight: '600',
-        fontSize: 20
+        fontSize: 20,
+        // paddingLeft: 15
     },
     idolCard: {
         justifyContent: 'flex-start',
@@ -71,7 +72,7 @@ const styles = StyleSheet.create({
         borderRadius: 25,
         marginBottom:10,
         width: 60,
-        height: 60
+        height: 60,
     },
     idolName: {
         width: 80,
