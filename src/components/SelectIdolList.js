@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, Image, Dimensions, TouchableOpacity } from "react-native";
 
 class SelectIdolList extends Component {
   state = {
@@ -26,7 +26,7 @@ class SelectIdolList extends Component {
           />
           <View style={styles.idolTextGroup}>
             <Text style={styles.idolName}>{this.props.name}</Text>
-            <Text style={styles.followingNum}>198,734명이 팔로우 합니다.</Text>
+            <Text style={styles.followingNum}>{this.props.followNum}명이 팔로우합니다.</Text>
           </View>
           <View>
             <TouchableOpacity style={buttonBg} onPress={ () => this._onPress() }>
@@ -48,12 +48,10 @@ const styles = StyleSheet.create({
   },
   idolCard: {
     flexDirection: 'row',
-    justifyContent: 'flex-start',
-    alignItems: 'flex-start',
   },
   idolPhoto: {
       backgroundColor: '#dedede',
-      borderRadius: 38,
+      borderRadius: 25,
       marginBottom: 10,
       marginRight: 15,
       width: 73,
@@ -62,8 +60,9 @@ const styles = StyleSheet.create({
   idolTextGroup: {
     flexDirection: 'column',
     textAlign: "left",
-    marginTop: 10,
+    marginTop: 15,
     marginRight: 15,
+    width: 140,
   },
   idolName: {
     fontSize: 19,
@@ -74,7 +73,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
   followingBtn: {
-    marginTop: 12,
+    marginTop: 15,
     paddingLeft: 18,
     paddingRight: 18,
     paddingTop: 11,
@@ -83,7 +82,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   followBtn: {
-    marginTop: 12,
+    marginTop: 15,
     paddingLeft: 18,
     paddingRight: 18,
     paddingTop: 11,
