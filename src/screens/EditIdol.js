@@ -2,17 +2,6 @@ import React, { Component } from 'react'
 import { Text, View, ListView, StyleSheet, Dimensions,TouchableOpacity, Image, FlatList } from 'react-native'
 import SelectIdolList from '../components/SelectIdolList'
 
-class IdolCard extends Component {
-    render() {
-        return (
-            <View style={styles.idolCard}>
-                <Image style={styles.idolPhoto} />
-                <Text style={styles.idolName}>{this.props.name}</Text>
-            </View>
-        )
-    }
-}
-
 export default class MyIdol extends Component {
     constructor(props) {
         super(props);
@@ -74,6 +63,7 @@ export default class MyIdol extends Component {
 
 const styles = StyleSheet.create({
     container: {
+      flex: 1,
       backgroundColor: '#fff',
       height: Dimensions.get('window').height,
     },
@@ -89,10 +79,12 @@ const styles = StyleSheet.create({
       fontSize: 20
     },
     followList: {
-      height: 220
+      height: '30%',
+      // height: 0
+      
     },
     unfollowList: {
-      height: 260
+      height: '50%',
     },
     idolCard: {
         justifyContent: 'flex-start',
