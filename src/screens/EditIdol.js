@@ -3,10 +3,11 @@ import { Text, View, ListView, StyleSheet, Dimensions,TouchableOpacity, Image, F
 import SelectIdolList from '../components/SelectIdolList'
 
 export default class MyIdol extends Component {
-    constructor(props) {
+  constructor(props) {
         super(props);
         this.state = {
           idolList: [],
+          toggleIdol: true
         }
     }
 
@@ -25,14 +26,25 @@ export default class MyIdol extends Component {
       })
     }
 
+    _onToggle() {
+      const toggle = !this.state.toggleIdol;
+      this.setState({toggleIdol: toggle})
+    }
+
     render() {
+
+      const {toggleIdol} = this.state;
+      const toggleValue = toggleIdol ? "접기" : "펼치기";
+
         return (
           <View style={styles.container}>
             <View style={styles.myIdol}>
 
               <Text style={styles.subTitle}>내가 팔로우한 아이돌</Text>
-              <Text style={{position:"absolute", top: 25, right: 25}}>접기</Text>
-              <View style={styles.followList}>
+              <TouchableOpacity style={{position:"absolute", top: 25, right: 25}} onPress={ () => this._onToggle() }>
+                <Text>{toggleValue}</Text>
+              </TouchableOpacity>
+              <View style={ this.state.toggleIdol ? styles.followList : styles.followListFalse }>
                 <FlatList
                   showsVerticalScrollIndicator={false}
                   data={this.state.idolList}
@@ -44,7 +56,7 @@ export default class MyIdol extends Component {
               </View>
 
               <Text style={styles.subTitle}>내가 팔로우하지 않는 아이돌</Text>
-              <View style={styles.unfollowList}>
+              <View style={this.state.toggleIdol ? styles.unfollowList : styles.unfollowListFalse}>
                 <FlatList
                   showsVerticalScrollIndicator={false}
                   data={this.state.idolList}
@@ -80,11 +92,17 @@ const styles = StyleSheet.create({
     },
     followList: {
       height: '30%',
-      // height: 0
-      
+    },
+    followListFalse: {
+      height: 0
     },
     unfollowList: {
       height: '50%',
+      marginBottom: -15
+    },
+    unfollowListFalse: {
+      height: '80%',
+      marginBottom: -15
     },
     idolCard: {
         justifyContent: 'flex-start',

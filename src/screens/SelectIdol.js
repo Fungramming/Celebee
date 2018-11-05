@@ -5,10 +5,9 @@ import SelectIdolList from '../components/SelectIdolList'
 class SelectIdol extends Component {
   constructor(props) {
     super(props);
-    // const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
-        // idols : ds.cloneWithRows(['BTS','뉴이스트','트와이스','세븐틴','엑소','워너원','비투비', 'BTS','뉴이스트','트와이스','세븐틴','엑소','워너원','비투비', 'BTS','뉴이스트','트와이스','세븐틴','엑소','워너원','비투비']),
         idolList: [],
+        // sortList: []
     }
   }
 
@@ -21,6 +20,12 @@ class SelectIdol extends Component {
     .then( (res) => res.json() )
     .then( (json) => {
       this.setState({ idolList: json.idols })
+      console.log('json.idols :', json.idols);
+      // this.setState({ sortList: json.idols.sort() })
+      // this.setState({ sortList: json.idols.sort((a, b) => {
+      //   return a.idol_name < b.idol_name ? -1 : a.name > b.name ? 1 : 0;
+      // }) })
+      console.log('this.state.sortList :', this.state.sortList);
     })
     .catch( (err) => {
       console.log('err :', err);
@@ -58,6 +63,7 @@ class SelectIdol extends Component {
 
         <FlatList
           showsVerticalScrollIndicator={false}
+          // data={this.state.sortList}
           data={this.state.idolList}
           renderItem={({item}) => {
             return <SelectIdolList name={item.idol_name} followNum={item.total_followers}></SelectIdolList>
