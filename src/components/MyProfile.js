@@ -8,9 +8,7 @@ class MyProfile extends Component {
         userName : this.props.userName,
     }
   }  
-  componentDidMount() {
-    console.log(this.state) 
-}
+  
   render() {
     return (
       <View style={styles.myProfileBox}>

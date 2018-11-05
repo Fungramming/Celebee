@@ -27,10 +27,11 @@ class EditMyProfile extends Component {
     static navigationOptions =  ({navigation}) => {        
         const {params = {}} = navigation.state;
         return {
+            headerTitle: "프로필 수정",
             headerRight: (
             // <TouchableOpacity ref={component => this.submit = component}>
             <TouchableOpacity onPress={params.handleSubmit}>
-                <Text style={{padding: 10}}>완료</Text>
+                <Text style={{padding: 25}}>완료</Text>
             </TouchableOpacity>
           )
         }
@@ -38,13 +39,14 @@ class EditMyProfile extends Component {
    
     componentDidMount() {
         this.props.navigation.setParams({ handleSubmit: this.onSubmitProfile.bind(this) });   
-        console.log('this.props :', this.props);   
     }
     onSubmitProfile = () => {
         if(this.state.userName.trim() === '') {
             return;
         }
         this.props.update(this.state.userName);
+        console.log('this.state.userName :', this.state.userName);
+        this.props.navigation.state.params.onNavigateBack(this.state.userName)
         this.props.navigation.goBack()
     }
     onChangeName = (value) => {
