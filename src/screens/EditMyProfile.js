@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
 import {Button,Platform, Text, View, StyleSheet,TouchableOpacity, Dimensions, Image, TextInput, StatusBar } from 'react-native'
-import { SafeAreaView } from 'react-navigation';
-import { createStackNavigator } from 'react-navigation';
 import { connect } from 'react-redux'
 import { updateName } from '../actions/users'
 
@@ -12,40 +10,43 @@ import Icon from 'react-native-vector-icons/AntDesign';
 const options = {
     title: '사진 등록',
     storageOptions: {
-      skipBackup: true,
-      path: 'images',
+    skipBackup: true,
+    path: 'images',
     },
-  };
+};
 class EditMyProfile extends Component {    
     constructor(props){
         super(props)
         this.state = {
             userName : this.props.userName,
+            // avatarSource : require('../../assets/logo_white.png'),
             avatarSource : "https://techcrunch.com/wp-content/uploads/2018/05/snap-dollar-eyes_preview.png?w=730&crop=1"
         }
     }
     
-    static navigationOptions =  ({navigation}) => {
+    static navigationOptions =  ({navigation}) => {        
         const {params = {}} = navigation.state;
         return {
+            headerTitle: "프로필 수정",
             headerRight: (
+            // <TouchableOpacity ref={component => this.submit = component}>
             <TouchableOpacity onPress={params.handleSubmit}>
-              <View style={{ paddingHorizontal: 15 }}>
-                <Icon name="setting" size={14} />
-              </View>
+                <Text style={{padding: 25}}>완료</Text>
             </TouchableOpacity>
           )
         }
     };
    
     componentDidMount() {
-        this.props.navigation.setParams({ handleSubmit: this.onSubmitProfile.bind(this) });      
+        this.props.navigation.setParams({ handleSubmit: this.onSubmitProfile.bind(this) });   
     }
     onSubmitProfile = () => {
         if(this.state.userName.trim() === '') {
             return;
         }
         this.props.update(this.state.userName);
+        console.log('this.state.userName :', this.state.userName);
+        this.props.navigation.state.params.onNavigateBack(this.state.userName)
         this.props.navigation.goBack()
     }
     onChangeName = (value) => {
@@ -108,13 +109,10 @@ class EditMyProfile extends Component {
                     onChangeText = {this.onChangeName}>
                 </TextInput>   
                 <TouchableOpacity style={styles.closeCircle} onPress={this.clearText}>
-                    <Icon name="closecircleo"></Icon>
+                    <Icon name="closecircleo" size={24}></Icon>
                 </TouchableOpacity>     
             </View>
         </View>
-        <TouchableOpacity  ref={component => this.submit = component} style={styles.submitButton} onPress={this.onSubmitProfile}>
-            <Text>SUBMIT</Text>
-        </TouchableOpacity>
       </View>
     )
   }
@@ -155,7 +153,7 @@ const styles = StyleSheet.create({
     },
     closeCircle: {
         position: "absolute",
-        top: 28,
+        top: 5,
         right: 0,
         fontSize: 15
     },
@@ -168,7 +166,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
     return {
-        userName: state.user.userName,   // Mount 될때 initialState 를 가져옴 , this.props 로. users 는 actios 에서의 users.js 의 이름
+        userName: state.user.userInfo.name,   // Mount 될때 initialState 를 가져옴 , this.props 로. users 는 actios 에서의 users.js 의 이름
     }
 }
 

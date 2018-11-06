@@ -15,11 +15,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "212649232198-4vb4qqkmjm9eqoc6nhcfa8mupckjq1j0.apps.googleusercontent.com",
+          "client_id": "212649232198-lbuq98lucbvt160c4ft6pkt335414srl.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.celebee",
-            "certificate_hash": "b708501a9b1c8ca1f8f4defea97cde04ae95d368"
+            "certificate_hash": "a477f7090f298d4c321dda1fd6d4d0bd68709d88"
           }
         },
         {
@@ -40,14 +40,14 @@
           "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "212649232198-nubs1f9uftgojhc5f87r3j6c4cklj3hv.apps.googleusercontent.com",
+              "client_id": "212649232198-pdr490ljglutsa1lmo41fcotq8i2pec5.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "212649232198-0u4vbcte8eub8kplhil8u9svh62rrasd.apps.googleusercontent.com",
+              "client_id": "212649232198-dalhs111vepbcj9nla7i9d6g49n5tosa.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "org.reactjs.native.example.Celebee"
+                "bundle_id": "com.google.firebase.auth.kakao.KakaoLoginIOS"
               }
             }
           ]

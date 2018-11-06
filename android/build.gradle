@@ -24,8 +24,8 @@ buildscript {
 allprojects {
     repositories {
         mavenLocal()
-        maven {url "https://maven.google.com"} // <--- this should be added and should be above jcenter
         google()
+        maven {url "https://maven.google.com"}
         jcenter()
         maven {
             // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
@@ -37,6 +37,12 @@ allprojects {
     }
 }
 
+subprojects {
+    repositories {
+        mavenCentral()
+        maven { url 'http://devrepo.kakao.com:8088/nexus/content/groups/public/' }
+    }
+}
 
 task wrapper(type: Wrapper) {
     gradleVersion = '4.4'

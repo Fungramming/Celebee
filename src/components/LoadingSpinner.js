@@ -17,22 +17,13 @@ class LoadingSpinner extends Component {
   render() {
     const animating = this.state.animating
     return (
-      <View style = {styles.container}>
+      <View style = {{opacity: (this.props.show) ? 1: 0 }}>
         <ActivityIndicator
             animating = {animating}
             // color = '#fff'
-            size = "large"
-            style = {styles.activityIndicator}/>
+            size = "large"/>
       </View>
     )
   }
 }
 export default LoadingSpinner;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center'
-  }
-});
