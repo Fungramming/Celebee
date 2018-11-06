@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View, ListView, StyleSheet, Dimensions,TouchableOpacity, Image, FlatList } from 'react-native'
+import { Text, View, ScrollView, StyleSheet, Dimensions,TouchableOpacity, Image, FlatList } from 'react-native'
 import SelectIdolList from '../components/SelectIdolList'
 
 export default class MyIdol extends Component {
@@ -38,7 +38,7 @@ export default class MyIdol extends Component {
 
         return (
           <View style={styles.container}>
-            <View style={styles.myIdol}>
+            <ScrollView showsVerticalScrollIndicator={false} style={styles.myIdol}>
 
               <Text style={styles.subTitle}>내가 팔로우한 아이돌</Text>
               <TouchableOpacity style={{position:"absolute", top: 25, right: 25}} onPress={ () => this._onToggle() }>
@@ -67,7 +67,7 @@ export default class MyIdol extends Component {
                 </FlatList>
               </View>
 
-            </View>
+            </ScrollView>
           </View>
         )
     }
@@ -91,18 +91,18 @@ const styles = StyleSheet.create({
       fontSize: 20
     },
     followList: {
-      height: '30%',
+      // height: '30%',
     },
     followListFalse: {
       height: 0
     },
     unfollowList: {
-      height: '50%',
-      marginBottom: -15
+      // height: '50%',
+      marginBottom: 15
     },
     unfollowListFalse: {
-      height: '80%',
-      marginBottom: -15
+      // height: '80%',
+      marginBottom: 15
     },
     idolCard: {
         justifyContent: 'flex-start',

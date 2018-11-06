@@ -43,34 +43,35 @@ class SelectIdol extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <StatusBar 
-          barStyle="dark-content"
-        />
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <StatusBar 
+            barStyle="dark-content"
+          />
 
-        <View style={styles.headerTextWrap}>
-          <Text style={styles.headerText}>좋아하는 아이돌을 팔로우해보세요!</Text>
-          <Text style={styles.headerText}>스케줄과 클립, 뉴스까지 받아보실 수 있습니다.</Text>
-        </View>
-        <Text style={styles.selectHeaderText}>내 최애 아이돌 선택하기</Text>
-        <View style={{flexDirection: 'row'}}>
-          <TouchableOpacity>
-            <Text style={styles.selectFilterText}>인기순</Text>
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <Text style={styles.selectFilterText}>가나다순</Text>
-          </TouchableOpacity>
-        </View>
+          <View style={styles.headerTextWrap}>
+            <Text style={styles.headerText}>좋아하는 아이돌을 팔로우해보세요!</Text>
+            <Text style={styles.headerText}>스케줄과 클립, 뉴스까지 받아보실 수 있습니다.</Text>
+          </View>
+          <Text style={styles.selectHeaderText}>내 최애 아이돌 선택하기</Text>
+          <View style={{flexDirection: 'row'}}>
+            <TouchableOpacity>
+              <Text style={styles.selectFilterText}>인기순</Text>
+            </TouchableOpacity>
+            <TouchableOpacity>
+              <Text style={styles.selectFilterText}>가나다순</Text>
+            </TouchableOpacity>
+          </View>
 
-        <FlatList
-          showsVerticalScrollIndicator={false}
-          // data={this.state.sortList}
-          data={this.state.idolList}
-          renderItem={({item}) => {
-            return <SelectIdolList name={item.idol_name} followNum={item.total_followers}></SelectIdolList>
-          }}
-          keyExtractor={(item, index) => index.toString()} >
-        </FlatList>
-
+          <FlatList
+            // showsVerticalScrollIndicator={false}
+            // data={this.state.sortList}
+            data={this.state.idolList}
+            renderItem={({item}) => {
+              return <SelectIdolList name={item.idol_name} followNum={item.total_followers}></SelectIdolList>
+            }}
+            keyExtractor={(item, index) => index.toString()} >
+          </FlatList>
+        </ScrollView>        
         <View style={styles.selectBtn}>
           <Button title="선택완료" color='#fff' onPress={() => this.goToMain()}/>
         </View>
