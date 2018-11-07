@@ -5,17 +5,14 @@ import {
   StyleSheet,
   TouchableOpacity
 } from "react-native";
-import { Container, Content, Icon, Thumbnail, Header, Left, Right, Body } from 'native-base';
 
 class News extends Component {
 
   render() {
     return (
-      <Container>
-        <View style={styles.container}>
-          <Text>News</Text>
-        </View>
-      </Container>
+      <View style={styles.container}>
+        <Text>News</Text>
+      </View>
     );
   }
 }

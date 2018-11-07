@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View, ListView, StyleSheet, Dimensions,TouchableOpacity, Image } from 'react-native'
+import { Text, View, ListView, StyleSheet, Dimensions,TouchableOpacity, Image, FlatList } from 'react-native'
 
 class IdolCard extends Component {
     render() {
@@ -15,23 +15,34 @@ class IdolCard extends Component {
 export default class MyIdol extends Component {
     constructor(props) {
         super(props);
-        const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+        // const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
         this.state = {
-            idols : ds.cloneWithRows(['BTS','뉴이스트','트와이스','세븐틴','엑소','워너원','비투비'])            
+            idols : ['BTS','뉴이스트','트와이스','세븐틴','엑소','워너원','비투비']
+            // idols : ds.cloneWithRows(['BTS','뉴이스트','트와이스','세븐틴','엑소','워너원','비투비'])            
         }
     }
     render() {
         return (
             <View style={styles.myIdol}>
                 <Text style={styles.subTitle}>내 아이돌</Text>
-                <ListView
+                {/* <ListView
                     style={{paddingLeft: 5}}
                     horizontal="true"
                     showsHorizontalScrollIndicator={false}
                     dataSource={this.state.idols}
                     renderRow={(rowData)=><IdolCard name={rowData}></IdolCard>}
                 >            
-                </ListView>
+                </ListView> */}
+                <FlatList
+                    horizontal={true}
+                    showsHorizontalScrollIndicator={false}
+                    data={this.state.idols}
+                    renderItem={({item}) => {
+                        return <IdolCard name={item}></IdolCard>
+                    }}
+                    keyExtractor={(item, index) => index.toString()} 
+                >
+                </FlatList>
             </View>
         )
     }
@@ -44,31 +55,29 @@ const styles = StyleSheet.create({
         // paddingLeft: 15
     },
     subTitle : {
-        marginLeft: 15,
+        marginLeft: 12,
         marginBottom: 20,
-        width: 80,
+        width: 100,
         fontWeight: '600',
-        fontSize: 20
+        fontSize: 20,
+        // paddingLeft: 15
     },
-
-    // idoncard
     idolCard: {
         justifyContent: 'flex-start',
         alignItems: 'center',
-        marginHorizontal: 1
+        marginHorizontal: 0.3,
     },
     idolPhoto: {
         backgroundColor: '#dedede',
-        borderRadius: 33,
+        borderRadius: 25,
         marginBottom:10,
         width: 60,
-        height: 60
+        height: 60,
     },
     idolName: {
         width: 80,
         textAlign:"center"
     },
-    
     editBtn: {
         position: "absolute",
         top: 0,

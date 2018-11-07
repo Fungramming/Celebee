@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Platform, View, Text, StyleSheet, TouchableOpacity, TextInput } from "react-native";
-import { Container, Content, Thumbnail, Header, Left, Right, Body, Title } from 'native-base';
 import Icon from 'react-native-vector-icons/AntDesign';
 
 class Schedule extends Component {

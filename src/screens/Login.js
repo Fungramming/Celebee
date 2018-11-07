@@ -4,18 +4,23 @@ import {
   Text,
   StyleSheet,
   StatusBar,
-  ActivityIndicator,
-  Alert
+  Alert,
+  AsyncStorage,
+  TouchableOpacity,
+  AppRegistry,
+  Dimensions,
+  Button,
+  Image
 } from "react-native";
 
 import LoadingSpinner from '../components/LoadingSpinner'
 import firebase from 'firebase'
-import { Container, Header, Content, Body, Icon, Button } from 'native-base';
 import RNKakaoLogins from 'react-native-kakao-logins'
 import { LoginManager, AccessToken } from 'react-native-fbsdk'
 import { GoogleSignin } from 'react-native-google-signin';
 import { connect } from "react-redux";
 import { initUserInfo } from "../actions/users";
+import AppIntro from 'react-native-app-intro';
 
 var config = {
   apiKey: "AIzaSyDI0yDEw3xg9eCQphgJbf95_RCIOPVlKH0",
@@ -30,9 +35,10 @@ firebase.initializeApp(config);
 class Login extends Component {
   constructor(props) {
     super(props)
-    state = {
+    this.state = {
       userInfo: {}, 
-      animating: true 
+      isLoading: false,
+      showRealApp: false,
     }
   }
 
@@ -45,9 +51,9 @@ class Login extends Component {
     })
   }
 
-  goToMain = () => {
-    this.props.navigation.navigate('SelectIdol')
-    // console.log('this.props.navigation.state :', this.props.navigation.state);
+  // 유저 토근 저장 
+  saveUserToken = async (data) => {
+    await AsyncStorage.setItem('userToken', data)
   }
 
   initUser = (supplier, data) => {
@@ -90,12 +96,23 @@ class Login extends Component {
           Alert.alert('Whoops!', 'You cancelled the sign in.');
         } else {
           AccessToken.getCurrentAccessToken()
-            .then((data) => {           
+            .then((data) => {         
+
+              this.setState({
+                isLoading: true
+              })
+
               const {accessToken} = data            
               _this.initUser("facebook",accessToken)
               const credential = firebase.auth.FacebookAuthProvider.credential(data.accessToken);
               return firebase.auth().signInAndRetrieveDataWithCredential(credential)
               .then(() => {
+
+                this.setState({
+                  isLoading: false
+                })
+
+                _this.saveUserToken(credential.accessToken)
                 _this.props.navigation.navigate('SelectIdol')
                 })
                 .catch((error) => {
@@ -117,11 +134,21 @@ class Login extends Component {
     var _this = this;
 
     GoogleSignin.signIn().then((data) => {
+
+      this.setState({
+        isLoading: true
+      })
+
       // create a new firebase credential with the token
       const credential = firebase.auth.GoogleAuthProvider.credential(data.idToken, data.accessToken)
       _this.initUser("google",data)      
       return firebase.auth().signInAndRetrieveDataWithCredential(credential)
-    }).then(() => {      
+    }).then(() => { 
+
+      this.setState({
+        isLoading: false
+      })
+
       _this.props.navigation.navigate('SelectIdol')
     }).catch((error) => {
       console.log(`Login fail with error: ${error}`);
@@ -145,35 +172,94 @@ class Login extends Component {
             _this.initUser("kakao", result)
           });
       }
+      this.setState({
+        isLoading: true
+      })
+      _this.props.navigation.navigate('SelectIdol')
     })
   }
 
   render() {
-    return (
-      <Container style={styles.container}>
-        <StatusBar 
-          barStyle="light-content"
-        />
-        <View style={styles.loginTextView}>
-          <Text style={styles.loginText}>로그인</Text>
+    if(this.state.showRealApp) {
+      return (
+        <View style={styles.container}>
+          <StatusBar 
+            barStyle="light-content"
+          />
+          <View style={styles.loginTextView}>
+            <Text style={styles.loginText}>로그인</Text>
+          </View>
+          <LoadingSpinner 
+            show={this.state.isLoading}
+          />
+          <View style={styles.loginButtonView}>
+            <TouchableOpacity style={styles.F_btn} onPress={this._onLoginFacebook.bind(this)}>
+              <Text style={{color:'#fff', fontSize: 16, textAlign: 'center',}}>페이스북계정으로 로그인</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.G_btn} onPress={this._onLoginGoggle.bind(this)}>
+              <Text style={{color:'#000', fontSize: 16, textAlign: 'center',}}>구글계정으로 로그인</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.K_btn} onPress={this._onLoginKakao.bind(this)}>         
+              <Text style={{color:'#000', fontSize: 16, textAlign: 'center',}}>카카오계정으로 로그인</Text>
+            </TouchableOpacity>
+          </View>
+          
         </View>
-
-        <LoadingSpinner/>
-
-        <View style={{flex: 2}}>
-          <Button full rounded primary style={styles.F_btn} onPress={this._onLoginFacebook.bind(this)}>
-            <Text style={{color:'#fff', fontSize: 16}}>페이스북계정으로 로그인</Text>
-          </Button>
-          <Button full rounded primary style={styles.G_btn} onPress={this._onLoginGoggle.bind(this)}>
-            <Text style={{color:'#000', fontSize: 16}}>구글로계정으로 로그인</Text>
-          </Button>
-          <Button full rounded primary style={styles.K_btn} onPress={this._onLoginKakao.bind(this)}>         
-            <Text style={{color:'#000', fontSize: 16}}>카카오계정으로 로그인</Text>
-          </Button>
+      );
+    } else {
+      return (   
+        <View>
+          <AppIntro
+            customStyles={{btnContainer: {padding: 120}}}
+            showSkipButton= {false}
+            showDoneButton= {false}>          
+            <View style={styles.slide}>
+              <View level={30}><Text style={[styles.text,{marginTop: -150}]}>셀</Text></View>
+              <View level={20}>
+                <Image
+                    style={styles.image}
+                    source={require('../../assets/logo_white.png')}
+                />   
+              </View>
+              <View level={10}><Text style={[styles.text,{marginTop: 0}]}>셀레비 어플입니다.</Text></View>
+            </View>
+            <View style={styles.slide}>
+              <View level={30}><Text style={[styles.text,{marginTop: -150}]}>레</Text></View>
+              <View level={20}>
+                <Image
+                    style={styles.image}
+                    source={require('../../assets/logo_white.png')}
+                />   
+              </View>
+              <View level={10}><Text style={[styles.text,{marginTop: 0}]}>셀레비 어플입니다.</Text></View>
+            </View>
+            <View style={styles.slide}>
+              <View level={30}><Text style={[styles.text,{marginTop: -150}]}>비</Text></View>
+              <View level={20}>
+                <Image
+                    style={styles.image}
+                    source={require('../../assets/logo_white.png')}
+                />   
+              </View>
+              <View level={10}><Text style={[styles.text,{marginTop: 0}]}>셀레비 어플입니다.</Text></View>
+            </View>
+            <View style={styles.slide}>
+              <View level={30}><Text style={[styles.text,{marginTop: -150}]}>!</Text></View>
+              <View level={20}>
+                <Image
+                    style={styles.image}
+                    source={require('../../assets/logo_white.png')}
+                />   
+              </View>
+              <View level={10}><Text style={[styles.text,{marginTop: 0}]}>셀레비 어플입니다.</Text></View>
+            </View>
+          </AppIntro>
+          <TouchableOpacity style={styles.button} onPress= {() => this.setState({ showRealApp: true })}>
+            <Text style={styles.text}>시작하기</Text>
+          </TouchableOpacity>
         </View>
-        
-      </Container>
-    );
+      )
+    }
   }
 }
 const mapStateToProps = state => {
@@ -192,16 +278,29 @@ const mapDispatchToProps = dispatch => {
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
 
 const styles = StyleSheet.create({
+
   container: {
     flex: 1,
     paddingLeft: 24,
     paddingRight: 24,
     backgroundColor: '#722784'
   },
+  image: {
+    marginTop: -70,
+    marginBottom: 50,
+    width: 200,
+    height: 200,
+  },
   loginTextView: {
-    flex:4,
+    flex: 1,
     alignSelf: 'stretch' ,
     marginTop: 70
+  },
+  loginButtonView: {
+    flex: 1,
+    alignContent: 'flex-end',
+    justifyContent: 'flex-end',
+    marginBottom: 50
   },
   loginText: {
     fontSize: 40,
@@ -209,18 +308,51 @@ const styles = StyleSheet.create({
     color: '#fff',
   },
   F_btn: {
+    alignSelf: 'center',
+    justifyContent: 'center',
+    width: '100%',
+    padding: 15,
     marginTop: 10,
     backgroundColor: '#365899',
-    borderRadius: 8,
+    borderRadius: 6,
   },
   G_btn: {
+    alignSelf: 'center',
+    justifyContent: 'center',
+    width: '100%',
+    padding: 15,
     marginTop: 10,
     backgroundColor: '#fff',
-    borderRadius: 8,
+    borderRadius: 6,
   },
   K_btn: {
+    alignSelf: 'center',
+    justifyContent: 'center',
+    width: '100%',
+    padding: 15,
     marginTop: 10,
     backgroundColor: '#F1D905',
-    borderRadius: 8,
+    borderRadius: 6,
+  },
+  button: {
+    color: 'white',
+    backgroundColor: 'rgba(0,0,0,0.3)',
+    width: Dimensions.get('window').width,
+    marginTop: -70,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  slide: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#722784',
+    padding: 15,
+  },
+  text: {
+    color: '#fff',
+    fontSize: 20,
+    fontWeight: 'bold',
+    padding: 25
   }
 });

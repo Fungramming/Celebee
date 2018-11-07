@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
 import {Button,Platform, Text, View, StyleSheet,TouchableOpacity, Dimensions, Image, TextInput, StatusBar } from 'react-native'
-import { SafeAreaView } from 'react-navigation';
-import { createStackNavigator } from 'react-navigation';
 import { connect } from 'react-redux'
 import { updateName } from '../actions/users'
 
@@ -29,6 +27,7 @@ class EditMyProfile extends Component {
     static navigationOptions =  ({navigation}) => {
         const {params = {}} = navigation.state;
         return {
+            headerTitle: '프로필 수정',
             headerRight: (
             // <TouchableOpacity ref={component => this.submit = component}>
             <TouchableOpacity onPress={params.handleSubmit}>
