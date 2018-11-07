@@ -1,4 +1,8 @@
-import { config, UPDATE_NAME, INIT_USER_INFO, ADD_USER_INFO } from '../actions/types'
+import { 
+    config, 
+    UPDATE_NAME, 
+    INIT_USER_INFO, 
+    ADD_USER_INFO } from '../actions/types'
 
 const initialState = {
     userInfo : {
@@ -23,7 +27,7 @@ const userReducer = (state = initialState, action) => {
                     'nickname':  action.payload.nickName,
                     'email': action.payload.email
                 }),
-            }).then((response) => response.json())            
+            })       
         case INIT_USER_INFO:
             return {
                 ...state,
