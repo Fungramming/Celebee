@@ -21,6 +21,7 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import {createStackNavigator, createSwitchNavigator, createBottomTabNavigator, createDrawerNavigator} from 'react-navigation';
 import AuthValid from './src/screens/AuthValidScreen'
 import Login from './src/screens/Login'
+import SetNickname from './src/screens/SetNickname'
 import MyPage from './src/screens/MyPage'
 import SelectIdol from './src/screens/SelectIdol'
 import BottomNavigation from './src/BottomNavigation'
@@ -91,6 +92,7 @@ const AppStackNavigator = createStackNavigator({
 export default AppSwichNavigator = createSwitchNavigator({
   AuthValid: AuthValid,
   Login: Login,
+  SetNickname: SetNickname,
   SelectIdol: SelectIdol,
   App: AppStackNavigator,
 })

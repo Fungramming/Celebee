@@ -44,7 +44,7 @@ export default class MyIdol extends Component {
             <ScrollView showsVerticalScrollIndicator={false} style={styles.myIdol}>
 
               <Text style={styles.subTitle}>내가 팔로우한 아이돌</Text>
-              <TouchableOpacity style={{position:"absolute", top: 25, right: 25}} onPress={ () => this._onToggle() }>
+              <TouchableOpacity style={{position:"absolute", top: 25, right: 25}} onPress={this._onToggle}>
                 <Text>{toggleValue}</Text>
               </TouchableOpacity>
               <View style={ this.state.toggleIdol ? styles.followList : styles.followListFalse }>
