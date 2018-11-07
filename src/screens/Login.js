@@ -58,17 +58,17 @@ class Login extends Component {
   }
 
   initUser = (supplier, data) => {
+    console.log('data :', data);
     let userInfo = {
-      name: '',
-      email: ''
+     
     }
     switch(supplier){
       case "facebook":
         fetch('https://graph.facebook.com/v2.5/me?fields=email,name &access_token=' + data)
         .then((response) => response.json())
         .then((json) => {
-          userInfo.name = json.name
           userInfo.email = json.email
+          userInfo.token = data
           this.props.init(userInfo)
         })
         .catch(() => {
@@ -76,14 +76,12 @@ class Login extends Component {
         })      
         break;
       case "google":
-        userInfo.name = data.user.name
         userInfo.email = data.user.email    
+        userInfo.token = data.accessToken
         this.props.init(userInfo)
         break;        
-      case "kakao":
-        userInfo.name = data.nickname
-        userInfo.email = data.email_verified
-        this.props.init(userInfo)
+      case "kakao":      
+        this.props.init(this.state.userInfo)
         break;  
     }  
   }
@@ -159,23 +157,36 @@ class Login extends Component {
   _onLoginKakao = () => {
     var _this = this;
 
-    RNKakaoLogins.login((error,result) => {
+    RNKakaoLogins.login((error, result) => {
       if (error) {
-        // Alert.alert('error: ', error )
         console.log('error :', error);
         return
       } else {
-          RNKakaoLogins.getProfile((error, result) => {
-            if (error){
-              console.log(error);
-              return;
+          this.setState({
+            userInfo: {
+              token : result.token
             }
-            _this.initUser("kakao", result)
-          });
-      }
+          })
+        }
       this.setState({
         isLoading: true
       })
+
+    })
+
+    RNKakaoLogins.getProfile((error, result)=>{
+      if (error) {
+        console.log('error :', error);
+        return
+      } else {
+          this.setState(prevState => ({ 
+            userInfo: {
+              ...prevState.userInfo,
+              email : result.email,
+            }
+          }))
+          _this.initUser("kakao", _this.state.userInfo)
+        }
       _this.props.navigation.navigate('SelectIdol')
     })
   }

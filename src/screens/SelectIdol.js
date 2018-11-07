@@ -1,6 +1,22 @@
 import React, { Component } from 'react'
 import { Text, StyleSheet, View, ScrollView, TouchableOpacity, StatusBar, Button, FlatList, Dimensions } from 'react-native'
 import SelectIdolList from '../components/SelectIdolList'
+import { connect } from "react-redux";
+import { initUserInfo } from "../actions/users";
+
+const mapDispatchToProps = dispatch => {
+  return {
+      add: (userInfo) => {
+          dispatch(addUserInfo(userInfo))
+      }
+  }
+}
+
+const mapStateToProps = state => {
+  return {
+      userInfo: state.user.userInfo,   // Mount 될때 initialState 를 가져옴 , this.props 로. users 는 actios 에서의 users.js 의 이름
+  }
+}
 
 class SelectIdol extends Component {
   constructor(props) {
@@ -13,6 +29,7 @@ class SelectIdol extends Component {
 
   componentDidMount() {
     this.getIdolList()
+    console.log('this.props :', this.props);
   }
   
   getIdolList =() => {
@@ -81,7 +98,8 @@ class SelectIdol extends Component {
     );
   }
 }
-export default SelectIdol;
+
+export default connect(mapStateToProps, mapDispatchToProps)(SelectIdol);
 
 const styles = StyleSheet.create({
   container: {

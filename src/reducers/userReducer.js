@@ -1,16 +1,30 @@
-import { UPDATE_NAME, INIT_USER_INFO } from '../actions/types'
+import { config, UPDATE_NAME, INIT_USER_INFO, ADD_USER_INFO } from '../actions/types'
 
 const initialState = {
     userInfo : {
-        name: '',
+        token: '',
+        nickName: '',
         email: ''
-    }
+    },
 }
 
 const userReducer = (state = initialState, action) => {
+    console.log('action :', action);
     switch(action.type) {
+        case ADD_USER_INFO:
+            fetch( config + 'register/', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    'token': action.payload.token,
+                    'nickname':  action.payload.nickName,
+                    'email': action.payload.email
+                }),
+            }).then((response) => response.json())            
         case INIT_USER_INFO:
-            console.log('payload',action.payload)
             return {
                 ...state,
                 userInfo : action.payload

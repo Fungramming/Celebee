@@ -16,6 +16,7 @@ class MyPage extends Component {
     console.log('on!!! :');
     console.log('2his.state.userName :', this.state.userName);
     console.log('this :', this);
+    // this.props.navigation
     this.setState({
       userName : userName
     })
