@@ -27,6 +27,7 @@ class EditMyProfile extends Component {
     static navigationOptions =  ({navigation}) => {
         const {params = {}} = navigation.state;
         return {
+            headerTitle: '프로필 수정',
             headerRight: (
             // <TouchableOpacity ref={component => this.submit = component}>
             <TouchableOpacity onPress={params.handleSubmit}>
