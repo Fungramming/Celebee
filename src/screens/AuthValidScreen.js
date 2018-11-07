@@ -24,7 +24,7 @@ class AuthValidScreen extends Component {
     loadApp = async () => {
       const userToken = await AsyncStorage.getItem('userToken')
       console.log('userToken in AuthValid :', userToken);
-      this.props.navigation.navigate(userToken ? 'SelectIdol' : 'Login')
+      this.props.navigation.navigate(userToken ? 'App' : 'Login')
     }
   
     render() {

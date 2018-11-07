@@ -48,6 +48,7 @@ const styles = StyleSheet.create({
   },
   idolCard: {
     flexDirection: 'row',
+    marginBottom: 5
   },
   idolPhoto: {
       backgroundColor: '#dedede',

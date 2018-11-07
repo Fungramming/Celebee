@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Text, StyleSheet, View, ScrollView, TouchableOpacity, StatusBar, Button, FlatList, Dimensions } from 'react-native'
 import SelectIdolList from '../components/SelectIdolList'
-
+import CompleteButton from '../components/CompleteButton'
 class SelectIdol extends Component {
   constructor(props) {
     super(props);
@@ -43,7 +43,7 @@ class SelectIdol extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <ScrollView showsVerticalScrollIndicator={false}>
+        <ScrollView style={{marginHorizontal: 12,}}showsVerticalScrollIndicator={false}>
           <StatusBar 
             barStyle="dark-content"
           />
@@ -74,9 +74,10 @@ class SelectIdol extends Component {
             keyExtractor={(item, index) => index.toString()} >
           </FlatList> */}
         </ScrollView>        
-        <View style={styles.selectBtn}>
+        <CompleteButton navi={() => this.goToMain()}/>
+        {/* <View style={styles.selectBtn}>
           <Button title="선택완료" color='#fff' onPress={() => this.goToMain()}/>
-        </View>
+        </View> */}
       </View>
     );
   }
@@ -86,8 +87,6 @@ export default SelectIdol;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingLeft: 24,
-    paddingRight: 24,
     backgroundColor: '#fefefe'
   },
   headerTextWrap: {
@@ -111,12 +110,5 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     paddingBottom: 20,
     fontSize: 12,
-  },
-  selectBtn: {
-    marginLeft: -24,
-    paddingTop: 15,
-    paddingBottom: 15,
-    width: Dimensions.get('window').width,
-    backgroundColor: '#722784'
   },
 });

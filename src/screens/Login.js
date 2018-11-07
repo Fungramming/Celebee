@@ -114,7 +114,7 @@ class Login extends Component {
                 })
 
                 _this.saveUserToken(credential.accessToken)
-                _this.props.navigation.navigate('SelectIdol')
+                _this.props.navigation.navigate('SetNickname')
                 })
                 .catch((error) => {
                   console.log(error.message);
@@ -150,7 +150,7 @@ class Login extends Component {
         isLoading: false
       })
 
-      _this.props.navigation.navigate('SelectIdol')
+      _this.props.navigation.navigate('SetNickname')
     }).catch((error) => {
       console.log(`Login fail with error: ${error}`);
     })
@@ -176,7 +176,7 @@ class Login extends Component {
       this.setState({
         isLoading: true
       })
-      _this.props.navigation.navigate('SelectIdol')
+      _this.props.navigation.navigate('SetNickname')
     })
   }
 
@@ -360,7 +360,6 @@ const styles = StyleSheet.create({
   text: {
     color: '#fff',
     fontSize: 20,
-    fontWeight: 'bold',
     padding: 25
   }
 });
