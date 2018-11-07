@@ -88,6 +88,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingLeft: 24,
     paddingRight: 24,
+    backgroundColor: '#fefefe'
   },
   headerTextWrap: {
     marginTop: 60,

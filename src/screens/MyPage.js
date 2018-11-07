@@ -3,17 +3,32 @@ import { Text, View,StyleSheet, Dimensions, TouchableOpacity } from 'react-nativ
 import MyProfile from '../components/MyProfile'
 import MyIdol from '../components/MyIdol'
 import Icon from 'react-native-vector-icons/AntDesign';
+import {connect} from 'react-redux'
+class MyPage extends Component {  
+  constructor(props){
+    super(props)
+    this.state = {
+      userName : this.props.userName,
+    }
+  }
+  handleOnBack = (userName) => {
+    console.log('userName :', userName);
+    console.log('on!!! :');
+    console.log('2his.state.userName :', this.state.userName);
+    console.log('this :', this);
+    this.setState({
+      userName : userName
+    })
+    console.log('2his.state.userName :', this.state.userName);
+  }
 
-export default class MyPage extends Component {
-  // static navigationOptions = {
-  //   headerTitle: '마이페이지'
-  // };
-  
   render() {
     return (
       <View style={styles.constainer}>
-        <TouchableOpacity onPress={() => this.props.navigation.navigate('EditMyProfile')}>
-          <MyProfile></MyProfile>
+        <TouchableOpacity onPress={() => this.props.navigation.navigate('EditMyProfile',{
+          onNavigateBack: this.handleOnBack.bind(this)
+        })}>
+          <MyProfile userName={this.state.userName}></MyProfile>
         </TouchableOpacity>
         <View style={styles.idolSettingBtn}>
           <TouchableOpacity onPress={() => this.props.navigation.navigate('EditIdol')}>
@@ -51,3 +66,12 @@ const styles = StyleSheet.create({
     fontSize: 24
   }
 })
+
+const mapStateToProps = state => {
+  
+  return {
+      userName: state.user.userInfo.name,   // Mount 될때 initialState 를 가져옴 , this.props 로. users 는 actios 에서의 users.js 의 이름
+  }
+}
+
+export default connect(mapStateToProps)(MyPage)

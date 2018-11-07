@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View, ListView, StyleSheet, Dimensions,TouchableOpacity, Image, FlatList } from 'react-native'
+import {Platform, Text, View, ListView, StyleSheet, Dimensions,TouchableOpacity, Image, FlatList } from 'react-native'
 
 class IdolCard extends Component {
     render() {
@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
     myIdol: {
         height: 180,
         width: Dimensions.get('window').width,
-        // paddingLeft: 15
+        paddingLeft: 15
     },
     subTitle : {
         marginLeft: 12,
@@ -65,14 +65,30 @@ const styles = StyleSheet.create({
     idolCard: {
         justifyContent: 'flex-start',
         alignItems: 'center',
-        marginHorizontal: 0.3,
+        marginHorizontal: 0.5,
+        ...Platform.select({
+            ios: {
+                marginHorizontal: 0.5
+            },
+            android: {
+                marginHorizontal: 4
+            },
+          }),
     },
     idolPhoto: {
         backgroundColor: '#dedede',
         borderRadius: 25,
         marginBottom:10,
-        width: 60,
-        height: 60,
+        ...Platform.select({
+            ios: {
+                width: 60,
+                height: 60
+            },
+            android: {
+                width: 68,
+                height: 68
+            },
+          }),
     },
     idolName: {
         width: 80,
