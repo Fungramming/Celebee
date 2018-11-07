@@ -61,8 +61,10 @@ class SelectIdol extends Component {
               <Text style={styles.selectFilterText}>가나다순</Text>
             </TouchableOpacity>
           </View>
-
-          <FlatList
+          { this.state.idolList.map((item, index) => (
+              <SelectIdolList name={item.idol_name} followNum={item.total_followers} key={item.id}></SelectIdolList>
+            ))}
+          {/* <FlatList
             // showsVerticalScrollIndicator={false}
             // data={this.state.sortList}
             data={this.state.idolList}
@@ -70,7 +72,7 @@ class SelectIdol extends Component {
               return <SelectIdolList name={item.idol_name} followNum={item.total_followers}></SelectIdolList>
             }}
             keyExtractor={(item, index) => index.toString()} >
-          </FlatList>
+          </FlatList> */}
         </ScrollView>        
         <View style={styles.selectBtn}>
           <Button title="선택완료" color='#fff' onPress={() => this.goToMain()}/>

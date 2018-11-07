@@ -53,6 +53,11 @@ export default class MyIdol extends Component {
                   }}
                   keyExtractor={(item, index) => index.toString()} >
                 </FlatList>
+                {/* { 
+                  this.state.idolList.map((item, index) => (
+                    <SelectIdolList name={item.idol_name} followNum={item.total_followers} key={item.id}></SelectIdolList>
+                  ))
+                } */}
               </View>
 
               <Text style={styles.subTitle}>내가 팔로우하지 않는 아이돌</Text>
@@ -65,6 +70,11 @@ export default class MyIdol extends Component {
                   }}
                   keyExtractor={(item, index) => index.toString()} >
                 </FlatList>
+                {/* { 
+                  this.state.idolList.map((item, index) => (
+                    <SelectIdolList name={item.idol_name} followNum={item.total_followers} key={item.id}></SelectIdolList>
+                  ))
+                } */}
               </View>
 
             </ScrollView>
