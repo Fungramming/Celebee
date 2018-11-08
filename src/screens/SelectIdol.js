@@ -75,10 +75,10 @@ class SelectIdol extends Component {
             keyExtractor={(item, index) => index.toString()} >
           </FlatList> */}
         </ScrollView>        
-        <CompleteButton navi={() => this.goToMain()}/>
-        {/* <View style={styles.selectBtn}>
-          <Button title="선택완료" color='#fff' onPress={() => this.goToMain()}/>
-        </View> */}
+        {/* <CompleteButton navi={() => this.goToMain()}/> */}
+        <View style={styles.selectBtn}>
+          <Button title="완료" color='#fff' onPress={() => this.goToMain()}/>
+        </View>
       </View>
     );
   }
@@ -113,4 +113,13 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
     fontSize: 12,
   },
+  selectBtn: {
+    paddingTop: 20,
+    paddingBottom: 20,
+    color:'#fff',
+    textAlign: 'center',
+    fontSize: 20,
+    width: Dimensions.get('window').width,
+    backgroundColor: '#722784'
+  }
 });

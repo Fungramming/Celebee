@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { Text, View, ScrollView, StyleSheet, Dimensions,TouchableOpacity, Image, FlatList } from 'react-native'
 import SelectIdolList from '../components/SelectIdolList'
 
-
 export default class MyIdol extends Component {
   constructor(props) {
         super(props);
@@ -26,8 +25,6 @@ export default class MyIdol extends Component {
         console.log('err :', err);
       })
     }
-
-
 
     _onToggle() {
       const toggle = !this.state.toggleIdol;
