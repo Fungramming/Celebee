@@ -18,23 +18,11 @@ class SetNickname extends Component {
     this.state = { 
       userInfo: this.props.userInfo,
       showValid: false,
-      controlButton: false
+      controlButton: true
     }
   }
 
-  componentDidMount(){
-  }
-
-  componentDidUpdate(){
-    
-  }
-
-  goToSelectIdol = () => {
-    this.props.navigation.navigate('SelectIdol')
-  }
-
   checkNickname = (text) => {
-
     fetch('http://celebee-env-1.gimjpxetg2.ap-northeast-2.elasticbeanstalk.com/api/v1.0/user/nickname/', {
       method: 'POST',
         headers: {
@@ -54,50 +42,22 @@ class SetNickname extends Component {
       }))
       console.log('res :', res);
       this.setState({showValid: true})
-      console.log('this.state.userInfo.nickName :', this.state.userInfo);
-      if( !this.state.userInfo.nickName ){
-        this.setState({showValid: false})
-        this.setState({checkValid: true}) 
-        this.setState({controlButton: false}) 
-      } else if(res.status === 200) {
-        this.setState({checkValid: true}) 
-        this.setState({controlButton: false}) 
-      } else {
+
+      if( this.state.userInfo.nickName === '' || res.ok === false ){
         this.setState({checkValid: false})
-        this.setState({controlButton: true})
+        this.setState({controlButton: true}) 
+      } else if (this.state.userInfo.nickName) {
+        this.setState({checkValid: true}) 
+        this.setState({controlButton: false})
       }
-
-      
-      console.log('this.state :', this.state);
     })
-    this.changeButtonStyle()
   }
 
-  changeButtonStyle() {
-    let changedStyle = {
-      backgroundColor : "#bbbbbb",
-      paddingTop: 20,
-      paddingBottom: 20,
-      color:'#fff',
-      textAlign: 'center',
-      fontSize: 20,
-      width: Dimensions.get('window').width,
-    }
-    
-    if( this.state.showValid && this.state.userInfo.nickName){   // 텍스트 없을 때 / 중복 닉네임
-      styles.selectBtn = changedStyle
-      console.log('changedStyle :', changedStyle);
-    } else if (!this.state.showValid) {   // 가능 닉네임
-      changedStyle.backgroundColor = "#722784"
-      console.log('changedStyle :', changedStyle);
-      styles.selectBtn = changedStyle
-    }
-    console.log('style.selectBtn :', styles.selectBtn);
-  }
 
   addUserInfo() {
     this.props.add(this.state.userInfo)
-}
+    this.props.navigation.navigate('SelectIdol')
+  }
 
   render() {
     return (
@@ -112,8 +72,6 @@ class SetNickname extends Component {
             maxLength={12}
             placeholder="12자 이내의 닉네임을 설정해 주세요"
             onChangeText={(text) => this.checkNickname(text)}
-            onFocus={this.emptyInput}
-            // onSubmitEditing={Keyboard.dismiss} 
             returnKeyType="go"
             value={this.state.userInfo.nickName}/>
         {/* </KeyboardAvoidingView> */}
@@ -125,13 +83,13 @@ class SetNickname extends Component {
         </View>
         <TouchableOpacity             
             disabled={this.state.controlButton} 
-            onPress={this.addUserInfo.bind(this)}>
+            onPress={this.addUserInfo.bind(this)}
+          >
             <Text 
-                ref="button" style={[ 
-                    styles.selectBtn,                     
-                    // !this.state.showValid ? {backgroundColor: "#722784"} : {backgroundColor: "#bbbbbb"},
-                    // !this.state.userInfo.nickName && !this.state.showValid ? {backgroundColor: "#bbbbbb"} : {backgroundColor: "#722784"}
-                    ]}>완료
+                ref="button" style={[ styles.selectBtn,                     
+                  !this.state.userInfo.nickName || !this.state.checkValid ? {backgroundColor: "#bbbbbb"} : {backgroundColor: "#722784"}
+                ]}>
+              완료
             </Text>
         </TouchableOpacity>       
       </View>
