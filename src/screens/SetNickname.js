@@ -16,27 +16,32 @@ class SetNickname extends Component {
   constructor(props) {
     super(props);
     this.state = { 
-      userInfo: this.props.userInfo,
+      userInfo: this.props.userInfo,    
       showValid: false,
       controlButton: true
     }
   }
 
-  checkNickname = (text) => {
-    fetch('http://celebee-env-1.gimjpxetg2.ap-northeast-2.elasticbeanstalk.com/api/v1.0/user/nickname/', {
+  async checkNickname(text) {
+    await fetch('http://celebee-env-1.gimjpxetg2.ap-northeast-2.elasticbeanstalk.com/api/v1.0/user/nickname/', {
       method: 'POST',
         headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-            'nickname': text,
+          'nickname': text,
         }),
       })
     .then((res) => {
       console.log('res :', res);      
       this.setState({showValid: true})
-      // console.log('처음 userInfo :', this.state.userInfo);
+      this.setState(prevState => ({ 
+        userInfo: {
+          ...prevState.userInfo,
+          nickName : text,
+        }
+      }))
       if( this.state.userInfo.nickName === '' || res.ok === false ){
         this.setState({checkValid: false})
         this.setState({controlButton: true}) 
@@ -44,13 +49,6 @@ class SetNickname extends Component {
         this.setState({checkValid: true}) 
         this.setState({controlButton: false})
       }
-      this.setState(prevState => ({ 
-        userInfo: {
-          ...prevState.userInfo,
-          nickName : text,
-        }
-      }))
-      // console.log('마지막 userInfo :', this.state.userInfo);
     })
   }
 
@@ -65,7 +63,6 @@ class SetNickname extends Component {
       <View style={styles.container}>
         <View style={{flex: 2}}></View>
         <View style={styles.nickNameView}>
-        {/* <KeyboardAvoidingView style={styles.nickNameView} behavior="padding" enabled> */}
           <Text style={styles.nickNameText}>닉네임 설정</Text>
           <TextInput 
             style={styles.nickname} 
@@ -74,8 +71,7 @@ class SetNickname extends Component {
             placeholder="12자 이내의 닉네임을 설정해 주세요"
             onChangeText={(text) => this.checkNickname(text)}
             returnKeyType="go"
-            value={this.state.userInfo.nickName}/>
-        {/* </KeyboardAvoidingView> */}
+          />
           <View style={[this.state.showValid ? styles.showValid : styles.hideValid, !this.state.userInfo.nickName ? {display:"none"}: '']}>
             <Text style={this.state.checkValid ? styles.greenText : styles.redText}>
               {this.state.checkValid ? '사용가능한 닉네임 입니다.' : '이미 사용중인 닉네임 입니다.'}
@@ -86,10 +82,10 @@ class SetNickname extends Component {
             disabled={this.state.controlButton} 
             onPress={this.addUserInfo.bind(this)}
           >
-            <Text 
-                ref="button" style={[ styles.selectBtn,                     
-                  !this.state.userInfo.nickName || !this.state.checkValid ? {backgroundColor: "#bbbbbb"} : {backgroundColor: "#722784"}
-                ]}>
+            <Text style={[ 
+                styles.selectBtn,                     
+                !this.state.userInfo.nickName || !this.state.checkValid ? {backgroundColor: "#bbbbbb"} : {backgroundColor: "#722784"}
+              ]}>
               완료
             </Text>
         </TouchableOpacity>       
