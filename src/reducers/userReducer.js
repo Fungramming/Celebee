@@ -27,7 +27,12 @@ const userReducer = (state = initialState, action) => {
                     'nickname':  action.payload.nickName,
                     'email': action.payload.email
                 }),
-            })       
+            }).then((data) => {
+                console.log('data :', data);
+                console.log('this.props :', this.props);
+            }).catch((error) => {
+                console.log('error :', error);
+              });          
         case INIT_USER_INFO:
             return {
                 ...state,
