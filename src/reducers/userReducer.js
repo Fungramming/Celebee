@@ -16,6 +16,7 @@ const userReducer = (state = initialState, action) => {
     console.log('action :', action);
     switch(action.type) {
         case ADD_USER_INFO:
+            console.log('action.payload :', action.payload);
             fetch( config + 'register/', {
                 method: 'POST',
                 headers: {

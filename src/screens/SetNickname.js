@@ -34,22 +34,23 @@ class SetNickname extends Component {
         }),
       })
     .then((res) => {
+      console.log('res :', res);      
+      this.setState({showValid: true})
+      // console.log('처음 userInfo :', this.state.userInfo);
+      if( this.state.userInfo.nickName === '' || res.ok === false ){
+        this.setState({checkValid: false})
+        this.setState({controlButton: true}) 
+      } else if (res.ok === true) {
+        this.setState({checkValid: true}) 
+        this.setState({controlButton: false})
+      }
       this.setState(prevState => ({ 
         userInfo: {
           ...prevState.userInfo,
           nickName : text,
         }
       }))
-      console.log('res :', res);
-      this.setState({showValid: true})
-
-      if( this.state.userInfo.nickName === '' || res.ok === false ){
-        this.setState({checkValid: false})
-        this.setState({controlButton: true}) 
-      } else if (this.state.userInfo.nickName) {
-        this.setState({checkValid: true}) 
-        this.setState({controlButton: false})
-      }
+      // console.log('마지막 userInfo :', this.state.userInfo);
     })
   }
 
