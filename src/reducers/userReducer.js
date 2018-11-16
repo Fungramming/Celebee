@@ -1,13 +1,13 @@
 import { 
     config, 
-    UPDATE_NAME, 
+    UPDATE_NICKNAME, 
     INIT_USER_INFO, 
     ADD_USER_INFO } from '../actions/types'
 
 const initialState = {
     userInfo : {
         token: '',
-        nickName: '',
+        nickname: '',
         email: ''
     },
 }
@@ -25,8 +25,8 @@ const userReducer = (state = initialState, action) => {
                 },
                 body: JSON.stringify({
                     'token': action.payload.token,
-                    'nickname':  action.payload.nickName,
-                    'email': action.payload.email
+                    'nickname':  action.payload.nickname,
+                    'email':  action.payload.email
                 }),
             }).then((data) => {
                 console.log('data :', data);
@@ -39,11 +39,11 @@ const userReducer = (state = initialState, action) => {
                 ...state,
                 userInfo : action.payload
             }
-        case UPDATE_NAME:
+        case UPDATE_NICKNAME:
             return {
                 ...state,
                 userInfo: {
-                    name: action.payload
+                    nickname: action.payload
                 }
             }
         default:

@@ -11,19 +11,21 @@ import { addUserInfo } from "../actions/users";
   constructor(props) {
     super(props);
     this.state = { 
-      userInfo: this.props.userInfo,    
+      userInfo: this.props.userInfo,   
+      valid: {
+        alertText: false,
+        completeButton: true,
+        available:false
+      }, 
       nicknameInputValid: true,
-      showValid: false,
-      controlButton: true,
+      // showValid: false,
+      // controlButton: true,
 
     }
   }
-  componentDidMount(){
-    this.textInput.focus()
-  }
 
-  async checkNickname(text) {
-    await fetch('http://celebee-env-1.gimjpxetg2.ap-northeast-2.elasticbeanstalk.com/api/v1.0/user/nickname/', {
+  checkNickname(text) {
+    fetch('http://celebee-env-1.gimjpxetg2.ap-northeast-2.elasticbeanstalk.com/api/v1.0/user/nickname/', {
       method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -34,21 +36,70 @@ import { addUserInfo } from "../actions/users";
         }),
       })
     .then((res) => {
-      this.setState({showValid: true})
-      this.setState(prevState => ({ 
-        userInfo: {
-          ...prevState.userInfo,
-          nickname : text,
-        }
-      }))
-      if( this.state.userInfo.nickname === '' || res.ok === false ){
-        this.setState({checkValid: false})
-        this.setState({controlButton: true}) 
-      } else if (res.ok === true) {
-        this.setState({checkValid: true}) 
-        this.setState({controlButton: false})
-      }
+  
+      console.log(!this.state.userInfo.nickname,1)
+      if( !this.state.userInfo.nickname || res.ok === false){
+        this.setState(prevState => ({
+          userInfo: {
+            ...prevState.userInfo,
+            nickname : text            
+          },
+          valid: {
+            ...prevState.valid,
+            alertText: true,
+            available: false,
+            completeButton: false
+          }
+        }))
+          
+        this.props.onValidFunc(this.state)
+        
+      } else if(this.state.userInfo.nickname !== '' && res.ok === true){
+        this.setState(prevState => ({
+          userInfo: {
+            ...prevState.userInfo,
+            nickname : text            
+          },
+          valid: {
+            ...prevState.valid,
+            alertText: true,
+            available: true,
+            completeButton: true
+          }
+        }))     
+        
+        this.props.onValidFunc(this.state)
+
+      }  
+
     })
+  }
+
+  clearText() {
+    function setData(){
+      return new Promise(
+        resolve => {
+          this.setState(prevState => ({
+            userInfo: {
+              ...prevState.userInfo,
+              nickname : ''            
+            },
+            valid: {
+              ...prevState.valid,
+              alertText: true,
+              available: false,
+              completeButton: false
+            }
+          }))
+          resolve()        
+        }
+      )
+    }
+    setData().then(()=> this.props.onValidFunc(this.state))
+    this.textInput.clear()
+
+    
+
   }
 
   onInputFocus() {    
@@ -69,21 +120,21 @@ import { addUserInfo } from "../actions/users";
             style={styles.nicknameInput} 
             maxLength={12}
             placeholder="12자 이내의 닉네임을 설정해 주세요"
-            onChangeText={(text) => this.props.checkNickname(text)}
+            onChangeText={(text) => this.checkNickname(text)}
             returnKeyType="done"
           />
-          <TouchableOpacity style={styles.nicknameValueBox} onPress={this.onInputFocus.bind(this)}>
-            <Text style={this.state.nicknameInputValid ? styles.onText : styles.offText}>{this.state.userInfo.nickname}</Text>
+          <TouchableOpacity style={[styles.nicknameValueBox,!this.state.userInfo.nickname ? {display:"none"}: '']} onPress={this.onInputFocus.bind(this)}>
+            <Text style={this.state.nicknameInputValid ? styles.onNicknameText : styles.offNicknameText}>{this.state.userInfo.nickname}</Text>
           </TouchableOpacity>
+          <TouchableOpacity style={styles.closeCircle} onPress={this.clearText.bind(this)}>
+            <Icon name="close" color="#722784" size={24}></Icon>
+          </TouchableOpacity> 
         </View>        
-        <View style={[this.props.showValid ? styles.showValid : styles.hideValid, !this.props.nickname ? {display:"none"}: '']}>
-          <Text style={this.props.checkValid ? styles.greenText : styles.redText}>
-            {this.props.checkValid ? '사용가능한 닉네임 입니다.' : '이미 사용중인 닉네임 입니다.'}
+        <View style={!this.state.userInfo.nickname ? {display:"none"}: ''}>
+          <Text style={this.state.valid.available ? styles.greenText : styles.redText}>
+            {this.state.valid.available ? '사용가능한 닉네임 입니다.' : '이미 사용중인 닉네임 입니다.'}
           </Text>
-        </View>
-        <TouchableOpacity style={styles.closeCircle} onPress={this.clearText}>
-            <Icon name="closecircleo" size={24}></Icon>
-        </TouchableOpacity> 
+        </View>      
       </View>
     )
   }
@@ -126,20 +177,6 @@ const styles = StyleSheet.create({
   },
   nicknameValue:{
     fontSize: 30,
-    borderWidth: 2,  
-    borderColor: 'red',
-    zIndex: 100,
-    width: '100%',
-    height: 60,
-  },
-  offText: {
-    opacity:0    
-  },
-  onText:{
-    opacity:1,
-    fontSize: 30,
-    borderWidth: 2,  
-    borderColor: 'red',
     zIndex: 100,
     width: '100%',
     height: 60,
@@ -152,6 +189,16 @@ const styles = StyleSheet.create({
     color: '#000',
     fontSize: 18
   },
+  onNicknameText:{
+    opacity:1,
+    fontSize: 30,
+    zIndex: 100,
+    width: '100%',
+    height: 60,
+  },
+  offNicknameText: {
+    opacity:0    
+  },
   greenText: {
     color:'#00a930',
     paddingLeft: 5
@@ -161,9 +208,10 @@ const styles = StyleSheet.create({
     paddingLeft: 5
   }, 
   closeCircle: {
+    zIndex:200,
     position: 'absolute',
-    top: 5,
-    right: 50,
+    top: 17,
+    right: 10,
     fontSize: 15
   }, 
 });
