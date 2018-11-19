@@ -35,7 +35,7 @@ class SetNickname extends Component {
     this.setState(prevState => ({
       userInfo: {
         ...prevState.userInfo,
-        email : "test@test",
+        email : state.userInfo.email,
         nickname : state.userInfo.nickname            
       },
       valid: state.valid
