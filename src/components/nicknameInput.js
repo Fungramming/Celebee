@@ -36,7 +36,12 @@ import { addUserInfo } from "../actions/users";
         }),
       })
     .then((res) => {
-  
+      this.setState(prevState => ({
+        userInfo: {
+          ...prevState.userInfo,
+          nickname : text            
+        },
+      }))
       console.log(!this.state.userInfo.nickname,1)
       if( !this.state.userInfo.nickname || res.ok === false){
         this.setState(prevState => ({
@@ -51,6 +56,7 @@ import { addUserInfo } from "../actions/users";
             completeButton: false
           }
         }))
+      console.log('this.state.userInfo.nickname :', this.state.userInfo.nickname);
           
         this.props.onValidFunc(this.state)
         
@@ -76,30 +82,8 @@ import { addUserInfo } from "../actions/users";
   }
 
   clearText() {
-    function setData(){
-      return new Promise(
-        resolve => {
-          this.setState(prevState => ({
-            userInfo: {
-              ...prevState.userInfo,
-              nickname : ''            
-            },
-            valid: {
-              ...prevState.valid,
-              alertText: true,
-              available: false,
-              completeButton: false
-            }
-          }))
-          resolve()        
-        }
-      )
-    }
-    setData().then(()=> this.props.onValidFunc(this.state))
+    this.checkNickname('')
     this.textInput.clear()
-
-    
-
   }
 
   onInputFocus() {    

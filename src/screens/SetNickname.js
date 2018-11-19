@@ -28,6 +28,9 @@ class SetNickname extends Component {
   componentDidMount(){
     console.log(1,this.state.userInfo);
   }
+  componentDidUpdate(){
+    console.log(this.state.valid)
+  }
 
   validFunc = (state) => {
     console.log('전달 받은 :', state);    
@@ -35,7 +38,7 @@ class SetNickname extends Component {
     this.setState(prevState => ({
       userInfo: {
         ...prevState.userInfo,
-        email : "test@test",
+        email : state.userInfo.email,
         nickname : state.userInfo.nickname            
       },
       valid: state.valid
@@ -63,7 +66,7 @@ class SetNickname extends Component {
           >
             <Text style={[ 
                 styles.selectBtn,                                      
-                this.state.valid.available || this.state.userInfo.nickname ? {backgroundColor: "#722784"} : {backgroundColor: "#bbbbbb"} 
+                this.state.valid.available? {backgroundColor: "#722784"} : {backgroundColor: "#bbbbbb"} 
               ]}>
               완료
             </Text>
