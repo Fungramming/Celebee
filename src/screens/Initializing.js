@@ -17,18 +17,19 @@ export default class Initialising extends React.Component {
   }
   componentDidMount() {
     SplashScreen.hide();
-    try {
-    //   const user = await AsyncStorage.getItem(USER_KEY)
-    //   console.log('user: ', user)
-      if (true) {
-        goHome()
-      } else {
-        goToLogin()
-      }
-    } catch (err) {
-      console.log('error: ', err)
-      goToLogin()
-    }
+    goToLogin()
+    // try {
+    // //   const user = await AsyncStorage.getItem(USER_KEY)
+    // //   console.log('user: ', user)
+    //   if (true) {
+    //     goHome()
+    //   } else {
+    //     goToLogin()
+    //   }
+    // } catch (err) {
+    //   console.log('error: ', err)
+    //   goToLogin()
+    // }
   }
 
   render() {

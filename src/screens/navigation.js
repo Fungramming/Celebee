@@ -4,19 +4,31 @@ import { Navigation } from 'react-native-navigation'
 import Icon from 'react-native-vector-icons/AntDesign';
 
 export const goToLogin = () => Navigation.setRoot({
-    root: {
-      stack: {
-        id: 'App',
-        children: [
-          {
-            component: {
-              name: 'Login',
-            }
-          }
-      ],
-      }
-    }
-  })
+  root: {
+    component: {
+      name: 'Login',
+      id: 'App',
+    },
+  }
+})
+  
+export const goInIt = () => Navigation.setRoot({
+  root: {
+    component: {
+      name: 'SetNickname',
+      id: 'SetNickname',
+    },
+  }
+})
+
+export const goSelectIdol = () => Navigation.setRoot({
+  root: {
+    component: {
+      name: 'SelectIdol',
+      id: 'SelectIdol',
+    },
+  }
+})
 
 export const goHome = () => Navigation.setRoot({
   root: {    

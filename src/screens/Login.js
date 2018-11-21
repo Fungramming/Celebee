@@ -23,6 +23,10 @@ import { connect } from "react-redux";
 import { initUserInfo } from "../actions/users";
 import AppIntro from 'react-native-app-intro';
 
+import Navigation from 'react-native-navigation'
+import { goToLogin, goHome, goInIt } from './navigation'
+
+
 var config = {
   apiKey: "AIzaSyDI0yDEw3xg9eCQphgJbf95_RCIOPVlKH0",
   authDomain: "celebee-a44f9.firebaseapp.com",
@@ -148,7 +152,8 @@ class Login extends Component {
         isLoading: false
       })
 
-      _this.props.navigation.navigate('SetNickname')
+      goInIt()
+      
     }).catch((error) => {
       console.log(`Login fail with error: ${error}`);
     })

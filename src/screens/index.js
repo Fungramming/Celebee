@@ -13,5 +13,5 @@ export function registerScreens() {
     Navigation.registerComponent('Schedule', () => require('./Schedule').default);
     Navigation.registerComponent('News', () => require('./News').default);
     Navigation.registerComponent('SelectIdol', () => require('./SelectIdol').default);
-    // Navigation.registerComponent('SetNickname', () => require('./SetNickname').default);
+    Navigation.registerComponentWithRedux('SetNickname', () => require('./SetNickname').default, Provider, store);
 }
