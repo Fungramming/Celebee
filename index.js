@@ -39,38 +39,40 @@
 
 
 
-import { Navigation } from "react-native-navigation";
-import {AppRegistry} from 'react-native';
-import React from 'react';
-import App from './App';
-import {name as appName} from './app.json';
-import {Provider} from 'react-redux'
+// import { Navigation } from "react-native-navigation";
+// import {AppRegistry} from 'react-native';
+// import React from 'react';
+// import App from './App';
+// import {name as appName} from './app.json';
+// import {Provider} from 'react-redux'
 
-import configureStore from './store'
+// import configureStore from './store'
 
-const store = configureStore()
+// const store = configureStore()
 
-const Celebee = () => (
-    <Provider store = { store }>
-        <App />
-    </Provider>
-)
+// const Celebee = () => (
+//     <Provider store = { store }>
+//         <App />
+//     </Provider>
+// )
 
-import {registerScreens} from './src/screens';
+// import {registerScreens} from './src/screens';
 
-registerScreens();
+// registerScreens();
 
-// AppRegistry.registerComponent(appName, () => Celebee);
+// // AppRegistry.registerComponent(appName, () => Celebee);
 
 
-// Navigation.registerComponent(`Celebee`, () => Celebee);
+// // Navigation.registerComponent(`Celebee`, () => Celebee);
 
-Navigation.events().registerAppLaunchedListener(() => {
-  Navigation.setRoot({
-    root: {
-      component: {
-        name: "Initializing"
-      }
-    }
-  });
-});
+// Navigation.events().registerAppLaunchedListener(() => {
+//   Navigation.setRoot({
+//     root: {
+//       component: {
+//         name: "Initializing"
+//       }
+//     }
+//   });
+// });
+
+require('./src/index.js')
