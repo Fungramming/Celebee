@@ -11,15 +11,16 @@ import { config, INIT_USER_INFO } from '../actions/types'
 import {connect} from 'react-redux'
 import { initUserInfo } from "../actions/users";
 import SplashScreen from 'react-native-splash-screen';
-
+import { Navigation } from 'react-native-navigation'
+import {LoginApp} from './index'
 class AuthValidScreen extends Component {
 
     constructor(props) {
       super(props);
-      this.loadApp()
     }
     componentDidMount() {
-      SplashScreen.hide();
+      // SplashScreen.hide()
+      this.loadApp()
     }
 
     // AsyncStorage에 유저토큰 값 확인 후 페이지 이동
@@ -41,9 +42,10 @@ class AuthValidScreen extends Component {
       //   this.props.init(result.result)
 
       // }).catch((error) => {
-      // }); 
+      // });                                                         
 
-      this.props.navigation.navigate(userToken ? 'App' : 'Login')
+      LoginApp()
+
     }
   
     render() {

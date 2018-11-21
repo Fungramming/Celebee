@@ -24,8 +24,7 @@ import { initUserInfo } from "../actions/users";
 import AppIntro from 'react-native-app-intro';
 
 import Navigation from 'react-native-navigation'
-import { goToLogin, goHome, goInIt } from './navigation'
-
+import SplashScreen from 'react-native-splash-screen';
 
 var config = {
   apiKey: "AIzaSyDI0yDEw3xg9eCQphgJbf95_RCIOPVlKH0",
@@ -48,6 +47,8 @@ class Login extends Component {
   }
 
   componentDidMount() {
+    SplashScreen.hide();
+
     GoogleSignin.configure({
       scopes: ['openid', 'email', 'profile'],
       shouldFetchBasicProfile: true,

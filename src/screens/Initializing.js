@@ -6,9 +6,6 @@ import {
   AsyncStorage
 } from 'react-native'
 
-import { goToLogin, goHome } from './navigation'
-import SplashScreen from 'react-native-splash-screen';
-
 // import { USER_KEY } from './config'
 
 export default class Initialising extends React.Component {
@@ -16,8 +13,6 @@ export default class Initialising extends React.Component {
     super(props);
   }
   componentDidMount() {
-    SplashScreen.hide();
-    goToLogin()
     // try {
     // //   const user = await AsyncStorage.getItem(USER_KEY)
     // //   console.log('user: ', user)

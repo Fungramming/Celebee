@@ -20,28 +20,51 @@ import { StatusBar } from 'react-native'
 import {Navigation} from 'react-native-navigation';
 
 import Login from './Login'
+import Auth from './AuthValidScreen'
 
 // 스크린 이름 및 const 정의
+export const AUTH_SCREEN = 'Celebee.AuthScreen';
 export const LOGIN_SCREEN = 'Celebee.LoginScreen';
 
 // Screens Map() 함수
 export const Screens = new Map();
+Screens.set(AUTH_SCREEN, Auth)
 Screens.set(LOGIN_SCREEN, Login)
 
 // LoginApp 네비게이션 함수 정의
-export const LoginApp = () => Navigation.push(this.props.componentId, {
-  component: {
-    name: LOGIN_SCREEN,
-    passProps: {
-      text: 'Login screen'
-    },
-    // options: {
-    //   topBar: {
-    //     title: {
-    //       text: 'Login'
-    //     }
-    //   }
-    // }
+export const AuthValid = () => Navigation.setRoot({
+  root: {
+    component: {
+      name: AUTH_SCREEN,
+      passProps: {
+        text: 'Login screen'
+      },
+      // options: {
+      //   topBar: {
+      //     title: {
+      //       text: 'Login'
+      //     }
+      //   }
+      // }
+    }
+  }
+});
+
+export const LoginApp = () => Navigation.setRoot({
+  root: {
+    component: {
+      name: LOGIN_SCREEN,
+      passProps: {
+        text: 'Login screen'
+      },
+      // options: {
+      //   topBar: {
+      //     title: {
+      //       text: 'Login'
+      //     }
+      //   }
+      // }
+    }
   }
 });
 
