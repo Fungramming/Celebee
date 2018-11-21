@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
     myIdol: {
         height: 180,
         width: Dimensions.get('window').width,
-        paddingLeft: 15
+        // paddingLeft: 15
     },
     subTitle : {
         marginLeft: 12,
@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
             android: {
                 marginHorizontal: 4
             },
-          }),
+        }),
     },
     idolPhoto: {
         backgroundColor: '#dedede',
@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
                 width: 68,
                 height: 68
             },
-          }),
+        }),
     },
     idolName: {
         width: 80,
