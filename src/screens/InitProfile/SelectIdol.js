@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Text, StyleSheet, View, ScrollView, TouchableOpacity, StatusBar, Button, FlatList, Dimensions } from 'react-native'
-import SelectIdolList from '../../components/SelectIdolList'
-import {MainApp} from '../index'
+import SelectIdolList from '../../components/Card/IdolCard'
+import {MainApp} from '../Navigation'
 
 class SelectIdol extends Component {
   constructor(props) {

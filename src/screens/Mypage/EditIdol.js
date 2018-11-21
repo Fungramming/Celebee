@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Text, View, ScrollView, StyleSheet, Dimensions,TouchableOpacity, Image, FlatList } from 'react-native'
-import SelectIdolList from '../components/SelectIdolList'
+import SelectIdolList from '../../components/Card/IdolCard'
 
 export default class MyIdol extends Component {
   constructor(props) {

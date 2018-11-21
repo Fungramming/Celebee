@@ -21,7 +21,7 @@ class SelectIdolList extends Component {
       <View style={styles.container}>
         <View style={styles.idolCard}>
           <Image
-            source={require("../../assets/user.png")}
+            source={require("../../../assets/user.png")}
             style={styles.idolPhoto}
           />
           <View style={styles.idolTextGroup}>

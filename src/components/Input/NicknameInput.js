@@ -4,10 +4,10 @@ import { Text, View, StyleSheet, TextInput, TouchableOpacity } from 'react-nativ
 import Icon from 'react-native-vector-icons/AntDesign';
 
 import { connect } from "react-redux";
-import { addUserInfo } from "../actions/users";
+import { addUserInfo } from "../../actions/users";
 // import { relative } from 'path';
 
- class NicknameInput extends Component {
+class NicknameInput extends Component {
   constructor(props) {
     super(props);
     this.state = { 
@@ -18,9 +18,6 @@ import { addUserInfo } from "../actions/users";
         available:false
       }, 
       nicknameInputValid: true,
-      // showValid: false,
-      // controlButton: true,
-
     }
   }
 

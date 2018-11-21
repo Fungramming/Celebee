@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import {Button,Platform, Text, View, StyleSheet,TouchableOpacity, Dimensions, Image, TextInput, StatusBar } from 'react-native'
 import { connect } from 'react-redux'
-import { updateName } from '../actions/users'
+import { updateName } from '../../actions/users'
 
 import ImagePicker from 'react-native-image-picker';
 import Icon from 'react-native-vector-icons/AntDesign';
@@ -38,7 +38,7 @@ class EditMyProfile extends Component {
     };
    
     componentDidMount() {
-        this.props.navigation.setParams({ handleSubmit: this.onSubmitProfile.bind(this) });   
+        // this.props.navigation.setParams({ handleSubmit: this.onSubmitProfile.bind(this) });   
     }
     onSubmitProfile = () => {
         if(this.state.userName.trim() === '') {
@@ -46,8 +46,8 @@ class EditMyProfile extends Component {
         }
         this.props.update(this.state.userName);
         console.log('this.state.userName :', this.state.userName);
-        this.props.navigation.state.params.onNavigateBack(this.state.userName)
-        this.props.navigation.goBack()
+        // this.props.navigation.state.params.onNavigateBack(this.state.userName)
+        // this.props.navigation.goBack()
     }
     onChangeName = (value) => {
         this.setState({

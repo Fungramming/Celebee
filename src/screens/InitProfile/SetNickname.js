@@ -11,9 +11,8 @@ import {
 } from "react-native";
 import { connect } from "react-redux";
 import { addUserInfo } from "../../actions/users";
-import NicknameInput from "../../components/nicknameInput"
-import Navigation from 'react-native-navigation'
-import { SelectIdolScreen } from '../index'
+import NicknameInput from "../../components/Input/NicknameInput"
+import { SelectIdolScreen } from '../Navigation'
 
 class SetNickname extends Component {
   constructor(props) {

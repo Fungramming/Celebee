@@ -12,7 +12,7 @@ import {connect} from 'react-redux'
 import { initUserInfo } from "../actions/users";
 import SplashScreen from 'react-native-splash-screen';
 import { Navigation } from 'react-native-navigation'
-import {LoginApp} from './index'
+import {LoginApp} from './Navigation'
 class AuthValidScreen extends Component {
 
     constructor(props) {

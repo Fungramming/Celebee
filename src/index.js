@@ -1,4 +1,4 @@
-import { Screens, AuthValid } from './screens'
+import { Screens, AuthValid } from './screens/Navigation'
 import configureStore from '../store'
 // import { Navigation } from 'react-native-navigation/lib/dist/Navigation';
 import {Navigation} from 'react-native-navigation';
