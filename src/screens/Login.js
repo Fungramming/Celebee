@@ -23,8 +23,7 @@ import { connect } from "react-redux";
 import { initUserInfo } from "../actions/users";
 import AppIntro from 'react-native-app-intro';
 
-import Navigation from 'react-native-navigation'
-import SplashScreen from 'react-native-splash-screen';
+import {SetNicknameScreen} from './index'
 
 var config = {
   apiKey: "AIzaSyDI0yDEw3xg9eCQphgJbf95_RCIOPVlKH0",
@@ -47,8 +46,6 @@ class Login extends Component {
   }
 
   componentDidMount() {
-    SplashScreen.hide();
-
     GoogleSignin.configure({
       scopes: ['openid', 'email', 'profile'],
       shouldFetchBasicProfile: true,
@@ -153,7 +150,7 @@ class Login extends Component {
         isLoading: false
       })
 
-      goInIt()
+      SetNicknameScreen()
       
     }).catch((error) => {
       console.log(`Login fail with error: ${error}`);

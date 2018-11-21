@@ -19,7 +19,7 @@ class AuthValidScreen extends Component {
       super(props);
     }
     componentDidMount() {
-      // SplashScreen.hide()
+      SplashScreen.hide()
       this.loadApp()
     }
 

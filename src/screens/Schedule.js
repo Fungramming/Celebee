@@ -1,17 +1,25 @@
 import React, { Component } from "react";
 import { Platform, View, Text, StyleSheet, TouchableOpacity, TextInput } from "react-native";
-import Icon from 'react-native-vector-icons/AntDesign';
 
 class Schedule extends Component {
+  static options(passProps) {
+    return {
+      topBar: {
+        rightButtons: {
+          id: 'buttonOne',
+          // icon: require('../../assets/user.png'),
+          backButton: { color: '#000', icon: require('../../assets/user.png') },
+          disableIconTint: false,
+          buttonColor: '#000'
+        },
+        statusBarStyle: 'light'
+      }
+    };
+  }
   render() {
     return (
       <View style={styles.container}>
-        <Text style={{position: "absolute", top: 0}}>스케쥴</Text>
-        <TouchableOpacity onPress={() => this.props.navigation.navigate('MyPage')}>
-          <View style={{ paddingHorizontal: 10 }}>
-            <Icon name="user" size={350} />
-          </View>
-        </TouchableOpacity>
+        <Text>스케쥴</Text>
       </View>
     );
   }

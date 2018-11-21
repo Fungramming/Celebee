@@ -13,7 +13,7 @@ import { connect } from "react-redux";
 import { addUserInfo } from "../actions/users";
 import NicknameInput from "../components/nicknameInput"
 import Navigation from 'react-native-navigation'
-import { goToLogin, goHome, goInIt, goSelectIdol } from './navigation'
+import { SelectIdolScreen } from './index'
 
 class SetNickname extends Component {
   constructor(props) {
@@ -52,8 +52,7 @@ class SetNickname extends Component {
 
   addUserInfo() {
     this.props.add(this.state.userInfo)
-    // this.props.navigation.navigate('SelectIdol')
-    goSelectIdol()
+    SelectIdolScreen()
   }
 
   render() {
