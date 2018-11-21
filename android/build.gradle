@@ -3,15 +3,16 @@
 buildscript {
     ext {
         buildToolsVersion = "27.0.3"
-        minSdkVersion = 16
+        minSdkVersion = 19
         compileSdkVersion = 27
         targetSdkVersion = 26
         supportLibVersion = "27.1.1"
     }
     repositories {
         google()
+        mavenLocal()
+        mavenCentral()
         jcenter()
-        mavenCentral() 
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.1.4'
@@ -23,9 +24,9 @@ buildscript {
 
 allprojects {
     repositories {
+        google()        
         mavenLocal()
-        google()
-        maven {url "https://maven.google.com"}
+        // maven {url "https://maven.google.com"}
         jcenter()
         maven {
             // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
@@ -34,6 +35,7 @@ allprojects {
         maven {
             url "$rootDir/../node_modules/react-native-google-signin/android"
         }
+        maven { url 'https://jitpack.io' }
     }
 }
 
