@@ -32,6 +32,14 @@ class MyPage extends Component {
       }
     })
   }
+
+  onEditIdolPress() {
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: MYPAGE_EDIT_IDOL_SCREEN
+      }
+    })
+  }
   render() {
     return (
       <View style={styles.constainer}>
@@ -39,7 +47,7 @@ class MyPage extends Component {
           <MyProfile userName={this.state.userName}></MyProfile>
         </TouchableOpacity>
         <View style={styles.idolSettingBtn}>
-          <TouchableOpacity onPress={() => this.props.navigation.navigate('EditIdol')}>
+          <TouchableOpacity onPress={ this.onEditIdolPress.bind(this) }>
             <Text>편집</Text>
           </TouchableOpacity>
         </View>
