@@ -44,8 +44,6 @@ class SetNickname extends Component {
       },
       valid: state.valid
     }))    
-
-    
     console.log('11111:', this.state.userInfo);
   }
 
@@ -58,7 +56,8 @@ class SetNickname extends Component {
     return (
       <View style={styles.container}>
         <View style={{flex: 2}}></View>       
-        <NicknameInput
+        <NicknameInput 
+          title={"닉네임 설정"}
           onValidFunc={this.validFunc}
         ></NicknameInput>
         <TouchableOpacity             

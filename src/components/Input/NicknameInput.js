@@ -18,9 +18,26 @@ class NicknameInput extends Component {
         available:false
       }, 
       nicknameInputValid: true,
+      // showValid: false,
+      // controlButton: true,
+
     }
   }
 
+  componentDidMount() {
+    // 닉네임 텍스트 
+    if(this.constructor.name == "NicknameInput"){
+      this.currentNickname();
+      console.log('this.state', this.state);
+    };
+  }
+
+  // 마이페이지 EditMyPage 
+  currentNickname(){
+    this.textInput.setNativeProps({text:this.state.userInfo.nickname})
+  } 
+  off
+  //  공통
   checkNickname(text) {
     fetch('http://celebee-env-1.gimjpxetg2.ap-northeast-2.elasticbeanstalk.com/api/v1.0/user/nickname/', {
       method: 'POST',
@@ -92,9 +109,10 @@ class NicknameInput extends Component {
   }
 
   render() {
+    const {title} = this.props
     return (
       <View style={styles.nicknameView}>
-        <Text style={styles.nicknameTitle}>닉네임 설정</Text>
+        <Text style={styles.nicknameTitle}>{title}</Text>
         <View>
           <TextInput 
             ref={(input) => { this.textInput = input; }}
@@ -102,7 +120,7 @@ class NicknameInput extends Component {
             maxLength={12}
             placeholder="12자 이내의 닉네임을 설정해 주세요"
             onChangeText={(text) => this.checkNickname(text)}
-            returnKeyType="done"
+            returnKeyType="done"            
           />
           <TouchableOpacity style={[styles.nicknameValueBox,!this.state.userInfo.nickname ? {display:"none"}: '']} onPress={this.onInputFocus.bind(this)}>
             <Text style={this.state.nicknameInputValid ? styles.onNicknameText : styles.offNicknameText}>{this.state.userInfo.nickname}</Text>
@@ -120,6 +138,7 @@ class NicknameInput extends Component {
     )
   }
 }
+
 
 const mapStateToProps = state => {
   return {
@@ -171,7 +190,7 @@ const styles = StyleSheet.create({
     fontSize: 18
   },
   onNicknameText:{
-    opacity:1,
+    opacity:0,
     fontSize: 30,
     zIndex: 100,
     width: '100%',

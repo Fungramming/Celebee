@@ -3,6 +3,8 @@ import {Button,Platform, Text, View, StyleSheet,TouchableOpacity, Dimensions, Im
 import { connect } from 'react-redux'
 import { updateName } from '../../actions/users'
 
+import NicknameInput from "../../components/Input/NicknameInput"
+
 import ImagePicker from 'react-native-image-picker';
 import Icon from 'react-native-vector-icons/AntDesign';
 
@@ -14,53 +16,22 @@ const options = {
     path: 'images',
     },
 };
-class EditMyProfile extends Component {    
-    constructor(props){
-        super(props)
-        this.state = {
-            userName : this.props.userName,
-            // avatarSource : require('../../assets/logo_white.png'),
-            avatarSource : "https://techcrunch.com/wp-content/uploads/2018/05/snap-dollar-eyes_preview.png?w=730&crop=1"
+class EditMyProfile extends Component {         
+    constructor(props) {
+        super(props);
+        this.state = { 
+          userInfo: this.props.userInfo,    
+          valid: {
+            alertText: false,
+            completeButton: false
+          },
+          avatarSource : "https://techcrunch.com/wp-content/uploads/2018/05/snap-dollar-eyes_preview.png?w=730&crop=1"
         }
     }
-    
-    static navigationOptions =  ({navigation}) => {        
-        const {params = {}} = navigation.state;
-        return {
-            headerTitle: "프로필 수정",
-            headerRight: (
-            // <TouchableOpacity ref={component => this.submit = component}>
-            <TouchableOpacity onPress={params.handleSubmit}>
-                <Text style={{padding: 25}}>완료</Text>
-            </TouchableOpacity>
-          )
-        }
-    };
-   
     componentDidMount() {
         // this.props.navigation.setParams({ handleSubmit: this.onSubmitProfile.bind(this) });   
-    }
-    onSubmitProfile = () => {
-        if(this.state.userName.trim() === '') {
-            return;
-        }
-        this.props.update(this.state.userName);
-        console.log('this.state.userName :', this.state.userName);
-        // this.props.navigation.state.params.onNavigateBack(this.state.userName)
-        // this.props.navigation.goBack()
-    }
-    onChangeName = (value) => {
-        this.setState({
-            userName: value
-        })
-        console.log(this.state.userName)
-    }
-    clearText = () => {
-        this.setState({
-            userName: ''
-        })
-        this._textInput.setNativeProps({text: ''});
-    }
+    }      
+   
     onEditPhoto = () => {
         var _this = this;
 
@@ -85,10 +56,22 @@ class EditMyProfile extends Component {
             }
         });
     }
-
+    validFunc = (state) => {
+        console.log('전달 받은 :', state);    
+        
+        this.setState(prevState => ({
+          userInfo: {
+            ...prevState.userInfo,
+            email : state.userInfo.email,
+            nickname : state.userInfo.nickname            
+          },
+          valid: state.valid
+        }))    
+        console.log('11111:', this.state.userInfo);
+      }
   render() {
     return (
-      <View style={{backgroundColor: '#fff', height: Dimensions.get('window').height}}>
+      <View style={styles.container}>
         <View style={styles.photoBox}>
             <TouchableOpacity onPress={this.onEditPhoto.bind(this)}>
                 <Image
@@ -97,28 +80,24 @@ class EditMyProfile extends Component {
                 />         
                 <Icon style={styles.photoIcon} name="camera"></Icon>
             </TouchableOpacity>
-        </View>  
-        <View style={styles.nameBox}>
-            <Text style={styles.userName}>사용자 이름</Text>
-            <View>
-                <TextInput 
-                    ref={component => this._textInput = component}
-                    style={styles.nameInput} 
-                    value = { this.state.userName } 
-                    onFocus = { this.onInputFocus }
-                    onChangeText = {this.onChangeName}>
-                </TextInput>   
-                <TouchableOpacity style={styles.closeCircle} onPress={this.clearText}>
-                    <Icon name="closecircleo" size={24}></Icon>
-                </TouchableOpacity>     
-            </View>
-        </View>
+        </View>          
+        <NicknameInput
+            title = {"닉네임"}
+            onValidFunc={this.validFunc}
+        ></NicknameInput>
       </View>
     )
   }
 }
 
 const styles = StyleSheet.create({
+    container: {
+        backgroundColor: "#fefefe",
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingHorizontal: 12,
+    },
     photoBox: {
         paddingVertical: 50,
         alignItems:'center'

@@ -112,9 +112,8 @@ class Login extends Component {
                 this.setState({
                   isLoading: false
                 })
-
-                _this.saveUserToken(credential.accessToken)
-                _this.props.navigation.navigate('SetNickname')
+                  _this.saveUserToken(credential.accessToken)
+                  SetNicknameScreen()                
                 })
                 .catch((error) => {
                   console.log(error.message);
@@ -190,7 +189,9 @@ class Login extends Component {
           }))
           _this.initUser("kakao", _this.state.userInfo)
         }
-        _this.props.navigation.navigate('SetNickname')
+
+        SetNicknameScreen()
+        
     })
   }
 
@@ -202,11 +203,11 @@ class Login extends Component {
             barStyle="light-content"
           />
           <View style={styles.loginTextView}>
-            <Text style={styles.loginText}>로그인</Text>
+            <Text style={styles.loginText}>로그인</Text>            
           </View>
           <LoadingSpinner 
             show={this.state.isLoading}
-          />
+          />      
           <View style={styles.loginButtonView}>
             <TouchableOpacity style={styles.F_btn} onPress={this._onLoginFacebook.bind(this)}>
               <Text style={{color:'#fff', fontSize: 16, textAlign: 'center',}}>페이스북계정으로 로그인</Text>

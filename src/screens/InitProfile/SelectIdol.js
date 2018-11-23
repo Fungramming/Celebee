@@ -66,9 +66,9 @@ class SelectIdol extends Component {
               <SelectIdolList name={item.idol_name} followNum={item.total_followers} key={item.id}></SelectIdolList>
             ))}
         </ScrollView>        
-        <View style={styles.selectBtn}>
-          <Button title="완료" color='#fff' onPress={() => this.goToMain()}/>
-        </View>
+        <TouchableOpacity onPress={() => this.goToMain()}>
+            <Text style={styles.selectBtn}>Celebee 시작하기</Text>
+        </TouchableOpacity> 
       </View>
     );
   }
