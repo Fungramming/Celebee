@@ -10,6 +10,8 @@ class MyProfile extends Component {
   }  
   
   render() {
+    const {nickname} = this.props
+    console.log('nickname', nickname);
     return (
       <View style={styles.myProfileBox}>
         <Image
@@ -17,7 +19,7 @@ class MyProfile extends Component {
           source={require("../../../../assets/user.png")}
         />         
         <View>
-          <Text style={styles.nickName}>{this.state.userName}</Text>
+          <Text style={styles.nickName}>{nickname}</Text>
           <Text style={styles.settingBtn}>프로필 수정</Text>
         </View>
       </View>

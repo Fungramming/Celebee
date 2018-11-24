@@ -82,6 +82,7 @@ class EditMyProfile extends Component {
             </TouchableOpacity>
         </View>          
         <NicknameInput
+            thisScreen = { this.constructor.name }
             title = {"닉네임"}
             onValidFunc={this.validFunc}
         ></NicknameInput>
@@ -89,6 +90,23 @@ class EditMyProfile extends Component {
     )
   }
 }
+
+
+const mapStateToProps = state => {
+    return {
+        userName: state.user.userInfo.name,   // Mount 될때 initialState 를 가져옴 , this.props 로. users 는 actios 에서의 users.js 의 이름
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        update: (name) => {
+            dispatch(updateName(name))
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(EditMyProfile)
 
 const styles = StyleSheet.create({
     container: {
@@ -142,20 +160,3 @@ const styles = StyleSheet.create({
         right: 0,
     }
 })
-
-const mapStateToProps = state => {
-    return {
-        userName: state.user.userInfo.name,   // Mount 될때 initialState 를 가져옴 , this.props 로. users 는 actios 에서의 users.js 의 이름
-    }
-}
-
-const mapDispatchToProps = dispatch => {
-    return {
-        update: (name) => {
-            dispatch(updateName(name))
-        }
-    }
-}
-
-
-export default connect(mapStateToProps, mapDispatchToProps)(EditMyProfile)

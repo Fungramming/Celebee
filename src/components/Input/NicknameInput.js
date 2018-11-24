@@ -1,5 +1,5 @@
+import { Text, View, StyleSheet, TextInput, TouchableOpacity, KeyboardAvoidingView, Animated } from 'react-native'
 import React, { Component } from 'react'
-import { Text, View, StyleSheet, TextInput, TouchableOpacity } from 'react-native'
 
 import Icon from 'react-native-vector-icons/AntDesign';
 
@@ -20,23 +20,37 @@ class NicknameInput extends Component {
       nicknameInputValid: true,
       // showValid: false,
       // controlButton: true,
-
     }
   }
 
+  _animatedPadding = new Animated.value(0);  
+
   componentDidMount() {
+  console.log('_animatedPadding', _animatedPadding);
+
     // 닉네임 텍스트 
-    if(this.constructor.name == "NicknameInput"){
+    if(this.props.thisScreen == "EditMyProfile"){
       this.currentNickname();
-      console.log('this.state', this.state);
-    };
+      // this.setState({
+      //   valid: {
+      //     alertText: true,
+      //     completeButton: true,
+      //     available: false
+      //   }
+      // })
+      console.log('this.state.valid', this.state.valid);
+    };    
+  }
+
+  componentDidUpdate() {
+    console.log('this.state.valid', this.state.valid);
   }
 
   // 마이페이지 EditMyPage 
   currentNickname(){
     this.textInput.setNativeProps({text:this.state.userInfo.nickname})
   } 
-  off
+  
   //  공통
   checkNickname(text) {
     fetch('http://celebee-env-1.gimjpxetg2.ap-northeast-2.elasticbeanstalk.com/api/v1.0/user/nickname/', {
@@ -57,7 +71,23 @@ class NicknameInput extends Component {
         },
       }))
       console.log(!this.state.userInfo.nickname,1)
-      if( !this.state.userInfo.nickname || res.ok === false){
+      if( !this.state.userInfo.nickname){
+        this.setState(prevState => ({
+          userInfo: {
+            ...prevState.userInfo,
+            nickname : text            
+          },
+          valid: {
+            ...prevState.valid,
+            alertText: false,
+            available: false,
+            completeButton: false
+          }
+        }))      
+          
+        this.props.onValidFunc(this.state)
+        
+      } else if( !this.state.userInfo.nickname || res.ok === false){
         this.setState(prevState => ({
           userInfo: {
             ...prevState.userInfo,
@@ -71,6 +101,7 @@ class NicknameInput extends Component {
           }
         }))
       console.log('this.state.userInfo.nickname :', this.state.userInfo.nickname);
+        console.log('on')
           
         this.props.onValidFunc(this.state)
         
@@ -87,6 +118,7 @@ class NicknameInput extends Component {
             completeButton: true
           }
         }))     
+        console.log('on')
         
         this.props.onValidFunc(this.state)
 
@@ -111,7 +143,7 @@ class NicknameInput extends Component {
   render() {
     const {title} = this.props
     return (
-      <View style={styles.nicknameView}>
+      <KeyboardAvoidingView style={styles.nicknameView}>
         <Text style={styles.nicknameTitle}>{title}</Text>
         <View>
           <TextInput 
@@ -129,12 +161,12 @@ class NicknameInput extends Component {
             <Icon name="close" color="#722784" size={24}></Icon>
           </TouchableOpacity> 
         </View>        
-        <View style={!this.state.userInfo.nickname ? {display:"none"}: ''}>
+        <View style={ this.state.valid.alertText ? '' : {display:"none"}}>
           <Text style={this.state.valid.available ? styles.greenText : styles.redText}>
             {this.state.valid.available ? '사용가능한 닉네임 입니다.' : '이미 사용중인 닉네임 입니다.'}
           </Text>
         </View>      
-      </View>
+      </KeyboardAvoidingView>
     )
   }
 }

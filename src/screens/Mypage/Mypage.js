@@ -8,10 +8,7 @@ import { Navigation } from 'react-native-navigation'
 import {MYPAGE_EDIT_IDOL_SCREEN, MYPAGE_EDIT_PROFILE_SCREEN, MYPAGE_SETTING_SCREEN} from '../Navigation'
 class MyPage extends Component {  
   constructor(props){
-    super(props)
-    this.state = {
-      userName : this.props.userName,
-    }
+    super(props)  
   }
   handleOnBack = (userName) => {
     console.log('userName :', userName);
@@ -44,7 +41,7 @@ class MyPage extends Component {
     return (
       <View style={styles.constainer}>
         <TouchableOpacity onPress={ this.onEditProfilePress.bind(this) }>
-          <MyProfile userName={this.state.userName}></MyProfile>
+          <MyProfile nickname={this.props.nickname}></MyProfile>
         </TouchableOpacity>
         <View style={styles.idolSettingBtn}>
           <TouchableOpacity onPress={ this.onEditIdolPress.bind(this) }>
@@ -86,7 +83,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => {
   
   return {
-      userName: state.user.userInfo.name,   // Mount 될때 initialState 를 가져옴 , this.props 로. users 는 actios 에서의 users.js 의 이름
+      nickname: state.user.userInfo.nickname,   // Mount 될때 initialState 를 가져옴 , this.props 로. users 는 actios 에서의 users.js 의 이름
   }
 }
 
