@@ -23,10 +23,10 @@ class NicknameInput extends Component {
     }
   }
 
-  _animatedPadding = new Animated.value(0);  
+  // _animatedPadding = new Animated.value(0);  
 
   componentDidMount() {
-  console.log('_animatedPadding', _animatedPadding);
+  // console.log('_animatedPadding', _animatedPadding);
 
     // 닉네임 텍스트 
     if(this.props.thisScreen == "EditMyProfile"){
@@ -170,7 +170,6 @@ class NicknameInput extends Component {
     )
   }
 }
-
 
 const mapStateToProps = state => {
   return {
