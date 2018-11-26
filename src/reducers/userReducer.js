@@ -50,7 +50,12 @@ const userReducer = (state = initialState, action) => {
             const data = new FormData();
             data.append('token', state.token)
             data.append('nickname', action.payload.info.nickname);
-            data.append('photo', action.payload.photo)
+            data.append('photo', {
+                uri: action.payload.photo.uri,
+                name: action.payload.photo.fileName,
+                type: action.payload.photo.type,
+            })
+            console.log('form, data :', data);
             // formData.append
             fetch( config + 'user/mypage-edit/', {
                 method: 'POST',
