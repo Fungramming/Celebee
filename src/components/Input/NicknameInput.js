@@ -160,12 +160,12 @@ class NicknameInput extends Component {
           <TouchableOpacity style={styles.closeCircle} onPress={this.clearText.bind(this)}>
             <Icon name="close" color="#722784" size={24}></Icon>
           </TouchableOpacity> 
-        </View>        
-        <View style={ this.state.valid.alertText ? '' : {display:"none"}}>
-          <Text style={this.state.valid.available ? styles.greenText : styles.redText}>
-            {this.state.valid.available ? '사용가능한 닉네임 입니다.' : '이미 사용중인 닉네임 입니다.'}
-          </Text>
-        </View>      
+          <View style={ this.state.valid.alertText ? '' : {display:"none"}}>
+            <Text style={this.state.valid.available ? styles.greenText : styles.redText}>
+              {this.state.valid.available ? '사용가능한 닉네임 입니다.' : '이미 사용중인 닉네임 입니다.'}
+            </Text>
+          </View>     
+        </View>                 
       </KeyboardAvoidingView>
     )
   }

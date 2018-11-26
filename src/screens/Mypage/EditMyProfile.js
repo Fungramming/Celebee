@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {Button,Platform, Text, View, StyleSheet,TouchableOpacity, Dimensions, Image, TextInput, StatusBar } from 'react-native'
+import {Button,Platform, Text, View, StyleSheet,TouchableOpacity, Dimensions, Image, TextInput, StatusBar, KeyboardAvoidingView, Animated } from 'react-native'
 import { connect } from 'react-redux'
 import { updateName } from '../../actions/users'
 
@@ -8,7 +8,6 @@ import NicknameInput from "../../components/Input/NicknameInput"
 import ImagePicker from 'react-native-image-picker';
 import Icon from 'react-native-vector-icons/AntDesign';
 
-
 const options = {
     title: '사진 등록',
     storageOptions: {
@@ -16,6 +15,7 @@ const options = {
     path: 'images',
     },
 };
+
 class EditMyProfile extends Component {         
     constructor(props) {
         super(props);
@@ -27,10 +27,11 @@ class EditMyProfile extends Component {
           },
           avatarSource : "https://techcrunch.com/wp-content/uploads/2018/05/snap-dollar-eyes_preview.png?w=730&crop=1"
         }
+    }  
+
+    shouldComponentUpdate() {
+        return true
     }
-    componentDidMount() {
-        // this.props.navigation.setParams({ handleSubmit: this.onSubmitProfile.bind(this) });   
-    }      
    
     onEditPhoto = () => {
         var _this = this;
@@ -71,7 +72,7 @@ class EditMyProfile extends Component {
       }
   render() {
     return (
-      <View style={styles.container}>
+      <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
         <View style={styles.photoBox}>
             <TouchableOpacity onPress={this.onEditPhoto.bind(this)}>
                 <Image
@@ -86,11 +87,10 @@ class EditMyProfile extends Component {
             title = {"닉네임"}
             onValidFunc={this.validFunc}
         ></NicknameInput>
-      </View>
+      </KeyboardAvoidingView>
     )
   }
 }
-
 
 const mapStateToProps = state => {
     return {
