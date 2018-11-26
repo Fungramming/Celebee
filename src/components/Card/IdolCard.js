@@ -22,7 +22,6 @@ class SelectIdolList extends Component {
     this.props.addIdol({
       followOrNot: followOrNot, 
       id: id, 
-      token: this.state.userInfo.token
     })
   }
 

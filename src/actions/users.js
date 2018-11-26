@@ -1,4 +1,4 @@
-import {INIT_USER_INFO, UPDATE_NAME, ADD_USER_INFO, ADD_USER_IDOL} from './types'
+import {INIT_USER_INFO, UPDATE_USER_INFO, ADD_USER_INFO, ADD_USER_IDOL} from './types'
 
 export const initUserInfo = userInfo => {
     return {
@@ -14,10 +14,10 @@ export const addUserInfo = userInfo => {
     }
 }
 
-export const updateName = userName => {
+export const updateUserInfo = userInfo => {
     return {
-        type: UPDATE_NAME,
-        payload: userName
+        type: UPDATE_USER_INFO,
+        payload: userInfo
     }
 }
 

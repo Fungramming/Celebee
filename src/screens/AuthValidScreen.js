@@ -26,6 +26,7 @@ class AuthValidScreen extends Component {
     // AsyncStorage에 유저토큰 값 확인 후 페이지 이동
     loadApp = async () => {
       const userToken = await AsyncStorage.getItem('userToken')
+
       console.log('userToken in AuthValid :', userToken);
 
       fetch( config + 'user/mypage/', {
@@ -42,16 +43,14 @@ class AuthValidScreen extends Component {
         
         if(data.ok == true){
           let result =  JSON.parse(data._bodyInit)
-          this.props.init(result.result)
+          this.props.init({result:result.result, token: userToken})
           MainApp()
         } else if(data.ok == false) {
           LoginApp()
         }
 
       }).catch((error) => {
-      });                                                         
-
-     
+      });                                                          
 
     }
   

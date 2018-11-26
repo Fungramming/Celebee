@@ -136,8 +136,8 @@ class Login extends Component {
   
   _onLoginGoggle = () => {
     let _this = this;
-    let credential
-    let googleEmail
+    let credential;
+    let googleEmail;
     GoogleSignin.signIn().then((data) => {
 
       this.setState({

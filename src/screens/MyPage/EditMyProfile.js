@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import {Button,Platform, Text, View, StyleSheet,TouchableOpacity, Dimensions, Image, TextInput, StatusBar, KeyboardAvoidingView, Animated } from 'react-native'
 import { connect } from 'react-redux'
-import { updateName } from '../../actions/users'
+import { Navigation } from 'react-native-navigation'
+
+import { updateUserInfo } from '../../actions/users'
 
 import NicknameInput from "../../components/Input/NicknameInput"
 
@@ -16,19 +18,55 @@ const options = {
     },
 };
 
-class EditMyProfile extends Component {         
+class EditMyProfile extends Component {      
+    static options(passProps) {
+        return {
+          topBar: {
+            title: {
+              text: '프로필 수정'
+            },
+            visible: true,
+            animate: false,
+            rightButtons: [
+              {
+                id: 'pressComplete',
+                text: '완료'
+              }          
+            ]
+          }
+        };
+    }
+            
     constructor(props) {
         super(props);
+        Navigation.events().bindComponent(this);  
+
         this.state = { 
           userInfo: this.props.userInfo,    
           valid: {
             alertText: false,
             completeButton: false
           },
-          avatarSource : "https://techcrunch.com/wp-content/uploads/2018/05/snap-dollar-eyes_preview.png?w=730&crop=1"
+          photo : "https://techcrunch.com/wp-content/uploads/2018/05/snap-dollar-eyes_preview.png?w=730&crop=1"
         }
     }  
+        
+    navigationButtonPressed({ buttonId }) {
+        // will be called when "buttonOne" is clicked
+        if(buttonId == "pressComplete"){
+            Navigation.popToRoot(this.props.componentId);
+            this.props.update({info:this.state.userInfo, photo: this.state.photo})
+        }
+    }
 
+    onComplete() {
+        Navigation.push(this.props.componentId, {
+            component: {
+                name: MYPAGE_SETTING_SCREEN
+            }
+        })
+    }
+    
     shouldComponentUpdate() {
         return true
     }
@@ -38,7 +76,7 @@ class EditMyProfile extends Component {
 
         ImagePicker.showImagePicker(options, (response) => {
             console.log('Response = ', response);
-        
+            
             if (response.didCancel) {
             console.log('User cancelled image picker');
             } else if (response.error) {
@@ -51,9 +89,10 @@ class EditMyProfile extends Component {
             // You can also display the image using data:
             // const source = { uri: 'data:image/jpeg;base64,' + response.data };
         
-            _this.setState({
-                avatarSource: source.uri,
-            });
+            _this.setState(prevState=>({
+                ...prevState,
+                photo: response,
+            }));
             }
         });
     }
@@ -77,7 +116,7 @@ class EditMyProfile extends Component {
             <TouchableOpacity onPress={this.onEditPhoto.bind(this)}>
                 <Image
                     style={styles.photo}
-                    source={{uri: this.state.avatarSource}}
+                    source={{uri: this.state.photo.uri}}
                 />         
                 <Icon style={styles.photoIcon} name="camera"></Icon>
             </TouchableOpacity>
@@ -100,8 +139,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        update: (name) => {
-            dispatch(updateName(name))
+        update: (userInfo) => {
+            dispatch(updateUserInfo(userInfo))
         }
     }
 }

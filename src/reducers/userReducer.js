@@ -1,4 +1,4 @@
-import { config, UPDATE_NICKNAME, INIT_USER_INFO, ADD_USER_INFO, ADD_USER_IDOL } from '../actions/types'
+import { config, UPDATE_USER_INFO, INIT_USER_INFO, ADD_USER_INFO, ADD_USER_IDOL } from '../actions/types'
 
 const initialState = {
     userInfo : {
@@ -13,8 +13,15 @@ const initialState = {
 const userReducer = (state = initialState, action) => {
     console.log('action :', action);
     switch(action.type) {
+        case INIT_USER_INFO:
+            return {
+                ...state,
+                userInfo: {
+                    email: action.payload.email
+                },
+                token: action.payload.token
+            }
         case ADD_USER_INFO:
-            console.log('action.payload :', action.payload);
             fetch( config + 'register/', {
                 method: 'POST',
                 headers: {
@@ -22,7 +29,7 @@ const userReducer = (state = initialState, action) => {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    'token': action.payload.token,
+                    'token': state.token,
                     'nickname':  action.payload.nickname,
                     'email':  action.payload.email
                 }),
@@ -31,20 +38,44 @@ const userReducer = (state = initialState, action) => {
                 console.log('this.props :', this.props);
             }).catch((error) => {
                 console.log('error :', error);
-              });          
-        case INIT_USER_INFO:
-            return {
-                ...state,
-                userInfo : action.payload
-            }
-        case UPDATE_NICKNAME:
-            return {
+              });    
+              return {
                 ...state,
                 userInfo: {
-                    nickname: action.payload
-                }
+                    nickname: action.payload.nickname,
+                    email: action.payload.email
+                },
+              }      
+        case UPDATE_USER_INFO:
+            const data = new FormData();
+            data.append('token', state.token)
+            data.append('nickname', action.payload.info.nickname);
+            data.append('photo', action.payload.photo)
+            // formData.append
+            fetch( config + 'user/mypage-edit/', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'multipart/form-data',
+                },
+                // body: JSON.stringify({
+                //     'token': state.userInfo.token,
+                //     'nickname':  action.payload.info.nickname,
+                //     'photo':  action.payload.photo
+                // }),
+                body: data
+            }).then((data) => {
+                console.log('data :', data);
+            }).catch((error) => {
+                console.log('error :', error);
+            });         
+            
+            return {
+                ...state,
+        
             }
         case ADD_USER_IDOL:
+            console.log('add idol state :', state);
             fetch( config + 'user/follow/', {
                 method: 'POST',
                 headers: {
@@ -54,12 +85,13 @@ const userReducer = (state = initialState, action) => {
                 body: JSON.stringify({
                     follow: action.payload.followOrNot,
                     idol_id: action.payload.id,
-                    token: action.payload.token,
+                    token: state.token,
                 }),
             }).then((data) => {
                 // console.log('action.payload.id :', action.payload.id);
                 console.log('ADD_USER_IDOL_DATA :', data);
                 // state.followIdol.concat([...state.followIdol, action.payload.id])
+                console.log('11111state :', state);
                 return {
                     ...state,
                     followIdol: [action.payload.id]
