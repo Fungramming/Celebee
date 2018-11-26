@@ -77,13 +77,17 @@ class Login extends Component {
           reject('ERROR GETTING DATA FROM FACEBOOK')
         })      
         break;
-      case "google":
-        userInfo.email = data.user.email    
+      case "google": 
+        userInfo.email = data.googleEmail
+        // userInfo.email = data.user.email    
         userInfo.token = data.accessToken
+        // userInfo.token = data.accessToken
         this.props.init(userInfo)
         break;        
       case "kakao":      
-        this.props.init(this.state.userInfo)
+        userInfo.token = data.token
+        userInfo.email = data.email
+        this.props.init(userInfo)
         break;  
     }  
   }
@@ -131,67 +135,57 @@ class Login extends Component {
   }
   
   _onLoginGoggle = () => {
-    var _this = this;
-
+    let _this = this;
+    let credential
+    let googleEmail
     GoogleSignin.signIn().then((data) => {
 
       this.setState({
         isLoading: true
       })
 
+      googleEmail = data.user.email
+
       // create a new firebase credential with the token
-      const credential = firebase.auth.GoogleAuthProvider.credential(data.idToken, data.accessToken)
-      _this.initUser("google",data)      
+      credential = firebase.auth.GoogleAuthProvider.credential(data.idToken, data.accessToken)
       return firebase.auth().signInAndRetrieveDataWithCredential(credential)
     }).then(() => { 
-
+      
       this.setState({
         isLoading: false
       })
+      _this.initUser("google",{googleEmail: googleEmail, accessToken: credential.accessToken})
       _this.saveUserToken(credential.accessToken)
-      SetNicknameScreen()
       
+      SetNicknameScreen()
     }).catch((error) => {
       console.log(`Login fail with error: ${error}`);
     })
   }
 
   _onLoginKakao = () => {
-    var _this = this;
-
+    let _this = this;
+    let token;
     RNKakaoLogins.login((error, result) => {
+      token = result.token
       if (error) {
         console.log('error :', error);
         return
       } else {
-          this.setState({
-            userInfo: {
-              token : result.token
-            }
+          RNKakaoLogins.getProfile((error, result)=>{
+            if (error) {
+              console.log('error :', error);
+              return
+            } 
+              console.log('result :', result);
+              _this.initUser("kakao", {token: token, email: result.email})
+              _this.saveUserToken(token)
           })
         }
       this.setState({
         isLoading: true
       })
-
-    })
-
-    RNKakaoLogins.getProfile((error, result)=>{
-      if (error) {
-        console.log('error :', error);
-        return
-      } else {
-          this.setState(prevState => ({ 
-            userInfo: {
-              ...prevState.userInfo,
-              email : result.email,
-            }
-          }))
-          _this.initUser("kakao", _this.state.userInfo)
-        }
-        _this.saveUserToken(credential.accessToken)
-        SetNicknameScreen()
-        
+      SetNicknameScreen()
     })
   }
 

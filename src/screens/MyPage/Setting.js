@@ -7,6 +7,7 @@ import {
   Button,
   AsyncStorage
 } from "react-native";
+import {LoginApp, MainApp} from '../Navigation'
 
 class Setting extends Component {
   // static navigationOptions = {
@@ -15,7 +16,7 @@ class Setting extends Component {
 
   signOut = async () => {
     AsyncStorage.clear()
-    this.props.navigation.navigate('Login')
+    LoginApp()
   }
 
   render() {

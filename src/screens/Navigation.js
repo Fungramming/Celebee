@@ -158,9 +158,18 @@ export const MainApp = () => Navigation.setRoot({
             },
           },
         },
-
       ]
     },
   },
 });
 
+export const SettingScreen = () => Navigation.setRoot({
+  root: {
+    component: {
+      name: MYPAGE_SETTING_SCREEN,
+      passProps: {
+        text: 'Select Idol screen'
+      },
+    },
+  }
+});
