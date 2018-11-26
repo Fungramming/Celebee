@@ -7,7 +7,8 @@ const initialState = {
         email: ''
     },
     idolToggle: true,
-    followIdol: []
+    followIdol: [],
+    token: ''
 }
 
 const userReducer = (state = initialState, action) => {
@@ -35,7 +36,10 @@ const userReducer = (state = initialState, action) => {
         case INIT_USER_INFO:
             return {
                 ...state,
-                userInfo : action.payload
+                userInfo : {
+                    email: action.payload.email,
+                },
+                token: action.payload.token
             }
         case UPDATE_NICKNAME:
             return {
@@ -54,6 +58,7 @@ const userReducer = (state = initialState, action) => {
                 body: JSON.stringify({
                     follow: action.payload.followOrNot,
                     idol_id: action.payload.id,
+                    // token: state.userInfo.token,
                     token: action.payload.token,
                 }),
             }).then((data) => {

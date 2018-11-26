@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
-import {Platform, Text, View, ListView, StyleSheet, Dimensions,TouchableOpacity, Image, FlatList } from 'react-native'
+import {Platform, Text, View, ListView, StyleSheet, Dimensions,TouchableOpacity, Image, FlatList, AsyncStorage } from 'react-native'
+import { config } from '../../../actions/types'
+import { connect } from "react-redux";
 
 class IdolCard extends Component {
     render() {
@@ -12,33 +14,54 @@ class IdolCard extends Component {
     }
 }
 
-export default class MyIdol extends Component {
+class MyIdol extends Component {
     constructor(props) {
         super(props);
-        // const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
         this.state = {
-            idols : ['BTS','뉴이스트','트와이스','세븐틴','엑소','워너원','비투비']
-            // idols : ds.cloneWithRows(['BTS','뉴이스트','트와이스','세븐틴','엑소','워너원','비투비'])            
+            myIdols : [],
+            followIdol: this.props.followIdol
         }
     }
+    componentDidMount() {
+        this.getMyIdol()
+        console.log('this.props.followIdol :', this.props.followIdol);
+    }
+
+    getMyIdol = async() => {
+        const userToken = await AsyncStorage.getItem('userToken')
+        console.log('userToken in AuthValid :', userToken);
+
+        fetch( config + 'user/mypage/', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                'token': userToken,
+            }),
+        }).then((data) => data.json())
+        .then( (json) => {
+            console.log('json.result :', json.result);
+            // this.setState({myIdols: json.result.follow_idol_id})
+            this.setState({followIdol: json.result.follow_idol_id})
+            // console.log('this.state.followIdol :', this.state.followIdol);
+            // console.log('this.props.followIdol :', this.props.followIdol);
+        }).catch((error) => {
+            console.log('error :', error);
+        });
+    }
+
     render() {
         return (
             <View style={styles.myIdol}>
                 <Text style={styles.subTitle}>내 아이돌</Text>
-                {/* <ListView
-                    style={{paddingLeft: 5}}
-                    horizontal="true"
-                    showsHorizontalScrollIndicator={false}
-                    dataSource={this.state.idols}
-                    renderRow={(rowData)=><IdolCard name={rowData}></IdolCard>}
-                >            
-                </ListView> */}
                 <FlatList
                     horizontal={true}
                     showsHorizontalScrollIndicator={false}
-                    data={this.state.idols}
+                    data={this.state.followIdol}
                     renderItem={({item}) => {
-                        return <IdolCard name={item}></IdolCard>
+                        return <IdolCard name={item.idol_name}></IdolCard>
                     }}
                     keyExtractor={(item, index) => index.toString()} 
                 >
@@ -47,6 +70,14 @@ export default class MyIdol extends Component {
         )
     }
 }
+
+const mapStateToProps = state => {
+    return {
+        followIdol: state.user.followIdol,   // Mount 될때 initialState 를 가져옴 , this.props 로. users 는 actios 에서의 users.js 의 이름
+    }
+}
+
+export default connect(mapStateToProps)(MyIdol)
 
 const styles = StyleSheet.create({
     myIdol: {

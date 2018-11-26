@@ -1,13 +1,17 @@
 import React, { Component } from 'react'
-import { Text, View, ScrollView, StyleSheet, Dimensions,TouchableOpacity, Image, FlatList } from 'react-native'
+import { Text, View, ScrollView, StyleSheet, Dimensions,TouchableOpacity, AsyncStorage, Image, FlatList } from 'react-native'
 import SelectIdolList from '../../components/Card/IdolCard'
+import { connect } from "react-redux";
+import { config } from '../../actions/types'
 
-export default class MyIdol extends Component {
+class EditIdol extends Component {
   constructor(props) {
         super(props);
         this.state = {
-          idolList: [],
-          toggleIdol: true
+          toggleIdol: true,
+          followIdol: [],
+          unfollowIdol: [],
+          userToken: ''
         }
     }
 
@@ -15,15 +19,28 @@ export default class MyIdol extends Component {
       this.getIdolList()
     }
     
-    getIdolList =() => {
-      fetch('http://celebee-env-1.gimjpxetg2.ap-northeast-2.elasticbeanstalk.com/api/v1.0/idols/')
-      .then( (res) => res.json() )
+    getIdolList = async() => {
+      const userToken = await AsyncStorage.getItem('userToken')
+      this.state.userToken = userToken
+      console.log('userToken in AuthValid :', userToken);
+
+      fetch( config + 'user/mypage/', {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            'token': userToken,
+        }),
+      }).then((data) => data.json())
       .then( (json) => {
-        this.setState({ idolList: json.idols })
-      })
-      .catch( (err) => {
-        console.log('err :', err);
-      })
+        console.log('json.result :', json.result);
+        this.setState({followIdol: json.result.follow_idol_id})
+        this.setState({unfollowIdol: json.result.unfollow_idol_id})
+      }).catch((error) => {
+        console.log('error :', error);
+      });
     }
 
     _onToggle() {
@@ -32,49 +49,40 @@ export default class MyIdol extends Component {
     }
 
     render() {
-
+      console.log('this.props.userInfo :', this.props.userInfo);
       const {toggleIdol} = this.state;
       const toggleValue = toggleIdol ? "접기" : "펼치기";
-
+      const token = this.state.userToken
         return (
           <View style={styles.container}>
             <ScrollView showsVerticalScrollIndicator={false} style={styles.myIdol}>
 
               <Text style={styles.subTitle}>내가 팔로우한 아이돌</Text>
-              <TouchableOpacity style={{position:"absolute", top: 25, right: 25}} onPress={this._onToggle}>
+              <TouchableOpacity style={{position:"absolute", top: 25, right: 25}} onPress={() => this._onToggle()}>
                 <Text>{toggleValue}</Text>
               </TouchableOpacity>
               <View style={ this.state.toggleIdol ? styles.followList : styles.followListFalse }>
                 <FlatList
                   showsVerticalScrollIndicator={false}
-                  data={this.state.idolList}
+                  data={this.state.followIdol}
                   renderItem={({item}) => {
-                    return <SelectIdolList name={item.idol_name} followNum={item.total_followers}></SelectIdolList>
+                    const toggleFalse = false
+                    return <SelectIdolList name={item.idol_name} followNum={item.total_followers} toggleFalse={toggleFalse} id={item.id} token={token}></SelectIdolList>
                   }}
                   keyExtractor={(item, index) => index.toString()} >
                 </FlatList>
-                {/* { 
-                  this.state.idolList.map((item, index) => (
-                    <SelectIdolList name={item.idol_name} followNum={item.total_followers} key={item.id}></SelectIdolList>
-                  ))
-                } */}
               </View>
 
               <Text style={styles.subTitle}>내가 팔로우하지 않는 아이돌</Text>
               <View style={this.state.toggleIdol ? styles.unfollowList : styles.unfollowListFalse}>
                 <FlatList
                   showsVerticalScrollIndicator={false}
-                  data={this.state.idolList}
+                  data={this.state.unfollowIdol}
                   renderItem={({item}) => {
-                    return <SelectIdolList name={item.idol_name} followNum={item.total_followers}></SelectIdolList>
+                    return <SelectIdolList name={item.idol_name} followNum={item.total_followers} id={item.id} token={token}></SelectIdolList>
                   }}
                   keyExtractor={(item, index) => index.toString()} >
                 </FlatList>
-                {/* { 
-                  this.state.idolList.map((item, index) => (
-                    <SelectIdolList name={item.idol_name} followNum={item.total_followers} key={item.id}></SelectIdolList>
-                  ))
-                } */}
               </View>
 
             </ScrollView>
@@ -82,6 +90,16 @@ export default class MyIdol extends Component {
         )
     }
 }
+
+const mapStateToProps = state => {
+  return {
+    userInfo: state.user.userInfo,
+    idolToggle: state.user.idolToggle
+  }
+}
+
+
+export default connect(mapStateToProps)(EditIdol)
 
 const styles = StyleSheet.create({
     container: {

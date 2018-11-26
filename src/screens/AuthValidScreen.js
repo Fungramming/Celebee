@@ -27,6 +27,7 @@ class AuthValidScreen extends Component {
     loadApp = async () => {
       const userToken = await AsyncStorage.getItem('userToken')
       console.log('userToken in AuthValid :', userToken);
+      // LoginApp()
 
       fetch( config + 'user/mypage/', {
         method: 'POST',
@@ -39,26 +40,27 @@ class AuthValidScreen extends Component {
         }),
       }).then((data) => {
         console.log('data :', data);
-        let result =  JSON.parse(data._bodyInit)
-        console.log('result :', result);
-        this.props.init(result.result)
         
-        if(data.ok == true){
+        if(data.ok === true){
+          let result =  JSON.parse(data._bodyInit)
+          this.props.init({result: result.result, token: userToken})
           MainApp()
-        } else if(data.ok == false) {
+        } else if(data.ok === false) {
           LoginApp()
         }
 
       }).catch((error) => {
-      });                                                         
 
-     
-
+      });
     }
   
     render() {
       return (
           <View style={styles.container}>
+              <Image 
+                style={{width: 150, height: 150}}
+                source={require('../../assets/logo_white.png')}>
+              </Image>
               <ActivityIndicator 
                 color='white'
               />

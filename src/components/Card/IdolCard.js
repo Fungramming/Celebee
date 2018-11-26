@@ -22,15 +22,21 @@ class SelectIdolList extends Component {
     this.props.addIdol({
       followOrNot: followOrNot, 
       id: id, 
-      token: this.state.userInfo.token
+      // token: this.props.token
+      token: this.props.userInfo.token
     })
   }
 
   render() {
 
+    if (this.props.toggleFalse === false) {
+      this.state.toggle = false
+    }
+
     const {toggle} = this.state;
     const textValue = toggle ? "팔로우" : "팔로잉";
     const buttonBg = toggle ? styles.followBtn : styles.followingBtn
+    
 
     return (
       <View style={styles.container}>
