@@ -12,7 +12,7 @@ import {connect} from 'react-redux'
 import { initUserInfo } from "../actions/users";
 import SplashScreen from 'react-native-splash-screen';
 import { Navigation } from 'react-native-navigation'
-import {LoginApp} from './Navigation'
+import {LoginApp, MainApp} from './Navigation'
 class AuthValidScreen extends Component {
 
     constructor(props) {
@@ -28,23 +28,31 @@ class AuthValidScreen extends Component {
       const userToken = await AsyncStorage.getItem('userToken')
       console.log('userToken in AuthValid :', userToken);
 
-      // fetch( config + 'mypage/', {
-      //   method: 'POST',
-      //   headers: {
-      //       'Accept': 'application/json',
-      //       'Content-Type': 'application/json',
-      //   },
-      //   body: JSON.stringify({
-      //       'token': userToken,
-      //   }),
-      // }).then((data) => {
-      //   let result =  JSON.parse(data._bodyInit)
-      //   this.props.init(result.result)
+      fetch( config + 'user/mypage/', {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            'token': userToken,
+        }),
+      }).then((data) => {
+        console.log('data :', data);
+        let result =  JSON.parse(data._bodyInit)
+        console.log('result :', result);
+        this.props.init(result.result)
+        
+        if(data.ok == true){
+          MainApp()
+        } else if(data.ok == false) {
+          LoginApp()
+        }
 
-      // }).catch((error) => {
-      // });                                                         
+      }).catch((error) => {
+      });                                                         
 
-      LoginApp()
+     
 
     }
   

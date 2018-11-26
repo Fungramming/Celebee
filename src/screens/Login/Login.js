@@ -148,7 +148,7 @@ class Login extends Component {
       this.setState({
         isLoading: false
       })
-
+      _this.saveUserToken(credential.accessToken)
       SetNicknameScreen()
       
     }).catch((error) => {
@@ -189,7 +189,7 @@ class Login extends Component {
           }))
           _this.initUser("kakao", _this.state.userInfo)
         }
-
+        _this.saveUserToken(credential.accessToken)
         SetNicknameScreen()
         
     })

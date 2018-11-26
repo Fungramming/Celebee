@@ -143,7 +143,7 @@ class NicknameInput extends Component {
   render() {
     const {title} = this.props
     return (
-      <KeyboardAvoidingView style={styles.nicknameView}>
+      <KeyboardAvoidingView style={styles.nicknameView} behavior="padding">
         <Text style={styles.nicknameTitle}>{title}</Text>
         <View>
           <TextInput 
