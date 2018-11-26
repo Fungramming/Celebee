@@ -10,13 +10,15 @@ import {
   AsyncStorage
 } from "react-native";
 import { connect } from "react-redux";
+
 import { addUserInfo } from "../../actions/users";
 import NicknameInput from "../../components/Input/NicknameInput"
-import { SelectIdolScreen } from '../Navigation'
+import { MyApp, SelectIdolScreen } from '../Navigation'
 
-class SetNickname extends Component {
+class SetNickname extends Component { 
   constructor(props) {
     super(props);
+
     this.state = { 
       userInfo: this.props.userInfo,    
       valid: {
@@ -35,7 +37,7 @@ class SetNickname extends Component {
 
   validFunc = (state) => {
     console.log('전달 받은 :', state);    
-    
+    console.log(' brfore this.state.userInfo :', this.state.userInfo);
     this.setState(prevState => ({
       userInfo: {
         ...prevState.userInfo,
@@ -44,10 +46,10 @@ class SetNickname extends Component {
       },
       valid: state.valid
     }))    
-    console.log('11111:', this.state.userInfo);
   }
 
   addUserInfo() {
+    console.log('set  this.state.userInfo :', this.state.userInfo);
     this.props.add(this.state.userInfo)
     SelectIdolScreen()
   }

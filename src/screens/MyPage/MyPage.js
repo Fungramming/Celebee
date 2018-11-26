@@ -6,20 +6,45 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import {connect} from 'react-redux'
 import { Navigation } from 'react-native-navigation'
 import {MYPAGE_EDIT_IDOL_SCREEN, MYPAGE_EDIT_PROFILE_SCREEN, MYPAGE_SETTING_SCREEN} from '../Navigation'
+
 class MyPage extends Component {  
-  constructor(props){
-    super(props)  
+  static options(passProps) {
+    return {
+      topBar: {
+        title: {
+          text: 'My Screen'
+        },
+        visible: true,
+        animate: false,
+        rightButtons: [
+          
+          {
+            id: 'toSettingScreen',
+            icon: require('../../../assets/user.png')
+          }
+        ]
+      }
+    };
   }
-  handleOnBack = (userName) => {
-    console.log('userName :', userName);
-    console.log('on!!! :');
-    console.log('2his.state.userName :', this.state.userName);
-    console.log('this :', this);
-    // this.props.navigation
-    this.setState({
-      userName : userName
+
+  constructor(props){
+    super(props);
+    Navigation.events().bindComponent(this);  
+  }
+
+  navigationButtonPressed({ buttonId }) {
+    // will be called when "buttonOne" is clicked
+    if(buttonId == "toSettingScreen"){
+      this.onSettingPress()
+    }
+  }
+
+  onSettingPress() {
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: MYPAGE_SETTING_SCREEN
+      }
     })
-    console.log('2his.state.userName :', this.state.userName);
   }
 
   onEditProfilePress() {
@@ -81,7 +106,7 @@ const styles = StyleSheet.create({
 })
 
 const mapStateToProps = state => {
-  
+  console.log('state :', state);
   return {
       nickname: state.user.userInfo.nickname,   // Mount 될때 initialState 를 가져옴 , this.props 로. users 는 actios 에서의 users.js 의 이름
   }

@@ -26,6 +26,7 @@ class AuthValidScreen extends Component {
     // AsyncStorage에 유저토큰 값 확인 후 페이지 이동
     loadApp = async () => {
       const userToken = await AsyncStorage.getItem('userToken')
+
       console.log('userToken in AuthValid :', userToken);
       // LoginApp()
 
