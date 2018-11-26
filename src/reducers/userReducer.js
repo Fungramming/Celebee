@@ -1,8 +1,4 @@
-import { 
-    config, 
-    UPDATE_NICKNAME, 
-    INIT_USER_INFO, 
-    ADD_USER_INFO } from '../actions/types'
+import { config, UPDATE_NICKNAME, INIT_USER_INFO, ADD_USER_INFO, ADD_USER_IDOL } from '../actions/types'
 
 const initialState = {
     userInfo : {
@@ -10,6 +6,8 @@ const initialState = {
         nickname: '',
         email: ''
     },
+    idolToggle: true,
+    followIdol: []
 }
 
 const userReducer = (state = initialState, action) => {
@@ -46,6 +44,29 @@ const userReducer = (state = initialState, action) => {
                     nickname: action.payload
                 }
             }
+        case ADD_USER_IDOL:
+            fetch( config + 'user/follow/', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    follow: action.payload.followOrNot,
+                    idol_id: action.payload.id,
+                    token: action.payload.token,
+                }),
+            }).then((data) => {
+                // console.log('action.payload.id :', action.payload.id);
+                console.log('ADD_USER_IDOL_DATA :', data);
+                // state.followIdol.concat([...state.followIdol, action.payload.id])
+                return {
+                    ...state,
+                    followIdol: [action.payload.id]
+                }
+            }).catch((error) => {
+                console.log('error :', error);
+            });
         default:
             return state;    
     }

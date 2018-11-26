@@ -1,14 +1,29 @@
 import React, { Component } from "react";
 import { View, Text, StyleSheet, Image, Dimensions, TouchableOpacity } from "react-native";
+import { connect } from "react-redux";
+import { addUserIdol } from "../../actions/users";
 
 class SelectIdolList extends Component {
-  state = {
-    toggle: true
+  constructor(props) {
+    super(props);
+    this.state = { 
+      userInfo: this.props.userInfo,    
+      toggle: this.props.idolToggle,
+    }
   }
 
-  _onPress() {
-    const newState = !this.state.toggle;
-    this.setState({toggle: newState})
+  addUserIdol() {
+    const btntoggle = !this.state.toggle
+    this.setState({toggle: btntoggle})
+
+    const followOrNot = this.state.toggle ? 1 : 0
+    const id = this.props.id
+
+    this.props.addIdol({
+      followOrNot: followOrNot, 
+      id: id, 
+      token: this.state.userInfo.token
+    })
   }
 
   render() {
@@ -29,7 +44,7 @@ class SelectIdolList extends Component {
             <Text style={styles.followingNum}>{this.props.followNum}명이 팔로우합니다.</Text>
           </View>
           <View>
-            <TouchableOpacity style={buttonBg} onPress={ () => this._onPress() }>
+            <TouchableOpacity style={buttonBg} onPress={ () => this.addUserIdol() }>
               <Text style={{color:'#fff', fontSize: 16}}>{textValue}</Text>
             </TouchableOpacity>
           </View>
@@ -38,7 +53,23 @@ class SelectIdolList extends Component {
     );
   }
 }
-export default SelectIdolList;
+
+const mapStateToProps = state => {
+  return {
+    userInfo: state.user.userInfo,
+    idolToggle: state.user.idolToggle
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    addIdol: (userIdol) => {
+      dispatch(addUserIdol(userIdol))
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SelectIdolList);
 
 const styles = StyleSheet.create({
   container: {

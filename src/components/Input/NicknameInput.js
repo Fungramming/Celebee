@@ -132,13 +132,13 @@ class NicknameInput extends Component {
     this.textInput.clear()
   }
 
-  onInputFocus() {    
-    this.setState({
-      nicknameInputValid: false
-    })
-    this.textInput.focus()
-    console.log('this.textInput :', this.textInput.isFocused());
-  }
+  // onInputFocus() {    
+  //   this.setState({
+  //     nicknameInputValid: false
+  //   })
+  //   this.textInput.focus()
+  //   console.log('this.textInput :', this.textInput.isFocused());
+  // }
 
   render() {
     const {title} = this.props
@@ -154,9 +154,9 @@ class NicknameInput extends Component {
             onChangeText={(text) => this.checkNickname(text)}
             returnKeyType="done"            
           />
-          <TouchableOpacity style={[styles.nicknameValueBox,!this.state.userInfo.nickname ? {display:"none"}: '']} onPress={this.onInputFocus.bind(this)}>
-            <Text style={this.state.nicknameInputValid ? styles.onNicknameText : styles.offNicknameText}>{this.state.userInfo.nickname}</Text>
-          </TouchableOpacity>
+          {/* <TouchableOpacity style={[styles.nicknameValueBox,!this.state.userInfo.nickname ? {display:"none"}: '']} onPress={this.onInputFocus.bind(this)}>
+            <Text style={styles.NicknameText}>{this.state.userInfo.nickname}</Text>
+          </TouchableOpacity> */}
           <TouchableOpacity style={styles.closeCircle} onPress={this.clearText.bind(this)}>
             <Icon name="close" color="#722784" size={24}></Icon>
           </TouchableOpacity> 
@@ -219,16 +219,6 @@ const styles = StyleSheet.create({
     borderWidth: 1.5,
     color: '#000',
     fontSize: 18
-  },
-  onNicknameText:{
-    opacity:0,
-    fontSize: 30,
-    zIndex: 100,
-    width: '100%',
-    height: 60,
-  },
-  offNicknameText: {
-    opacity:0    
   },
   greenText: {
     color:'#00a930',

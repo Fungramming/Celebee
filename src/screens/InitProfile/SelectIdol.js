@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { Text, StyleSheet, View, ScrollView, TouchableOpacity, StatusBar, Button, FlatList, Dimensions } from 'react-native'
 import SelectIdolList from '../../components/Card/IdolCard'
+import { connect } from "react-redux";
+
 import {MainApp} from '../Navigation'
 
 class SelectIdol extends Component {
@@ -8,7 +10,7 @@ class SelectIdol extends Component {
     super(props);
     this.state = {
         idolList: [],
-        // sortList: []
+        sortByKorean: false,
     }
   }
 
@@ -20,31 +22,34 @@ class SelectIdol extends Component {
     fetch('http://celebee-env-1.gimjpxetg2.ap-northeast-2.elasticbeanstalk.com/api/v1.0/idols/')
     .then( (res) => res.json() )
     .then( (json) => {
-      this.setState({ idolList: json.idols })
-      console.log('json.idols :', json.idols);
-      // this.setState({ sortList: json.idols.sort() })
-      // this.setState({ sortList: json.idols.sort((a, b) => {
-      //   return a.idol_name < b.idol_name ? -1 : a.name > b.name ? 1 : 0;
-      // }) })
-      console.log('this.state.sortList :', this.state.sortList);
+      this.setState({ 
+        idolList: json.idols.sort( (a,b) => b.total_followers - a.total_followers ),
+      })
+      console.log('this.state.idolList :', this.state.idolList);
     })
     .catch( (err) => {
       console.log('err :', err);
     })
   }
 
+  SortByFollower() {
+    this.setState({sortByKorean: false})
+    this.state.idolList.sort( (a,b) => b.total_followers - a.total_followers )
+  }
+
+  SortByKoran() {
+    this.setState({sortByKorean: true})
+    this.state.idolList.sort( (a,b) => (a.idol_name < b.idol_name) ? -1 : ( (a.idol_name > b.idol_name) ? 1 : 0 ) )
+  }
+
   goToMain = () => {
     MainApp()
   }
 
-  static navigationOptions = {
-    header: null
-  }
-  
   render() {
     return (
       <View style={styles.container}>
-        <ScrollView style={{marginHorizontal: 12,}}showsVerticalScrollIndicator={false}>
+        <ScrollView style={{marginHorizontal: 12,}} showsVerticalScrollIndicator={false}>
           <StatusBar 
             barStyle="dark-content"
           />
@@ -55,16 +60,16 @@ class SelectIdol extends Component {
           </View>
           <Text style={styles.selectHeaderText}>내 최애 아이돌 선택하기</Text>
           <View style={{flexDirection: 'row'}}>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={ () => this.SortByFollower() }>
               <Text style={styles.selectFilterText}>인기순</Text>
             </TouchableOpacity>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={ () => this.SortByKoran() }>
               <Text style={styles.selectFilterText}>가나다순</Text>
             </TouchableOpacity>
           </View>
-          { this.state.idolList.map((item, index) => (
-              <SelectIdolList name={item.idol_name} followNum={item.total_followers} key={item.id}></SelectIdolList>
-            ))}
+            {this.state.idolList.map((item, index) => (
+              <SelectIdolList name={item.idol_name} followNum={item.total_followers} key={item.id} id={item.id}></SelectIdolList>
+            ))} 
         </ScrollView>        
         <TouchableOpacity onPress={() => this.goToMain()}>
             <Text style={styles.selectBtn}>Celebee 시작하기</Text>
@@ -74,7 +79,13 @@ class SelectIdol extends Component {
   }
 }
 
-export default SelectIdol;
+const mapStateToProps = state => {
+  return {
+    followIdol: state.user.followIdol,
+  }
+}
+
+export default connect(mapStateToProps)(SelectIdol);
 
 const styles = StyleSheet.create({
   container: {
