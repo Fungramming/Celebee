@@ -7,27 +7,30 @@ const initialState = {
         email: '',
         photo: '../../../../assets/user.png',
         followIdol: '',
-        unfollowIdol: ''
+        unfollowIdol: []
     },
     idolToggle: true,
-    followIdol: [],
     token: ''
 }
 
 const userReducer = (state = initialState, action) => {
     switch(action.type) {
-        //init 할때 두가지 경우가 있음 - 초기 로그인 - 두번째 로그인  이 두가지 경우는 서로 키 개수가 다르다.        
+        //init 할때 두가지 경우가 있음 - 초기 로그인 - 두번째 로그인  이 두가지 경우는 서로 키 개수가 다르다.    
         case INIT_USER_INFO:
+            console.log('11111',1111111111111111111111)
+
             return {
                 ...state,
                 userInfo: {
+                    ...state.userInfo,
                     email: action.payload.email,
                 },
                 token: action.payload.token
             }
-        case ASYNC_INIT_USER_INFO:          
-            state = {
-                userInfo : {
+        case ASYNC_INIT_USER_INFO:                 
+                console.log('11111',1111111111111111111111111)  
+                console.log('action.payload.result.nickname :', action.payload.result.nickname);
+                state.userInfo = {
                     ...state.userInfo,
                     id: action.payload.result.id,
                     nickname: action.payload.result.nickname,
@@ -35,22 +38,30 @@ const userReducer = (state = initialState, action) => {
                     photo: action.payload.result.photo,
                     followIdol: action.payload.result.follow_idol_id,
                     unfollowIdol: action.payload.result.unfollow_idol_id
-                },
-                token: action.payload.token,                
-            }
-            return {  
-                ...state,
-                // userInfo: {
-                //     id: action.payload.result.id,
-                //     nickname: action.payload.result.nickname,
-                //     email: action.payload.result.email,
-                //     photo: action.payload.result.photo,
-                //     followIdol: action.payload.result.follow_idol_id,
-                //     unfollowIdol: action.payload.result.unfollow_idol_id
-                // },
-                // token: action.payload.token,
-                // test: "test"
-            }
+                    // userInfo : {
+                    //     ...state.userInfo,
+                    //     id: action.payload.result.id,
+                    //     nickname: action.payload.result.nickname,
+                    //     email: action.payload.result.email,
+                    //     photo: action.payload.result.photo,
+                    //     followIdol: action.payload.result.follow_idol_id,
+                    //     unfollowIdol: action.payload.result.unfollow_idol_id
+                    // },
+                }
+                state.token =  action.payload.token
+                // return {  
+                //     ...state,
+                //     userInfo: {
+                //         id: action.payload.result.id,
+                //         nickname: action.payload.result.nickname,
+                //         email: action.payload.result.email,
+                //         photo: action.payload.result.photo,
+                //         followIdol: action.payload.result.follow_idol_id,
+                //         unfollowIdol: action.payload.result.unfollow_idol_id
+                //     },
+                //     token: action.payload.token,
+                //     test: "test"
+                // }            
         case ADD_USER_INFO:
             fetch( config + 'register/', {
                 method: 'POST',
@@ -67,10 +78,12 @@ const userReducer = (state = initialState, action) => {
                 console.log('data :', data);                
             }).catch((error) => {
                 console.log('error :', error);
-            });    
+            });   
+             
             return {
                 ...state,
                 userInfo: {
+                    ...state.userInfo,
                     nickname: action.payload.nickname,
                     email: action.payload.email
                 },
@@ -93,17 +106,23 @@ const userReducer = (state = initialState, action) => {
                 },            
                 body: data
             }).then((data) => {
-                let result =  JSON.parse(data._bodyInit);
-                console.log('result :', result);
-                return {
-                    ...state,
-                    userInfo: {
-                        ...state.userInfo,
-                        nickname: result.result.nickname,
-                        photo: result.result.photo
-                    }
+                let result =  JSON.parse(data._bodyInit);   
+
+                state.userInfo = {
+                    ...state.userInfo,
+                    nickname: result.result.nickname,
+                    photo: result.result.photo
+                }
+                
+                // return {
+                //     ...state,
+                //     userInfo: {
+                //         ...state.userInfo,
+                //         nickname: result.result.nickname,
+                //         photo: result.result.photo
+                //     }
                        
-                } 
+                // } 
 
             }).catch((error) => {
                 console.log('error :', error);
@@ -111,6 +130,7 @@ const userReducer = (state = initialState, action) => {
                 
                                        
         case ADD_USER_IDOL:
+        // let
             fetch( config + 'user/follow/', {
                 method: 'POST',
                 headers: {
@@ -123,13 +143,18 @@ const userReducer = (state = initialState, action) => {
                     token: state.token,
                 }),
             }).then((data) => {
-                return {
-                    ...state,
-                    followIdol: [action.payload.id]
+                let result =  JSON.parse(data._bodyInit);   
+                console.log('add user data :', data);  
+                let followIdol = result.result.follow_idol_id           
+                console.log('followIdol :', followIdol);
+                state.userInfo = {
+                    ...state.userInfo,
+                    followIdol : followIdol
                 }
             }).catch((error) => {
                 console.log('error :', error);
             });
+                    
         default:
             return state;    
     }

@@ -27,6 +27,12 @@ class MyPage extends Component {
     };
   }
 
+  componentDidMount() {
+    setTimeout(()=> {
+      console.log('this.props.userInfo :', this.props.userInfo);
+    }, 2000) 
+  }
+
   constructor(props){
     super(props);
     Navigation.events().bindComponent(this);  

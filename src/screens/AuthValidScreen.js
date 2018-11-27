@@ -44,10 +44,8 @@ class AuthValidScreen extends Component {
         
         if(data.ok === true){
           let result =  JSON.parse(data._bodyInit)
-          this.props.asyncInit({result: result.result, token: userToken})
-          setTimeout(()=>{
-            MainApp()
-          }, 2000)
+          this.props.asyncInit({result: result.result, token: userToken})      
+          MainApp()       
         } else if(data.ok === false) {
           LoginApp()
         }
