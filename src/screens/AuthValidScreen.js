@@ -43,7 +43,7 @@ class AuthValidScreen extends Component {
         console.log('data :', data);
         
         if(data.ok === true){
-          let result =  JSON.parse(data._bodyInit)
+          let result = JSON.parse(data._bodyInit)
           this.props.asyncInit({result: result.result, token: userToken})      
           MainApp()       
         } else if(data.ok === false) {

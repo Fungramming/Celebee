@@ -19,37 +19,38 @@ class MyIdol extends Component {
         super(props);
         this.state = {
             myIdols : [],
-            followIdol: this.props.followIdol
+            followIdol: this.props.userInfo.followIdol
         }
     }
-    componentDidMount() {
-        this.getMyIdol()
-    }
+    // componentDidMount() {
+        // this.getMyIdol()
+        // console.log('this.state.followIdol :', this.state.followIdol);
+    // }
 
     componentDidUpdate() {
-        console.log('this.props.followIdol :', this.props.followIdol);
+        this.state.followIdol = this.props.userInfo.followIdol
+        console.log('MyIdol - this.state.followIdol :', this.state.followIdol);
     }
 
-    getMyIdol = async() => {
-        const userToken = await AsyncStorage.getItem('userToken')
-
-        fetch( config + 'user/mypage/', {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                'token': userToken,
-            }),
-        }).then((data) => data.json())
-        .then( (json) => {
-            console.log('json.result :', json.result);
-            this.setState({followIdol: json.result.follow_idol_id})
-        }).catch((error) => {
-            console.log('error :', error);
-        });
-    }
+    // getMyIdol = async() => {
+    //     const userToken = await AsyncStorage.getItem('userToken')
+        // fetch( config + 'user/mypage/', {
+        //     method: 'POST',
+        //     headers: {
+        //         'Accept': 'application/json',
+        //         'Content-Type': 'application/json',
+        //     },
+        //     body: JSON.stringify({
+        //         'token': userToken,
+        //     }),
+        // }).then((data) => data.json())
+        // .then( (json) => {
+        //     console.log('json.result :', json.result);
+        //     this.setState({followIdol: json.result.follow_idol_id})
+        // }).catch((error) => {
+        //     console.log('error :', error);
+        // });
+    // }
 
     render() {
         return (
@@ -72,7 +73,7 @@ class MyIdol extends Component {
 
 const mapStateToProps = state => {
     return {
-        followIdol: state.user.followIdol,   // Mount 될때 initialState 를 가져옴 , this.props 로. users 는 actios 에서의 users.js 의 이름
+        userInfo: state.user.userInfo,   // Mount 될때 initialState 를 가져옴 , this.props 로. users 는 actios 에서의 users.js 의 이름
     }
 }
 

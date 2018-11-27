@@ -6,8 +6,8 @@ const initialState = {
         nickname: '',
         email: '',
         photo: '../../../../assets/user.png',
-        followIdol: '',
-        unfollowIdol: []
+        followIdol: {},
+        unfollowIdol: {}
     },
     idolToggle: true,
     token: ''
@@ -26,40 +26,40 @@ const userReducer = (state = initialState, action) => {
                 token: action.payload.token
             }
         case ASYNC_INIT_USER_INFO:                 
-                console.log('11111',1111111111111111111111111)  
-                console.log('action.payload.result.nickname :', action.payload.result.nickname);
-                state.userInfo = {
-                    ...state.userInfo,
-                    id: action.payload.result.id,
-                    nickname: action.payload.result.nickname,
-                    email: action.payload.result.email,
-                    photo: action.payload.result.photo,
-                    followIdol: action.payload.result.follow_idol_id,
-                    unfollowIdol: action.payload.result.unfollow_idol_id
-                    // userInfo : {
-                    //     ...state.userInfo,
-                    //     id: action.payload.result.id,
-                    //     nickname: action.payload.result.nickname,
-                    //     email: action.payload.result.email,
-                    //     photo: action.payload.result.photo,
-                    //     followIdol: action.payload.result.follow_idol_id,
-                    //     unfollowIdol: action.payload.result.unfollow_idol_id
-                    // },
-                }
-                state.token =  action.payload.token
-                // return {  
-                //     ...state,
-                //     userInfo: {
-                //         id: action.payload.result.id,
-                //         nickname: action.payload.result.nickname,
-                //         email: action.payload.result.email,
-                //         photo: action.payload.result.photo,
-                //         followIdol: action.payload.result.follow_idol_id,
-                //         unfollowIdol: action.payload.result.unfollow_idol_id
-                //     },
-                //     token: action.payload.token,
-                //     test: "test"
-                // }            
+                // console.log('11111',1111111111111111111111111)  
+                // console.log('action.payload.result.nickname :', action.payload.result.nickname);
+                // state.userInfo = {
+                //     ...state.userInfo,
+                //     id: action.payload.result.id,
+                //     nickname: action.payload.result.nickname,
+                //     email: action.payload.result.email,
+                //     photo: action.payload.result.photo,
+                //     followIdol: action.payload.result.follow_idol_id,
+                //     unfollowIdol: action.payload.result.unfollow_idol_id
+                //     // userInfo : {
+                //     //     ...state.userInfo,
+                //     //     id: action.payload.result.id,
+                //     //     nickname: action.payload.result.nickname,
+                //     //     email: action.payload.result.email,
+                //     //     photo: action.payload.result.photo,
+                //     //     followIdol: action.payload.result.follow_idol_id,
+                //     //     unfollowIdol: action.payload.result.unfollow_idol_id
+                //     // },
+                // }
+                // state.token =  action.payload.token
+                return {  
+                    ...state,
+                    userInfo: {
+                        id: action.payload.result.id,
+                        nickname: action.payload.result.nickname,
+                        email: action.payload.result.email,
+                        photo: action.payload.result.photo,
+                        followIdol: action.payload.result.follow_idol_id,
+                        unfollowIdol: action.payload.result.unfollow_idol_id
+                    },
+                    token: action.payload.token,
+                    test: "test"
+                }            
         case ADD_USER_INFO:
             fetch( config + 'register/', {
                 method: 'POST',

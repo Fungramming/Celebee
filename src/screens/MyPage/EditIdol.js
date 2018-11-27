@@ -9,38 +9,39 @@ class EditIdol extends Component {
         super(props);
         this.state = {
           toggleIdol: true,
-          followIdol: [],
-          unfollowIdol: [],
-          userToken: ''
+          followIdol: this.props.userInfo.followIdol,
+          unfollowIdol: this.props.userInfo.unfollowIdol,
+          // userToken: ''
         }
     }
 
-    componentDidMount() {
-      this.getIdolList()
-    }
+    // componentDidMount() {
+    //   this.getIdolList()
+    //   console.log('this.state.followIdol :', this.state.followIdol);
+    // }
     
-    getIdolList = async() => {
-      const userToken = await AsyncStorage.getItem('userToken')
-      this.state.userToken = userToken
+    // getIdolList = async() => {
+    //   const userToken = await AsyncStorage.getItem('userToken')
+    //   this.state.userToken = userToken
 
-      fetch( config + 'user/mypage/', {
-        method: 'POST',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            'token': userToken,
-        }),
-      }).then((data) => data.json())
-      .then( (json) => {
-        this.setState({followIdol: json.result.follow_idol_id})
-        this.setState({unfollowIdol: json.result.unfollow_idol_id})
-        console.log('this.state.followIdol :', this.state.followIdol);
-      }).catch((error) => {
-        console.log('error :', error);
-      });
-    }
+    //   fetch( config + 'user/mypage/', {
+    //     method: 'POST',
+    //     headers: {
+    //         'Accept': 'application/json',
+    //         'Content-Type': 'application/json',
+    //     },
+    //     body: JSON.stringify({
+    //         'token': userToken,
+    //     }),
+    //   }).then((data) => data.json())
+    //   .then( (json) => {
+    //     this.setState({followIdol: json.result.follow_idol_id})
+    //     this.setState({unfollowIdol: json.result.unfollow_idol_id})
+    //     console.log('this.state.followIdol :', this.state.followIdol);
+    //   }).catch((error) => {
+    //     console.log('error :', error);
+    //   });
+    // }
 
     _onToggle() {
       const toggle = !this.state.toggleIdol;

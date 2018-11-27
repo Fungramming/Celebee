@@ -28,9 +28,6 @@ class SetNickname extends Component {
     }
   }
 
-  componentDidMount(){
-    console.log(1,this.state.userInfo);
-  }
   componentDidUpdate(){
     console.log(this.state.valid)
   }
@@ -79,7 +76,7 @@ class SetNickname extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log('setni state :', state);
+  console.log('state :', state);
   return {
       userInfo: state.user.userInfo,   // Mount 될때 initialState 를 가져옴 , this.props 로. users 는 actios 에서의 users.js 의 이름
   }
