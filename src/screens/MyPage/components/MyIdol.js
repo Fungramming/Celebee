@@ -70,7 +70,7 @@ class MyIdol extends Component {
 
 const mapStateToProps = state => {
     return {
-        followIdol: state.user.followIdol,   // Mount 될때 initialState 를 가져옴 , this.props 로. users 는 actios 에서의 users.js 의 이름
+        followIdol: state.user.userInfo.followIdol,   // Mount 될때 initialState 를 가져옴 , this.props 로. users 는 actios 에서의 users.js 의 이름
     }
 }
 

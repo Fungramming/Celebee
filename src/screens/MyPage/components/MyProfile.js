@@ -9,6 +9,11 @@ class MyProfile extends Component {
     }
   }  
   
+  shouldComponentUpdate(nextProps, nextState) {    
+    return nextProps.userInfo != this.props.userInfo
+  }
+
+  
   render() {
     return (
       <View style={styles.myProfileBox}>

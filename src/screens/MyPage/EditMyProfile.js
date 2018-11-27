@@ -42,12 +42,11 @@ class EditMyProfile extends Component {
         Navigation.events().bindComponent(this);  
 
         this.state = { 
-          userInfo: this.props.userInfo,    
-          valid: {
-            alertText: false,
-            completeButton: false
-          },
-          photo : "https://techcrunch.com/wp-content/uploads/2018/05/snap-dollar-eyes_preview.png?w=730&crop=1"
+            userInfo: this.props.userInfo,
+            valid: {
+                alertText: false,
+                completeButton: false
+            }
         }
     }  
         
@@ -55,7 +54,7 @@ class EditMyProfile extends Component {
         // will be called when "buttonOne" is clicked
         if(buttonId == "pressComplete"){
             Navigation.popToRoot(this.props.componentId);
-            this.props.update({info:this.state.userInfo, photo: this.state.photo})
+            this.props.update(this.state.userInfo)
         }
     }
 
@@ -67,15 +66,16 @@ class EditMyProfile extends Component {
         })
     }
     
-    shouldComponentUpdate() {
-        return true
+    shouldComponentUpdate(nextProps, nextState) {  
+        console.log('nextProps :', nextProps); 
+        console.log('nextState :', nextState); 
+        return this.props.userInfo != nextState.userInfo  
     }
    
     onEditPhoto = () => {
         var _this = this;
 
         ImagePicker.showImagePicker(options, (response) => {
-            console.log('Response = ', response);
             
             if (response.didCancel) {
             console.log('User cancelled image picker');
@@ -84,14 +84,19 @@ class EditMyProfile extends Component {
             } else if (response.customButton) {
             console.log('User tapped custom button: ', response.customButton);
             } else {
-            const source = { uri: response.uri };
+          
         
-            // You can also display the image using data:
-            // const source = { uri: 'data:image/jpeg;base64,' + response.data };
-        
+            // // You can also display the image using data:
+            // // const source = { uri: 'data:image/jpeg;base64,' + response.data };
+                
+            // console.log('source :', source);
+            console.log('response :', response);
             _this.setState(prevState=>({
                 ...prevState,
-                photo: response,
+                userInfo : {
+                    ...prevState.userInfo,
+                    photo: response
+                }
             }));
             }
         });
@@ -107,14 +112,18 @@ class EditMyProfile extends Component {
         }))    
       }
   render() {
+      console.log('this.state.userInfo.photo :',this.state.userInfo.photo );
     return (
       <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
         <View style={styles.photoBox}>
             <TouchableOpacity onPress={this.onEditPhoto.bind(this)}>
-                <Image
-                    style={styles.photo}
-                    source={{uri: this.state.photo.uri}}
-                />         
+            {this.state.userInfo.photo == null? <Image
+                style={styles.photo}
+                source={require('../../../assets/user.png')}
+                />  : <Image
+                style={styles.photo}
+                source={{uri: this.state.userInfo.photo.uri}}
+            />  }          
                 <Icon style={styles.photoIcon} name="camera"></Icon>
             </TouchableOpacity>
         </View>          
@@ -129,8 +138,8 @@ class EditMyProfile extends Component {
 }
 
 const mapStateToProps = state => {
-    return {
-        userName: state.user.userInfo.name,   // Mount 될때 initialState 를 가져옴 , this.props 로. users 는 actios 에서의 users.js 의 이름
+    return {      
+        userInfo: state.user.userInfo,   // Mount 될때 initialState 를 가져옴 , this.props 로. users 는 actios 에서의 users.js 의 이름
     }
 }
 

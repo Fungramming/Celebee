@@ -17,8 +17,6 @@ const userReducer = (state = initialState, action) => {
     switch(action.type) {
         //init 할때 두가지 경우가 있음 - 초기 로그인 - 두번째 로그인  이 두가지 경우는 서로 키 개수가 다르다.    
         case INIT_USER_INFO:
-            console.log('11111',1111111111111111111111)
-
             return {
                 ...state,
                 userInfo: {
@@ -28,40 +26,19 @@ const userReducer = (state = initialState, action) => {
                 token: action.payload.token
             }
         case ASYNC_INIT_USER_INFO:                 
-                console.log('11111',1111111111111111111111111)  
-                console.log('action.payload.result.nickname :', action.payload.result.nickname);
-                state.userInfo = {
-                    ...state.userInfo,
-                    id: action.payload.result.id,
-                    nickname: action.payload.result.nickname,
-                    email: action.payload.result.email,
-                    photo: action.payload.result.photo,
-                    followIdol: action.payload.result.follow_idol_id,
-                    unfollowIdol: action.payload.result.unfollow_idol_id
-                    // userInfo : {
-                    //     ...state.userInfo,
-                    //     id: action.payload.result.id,
-                    //     nickname: action.payload.result.nickname,
-                    //     email: action.payload.result.email,
-                    //     photo: action.payload.result.photo,
-                    //     followIdol: action.payload.result.follow_idol_id,
-                    //     unfollowIdol: action.payload.result.unfollow_idol_id
-                    // },
-                }
-                state.token =  action.payload.token
-                // return {  
-                //     ...state,
-                //     userInfo: {
-                //         id: action.payload.result.id,
-                //         nickname: action.payload.result.nickname,
-                //         email: action.payload.result.email,
-                //         photo: action.payload.result.photo,
-                //         followIdol: action.payload.result.follow_idol_id,
-                //         unfollowIdol: action.payload.result.unfollow_idol_id
-                //     },
-                //     token: action.payload.token,
-                //     test: "test"
-                // }            
+                return {  
+                    ...state,
+                    userInfo: {
+                        id: action.payload.result.id,
+                        nickname: action.payload.result.nickname,
+                        email: action.payload.result.email,
+                        photo: action.payload.result.photo,
+                        followIdol: action.payload.result.follow_idol_id,
+                        unfollowIdol: action.payload.result.unfollow_idol_id
+                    },
+                    token: action.payload.token,
+                    test: "test"
+                }   
         case ADD_USER_INFO:
             fetch( config + 'register/', {
                 method: 'POST',
@@ -75,7 +52,7 @@ const userReducer = (state = initialState, action) => {
                     'email':  action.payload.email
                 }),
             }).then((data) => {
-                console.log('data :', data);                
+                console.log('?data :', data);                
             }).catch((error) => {
                 console.log('error :', error);
             });   
@@ -88,47 +65,7 @@ const userReducer = (state = initialState, action) => {
                     email: action.payload.email
                 },
             }      
-        case UPDATE_USER_INFO:
-            const data = new FormData();
-            data.append('token', state.token)
-            data.append('nickname', action.payload.info.nickname);
-            data.append('photo', {
-                uri: action.payload.photo.uri,
-                name: action.payload.photo.fileName,
-                type: action.payload.photo.type,
-            })
-        
-            fetch( config + 'user/mypage-edit/', {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'multipart/form-data',
-                },            
-                body: data
-            }).then((data) => {
-                let result =  JSON.parse(data._bodyInit);   
 
-                state.userInfo = {
-                    ...state.userInfo,
-                    nickname: result.result.nickname,
-                    photo: result.result.photo
-                }
-                
-                // return {
-                //     ...state,
-                //     userInfo: {
-                //         ...state.userInfo,
-                //         nickname: result.result.nickname,
-                //         photo: result.result.photo
-                //     }
-                       
-                // } 
-
-            }).catch((error) => {
-                console.log('error :', error);
-            });   
-                
-                                       
         case ADD_USER_IDOL:
         // let
             fetch( config + 'user/follow/', {
@@ -146,15 +83,83 @@ const userReducer = (state = initialState, action) => {
                 let result =  JSON.parse(data._bodyInit);   
                 console.log('add user data :', data);  
                 let followIdol = result.result.follow_idol_id           
-                console.log('followIdol :', followIdol);
+                console.log('111followIdol :', followIdol);
                 state.userInfo = {
                     ...state.userInfo,
                     followIdol : followIdol
                 }
             }).catch((error) => {
                 console.log('error :', error);
-            });
-                    
+            });  
+            return {
+                ...state
+            }   
+        case UPDATE_USER_INFO:
+            console.log('111 :', 111);
+            const formData = new FormData();
+            formData.append('token', state.token)
+            formData.append('nickname', action.payload.nickname);
+            // 사진 안바꿨을때 조건 문 필요
+            if(action.payload.photo){
+                formData.append('photo', {
+                    uri: action.payload.photo.uri,
+                    name: action.payload.photo.fileName,
+                    type: action.payload.photo.type,
+                })
+            }            
+
+            console.log('11formData :', formData);
+            // fetch( config + 'user/mypage-edit/', {
+            //     method: 'POST',
+            //     headers: {
+            //         'Accept': 'application/json',
+            //         'Content-Type': 'multipart/form-data',
+            //     },            
+            //     body: formData
+            // }).then((data) => {
+            //     let result =  JSON.parse(data._bodyInit);   
+            //     console.log('result :', result);
+            //     // state.userInfo = {
+            //     //     ...state.userInfo,
+            //     //     nickname: result.result.nickname,
+            //     //     photo: result.result.photo
+            //     // }
+                
+            //     // return {
+            //     //     ...state,
+            //     //     userInfo: {
+            //     //         ...state.userInfo,
+            //     //         nickname: result.result.nickname,
+            //     //         photo: result.result.photo
+            //     //     }
+                       
+            //     // } 
+
+            // }).catch((error) => {
+            //     console.log('error :', error);
+            // });   
+                
+            fetch( config + 'user/mypage-edit/', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'multipart/form-data',
+                },
+                body:formData,
+            }).then((data) => {
+                console.log('data :', data);
+                let result =  JSON.parse(data._bodyInit); 
+                state.userInfo = {
+                    ...state.userInfo,
+                    photo : result.result.photo
+                }
+                console.log('state :', state);
+            }).catch((error) => {
+                console.log('error :', error);
+            });  
+            return {
+                ...state              
+            }
         default:
             return state;    
     }

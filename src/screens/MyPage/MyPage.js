@@ -27,12 +27,6 @@ class MyPage extends Component {
     };
   }
 
-  componentDidMount() {
-    setTimeout(()=> {
-      console.log('this.props.userInfo :', this.props.userInfo);
-    }, 2000) 
-  }
-
   constructor(props){
     super(props);
     Navigation.events().bindComponent(this);  
@@ -40,6 +34,12 @@ class MyPage extends Component {
       userInfo : this.props.userInfo
     }
   }
+
+  shouldComponentUpdate(nextProps, nextState) {  
+    console.log('nextProps :', nextProps); 
+    console.log('nextState :', nextState); 
+    return this.state.userInfo = nextState.userInfo  
+}
 
   navigationButtonPressed({ buttonId }) {
     // will be called when "buttonOne" is clicked
