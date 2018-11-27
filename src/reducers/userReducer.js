@@ -95,13 +95,13 @@ const userReducer = (state = initialState, action) => {
                 }),
             }).then((data) => {
                 console.log('ADD_USER_IDOL_DATA :', data);
-                console.log('11111state :', state);
                 let userData = JSON.parse(data._bodyInit)
                 let idolList = userData.result.follow_idol_id
                 console.log('idolList :', idolList);
+                state.followIdol[idolList]
                 return {
                     ...state,
-                    followIdol: idolList
+                    // followIdol: idolList
                 }
                 
             }).catch((error) => {
