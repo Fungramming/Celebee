@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { config, INIT_USER_INFO } from '../actions/types'
 import {connect} from 'react-redux'
-import { initUserInfo } from "../actions/users";
+import { asyncInitUserInfo } from "../actions/users";
 import SplashScreen from 'react-native-splash-screen';
 import { Navigation } from 'react-native-navigation'
 import {LoginApp, MainApp} from './Navigation'
@@ -44,8 +44,10 @@ class AuthValidScreen extends Component {
         
         if(data.ok === true){
           let result =  JSON.parse(data._bodyInit)
-          this.props.init({result: result.result, token: userToken})
-          MainApp()
+          this.props.asyncInit({result: result.result, token: userToken})
+          setTimeout(()=>{
+            MainApp()
+          }, 2000)
         } else if(data.ok === false) {
           LoginApp()
         }
@@ -79,8 +81,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-      init: (userInfo) => {
-          dispatch(initUserInfo(userInfo))
+      asyncInit: (userInfo) => {
+          dispatch(asyncInitUserInfo(userInfo))
       }
   }
 }

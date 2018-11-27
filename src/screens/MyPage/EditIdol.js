@@ -22,7 +22,6 @@ class EditIdol extends Component {
     getIdolList = async() => {
       const userToken = await AsyncStorage.getItem('userToken')
       this.state.userToken = userToken
-      console.log('userToken in AuthValid :', userToken);
 
       fetch( config + 'user/mypage/', {
         method: 'POST',
@@ -35,7 +34,6 @@ class EditIdol extends Component {
         }),
       }).then((data) => data.json())
       .then( (json) => {
-        console.log('json.result :', json.result);
         this.setState({followIdol: json.result.follow_idol_id})
         this.setState({unfollowIdol: json.result.unfollow_idol_id})
       }).catch((error) => {
@@ -49,7 +47,6 @@ class EditIdol extends Component {
     }
 
     render() {
-      console.log('this.props.userInfo :', this.props.userInfo);
       const {toggleIdol} = this.state;
       const toggleValue = toggleIdol ? "접기" : "펼치기";
       const token = this.state.userToken

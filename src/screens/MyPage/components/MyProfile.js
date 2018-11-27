@@ -5,21 +5,22 @@ class MyProfile extends Component {
   constructor(props){
     super(props)
     this.state = {
-        userName : this.props.userName,
+        userInfo: this.props.userInfo
     }
   }  
   
   render() {
-    const {nickname} = this.props
-    console.log('nickname', nickname);
     return (
       <View style={styles.myProfileBox}>
-        <Image
+        {this.state.userInfo.photo == '../../../../assets/user.png'? <Image
           style={styles.photo}
-          source={require("../../../../assets/user.png")}
-        />         
+          source={require('../../../../assets/user.png')}
+        />  : <Image
+        style={styles.photo}
+        source={{uri: this.state.userInfo.photo}}
+      />  }   
         <View>
-          <Text style={styles.nickName}>{nickname}</Text>
+          <Text style={styles.nickName}>{this.state.userInfo.nickname}</Text>
           <Text style={styles.settingBtn}>프로필 수정</Text>
         </View>
       </View>
@@ -62,9 +63,8 @@ const styles = StyleSheet.create({
 
 
 const mapStateToProps = state => {
-  
-  return {
-      userName: state.user.userInfo.name,   // Mount 될때 initialState 를 가져옴 , this.props 로. users 는 actios 에서의 users.js 의 이름
+  return {      
+      userInfo: state.user.userInfo,   // Mount 될때 initialState 를 가져옴 , this.props 로. users 는 actios 에서의 users.js 의 이름
   }
 }
 

@@ -1,8 +1,15 @@
-import {INIT_USER_INFO, UPDATE_USER_INFO, ADD_USER_INFO, ADD_USER_IDOL} from './types'
+import {INIT_USER_INFO, UPDATE_USER_INFO, ADD_USER_INFO, ADD_USER_IDOL, ASNYC_INIT_USER_INFO} from './types'
 
 export const initUserInfo = userInfo => {
     return {
         type: INIT_USER_INFO,
+        payload: userInfo
+    }
+}
+
+export const asyncInitUserInfo = userInfo => {
+    return {
+        type: ASNYC_INIT_USER_INFO,
         payload: userInfo
     }
 }
