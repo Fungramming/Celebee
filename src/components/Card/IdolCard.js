@@ -12,6 +12,12 @@ class SelectIdolList extends Component {
     }
   }
 
+  componentWillMount() {
+    if (this.props.toggleFalse === false) {
+      this.state.toggle = false
+    }
+  }
+
   addUserIdol() {
     const btntoggle = !this.state.toggle
     this.setState({toggle: btntoggle})
@@ -23,18 +29,17 @@ class SelectIdolList extends Component {
       followOrNot: followOrNot, 
       id: id, 
     })
+
+    if (this.props.toggleFalse === false) {
+      this.state.toggle = true
+    }
   }
 
   render() {
 
-    if (this.props.toggleFalse === false) {
-      this.state.toggle = false
-    }
-
     const {toggle} = this.state;
     const textValue = toggle ? "팔로우" : "팔로잉";
     const buttonBg = toggle ? styles.followBtn : styles.followingBtn
-    
 
     return (
       <View style={styles.container}>

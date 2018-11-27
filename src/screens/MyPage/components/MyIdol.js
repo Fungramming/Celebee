@@ -27,6 +27,10 @@ class MyIdol extends Component {
         console.log('this.props.followIdol :', this.props.followIdol);
     }
 
+    componentDidUpdate() {
+        console.log('this.props.followIdol :', this.props.followIdol);
+    }
+
     getMyIdol = async() => {
         const userToken = await AsyncStorage.getItem('userToken')
         console.log('userToken in AuthValid :', userToken);
@@ -43,10 +47,7 @@ class MyIdol extends Component {
         }).then((data) => data.json())
         .then( (json) => {
             console.log('json.result :', json.result);
-            // this.setState({myIdols: json.result.follow_idol_id})
             this.setState({followIdol: json.result.follow_idol_id})
-            // console.log('this.state.followIdol :', this.state.followIdol);
-            // console.log('this.props.followIdol :', this.props.followIdol);
         }).catch((error) => {
             console.log('error :', error);
         });

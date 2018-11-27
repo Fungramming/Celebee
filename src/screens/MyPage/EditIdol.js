@@ -38,6 +38,7 @@ class EditIdol extends Component {
         console.log('json.result :', json.result);
         this.setState({followIdol: json.result.follow_idol_id})
         this.setState({unfollowIdol: json.result.unfollow_idol_id})
+        console.log('this.state.followIdol :', this.state.followIdol);
       }).catch((error) => {
         console.log('error :', error);
       });

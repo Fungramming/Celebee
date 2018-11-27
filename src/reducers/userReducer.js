@@ -94,17 +94,20 @@ const userReducer = (state = initialState, action) => {
                     token: state.token,
                 }),
             }).then((data) => {
-                // console.log('action.payload.id :', action.payload.id);
                 console.log('ADD_USER_IDOL_DATA :', data);
-                // state.followIdol.concat([...state.followIdol, action.payload.id])
                 console.log('11111state :', state);
+                let userData = JSON.parse(data._bodyInit)
+                let idolList = userData.result.follow_idol_id
+                console.log('idolList :', idolList);
                 return {
                     ...state,
-                    followIdol: [action.payload.id]
+                    followIdol: idolList
                 }
+                
             }).catch((error) => {
                 console.log('error :', error);
             });
+            console.log('state.followIdol :', state.followIdol);
         default:
             return state;    
     }
