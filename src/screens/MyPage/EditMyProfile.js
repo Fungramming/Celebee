@@ -97,8 +97,6 @@ class EditMyProfile extends Component {
         });
     }
     validFunc = (state) => {
-        console.log('전달 받은 :', state);    
-        
         this.setState(prevState => ({
           userInfo: {
             ...prevState.userInfo,
@@ -107,7 +105,6 @@ class EditMyProfile extends Component {
           },
           valid: state.valid
         }))    
-        console.log('11111:', this.state.userInfo);
       }
   render() {
     return (

@@ -17,7 +17,6 @@ class Schedule extends Component {
     };
   }
   render() {
-    console.log('this.props.componentId :', this.props.componentId);
     return (
       <View style={styles.container}>
         <Text>스케쥴</Text>

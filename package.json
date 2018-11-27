@@ -36,6 +36,7 @@
     "react-devtools": "^3.4.0",
     "react-native-debugger-open": "^0.3.17",
     "react-test-renderer": "16.6.0-alpha.8af6728",
+    "redux-logger": "^3.0.6",
     "schedule": "^0.4.0"
   },
   "jest": {

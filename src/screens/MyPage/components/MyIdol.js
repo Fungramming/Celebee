@@ -24,7 +24,6 @@ class MyIdol extends Component {
     }
     componentDidMount() {
         this.getMyIdol()
-        console.log('this.props.followIdol :', this.props.followIdol);
     }
 
     componentDidUpdate() {
@@ -33,7 +32,6 @@ class MyIdol extends Component {
 
     getMyIdol = async() => {
         const userToken = await AsyncStorage.getItem('userToken')
-        console.log('userToken in AuthValid :', userToken);
 
         fetch( config + 'user/mypage/', {
             method: 'POST',

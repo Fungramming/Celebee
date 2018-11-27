@@ -27,9 +27,18 @@ class MyPage extends Component {
     };
   }
 
+  componentDidMount() {
+    setTimeout(()=> {
+      console.log('this.props.userInfo :', this.props.userInfo);
+    }, 2000) 
+  }
+
   constructor(props){
     super(props);
     Navigation.events().bindComponent(this);  
+    this.state = {
+      userInfo : this.props.userInfo
+    }
   }
 
   navigationButtonPressed({ buttonId }) {
@@ -66,7 +75,7 @@ class MyPage extends Component {
     return (
       <View style={styles.constainer}>
         <TouchableOpacity onPress={ this.onEditProfilePress.bind(this) }>
-          <MyProfile nickname={this.props.nickname}></MyProfile>
+          <MyProfile nickname={this.state.userInfo.nickname}></MyProfile>
         </TouchableOpacity>
         <View style={styles.idolSettingBtn}>
           <TouchableOpacity onPress={ this.onEditIdolPress.bind(this) }>
@@ -106,9 +115,8 @@ const styles = StyleSheet.create({
 })
 
 const mapStateToProps = state => {
-  console.log('state :', state);
   return {
-      nickname: state.user.userInfo.nickname,   // Mount 될때 initialState 를 가져옴 , this.props 로. users 는 actios 에서의 users.js 의 이름
+    userInfo: state.user.userInfo,   // Mount 될때 initialState 를 가져옴 , this.props 로. users 는 actios 에서의 users.js 의 이름
   }
 }
 
