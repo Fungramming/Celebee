@@ -22,36 +22,12 @@ class MyIdol extends Component {
             followIdol: this.props.userInfo.followIdol
         }
     }
-    // componentDidMount() {
-        // this.getMyIdol()
-        // console.log('this.state.followIdol :', this.state.followIdol);
-    // }
 
     componentDidUpdate() {
         this.setState({'followIdol': this.props.userInfo.followIdol }) 
         console.log('MyIdol - this.state.followIdol :', this.state.followIdol);
     }
-
-    // getMyIdol = async() => {
-    //     const userToken = await AsyncStorage.getItem('userToken')
-        // fetch( config + 'user/mypage/', {
-        //     method: 'POST',
-        //     headers: {
-        //         'Accept': 'application/json',
-        //         'Content-Type': 'application/json',
-        //     },
-        //     body: JSON.stringify({
-        //         'token': userToken,
-        //     }),
-        // }).then((data) => data.json())
-        // .then( (json) => {
-        //     console.log('json.result :', json.result);
-        //     this.setState({followIdol: json.result.follow_idol_id})
-        // }).catch((error) => {
-        //     console.log('error :', error);
-        // });
-    // }
-
+    
     render() {
         return (
             <View style={styles.myIdol}>
@@ -73,7 +49,7 @@ class MyIdol extends Component {
 
 const mapStateToProps = state => {
     return {
-        userInfo: state.user.userInfo,   // Mount 될때 initialState 를 가져옴 , this.props 로. users 는 actios 에서의 users.js 의 이름
+        followIdol: state.user.userInfo.followIdol,   // Mount 될때 initialState 를 가져옴 , this.props 로. users 는 actios 에서의 users.js 의 이름
     }
 }
 
