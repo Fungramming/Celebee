@@ -84,12 +84,7 @@ class EditMyProfile extends Component {
             } else if (response.customButton) {
             console.log('User tapped custom button: ', response.customButton);
             } else {
-          
-        
-            // // You can also display the image using data:
-            // // const source = { uri: 'data:image/jpeg;base64,' + response.data };
-                
-            // console.log('source :', source);
+                  
             console.log('response :', response);
             _this.setState(prevState=>({
                 ...prevState,
@@ -112,7 +107,9 @@ class EditMyProfile extends Component {
         }))    
       }
   render() {
-      console.log('this.state.userInfo.photo :',this.state.userInfo.photo );
+      console.log('this.state.userInfo.photo :', this.state.userInfo.photo);
+      console.log('typeof this.state.userInfo.photo :', typeof this.state.userInfo.photo);
+      console.log('111111111this.state.userInfo.photo :',typeof this.state.userInfo.photo === 'object' );
     return (
       <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
         <View style={styles.photoBox}>
@@ -122,7 +119,7 @@ class EditMyProfile extends Component {
                 source={require('../../../assets/user.png')}
                 />  : <Image
                 style={styles.photo}
-                source={{uri: this.state.userInfo.photo.uri}}
+                source={{uri: typeof this.state.userInfo.photo == 'object' ? this.state.userInfo.photo.uri : this.state.userInfo.photo}}
             />  }          
                 <Icon style={styles.photoIcon} name="camera"></Icon>
             </TouchableOpacity>

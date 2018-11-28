@@ -95,7 +95,6 @@ const userReducer = (state = initialState, action) => {
                 ...state
             }   
         case UPDATE_USER_INFO:
-            console.log('111 :', 111);
             const formData = new FormData();
             formData.append('token', state.token)
             formData.append('nickname', action.payload.nickname);
