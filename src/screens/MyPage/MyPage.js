@@ -12,15 +12,15 @@ class MyPage extends Component {
     return {
       topBar: {
         title: {
-          text: 'My Screen'
+          text: '마이페이지'
         },
         visible: true,
         animate: false,
         rightButtons: [
-          
           {
             id: 'toSettingScreen',
-            icon: require('../../../assets/user.png')
+            icon: require('../../../assets/user.png'),
+            disableIconTint: false,
           }
         ]
       }
