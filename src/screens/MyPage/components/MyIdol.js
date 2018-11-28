@@ -19,7 +19,7 @@ class MyIdol extends Component {
         super(props);
         this.state = {
             myIdols : [],
-            followIdol: this.props.userInfo.followIdol
+            followIdol: this.props.followIdol
         }
     }
 
@@ -35,7 +35,7 @@ class MyIdol extends Component {
                 <FlatList
                     horizontal={true}
                     showsHorizontalScrollIndicator={false}
-                    data={this.props.userInfo.followIdol}
+                    data={this.props.followIdol}
                     renderItem={({item}) => {
                         return <IdolCard name={item.idol_name}></IdolCard>
                     }}
