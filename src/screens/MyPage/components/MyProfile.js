@@ -8,16 +8,21 @@ class MyProfile extends Component {
         userInfo: this.props.userInfo
     }
   }  
+
+  componentDidMount() {
+    console.log('this.props.dispatch :', this.props);
+  }
+
   componentDidUpdate(prevProps) {
     console.log(' this.props.userInfo.photo :',  this.props.userInfo.photo);
     console.log('1this.props.userInfo.nickname :', this.props.userInfo.nickname);
     console.log('2prevProps.userInfo.nickname :', prevProps.userInfo.nickname);
-    if ( prevProps.userInfo.nickname !== this.props.userInfo.nickname) {
+    if ( prevProps.userInfo.nickname !== this.props.userInfo.nickname || prevProps.userInfo.photo !== this.props.userInfo.photo) {
       this.setState(prevState => ({
         userInfo: {
           ...prevState.userInfo,
           nickname : this.props.userInfo.nickname,
-          // photo:             
+          photo: this.props.userInfo.photo     
         },
       }))  
     }
@@ -26,12 +31,12 @@ class MyProfile extends Component {
   render() {
     return (
       <View style={styles.myProfileBox}>
-        {this.state.userInfo.photo == '../../../../assets/user.png'? <Image
+        {this.state.userInfo.photo == ''? <Image
           style={styles.photo}
           source={require('../../../../assets/user.png')}
         />  : <Image
         style={styles.photo}
-        source={{uri: this.state.userInfo.photo}}
+        source={{uri: typeof this.state.userInfo.photo == 'object' ? this.state.userInfo.photo.uri : this.state.userInfo.photo}}
       />  }   
         <View>
           <Text style={styles.nickName}>{this.state.userInfo.nickname}</Text>

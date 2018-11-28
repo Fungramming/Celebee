@@ -79,21 +79,22 @@ const userReducer = (state = initialState, action) => {
             }).then((data) => {
                 let result =  JSON.parse(data._bodyInit);   
                 console.log('add user data :', data);  
-                let followIdol = result.result.follow_idol_id           
-                console.log('111followIdol :', followIdol);
+                followIdol = result.result.follow_idol_id           
                 state.userInfo = {
                     ...state.userInfo,
                     followIdol : followIdol
                 }
                 console.log('state.userInfo :', state.userInfo);
+                
             }).catch((error) => {
                 console.log('error :', error);
             });  
             return {
-                ...state
-            }   
+                ...state              
+            } 
         case UPDATE_USER_INFO:
             const formData = new FormData();
+            console.log('state :', state);
             formData.append('token', state.token)
             formData.append('nickname', action.payload.nickname);
             // photo가 바뀌었을때 조건: photo param 추가            
@@ -113,14 +114,20 @@ const userReducer = (state = initialState, action) => {
                 },
                 body:formData,
             }).then((data) => {
-                let result =  JSON.parse(data._bodyInit);                 
+                console.log('11data :', data);
+                let result =  JSON.parse(data._bodyInit);    
+                console.log('result :', result);             
                 // photo가 바뀌었을때 조건: photo param 추가
                 if(action.payload.photo.uri !== undefined){
+                   
                     state.userInfo = {
                         ...state.userInfo,
                         photo : result.result.photo
                     }
-                }
+
+                    console.log('state.userInfo.photo :', state.userInfo.photo);
+                }        
+
                 console.log('state :', state);
             }).catch((error) => {
                 console.log('error :', error);
@@ -132,7 +139,7 @@ const userReducer = (state = initialState, action) => {
                     ...state.userInfo,
                     nickname: action.payload.nickname,                    
                 }              
-            }
+            }             
         default:
             return state;    
     }

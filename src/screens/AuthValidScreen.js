@@ -46,7 +46,9 @@ class AuthValidScreen extends Component {
           // photo 값 null로 받을 시 
           // JSON value '<null>' of type NSNull cannot be converted to NSString
           // 에러 발생
-          result.result.photo = ''
+          if(result.result.photo == null) {
+            result.result.photo = ''
+          }
           this.props.asyncInit({result: result.result, token: userToken})      
           MainApp()       
         } else if(data.ok === false) {
