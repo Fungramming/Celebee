@@ -12,10 +12,22 @@ class SelectIdolList extends Component {
     }
   }
 
+
+  componentWillMount() {
+    if (this.props.toggleFalse === false) {
+      this.setState(prevState => ({
+        ...prevState,
+        toggle : false     
+      }))  
+    }    
+  }
+
   addUserIdol() {
     const btntoggle = !this.state.toggle
-    this.setState({toggle: btntoggle})
-
+    this.setState(prevState => ({
+      ...prevState,
+      toggle : btntoggle     
+    }))
     const followOrNot = this.state.toggle ? 1 : 0
     const id = this.props.id
 
@@ -23,19 +35,21 @@ class SelectIdolList extends Component {
       followOrNot: followOrNot, 
       id: id, 
     })
+
+    if( this.props.toggleFalse === false) {
+      this.setState(prevState => ({
+        ...prevState,
+        toggle : true     
+      }))
+    }
   }
 
   render() {
-
-    if (this.props.toggleFalse === false) {
-      this.state.toggle = false
-    }
 
     const {toggle} = this.state;
     const textValue = toggle ? "팔로우" : "팔로잉";
     const buttonBg = toggle ? styles.followBtn : styles.followingBtn
     
-
     return (
       <View style={styles.container}>
         <View style={styles.idolCard}>

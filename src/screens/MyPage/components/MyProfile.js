@@ -8,12 +8,21 @@ class MyProfile extends Component {
         userInfo: this.props.userInfo
     }
   }  
-  
-  shouldComponentUpdate(nextProps, nextState) {    
-    return nextProps.userInfo != this.props.userInfo
+  componentDidUpdate(prevProps) {
+    console.log(' this.props.userInfo.photo :',  this.props.userInfo.photo);
+    console.log('1this.props.userInfo.nickname :', this.props.userInfo.nickname);
+    console.log('2prevProps.userInfo.nickname :', prevProps.userInfo.nickname);
+    if ( prevProps.userInfo.nickname !== this.props.userInfo.nickname) {
+      this.setState(prevState => ({
+        userInfo: {
+          ...prevState.userInfo,
+          nickname : this.props.userInfo.nickname,
+          // photo:             
+        },
+      }))  
+    }
   }
 
-  
   render() {
     return (
       <View style={styles.myProfileBox}>

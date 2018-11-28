@@ -18,37 +18,12 @@ class MyIdol extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            myIdols : [],
-            followIdol: this.props.followIdol
+            userInfo: {
+                followIdol: this.props.userInfo.followIdol
+            }
         }
     }
-    componentDidMount() {
-        this.getMyIdol()
-    }
-
-    getMyIdol = async() => {
-        const userToken = await AsyncStorage.getItem('userToken')
-
-        fetch( config + 'user/mypage/', {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                'token': userToken,
-            }),
-        }).then((data) => data.json())
-        .then( (json) => {
-            // this.setState({myIdols: json.result.follow_idol_id})
-            this.setState({followIdol: json.result.follow_idol_id})
-            // console.log('this.state.followIdol :', this.state.followIdol);
-            // console.log('this.props.followIdol :', this.props.followIdol);
-        }).catch((error) => {
-            console.log('error :', error);
-        });
-    }
-
+    
     render() {
         return (
             <View style={styles.myIdol}>
@@ -56,7 +31,7 @@ class MyIdol extends Component {
                 <FlatList
                     horizontal={true}
                     showsHorizontalScrollIndicator={false}
-                    data={this.state.followIdol}
+                    data={this.state.userInfo.followIdol}
                     renderItem={({item}) => {
                         return <IdolCard name={item.idol_name}></IdolCard>
                     }}
@@ -70,7 +45,7 @@ class MyIdol extends Component {
 
 const mapStateToProps = state => {
     return {
-        followIdol: state.user.userInfo.followIdol,   // Mount 될때 initialState 를 가져옴 , this.props 로. users 는 actios 에서의 users.js 의 이름
+        userInfo: state.user.userInfo,   // Mount 될때 initialState 를 가져옴 , this.props 로. users 는 actios 에서의 users.js 의 이름
     }
 }
 

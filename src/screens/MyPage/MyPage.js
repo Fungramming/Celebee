@@ -31,15 +31,9 @@ class MyPage extends Component {
     super(props);
     Navigation.events().bindComponent(this);  
     this.state = {
-      userInfo : this.props.userInfo
+      userInfo : props.userInfo
     }
   }
-
-  shouldComponentUpdate(nextProps, nextState) {  
-    console.log('nextProps :', nextProps); 
-    console.log('nextState :', nextState); 
-    return this.state.userInfo = nextState.userInfo  
-}
 
   navigationButtonPressed({ buttonId }) {
     // will be called when "buttonOne" is clicked
@@ -59,7 +53,7 @@ class MyPage extends Component {
   onEditProfilePress() {
     Navigation.push(this.props.componentId, {
       component: {
-        name: MYPAGE_EDIT_PROFILE_SCREEN
+        name: MYPAGE_EDIT_PROFILE_SCREEN,       
       }
     })
   }
@@ -67,10 +61,11 @@ class MyPage extends Component {
   onEditIdolPress() {
     Navigation.push(this.props.componentId, {
       component: {
-        name: MYPAGE_EDIT_IDOL_SCREEN
+        name: MYPAGE_EDIT_IDOL_SCREEN     
       }
     })
   }
+  
   render() {
     return (
       <View style={styles.constainer}>

@@ -88,6 +88,7 @@ const userReducer = (state = initialState, action) => {
                     ...state.userInfo,
                     followIdol : followIdol
                 }
+                console.log('after state.userInfo :', state.userInfo);
             }).catch((error) => {
                 console.log('error :', error);
             });  
@@ -98,46 +99,15 @@ const userReducer = (state = initialState, action) => {
             const formData = new FormData();
             formData.append('token', state.token)
             formData.append('nickname', action.payload.nickname);
-            // 사진 안바꿨을때 조건 문 필요
-            if(action.payload.photo){
+            // photo가 바뀌었을때 조건: photo param 추가            
+            if(action.payload.photo.uri !== undefined){
                 formData.append('photo', {
                     uri: action.payload.photo.uri,
                     name: action.payload.photo.fileName,
                     type: action.payload.photo.type,
                 })
-            }            
-
-            console.log('11formData :', formData);
-            // fetch( config + 'user/mypage-edit/', {
-            //     method: 'POST',
-            //     headers: {
-            //         'Accept': 'application/json',
-            //         'Content-Type': 'multipart/form-data',
-            //     },            
-            //     body: formData
-            // }).then((data) => {
-            //     let result =  JSON.parse(data._bodyInit);   
-            //     console.log('result :', result);
-            //     // state.userInfo = {
-            //     //     ...state.userInfo,
-            //     //     nickname: result.result.nickname,
-            //     //     photo: result.result.photo
-            //     // }
-                
-            //     // return {
-            //     //     ...state,
-            //     //     userInfo: {
-            //     //         ...state.userInfo,
-            //     //         nickname: result.result.nickname,
-            //     //         photo: result.result.photo
-            //     //     }
-                       
-            //     // } 
-
-            // }).catch((error) => {
-            //     console.log('error :', error);
-            // });   
-                
+            } 
+            
             fetch( config + 'user/mypage-edit/', {
                 method: 'POST',
                 headers: {
@@ -146,18 +116,25 @@ const userReducer = (state = initialState, action) => {
                 },
                 body:formData,
             }).then((data) => {
-                console.log('data :', data);
-                let result =  JSON.parse(data._bodyInit); 
-                state.userInfo = {
-                    ...state.userInfo,
-                    photo : result.result.photo
+                let result =  JSON.parse(data._bodyInit);                 
+                // photo가 바뀌었을때 조건: photo param 추가
+                if(action.payload.photo.uri !== undefined){
+                    state.userInfo = {
+                        ...state.userInfo,
+                        photo : result.result.photo
+                    }
                 }
                 console.log('state :', state);
             }).catch((error) => {
                 console.log('error :', error);
-            });  
+            });       
+                            
             return {
-                ...state              
+                ...state,
+                userInfo : {
+                    ...state.userInfo,
+                    nickname: action.payload.nickname,                    
+                }              
             }
         default:
             return state;    

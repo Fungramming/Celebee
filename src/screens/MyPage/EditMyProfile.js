@@ -42,7 +42,7 @@ class EditMyProfile extends Component {
         Navigation.events().bindComponent(this);  
 
         this.state = { 
-            userInfo: this.props.userInfo,
+            userInfo: props.userInfo,
             valid: {
                 alertText: false,
                 completeButton: false
@@ -65,13 +65,7 @@ class EditMyProfile extends Component {
             }
         })
     }
-    
-    shouldComponentUpdate(nextProps, nextState) {  
-        console.log('nextProps :', nextProps); 
-        console.log('nextState :', nextState); 
-        return this.props.userInfo != nextState.userInfo  
-    }
-   
+     
     onEditPhoto = () => {
         var _this = this;
 
@@ -85,7 +79,6 @@ class EditMyProfile extends Component {
             console.log('User tapped custom button: ', response.customButton);
             } else {
                   
-            console.log('response :', response);
             _this.setState(prevState=>({
                 ...prevState,
                 userInfo : {
@@ -107,9 +100,6 @@ class EditMyProfile extends Component {
         }))    
       }
   render() {
-      console.log('this.state.userInfo.photo :', this.state.userInfo.photo);
-      console.log('typeof this.state.userInfo.photo :', typeof this.state.userInfo.photo);
-      console.log('111111111this.state.userInfo.photo :',typeof this.state.userInfo.photo === 'object' );
     return (
       <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
         <View style={styles.photoBox}>
