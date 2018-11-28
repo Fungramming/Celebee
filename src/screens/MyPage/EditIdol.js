@@ -14,7 +14,7 @@ class EditIdol extends Component {
           userToken: ''
         }
     }
-    
+
     _onToggle() {
       const toggle = !this.state.toggleIdol;
       this.setState({toggleIdol: toggle})

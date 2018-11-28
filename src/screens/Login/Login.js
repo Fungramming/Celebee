@@ -57,6 +57,7 @@ class Login extends Component {
   // 유저 토근 저장 
   saveUserToken = async (data) => {
     await AsyncStorage.setItem('userToken', data)
+    // await AsyncStorage.setItem('userToken', JSON.stringify(data))
   }
 
   initUser = (supplier, data) => {

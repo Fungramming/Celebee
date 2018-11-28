@@ -28,7 +28,6 @@ class AuthValidScreen extends Component {
       const userToken = await AsyncStorage.getItem('userToken')
 
       console.log('userToken in AuthValid :', userToken);
-      // LoginApp()
 
       fetch( config + 'user/mypage/', {
         method: 'POST',
@@ -43,7 +42,11 @@ class AuthValidScreen extends Component {
         console.log('data :', data);
         
         if(data.ok === true){
-          let result =  JSON.parse(data._bodyInit)
+          let result = JSON.parse(data._bodyInit)
+          // photo 값 null로 받을 시 
+          // JSON value '<null>' of type NSNull cannot be converted to NSString
+          // 에러 발생
+          result.result.photo = ''
           this.props.asyncInit({result: result.result, token: userToken})      
           MainApp()       
         } else if(data.ok === false) {

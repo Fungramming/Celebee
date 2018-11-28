@@ -7,7 +7,7 @@ const initialState = {
         email: '',
         photo: '../../../../assets/user.png',
         followIdol: '',
-        unfollowIdol: []
+        unfollowIdol: ''
     },
     idolToggle: true,
     token: ''
@@ -25,7 +25,8 @@ const userReducer = (state = initialState, action) => {
                 },
                 token: action.payload.token
             }
-        case ASYNC_INIT_USER_INFO:                 
+        case ASYNC_INIT_USER_INFO:
+        console.log('action.payload :', action.payload);              
                 return {  
                     ...state,
                     userInfo: {
@@ -37,8 +38,7 @@ const userReducer = (state = initialState, action) => {
                         unfollowIdol: action.payload.result.unfollow_idol_id
                     },
                     token: action.payload.token,
-                    test: "test"
-                }   
+                }            
         case ADD_USER_INFO:
             fetch( config + 'register/', {
                 method: 'POST',
@@ -56,7 +56,6 @@ const userReducer = (state = initialState, action) => {
             }).catch((error) => {
                 console.log('error :', error);
             });   
-             
             return {
                 ...state,
                 userInfo: {
@@ -64,10 +63,8 @@ const userReducer = (state = initialState, action) => {
                     nickname: action.payload.nickname,
                     email: action.payload.email
                 },
-            }      
-
+            } 
         case ADD_USER_IDOL:
-        // let
             fetch( config + 'user/follow/', {
                 method: 'POST',
                 headers: {
@@ -88,7 +85,7 @@ const userReducer = (state = initialState, action) => {
                     ...state.userInfo,
                     followIdol : followIdol
                 }
-                console.log('after state.userInfo :', state.userInfo);
+                console.log('state.userInfo :', state.userInfo);
             }).catch((error) => {
                 console.log('error :', error);
             });  
