@@ -18,10 +18,26 @@ class MyIdol extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            followIdol: this.props.userInfo.followIdol
+            follow_idol_id: this.props.userInfo.follow_idol_id
         }
     }
     
+    componentDidMount() {
+        console.log('111111111111111111 :', 111111111111111111);
+    }
+
+    componentDidUpdate(prevProps) {  
+        console.log('prevProps} @@:', prevProps);  
+        console.log('this.props :', this.props); 
+        if ( prevProps.userInfo.follow_idol_id !== this.props.userInfo.follow_idol_id ) {
+          this.setState({
+            follow_idol_id: this.props.userInfo.follow_idol_id
+          })  
+        }
+        console.log('this.state !@@@@:', this.state);
+      }
+    
+
     render() {
         return (
             <View style={styles.myIdol}>
@@ -29,7 +45,7 @@ class MyIdol extends Component {
                 <FlatList
                     horizontal={true}
                     showsHorizontalScrollIndicator={false}
-                    data={this.state.followIdol}
+                    data={this.state.follow_idol_id}
                     renderItem={({item}) => {
                         return <IdolCard name={item.idol_name}></IdolCard>
                     }}

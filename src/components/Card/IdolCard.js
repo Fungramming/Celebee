@@ -2,11 +2,13 @@ import React, { Component } from "react";
 import { View, Text, StyleSheet, Image, Dimensions, TouchableOpacity } from "react-native";
 import { connect } from "react-redux";
 import { addUserIdol } from "../../actions/users";
+import { config } from '../../actions/types'
 
 class SelectIdolList extends Component {
   constructor(props) {
     super(props);
     this.state = { 
+      token: this.props.token,
       userInfo: this.props.userInfo,    
       toggle: this.props.idolToggle,
     }
@@ -31,10 +33,31 @@ class SelectIdolList extends Component {
     const followOrNot = this.state.toggle ? 1 : 0
     const id = this.props.id
 
-    this.props.addIdol({
-      followOrNot: followOrNot, 
-      id: id, 
-    })
+    fetch( config + 'user/follow/', {
+      method: 'POST',
+      headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+          follow: followOrNot,
+          idol_id: id,
+          token: this.state.token
+      }),
+    }).then((data) => {
+        let result =  JSON.parse(data._bodyInit);   
+        console.log('result@@@@ :', result);  
+        this.setState(prevState => ({
+          ...prevState,
+          userInfo : result.result
+        }))
+        console.log('this.state. !@@@@@@@@@@@:', this.state);
+        this.props.addIdol(this.state.userInfo)
+        
+    }).catch((error) => {
+        console.log('error :', error);
+    });  
+
 
     if( this.props.toggleFalse === false) {
       this.setState(prevState => ({
@@ -74,6 +97,7 @@ class SelectIdolList extends Component {
 
 const mapStateToProps = state => {
   return {
+    token: state.user.token,
     userInfo: state.user.userInfo,
     idolToggle: state.user.idolToggle
   }

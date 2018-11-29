@@ -14,9 +14,6 @@ class MyProfile extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    console.log(' this.props.userInfo.photo :',  this.props.userInfo.photo);
-    console.log('1this.props.userInfo.nickname :', this.props.userInfo.nickname);
-    console.log('2prevProps.userInfo.nickname :', prevProps.userInfo.nickname);
     if ( prevProps.userInfo.nickname !== this.props.userInfo.nickname || prevProps.userInfo.photo !== this.props.userInfo.photo) {
       this.setState(prevState => ({
         userInfo: {
@@ -31,7 +28,7 @@ class MyProfile extends Component {
   render() {
     return (
       <View style={styles.myProfileBox}>
-        {this.state.userInfo.photo == ''? <Image
+        {this.state.userInfo.photo == null? <Image
           style={styles.photo}
           source={require('../../../../assets/user.png')}
         />  : <Image

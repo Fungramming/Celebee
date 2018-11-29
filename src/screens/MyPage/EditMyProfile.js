@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import {Button,Platform, Text, View, StyleSheet,TouchableOpacity, Dimensions, Image, TextInput, StatusBar, KeyboardAvoidingView, Animated } from 'react-native'
 import { connect } from 'react-redux'
 import { Navigation } from 'react-native-navigation'
-
+import { config } from '../../actions/types'
 import { updateUserInfo } from '../../actions/users'
 
 import NicknameInput from "../../components/Input/NicknameInput"
@@ -42,6 +42,7 @@ class EditMyProfile extends Component {
         Navigation.events().bindComponent(this);  
 
         this.state = { 
+            token: props.token,
             userInfo: props.userInfo,
             valid: {
                 alertText: false,
@@ -53,8 +54,44 @@ class EditMyProfile extends Component {
     navigationButtonPressed({ buttonId }) {
         // will be called when "buttonOne" is clicked
         if(buttonId == "pressComplete"){
-            Navigation.popToRoot(this.props.componentId);
-            this.props.update(this.state.userInfo)
+
+            const formData = new FormData();
+            formData.append('token', this.state.token)
+            formData.append('nickname', this.state.userInfo.nickname);
+            // photo가 바뀌었을때 조건: photo param 추가            
+            if(this.state.userInfo.photo.uri !== undefined){
+                formData.append('photo', {
+                    uri: this.state.userInfo.photo.uri,
+                    name: this.state.userInfo.photo.fileName,
+                    type: this.state.userInfo.photo.type,
+                })
+            }                         
+
+            fetch( config + 'user/mypage-edit/', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'multipart/form-data',
+                },
+                body:formData,
+            }).then((data) => {
+                console.log('11data :', data);
+                let result =  JSON.parse(data._bodyInit);  
+                                   
+                this.setState(prevState => ({
+                    ...prevState,
+                    userInfo : result.result
+                }))
+
+                Navigation.popToRoot(this.props.componentId);
+                this.props.update(this.state.userInfo)
+
+            }).catch((error) => {
+                console.log('error :', error);
+            }); 
+
+
+           
         }
     }
 
@@ -127,6 +164,7 @@ class EditMyProfile extends Component {
 const mapStateToProps = state => {
     return {      
         userInfo: state.user.userInfo,   // Mount 될때 initialState 를 가져옴 , this.props 로. users 는 actios 에서의 users.js 의 이름
+        token: state.user.token
     }
 }
 
