@@ -3,6 +3,8 @@ package com.celebee;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import fr.bamlab.rnimageresizer.ImageResizerPackage;
+import com.dylanvann.fastimage.FastImageViewPackage;
 import com.dooboolab.kakaologins.RNKakaoLoginsPackage;
 import co.apptailor.googlesignin.RNGoogleSigninPackage;
 import com.facebook.reactnative.androidsdk.FBSDKPackage;
@@ -107,7 +109,10 @@ public class MainApplication extends NavigationApplication {
             new VectorIconsPackage(),
             new SplashScreenReactPackage(),
             new ImagePickerPackage(),
-            new FBSDKPackage(mCallbackManager)
+            new FBSDKPackage(mCallbackManager),
+            new ImageResizerPackage(),
+            new FastImageViewPackage()
+
         );
     }
   

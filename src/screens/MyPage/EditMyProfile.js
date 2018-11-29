@@ -2,6 +2,9 @@ import React, { Component } from 'react'
 import {Button,Platform, Text, View, StyleSheet,TouchableOpacity, Dimensions, Image, TextInput, StatusBar, KeyboardAvoidingView, Animated } from 'react-native'
 import { connect } from 'react-redux'
 import { Navigation } from 'react-native-navigation'
+import FastImage from 'react-native-fast-image'
+import ImageResizer from 'react-native-image-resizer';
+
 import { config } from '../../actions/types'
 import { updateUserInfo } from '../../actions/users'
 
@@ -62,8 +65,8 @@ class EditMyProfile extends Component {
             if(this.state.userInfo.photo.uri !== undefined){
                 formData.append('photo', {
                     uri: this.state.userInfo.photo.uri,
-                    name: this.state.userInfo.photo.fileName,
-                    type: this.state.userInfo.photo.type,
+                    name: this.state.userInfo.photo.name,
+                    type: "image/jpeg"
                 })
             }                         
 
@@ -115,14 +118,29 @@ class EditMyProfile extends Component {
             } else if (response.customButton) {
             console.log('User tapped custom button: ', response.customButton);
             } else {
-                  
-            _this.setState(prevState=>({
-                ...prevState,
-                userInfo : {
-                    ...prevState.userInfo,
-                    photo: response
-                }
-            }));
+                console.log('response :', response);
+
+                let imageUri = response.uri;
+                let newWidth = 100;
+                let newHeight = 100;    
+                let compressFormat = 'JPEG'; // or 'PNG'
+                let quality = 80; // out of 100
+
+                ImageResizer.createResizedImage(imageUri, newWidth, newHeight, compressFormat, quality,).then((resizedImageUri) => {
+                    console.log('resizedImageUri :', resizedImageUri);
+
+                    _this.setState(prevState=>({
+                        ...prevState,
+                        userInfo : {
+                            ...prevState.userInfo,
+                            photo: resizedImageUri
+                        }
+                    }));
+                    
+                }).catch((err) => {
+                    // Oops, something went wrong. Check that the filename is correct and
+                    // inspect err to get more details.
+                });            
             }
         });
     }
@@ -144,7 +162,7 @@ class EditMyProfile extends Component {
             {this.state.userInfo.photo == null? <Image
                 style={styles.photo}
                 source={require('../../../assets/user.png')}
-                />  : <Image
+                />  : <FastImage
                 style={styles.photo}
                 source={{uri: typeof this.state.userInfo.photo == 'object' ? this.state.userInfo.photo.uri : this.state.userInfo.photo}}
             />  }          

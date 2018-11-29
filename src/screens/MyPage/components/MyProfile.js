@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Text, View, StyleSheet, TouchableOpacity, Dimensions, Image } from 'react-native'
+import FastImage from 'react-native-fast-image'
 import {connect} from 'react-redux'
 class MyProfile extends Component {
   constructor(props){
@@ -31,7 +32,7 @@ class MyProfile extends Component {
         {this.state.userInfo.photo == null? <Image
           style={styles.photo}
           source={require('../../../../assets/user.png')}
-        />  : <Image
+        />  : <FastImage
         style={styles.photo}
         source={{uri: typeof this.state.userInfo.photo == 'object' ? this.state.userInfo.photo.uri : this.state.userInfo.photo}}
       />  }   
