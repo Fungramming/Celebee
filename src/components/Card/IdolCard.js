@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { View, Text, StyleSheet, Image, Dimensions, TouchableOpacity } from "react-native";
 import { connect } from "react-redux";
-import { addUserIdol } from "../../actions/users";
+import { addUserIdol, idolFetchRequest } from "../../actions/users";
 import { config } from '../../actions/types'
 
 class SelectIdolList extends Component {
@@ -33,30 +33,7 @@ class SelectIdolList extends Component {
     const followOrNot = this.state.toggle ? 1 : 0
     const id = this.props.id
 
-    fetch( config + 'user/follow/', {
-      method: 'POST',
-      headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-          follow: followOrNot,
-          idol_id: id,
-          token: this.state.token
-      }),
-    }).then((data) => {
-        let result =  JSON.parse(data._bodyInit);   
-        console.log('result@@@@ :', result);  
-        this.setState(prevState => ({
-          ...prevState,
-          userInfo : result.result
-        }))
-        console.log('this.state. !@@@@@@@@@@@:', this.state);
-        this.props.addIdol(this.state.userInfo)
-        
-    }).catch((error) => {
-        console.log('error :', error);
-    });  
+    
 
 
     if( this.props.toggleFalse === false) {
@@ -106,7 +83,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     addIdol: (userIdol) => {
-      dispatch(addUserIdol(userIdol))
+      dispatch(idolFetchRequest(userIdol))
     }
   }
 }
