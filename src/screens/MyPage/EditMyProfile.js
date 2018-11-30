@@ -13,7 +13,7 @@ import NicknameInput from "../../components/Input/NicknameInput"
 import ImagePicker from 'react-native-image-picker';
 import Icon from 'react-native-vector-icons/AntDesign';
 
-const options = {
+const IMAGE_PICKER_OPTIONS = {
     title: '사진 등록',
     storageOptions: {
     skipBackup: true,
@@ -109,8 +109,12 @@ class EditMyProfile extends Component {
     onEditPhoto = () => {
         var _this = this;
 
-        ImagePicker.showImagePicker(options, (response) => {
-            
+        ImagePicker.launchImageLibrary(IMAGE_PICKER_OPTIONS, (response) => {
+            response.isVertical = true
+            const { error, uri, originalRotation } = response
+            console.log('response :', response);
+            console.log('object :', originalRotation);
+
             if (response.didCancel) {
             console.log('User cancelled image picker');
             } else if (response.error) {
@@ -120,13 +124,13 @@ class EditMyProfile extends Component {
             } else {
                 console.log('response :', response);
 
-                let imageUri = response.uri;
+                let imageUri = uri;
                 let newWidth = 100;
                 let newHeight = 100;    
                 let compressFormat = 'JPEG'; // or 'PNG'
-                let quality = 80; // out of 100
+                let quality = 80; // out of 100                               
 
-                ImageResizer.createResizedImage(imageUri, newWidth, newHeight, compressFormat, quality,).then((resizedImageUri) => {
+                ImageResizer.createResizedImage(imageUri, newWidth, newHeight, compressFormat, quality, rotation).then((resizedImageUri) => {
                     console.log('resizedImageUri :', resizedImageUri);
 
                     _this.setState(prevState=>({
@@ -159,7 +163,7 @@ class EditMyProfile extends Component {
       <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
         <View style={styles.photoBox}>
             <TouchableOpacity onPress={this.onEditPhoto.bind(this)}>
-            {this.state.userInfo.photo == null? <Image
+            {this.state.userInfo.photo == null? <FastImage
                 style={styles.photo}
                 source={require('../../../assets/user.png')}
                 />  : <FastImage
