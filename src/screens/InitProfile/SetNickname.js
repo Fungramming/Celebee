@@ -46,7 +46,6 @@ class SetNickname extends Component {
   }
 
   addUserInfo() {
-    console.log('set  this.state.userInfo :', this.state.userInfo);
     this.props.add(this.state.userInfo)
     SelectIdolScreen()
   }

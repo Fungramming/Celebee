@@ -1,4 +1,11 @@
-import {INIT_USER_INFO, UPDATE_USER_INFO, FETCH_IDOL_REQUESTED, ADD_USER_INFO, ADD_USER_IDOL, ASYNC_INIT_USER_INFO} from './types'
+import {ASYNC_INIT_USER_INFO, INIT_USER_INFO, UPDATE_USER_INFO, ADD_USER_INFO_REQUEST, ADD_USER_INFO, ADD_USER_IDOL, FETCH_IDOL_REQUESTED} from './types'
+
+export const asyncInitUserInfo = userInfo => {
+    return {
+        type: ASYNC_INIT_USER_INFO,
+        payload: userInfo
+    }
+}
 
 export const initUserInfo = userInfo => {
     return {
@@ -7,9 +14,9 @@ export const initUserInfo = userInfo => {
     }
 }
 
-export const asyncInitUserInfo = userInfo => {
+export const addUserInfoRequest = userInfo => {
     return {
-        type: ASYNC_INIT_USER_INFO,
+        type: ADD_USER_INFO_REQUEST,
         payload: userInfo
     }
 }

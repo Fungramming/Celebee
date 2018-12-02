@@ -1,4 +1,4 @@
-import { config, UPDATE_USER_INFO, INIT_USER_INFO, ADD_USER_INFO, FETCH_IDOL_REQUESTED, ADD_USER_IDOL, ASYNC_INIT_USER_INFO } from '../actions/types'
+import { config, UPDATE_USER_INFO, INIT_USER_INFO, ADD_USER_INFO_REQUEST, ADD_USER_INFO, FETCH_IDOL_REQUESTED, ADD_USER_IDOL, ASYNC_INIT_USER_INFO } from '../actions/types'
 
 const initialState = {
     userInfo : {
@@ -38,6 +38,10 @@ const userReducer = (state = initialState, action) => {
                     },
                     token: action.payload.token,
                 }            
+        case ADD_USER_INFO_REQUEST:
+            return {
+                ...state
+            }
         case ADD_USER_INFO:
             fetch( config + 'register/', {
                 method: 'POST',

@@ -39,8 +39,6 @@ class AuthValidScreen extends Component {
             'token': userToken,
         }),
       }).then((data) => {
-        console.log('data :', data);
-        
         if(data.ok === true){
           let result = JSON.parse(data._bodyInit)
           // photo 값 null로 받을 시 

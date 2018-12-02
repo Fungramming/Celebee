@@ -2,6 +2,7 @@ export const config = "http://celebee-env-1.gimjpxetg2.ap-northeast-2.elasticbea
 
 export const INIT_USER_INFO = "INIT_USER_INFO";
 export const ASYNC_INIT_USER_INFO = "ASYNC_INIT_USER_INFO";
+export const ADD_USER_INFO_REQUEST = "ADD_USER_INFO_REQUEST";
 export const ADD_USER_INFO = "ADD_USER_INFO";
 export const UPDATE_USER_INFO = "UPDATE_USER_INFO";
 export const FETCH_IDOL_REQUESTED = "FETCH_IDOL_REQUESTED";

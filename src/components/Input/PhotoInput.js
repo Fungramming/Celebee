@@ -1,17 +1,20 @@
-import React, { Component } from 'react'
-import {Button,Platform, Text, View, StyleSheet,TouchableOpacity, Dimensions, Image, TextInput, StatusBar, KeyboardAvoidingView, Animated } from 'react-native'
-import { connect } from 'react-redux'
-import { Navigation } from 'react-native-navigation'
+import React, { Component } from "react";
+import { 
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+  Dimensions,
+  KeyboardAvoidingView,
+  AsyncStorage
+} from "react-native";
 import FastImage from 'react-native-fast-image'
 import ImageResizer from 'react-native-image-resizer';
 
-import { config } from '../../actions/types'
-import { updateUserInfo } from '../../actions/users'
 
-import NicknameInput from "../../components/Input/NicknameInput"
+import { MyApp, SelectIdolScreen } from '../Navigation'
 
-import ImagePicker from 'react-native-image-picker';
-import Icon from 'react-native-vector-icons/AntDesign';
 
 const IMAGE_PICKER_OPTIONS = {
     title: '사진 등록',
@@ -20,25 +23,8 @@ const IMAGE_PICKER_OPTIONS = {
     path: 'images',
     },
 };
-class EditMyProfile extends Component {      
-    static options(passProps) {
-        return {
-          topBar: {
-            title: {
-              text: '프로필 수정'
-            },
-            visible: true,
-            animate: false,
-            rightButtons: [
-              {
-                id: 'pressComplete',
-                text: '완료'
-              }          
-            ]
-          }
-        };
-    }
-            
+
+class EditMyProfile extends Component {               
     constructor(props) {
         super(props);
         Navigation.events().bindComponent(this);  
@@ -57,40 +43,40 @@ class EditMyProfile extends Component {
         // will be called when "buttonOne" is clicked
         if(buttonId == "pressComplete"){
 
-            const formData = new FormData();
-            formData.append('token', this.state.token)
-            formData.append('nickname', this.state.userInfo.nickname);
-            // photo가 바뀌었을때 조건: photo param 추가            
-            if(this.state.userInfo.photo.uri !== undefined){
-                formData.append('photo', {
-                    uri: this.state.userInfo.photo.uri,
-                    name: this.state.userInfo.photo.name,
-                    type: "image/jpeg"
-                })
-            }                         
+            // const formData = new FormData();
+            // formData.append('token', this.state.token)
+            // formData.append('nickname', this.state.userInfo.nickname);
+            // // photo가 바뀌었을때 조건: photo param 추가            
+            // if(this.state.userInfo.photo.uri !== undefined){
+            //     formData.append('photo', {
+            //         uri: this.state.userInfo.photo.uri,
+            //         name: this.state.userInfo.photo.name,
+            //         type: "image/jpeg"
+            //     })
+            // }                         
 
-            fetch( config + 'user/mypage-edit/', {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'multipart/form-data',
-                },
-                body:formData,
-            }).then((data) => {
-                console.log('11data :', data);
-                let result =  JSON.parse(data._bodyInit);  
+            // fetch( config + 'user/mypage-edit/', {
+            //     method: 'POST',
+            //     headers: {
+            //         'Accept': 'application/json',
+            //         'Content-Type': 'multipart/form-data',
+            //     },
+            //     body:formData,
+            // }).then((data) => {
+            //     console.log('11data :', data);
+            //     let result =  JSON.parse(data._bodyInit);  
                                    
-                this.setState(prevState => ({
-                    ...prevState,
-                    userInfo : result.result
-                }))
+            //     this.setState(prevState => ({
+            //         ...prevState,
+            //         userInfo : result.result
+            //     }))
 
-                Navigation.popToRoot(this.props.componentId);
-                this.props.update(this.state.userInfo)
+            //     Navigation.popToRoot(this.props.componentId);
+            //     this.props.update(this.state.userInfo)
 
-            }).catch((error) => {
-                console.log('error :', error);
-            });            
+            // }).catch((error) => {
+            //     console.log('error :', error);
+            // });            
         }
     }
 
@@ -152,8 +138,7 @@ class EditMyProfile extends Component {
         }))    
       }
   render() {
-    return (
-      <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
+    return (      
         <View style={styles.photoBox}>
             <TouchableOpacity onPress={this.onEditPhoto.bind(this)}>
             {this.state.userInfo.photo == null? <FastImage
@@ -165,13 +150,7 @@ class EditMyProfile extends Component {
             />  }          
                 <Icon style={styles.photoIcon} name="camera"></Icon>
             </TouchableOpacity>
-        </View>          
-        <NicknameInput
-            thisScreen = { this.constructor.name }
-            title = {"닉네임"}
-            onValidFunc={this.validFunc}
-        ></NicknameInput>
-      </KeyboardAvoidingView>
+        </View>                
     )
   }
 }
@@ -217,31 +196,5 @@ const styles = StyleSheet.create({
         top: 0,
         right: 0,
         fontSize: 22
-      },
-    nameBox: {
-        paddingHorizontal: 24,
-      },
-    nickName: {
-      fontSize: 23,
-      fontWeight: 'bold'
-    },
-    nameInput: {
-        borderBottomWidth: StyleSheet.hairlineWidth,
-        marginTop: 10,
-        paddingLeft: 5,
-        paddingBottom: 5,
-        fontSize: 18,
-        borderColor: 'black'
-    },
-    closeCircle: {
-        position: "absolute",
-        top: 5,
-        right: 0,
-        fontSize: 15
-    },
-    submitButton: {
-        position: "absolute",
-        top: -10,
-        right: 0,
-    }
+      }   
 })
