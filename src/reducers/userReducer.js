@@ -1,4 +1,4 @@
-import { config, UPDATE_USER_INFO, INIT_USER_INFO, ADD_USER_INFO, IDOL_FETCH_REQUESTED, ADD_USER_IDOL, ASYNC_INIT_USER_INFO } from '../actions/types'
+import { config, UPDATE_USER_INFO, INIT_USER_INFO, ADD_USER_INFO, FETCH_IDOL_REQUESTED, ADD_USER_IDOL, ASYNC_INIT_USER_INFO } from '../actions/types'
 
 const initialState = {
     userInfo : {
@@ -26,7 +26,6 @@ const userReducer = (state = initialState, action) => {
                 token: action.payload.token
             }
         case ASYNC_INIT_USER_INFO:
-        console.log('action.payload :', action.payload);              
                 return {  
                     ...state,
                     userInfo: {
@@ -64,11 +63,11 @@ const userReducer = (state = initialState, action) => {
                     email: action.payload.email
                 },
             } 
-        case IDOL_FETCH_REQUESTED:            
+        case FETCH_IDOL_REQUESTED:            
             return {
                 ...state,
             }
-        case ADD_USER_IDOL:            
+        case ADD_USER_IDOL:    
             return {
                 ...state,
                 userInfo: action.payload                       

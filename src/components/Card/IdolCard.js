@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { View, Text, StyleSheet, Image, Dimensions, TouchableOpacity } from "react-native";
 import { connect } from "react-redux";
-import { addUserIdol, idolFetchRequest } from "../../actions/users";
+import { addUserIdol, fetchIdolRequest } from "../../actions/users";
 import { config } from '../../actions/types'
 
 class SelectIdolList extends Component {
@@ -31,17 +31,22 @@ class SelectIdolList extends Component {
       toggle : btntoggle     
     }))
     const followOrNot = this.state.toggle ? 1 : 0
-    const id = this.props.id
+    const id = this.props.id    
 
-    
+    // if( this.props.toggleFalse === false) {
+    //   this.setState(prevState => ({
+    //     ...prevState,
+    //     toggle : true     
+    //   }))
+    // }
 
-
-    if( this.props.toggleFalse === false) {
-      this.setState(prevState => ({
-        ...prevState,
-        toggle : true     
-      }))
+    let payload = {
+      follow: followOrNot,
+      idol_id: id,
+      token: this.state.token
     }
+  
+    this.props.fetchIdol(payload)
   }
 
   render() {
@@ -82,8 +87,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    addIdol: (userIdol) => {
-      dispatch(idolFetchRequest(userIdol))
+    fetchIdol: (userIdol) => {
+      dispatch(fetchIdolRequest(userIdol))
     }
   }
 }
