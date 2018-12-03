@@ -16,13 +16,7 @@ class EditIdol extends Component {
         },
         id: 'backToMypage',
         visible: true,
-        animate: false,  
-        // rightButtons: [
-        //   {
-        //     id: 'pressComplete',
-        //     text: '완료'
-        //   }          
-        // ]     
+        animate: false     
       }
     };
   }
@@ -43,12 +37,7 @@ class EditIdol extends Component {
       if(buttonId == "backToMypage"){
         Navigation.popToRoot(this.props.componentId);        
       }
-    }  
-    
-    componentDidMount() {
-      console.log('this.props :', this.props);
-      console.log('@@@ :', this.state);
-    }    
+    }       
 
     _onToggle() {
       const toggle = !this.state.toggleIdol;
@@ -65,7 +54,6 @@ class EditIdol extends Component {
         return (
           <View style={styles.container}>
             <ScrollView showsVerticalScrollIndicator={false} style={styles.myIdol}>
-
               <Text style={styles.subTitle}>내가 팔로우한 아이돌</Text>
               <TouchableOpacity style={{position:"absolute", top: 25, right: 25}} onPress={() => this._onToggle()}>
                 <Text>{toggleValue}</Text>
@@ -93,7 +81,6 @@ class EditIdol extends Component {
                   keyExtractor={(item, index) => index.toString()} >
                 </FlatList>
               </View>
-
             </ScrollView>
           </View>
         )
@@ -101,7 +88,6 @@ class EditIdol extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log('@@state :', state);
   return {
     userInfo: state.user.userInfo,
     idolToggle: state.user.idolToggle

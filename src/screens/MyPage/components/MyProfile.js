@@ -10,10 +10,6 @@ class MyProfile extends Component {
     }
   }  
 
-  componentDidMount() {
-    console.log('this.props.dispatch :', this.props);
-  }
-
   componentDidUpdate(prevProps) {
     if ( prevProps.userInfo.nickname !== this.props.userInfo.nickname || prevProps.userInfo.photo !== this.props.userInfo.photo) {
       this.setState(prevState => ({
@@ -29,7 +25,7 @@ class MyProfile extends Component {
   render() {
     return (
       <View style={styles.myProfileBox}>
-        {this.state.userInfo.photo == null? <Image
+        {this.state.userInfo.photo == null? <FastImage
           style={styles.photo}
           source={require('../../../../assets/user.png')}
         />  : <FastImage

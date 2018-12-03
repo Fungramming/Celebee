@@ -99,9 +99,7 @@ class NicknameInput extends Component {
             available: false,
             completeButton: false
           }
-        }))
-      console.log('this.state.userInfo.nickname :', this.state.userInfo.nickname);
-        console.log('on')
+        })) 
           
         this.props.onValidFunc(this.state)
         
@@ -118,7 +116,6 @@ class NicknameInput extends Component {
             completeButton: true
           }
         }))     
-        console.log('on')
         
         this.props.onValidFunc(this.state)
 
@@ -131,14 +128,6 @@ class NicknameInput extends Component {
     this.checkNickname('')
     this.textInput.clear()
   }
-
-  // onInputFocus() {    
-  //   this.setState({
-  //     nicknameInputValid: false
-  //   })
-  //   this.textInput.focus()
-  //   console.log('this.textInput :', this.textInput.isFocused());
-  // }
 
   render() {
     const {title} = this.props
@@ -154,9 +143,6 @@ class NicknameInput extends Component {
             onChangeText={(text) => this.checkNickname(text)}
             returnKeyType="done"            
           />
-          {/* <TouchableOpacity style={[styles.nicknameValueBox,!this.state.userInfo.nickname ? {display:"none"}: '']} onPress={this.onInputFocus.bind(this)}>
-            <Text style={styles.NicknameText}>{this.state.userInfo.nickname}</Text>
-          </TouchableOpacity> */}
           <TouchableOpacity style={styles.closeCircle} onPress={this.clearText.bind(this)}>
             <Icon name="close" color="#722784" size={24}></Icon>
           </TouchableOpacity> 

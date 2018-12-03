@@ -22,19 +22,12 @@ class MyIdol extends Component {
         }
     }
     
-    componentDidMount() {
-        console.log('111111111111111111 :', 111111111111111111);
-    }
-
     componentDidUpdate(prevProps) {  
-        console.log('prevProps} @@:', prevProps);  
-        console.log('this.props :', this.props); 
         if ( prevProps.userInfo.follow_idol_id !== this.props.userInfo.follow_idol_id ) {
           this.setState({
             follow_idol_id: this.props.userInfo.follow_idol_id
           })  
-        }
-        console.log('this.state !@@@@:', this.state);
+        }    
       }
     
 

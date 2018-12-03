@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { View, Text, StyleSheet, Image, Dimensions, TouchableOpacity } from "react-native";
 import { connect } from "react-redux";
-import { addUserIdol } from "../../actions/users";
+import { fetchIdolRequest } from "../../actions/users";
 import { config } from '../../actions/types'
 
 class SelectIdolList extends Component {
@@ -14,7 +14,9 @@ class SelectIdolList extends Component {
     }
   }
 
-
+  componentDidUpdate() {
+    console.log('!@@this.props :', this);
+  }
   componentWillMount() {
     if (this.props.toggleFalse === false) {
       this.setState(prevState => ({
@@ -24,47 +26,29 @@ class SelectIdolList extends Component {
     }    
   }
 
-  addUserIdol() {
+  onFetchIdolRequest() {
     const btntoggle = !this.state.toggle
     this.setState(prevState => ({
       ...prevState,
       toggle : btntoggle     
     }))
     const followOrNot = this.state.toggle ? 1 : 0
-    const id = this.props.id
+    const id = this.props.id    
 
-    fetch( config + 'user/follow/', {
-      method: 'POST',
-      headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-          follow: followOrNot,
-          idol_id: id,
-          token: this.state.token
-      }),
-    }).then((data) => {
-        let result =  JSON.parse(data._bodyInit);   
-        console.log('result@@@@ :', result);  
-        this.setState(prevState => ({
-          ...prevState,
-          userInfo : result.result
-        }))
-        console.log('this.state. !@@@@@@@@@@@:', this.state);
-        this.props.addIdol(this.state.userInfo)
-        
-    }).catch((error) => {
-        console.log('error :', error);
-    });  
+    // if( this.props.toggleFalse === false) {
+    //   this.setState(prevState => ({
+    //     ...prevState,
+    //     toggle : true     
+    //   }))
+    // }
 
-
-    if( this.props.toggleFalse === false) {
-      this.setState(prevState => ({
-        ...prevState,
-        toggle : true     
-      }))
+    let payload = {
+      follow: followOrNot,
+      idol_id: id,
+      token: this.state.token
     }
+  
+    this.props.fetchIdolRequest(payload)
   }
 
   render() {
@@ -85,7 +69,7 @@ class SelectIdolList extends Component {
             <Text style={styles.followingNum}>{this.props.followNum}명이 팔로우합니다.</Text>
           </View>
           <View>
-            <TouchableOpacity style={buttonBg} onPress={ () => this.addUserIdol() }>
+            <TouchableOpacity style={buttonBg} onPress={ () => this.onFetchIdolRequest() }>
               <Text style={{color:'#fff', fontSize: 16}}>{textValue}</Text>
             </TouchableOpacity>
           </View>
@@ -105,8 +89,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    addIdol: (userIdol) => {
-      dispatch(addUserIdol(userIdol))
+    fetchIdolRequest: (userIdol) => {
+      dispatch(fetchIdolRequest(userIdol))
     }
   }
 }

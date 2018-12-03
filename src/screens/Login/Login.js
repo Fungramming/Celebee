@@ -20,10 +20,10 @@ import RNKakaoLogins from 'react-native-kakao-logins'
 import { LoginManager, AccessToken } from 'react-native-fbsdk'
 import { GoogleSignin } from 'react-native-google-signin';
 import { connect } from "react-redux";
-import { initUserInfo } from "../../actions/users";
+import { initUserInfo, checkUserRequest } from "../../actions/users";
 import AppIntro from 'react-native-app-intro';
 
-import {SetNicknameScreen} from '../Navigation'
+import {MainApp, SetNicknameScreen} from '../Navigation'
 
 var config = {
   apiKey: "AIzaSyDI0yDEw3xg9eCQphgJbf95_RCIOPVlKH0",
@@ -42,6 +42,7 @@ class Login extends Component {
       userInfo: {}, 
       isLoading: false,
       showRealApp: false,
+      userValid: this.props.userValid
     }
   }
 
@@ -54,11 +55,33 @@ class Login extends Component {
     })
   }
 
+  // componentDidUpdate(prevProps) {
+  //   if (prevProps.userValid !== this.props.userValid ) {
+  //     this.setState({
+  //       userValid: this.props.userValid
+  //     })
+  //     if (this.props.userValid === true) {
+  //       MainApp()
+  //     } else {
+  //       SetNicknameScreen()
+  //     }
+  //   }
+  // }
+
   // 유저 토근 저장 
   saveUserToken = async (data) => {
     await AsyncStorage.setItem('userToken', data)
-    // await AsyncStorage.setItem('userToken', JSON.stringify(data))
+
+    if (this.props.userValid === true) {
+      MainApp()
+    } else {
+      SetNicknameScreen()
+    }
   }
+
+  checkUserRequest(token) {
+    this.props.checkUser(token)
+  } 
 
   initUser = (supplier, data) => {
     console.log('data :', data);
@@ -109,16 +132,16 @@ class Login extends Component {
               })
 
               const {accessToken} = data            
-              _this.initUser("facebook",accessToken)
+              _this.initUser("facebook", accessToken)
               const credential = firebase.auth.FacebookAuthProvider.credential(data.accessToken);
               return firebase.auth().signInAndRetrieveDataWithCredential(credential)
               .then(() => {
-
+                console.log('credential :', credential);
                 this.setState({
                   isLoading: false
                 })
-                  _this.saveUserToken(credential.accessToken)
-                  SetNicknameScreen()                
+                _this.checkUserRequest(credential.accessToken)
+                _this.saveUserToken(credential.accessToken)
                 })
                 .catch((error) => {
                   console.log(error.message);
@@ -151,14 +174,13 @@ class Login extends Component {
       credential = firebase.auth.GoogleAuthProvider.credential(data.idToken, data.accessToken)
       return firebase.auth().signInAndRetrieveDataWithCredential(credential)
     }).then(() => { 
-      
       this.setState({
         isLoading: false
       })
       _this.initUser("google",{googleEmail: googleEmail, accessToken: credential.accessToken})
+      _this.checkUserRequest(credential.accessToken)
       _this.saveUserToken(credential.accessToken)
-      
-      SetNicknameScreen()
+
     }).catch((error) => {
       console.log(`Login fail with error: ${error}`);
     })
@@ -180,13 +202,13 @@ class Login extends Component {
             } 
               console.log('result :', result);
               _this.initUser("kakao", {token: token, email: result.email})
+              _this.checkUserRequest(token)
               _this.saveUserToken(token)
           })
         }
       this.setState({
         isLoading: true
       })
-      SetNicknameScreen()
     })
   }
 
@@ -276,13 +298,17 @@ class Login extends Component {
 const mapStateToProps = state => {
   return {
       userInfo: state.user.userInfo,   // Mount 될때 initialState 를 가져옴 , this.props 로. users 는 actios 에서의 users.js 의 이름
+      userValid: state.user.userValid
   }
 }
 const mapDispatchToProps = dispatch => {
   return {
-      init: (userInfo) => {
-          dispatch(initUserInfo(userInfo))
-      }
+    init: (userInfo) => {
+      dispatch(initUserInfo(userInfo))
+    },
+    checkUser: (userInfo) => {
+      dispatch(checkUserRequest(userInfo))
+    }
   }
 }
 
