@@ -1,4 +1,4 @@
-import { config, UPDATE_USER_INFO, INIT_USER_INFO, ADD_USER_INFO_REQUEST, ADD_USER_INFO, FETCH_IDOL_REQUEST, FETCH_IDOL, ASYNC_INIT_USER_INFO } from '../actions/types'
+import { config, FETCH_USER_REQUEST, FETCH_USER, UPDATE_USER_INFO, INIT_USER_INFO, ADD_USER_INFO_REQUEST, ADD_USER_INFO, FETCH_IDOL_REQUEST, FETCH_IDOL, ASYNC_INIT_USER_INFO } from '../actions/types'
 
 const initialState = {
     userInfo : {
@@ -37,7 +37,15 @@ const userReducer = (state = initialState, action) => {
                         unfollow_idol_id: action.payload.result.unfollow_idol_id
                     },
                     token: action.payload.token,
-                }            
+                }       
+        case FETCH_USER_REQUEST:
+            return {
+                ...state
+            }     
+        case FETCH_USER:
+            return {
+                ...state
+            }    
         case ADD_USER_INFO_REQUEST:
             return {
                 ...state

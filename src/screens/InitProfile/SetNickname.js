@@ -11,7 +11,7 @@ import {
 } from "react-native";
 import { connect } from "react-redux";
 
-import { addUserInfo } from "../../actions/users";
+import { addUserInfo, fetchUserInfoRequest } from "../../actions/users";
 import NicknameInput from "../../components/Input/NicknameInput"
 import PhotoInput from "../../components/Input/PhotoInput"
 
@@ -23,6 +23,7 @@ class SetNickname extends Component {
     super(props);
 
     this.state = { 
+      token: this.props.token,
       userInfo: this.props.userInfo,    
       valid: {
         alertText: false,
@@ -32,7 +33,9 @@ class SetNickname extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if ( prevProps.userInfo.nickname !== this.props.userInfo.nickname || prevProps.userInfo.photo !== this.props.userInfo.photo) {
+    console.log('@@@@@@@@@@@prevProps :', prevProps);
+    console.log('@@@@@@@@@@@@@@@this.state :', this.state);
+    if (prevProps.userInfo.photo !== this.props.userInfo.photo) {
       this.setState(prevState => ({
         userInfo: {
           ...prevState.userInfo,
@@ -42,10 +45,6 @@ class SetNickname extends Component {
       }))  
       console.log('changed this.state :', this.state);
     }
-  }
-
-  componentDidUpdate(){
-    console.log(this.state.valid)
   }
 
   validFunc = (state) => {
@@ -61,23 +60,35 @@ class SetNickname extends Component {
     }))    
   }
 
-  addUserInfo() {
-    this.props.add(this.state.userInfo)
+  addUserInfo = () => {
+    console.log('this.state.userInfo :', this.state.userInfo);
+    this.props.fetchUserInfoRequest(this.state)
+    // this.props.add(this.state.userInfo)
     SelectIdolScreen()
+  }
+
+  initPhoto = (data) => {
+    this.setState(prevState => ({
+      ...prevState,
+      userInfo: {
+        ...prevState.userInfo,
+        photo : data            
+      },
+    }))    
   }
 
   render() {
     return (
       <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>      
         <Text style={styles.title}>셀레비에서 사용할{"\n"}프로필을 완성해주세요.</Text>
-        <PhotoInput></PhotoInput>     
+        <PhotoInput onInitPhoto={this.initPhoto}></PhotoInput>     
         <NicknameInput 
           title={"닉네임"}
           onValidFunc={this.validFunc}
         ></NicknameInput>
         <TouchableOpacity             
             disabled={!this.state.valid.completeButton} 
-            onPress={this.addUserInfo.bind(this)}
+            onPress={this.addUserInfo}
           >
             <Text style={[ 
                 styles.selectBtn,                                      
@@ -95,12 +106,13 @@ const mapStateToProps = state => {
   console.log('state :', state);
   return {
       userInfo: state.user.userInfo,   // Mount 될때 initialState 를 가져옴 , this.props 로. users 는 actios 에서의 users.js 의 이름
+      token: state.token
   }
 }
 const mapDispatchToProps = dispatch => {
   return {
-      add: (userInfo) => {
-          dispatch(addUserInfo(userInfo))
+    fetchUserInfoRequest: (userInfo) => {
+          dispatch(fetchUserInfoRequest(userInfo))
       }
   }
 }

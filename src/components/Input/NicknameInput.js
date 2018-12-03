@@ -18,32 +18,14 @@ class NicknameInput extends Component {
         available:false
       }, 
       nicknameInputValid: true,
-      // showValid: false,
-      // controlButton: true,
     }
   }
 
-  // _animatedPadding = new Animated.value(0);  
-
   componentDidMount() {
-  // console.log('_animatedPadding', _animatedPadding);
-
     // 닉네임 텍스트 
     if(this.props.thisScreen == "EditMyProfile"){
       this.currentNickname();
-      // this.setState({
-      //   valid: {
-      //     alertText: true,
-      //     completeButton: true,
-      //     available: false
-      //   }
-      // })
-      console.log('this.state.valid', this.state.valid);
     };    
-  }
-
-  componentDidUpdate() {
-    console.log('this.state.valid', this.state.valid);
   }
 
   // 마이페이지 EditMyPage 
@@ -70,7 +52,6 @@ class NicknameInput extends Component {
           nickname : text            
         },
       }))
-      console.log(!this.state.userInfo.nickname,1)
       if( !this.state.userInfo.nickname){
         this.setState(prevState => ({
           userInfo: {

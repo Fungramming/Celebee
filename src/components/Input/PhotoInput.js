@@ -14,6 +14,7 @@ import { connect } from "react-redux";
 import Icon from 'react-native-vector-icons/AntDesign';
 import FastImage from 'react-native-fast-image'
 import ImageResizer from 'react-native-image-resizer';
+import ImagePicker from 'react-native-image-picker';
 
 
 // import { MyApp, SelectIdolScreen } from '../Navigation'
@@ -35,13 +36,15 @@ class EditMyProfile extends Component {
         this.state = { 
             token: props.token,
             userInfo: props.userInfo,
-            valid: {
-                alertText: false,
-                completeButton: false
-            }
         }
     }  
-        
+
+    componentDidUpdate(prevState) {
+        if(prevState.userInfo.photo !== this.state.userInfo.photo){
+            this.props.onInitPhoto(this.state.userInfo.photo)
+        }
+    }
+
     // navigationButtonPressed({ buttonId }) {
     //     // will be called when "buttonOne" is clicked
     //     if(buttonId == "pressComplete"){
@@ -87,14 +90,6 @@ class EditMyProfile extends Component {
         console.log('this.state :', this.state);
     }
 
-    onComplete() {
-        // Navigation.push(this.props.componentId, {
-        //     component: {
-        //         name: MYPAGE_SETTING_SCREEN
-        //     }
-        // })
-    }
-     
     onEditPhoto = () => {
         var _this = this;
 
@@ -117,7 +112,7 @@ class EditMyProfile extends Component {
                 let compressFormat = 'JPEG'; // or 'PNG'
                 let quality = 80; // out of 100                               
 
-                ImageResizer.createResizedImage(imageUri, newWidth, newHeight, compressFormat, quality, rotation).then((resizedImageUri) => {
+                ImageResizer.createResizedImage(imageUri, newWidth, newHeight, compressFormat, quality).then((resizedImageUri) => {
 
                     _this.setState(prevState=>({
                         ...prevState,
