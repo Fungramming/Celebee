@@ -130,7 +130,7 @@ class EditMyProfile extends Component {
                 let compressFormat = 'JPEG'; // or 'PNG'
                 let quality = 80; // out of 100                               
 
-                ImageResizer.createResizedImage(imageUri, newWidth, newHeight, compressFormat, quality, rotation).then((resizedImageUri) => {
+                ImageResizer.createResizedImage(imageUri, newWidth, newHeight, compressFormat, quality).then((resizedImageUri) => {
                     console.log('resizedImageUri :', resizedImageUri);
 
                     _this.setState(prevState=>({
