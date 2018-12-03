@@ -6,5 +6,5 @@ export const ADD_USER_INFO_REQUEST = "ADD_USER_INFO_REQUEST";
 export const ADD_USER_INFO = "ADD_USER_INFO";
 export const UPDATE_USER_INFO = "UPDATE_USER_INFO";
 export const FETCH_IDOL_REQUEST = "FETCH_IDOL_REQUEST";
-export const ADD_USER_IDOL = "ADD_USER_IDOL";
+export const FETCH_IDOL = "FETCH_IDOL";
 

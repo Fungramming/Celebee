@@ -1,4 +1,4 @@
-import { config, UPDATE_USER_INFO, INIT_USER_INFO, ADD_USER_INFO_REQUEST, ADD_USER_INFO, FETCH_IDOL_REQUEST, ADD_USER_IDOL, ASYNC_INIT_USER_INFO } from '../actions/types'
+import { config, UPDATE_USER_INFO, INIT_USER_INFO, ADD_USER_INFO_REQUEST, ADD_USER_INFO, FETCH_IDOL_REQUEST, FETCH_IDOL, ASYNC_INIT_USER_INFO } from '../actions/types'
 
 const initialState = {
     userInfo : {
@@ -71,7 +71,7 @@ const userReducer = (state = initialState, action) => {
             return {
                 ...state,
             }
-        case ADD_USER_IDOL:               
+        case FETCH_IDOL:               
             return {
                 ...state,
                 userInfo: action.payload                       

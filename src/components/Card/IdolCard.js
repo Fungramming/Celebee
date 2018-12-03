@@ -26,7 +26,7 @@ class SelectIdolList extends Component {
     }    
   }
 
-  addUserIdol() {
+  onFetchIdol() {
     const btntoggle = !this.state.toggle
     this.setState(prevState => ({
       ...prevState,
@@ -69,7 +69,7 @@ class SelectIdolList extends Component {
             <Text style={styles.followingNum}>{this.props.followNum}명이 팔로우합니다.</Text>
           </View>
           <View>
-            <TouchableOpacity style={buttonBg} onPress={ () => this.addUserIdol() }>
+            <TouchableOpacity style={buttonBg} onPress={ () => this.onFetchIdol() }>
               <Text style={{color:'#fff', fontSize: 16}}>{textValue}</Text>
             </TouchableOpacity>
           </View>
