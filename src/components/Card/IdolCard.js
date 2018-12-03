@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { View, Text, StyleSheet, Image, Dimensions, TouchableOpacity } from "react-native";
 import { connect } from "react-redux";
-import { addUserIdol, fetchIdolRequest } from "../../actions/users";
+import { fetchIdolRequest } from "../../actions/users";
 import { config } from '../../actions/types'
 
 class SelectIdolList extends Component {
@@ -14,7 +14,9 @@ class SelectIdolList extends Component {
     }
   }
 
-
+  componentDidUpdate() {
+    console.log('!@@this.props :', this);
+  }
   componentWillMount() {
     if (this.props.toggleFalse === false) {
       this.setState(prevState => ({

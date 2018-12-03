@@ -13,7 +13,10 @@ import { connect } from "react-redux";
 
 import { addUserInfo } from "../../actions/users";
 import NicknameInput from "../../components/Input/NicknameInput"
+import PhotoInput from "../../components/Input/PhotoInput"
+
 import { MyApp, SelectIdolScreen } from '../Navigation'
+
 
 class SetNickname extends Component { 
   constructor(props) {
@@ -25,6 +28,19 @@ class SetNickname extends Component {
         alertText: false,
         completeButton: false
       },
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    if ( prevProps.userInfo.nickname !== this.props.userInfo.nickname || prevProps.userInfo.photo !== this.props.userInfo.photo) {
+      this.setState(prevState => ({
+        userInfo: {
+          ...prevState.userInfo,
+          nickname : this.props.userInfo.nickname,
+          photo: this.props.userInfo.photo     
+        },
+      }))  
+      console.log('changed this.state :', this.state);
     }
   }
 
@@ -52,10 +68,11 @@ class SetNickname extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <View style={{flex: 2}}></View>       
+      <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>      
+        <Text style={styles.title}>셀레비에서 사용할{"\n"}프로필을 완성해주세요.</Text>
+        <PhotoInput></PhotoInput>     
         <NicknameInput 
-          title={"닉네임 설정"}
+          title={"닉네임"}
           onValidFunc={this.validFunc}
         ></NicknameInput>
         <TouchableOpacity             
@@ -69,7 +86,7 @@ class SetNickname extends Component {
               완료
             </Text>
         </TouchableOpacity>       
-      </View>
+      </KeyboardAvoidingView>
     );
   }
 }
@@ -95,20 +112,27 @@ const styles = StyleSheet.create({
     backgroundColor: "#fefefe",
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
+    paddingTop: 50,
     paddingHorizontal: 12,
   },
+  title: {
+    color: 'black',
+    width: "100%",
+    fontSize: 25,
+    fontWeight: '600'
+  },
   nickNameView: {
-    flex: 3,
     alignSelf: 'stretch',
   },
   selectBtn: {
+    color:'#fff',
+    backgroundColor: '#bbbbbb',
     paddingTop: 20,
     paddingBottom: 20,
-    color:'#fff',
+    width: Dimensions.get('window').width,
+    alignSelf: 'flex-end',
     textAlign: 'center',
     fontSize: 20,
-    width: Dimensions.get('window').width,
-    backgroundColor: '#bbbbbb'
   }
 });

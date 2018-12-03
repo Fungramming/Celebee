@@ -1,11 +1,11 @@
-import { config, UPDATE_USER_INFO, INIT_USER_INFO, ADD_USER_INFO_REQUEST, ADD_USER_INFO, FETCH_IDOL_REQUESTED, ADD_USER_IDOL, ASYNC_INIT_USER_INFO } from '../actions/types'
+import { config, UPDATE_USER_INFO, INIT_USER_INFO, ADD_USER_INFO_REQUEST, ADD_USER_INFO, FETCH_IDOL_REQUEST, ADD_USER_IDOL, ASYNC_INIT_USER_INFO } from '../actions/types'
 
 const initialState = {
     userInfo : {
         id: '',
         nickname: '',
         email: '',
-        photo: '../../../../assets/user.png',
+        photo: '../../../assets/user.png',
         follow_idol_id: [],
         unfollow_idol_id: []
     },
@@ -67,11 +67,11 @@ const userReducer = (state = initialState, action) => {
                     email: action.payload.email
                 },
             } 
-        case FETCH_IDOL_REQUESTED:            
+        case FETCH_IDOL_REQUEST:            
             return {
                 ...state,
             }
-        case ADD_USER_IDOL:    
+        case ADD_USER_IDOL:               
             return {
                 ...state,
                 userInfo: action.payload                       

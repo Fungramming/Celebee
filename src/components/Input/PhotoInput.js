@@ -9,11 +9,14 @@ import {
   KeyboardAvoidingView,
   AsyncStorage
 } from "react-native";
+import { connect } from "react-redux";
+
+import Icon from 'react-native-vector-icons/AntDesign';
 import FastImage from 'react-native-fast-image'
 import ImageResizer from 'react-native-image-resizer';
 
 
-import { MyApp, SelectIdolScreen } from '../Navigation'
+// import { MyApp, SelectIdolScreen } from '../Navigation'
 
 
 const IMAGE_PICKER_OPTIONS = {
@@ -27,7 +30,7 @@ const IMAGE_PICKER_OPTIONS = {
 class EditMyProfile extends Component {               
     constructor(props) {
         super(props);
-        Navigation.events().bindComponent(this);  
+        // Navigation.events().bindComponent(this);  
 
         this.state = { 
             token: props.token,
@@ -39,53 +42,57 @@ class EditMyProfile extends Component {
         }
     }  
         
-    navigationButtonPressed({ buttonId }) {
-        // will be called when "buttonOne" is clicked
-        if(buttonId == "pressComplete"){
+    // navigationButtonPressed({ buttonId }) {
+    //     // will be called when "buttonOne" is clicked
+    //     if(buttonId == "pressComplete"){
 
-            // const formData = new FormData();
-            // formData.append('token', this.state.token)
-            // formData.append('nickname', this.state.userInfo.nickname);
-            // // photo가 바뀌었을때 조건: photo param 추가            
-            // if(this.state.userInfo.photo.uri !== undefined){
-            //     formData.append('photo', {
-            //         uri: this.state.userInfo.photo.uri,
-            //         name: this.state.userInfo.photo.name,
-            //         type: "image/jpeg"
-            //     })
-            // }                         
+    //         const formData = new FormData();
+    //         formData.append('token', this.state.token)
+    //         formData.append('nickname', this.state.userInfo.nickname);
+    //         // photo가 바뀌었을때 조건: photo param 추가            
+    //         if(this.state.userInfo.photo.uri !== undefined){
+    //             formData.append('photo', {
+    //                 uri: this.state.userInfo.photo.uri,
+    //                 name: this.state.userInfo.photo.name,
+    //                 type: "image/jpeg"
+    //             })
+    //         }                         
 
-            // fetch( config + 'user/mypage-edit/', {
-            //     method: 'POST',
-            //     headers: {
-            //         'Accept': 'application/json',
-            //         'Content-Type': 'multipart/form-data',
-            //     },
-            //     body:formData,
-            // }).then((data) => {
-            //     console.log('11data :', data);
-            //     let result =  JSON.parse(data._bodyInit);  
+    //         fetch( config + 'user/mypage-edit/', {
+    //             method: 'POST',
+    //             headers: {
+    //                 'Accept': 'application/json',
+    //                 'Content-Type': 'multipart/form-data',
+    //             },
+    //             body:formData,
+    //         }).then((data) => {
+    //             console.log('11data :', data);
+    //             let result =  JSON.parse(data._bodyInit);  
                                    
-            //     this.setState(prevState => ({
-            //         ...prevState,
-            //         userInfo : result.result
-            //     }))
+    //             this.setState(prevState => ({
+    //                 ...prevState,
+    //                 userInfo : result.result
+    //             }))
 
-            //     Navigation.popToRoot(this.props.componentId);
-            //     this.props.update(this.state.userInfo)
+    //             Navigation.popToRoot(this.props.componentId);
+    //             this.props.update(this.state.userInfo)
 
-            // }).catch((error) => {
-            //     console.log('error :', error);
-            // });            
-        }
+    //         }).catch((error) => {
+    //             console.log('error :', error);
+    //         });            
+    //     }
+    // }
+
+    componentDidMount() {
+        console.log('this.state :', this.state);
     }
 
     onComplete() {
-        Navigation.push(this.props.componentId, {
-            component: {
-                name: MYPAGE_SETTING_SCREEN
-            }
-        })
+        // Navigation.push(this.props.componentId, {
+        //     component: {
+        //         name: MYPAGE_SETTING_SCREEN
+        //     }
+        // })
     }
      
     onEditPhoto = () => {
@@ -141,7 +148,7 @@ class EditMyProfile extends Component {
     return (      
         <View style={styles.photoBox}>
             <TouchableOpacity onPress={this.onEditPhoto.bind(this)}>
-            {this.state.userInfo.photo == null? <FastImage
+            {this.state.userInfo.photo == '../../../assets/user.png'? <FastImage
                 style={styles.photo}
                 source={require('../../../assets/user.png')}
                 />  : <FastImage
@@ -195,6 +202,6 @@ const styles = StyleSheet.create({
         position: 'absolute',
         top: 0,
         right: 0,
-        fontSize: 22
+        fontSize: 25
       }   
 })
