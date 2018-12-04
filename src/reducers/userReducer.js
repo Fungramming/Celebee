@@ -41,13 +41,14 @@ const userReducer = (state = initialState, action) => {
             }
         case CHECK_USER_REQUEST:
             return {  
-                ...state
+                ...state,
+                token: action.payload
             }
         case CHECK_USER:
             return {  
                 ...state,
                 userValid: action.payload.userValid,
-                userInfo: action.payload.userInfo.result
+                userInfo: action.payload.userInfo.result,
             }
         case ADD_USER_INFO_REQUEST:
             return {

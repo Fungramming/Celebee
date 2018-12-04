@@ -9,7 +9,6 @@ import {
   TouchableOpacity,
   AppRegistry,
   Dimensions,
-  Button,
   Image,
   Platform
 } from "react-native";
@@ -55,20 +54,7 @@ class Login extends Component {
     })
   }
 
-  // componentDidUpdate(prevProps) {
-  //   if (prevProps.userValid !== this.props.userValid ) {
-  //     this.setState({
-  //       userValid: this.props.userValid
-  //     })
-  //     if (this.props.userValid === true) {
-  //       MainApp()
-  //     } else {
-  //       SetNicknameScreen()
-  //     }
-  //   }
-  // }
-
-  // 유저 토근 저장 
+  // 유저 토근 저장 / 유저 판별 후 페이지 이동
   saveUserToken = async (data) => {
     await AsyncStorage.setItem('userToken', data)
 
@@ -85,9 +71,7 @@ class Login extends Component {
 
   initUser = (supplier, data) => {
     console.log('data :', data);
-    let userInfo = {
-     
-    }
+    let userInfo = {}
     switch(supplier){
       case "facebook":
         fetch('https://graph.facebook.com/v2.5/me?fields=email,name &access_token=' + data)
@@ -102,10 +86,8 @@ class Login extends Component {
         })      
         break;
       case "google": 
-        userInfo.email = data.googleEmail
-        // userInfo.email = data.user.email    
+        userInfo.email = data.googleEmail 
         userInfo.token = data.accessToken
-        // userInfo.token = data.accessToken
         this.props.init(userInfo)
         break;        
       case "kakao":      
@@ -133,15 +115,19 @@ class Login extends Component {
 
               const {accessToken} = data            
               _this.initUser("facebook", accessToken)
+
               const credential = firebase.auth.FacebookAuthProvider.credential(data.accessToken);
               return firebase.auth().signInAndRetrieveDataWithCredential(credential)
+
               .then(() => {
-                console.log('credential :', credential);
+
                 this.setState({
                   isLoading: false
                 })
-                _this.checkUserRequest(credential.accessToken)
+
                 _this.saveUserToken(credential.accessToken)
+                _this.checkUserRequest(credential.accessToken)
+
                 })
                 .catch((error) => {
                   console.log(error.message);
@@ -174,12 +160,14 @@ class Login extends Component {
       credential = firebase.auth.GoogleAuthProvider.credential(data.idToken, data.accessToken)
       return firebase.auth().signInAndRetrieveDataWithCredential(credential)
     }).then(() => { 
+
       this.setState({
         isLoading: false
       })
+      
       _this.initUser("google",{googleEmail: googleEmail, accessToken: credential.accessToken})
-      _this.checkUserRequest(credential.accessToken)
       _this.saveUserToken(credential.accessToken)
+      _this.checkUserRequest(credential.accessToken)
 
     }).catch((error) => {
       console.log(`Login fail with error: ${error}`);
@@ -202,8 +190,8 @@ class Login extends Component {
             } 
               console.log('result :', result);
               _this.initUser("kakao", {token: token, email: result.email})
-              _this.checkUserRequest(token)
               _this.saveUserToken(token)
+              _this.checkUserRequest(token)
           })
         }
       this.setState({

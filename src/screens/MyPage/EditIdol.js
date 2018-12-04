@@ -37,7 +37,17 @@ class EditIdol extends Component {
       if(buttonId == "backToMypage"){
         Navigation.popToRoot(this.props.componentId);        
       }
-    }       
+    }
+
+    SortByFollower() {
+      this.setState({sortByKorean: false})
+      this.state.unfollow_idol_id.sort( (a,b) => b.total_followers - a.total_followers )
+    }
+  
+    SortByKoran() {
+      this.setState({sortByKorean: true})
+      this.state.unfollow_idol_id.sort( (a,b) => (a.idol_name < b.idol_name) ? -1 : ( (a.idol_name > b.idol_name) ? 1 : 0 ) )
+    }
 
     _onToggle() {
       const toggle = !this.state.toggleIdol;
@@ -72,14 +82,17 @@ class EditIdol extends Component {
 
               <Text style={styles.subTitle}>내가 팔로우하지 않는 아이돌</Text>
               <View style={this.state.toggleIdol ? styles.unfollowList : styles.unfollowListFalse}>
-                <FlatList
-                  showsVerticalScrollIndicator={false}
-                  data={this.state.unfollow_idol_id}
-                  renderItem={({item}) => {
-                    return <SelectIdolList name={item.idol_name} followNum={item.total_followers} id={item.id} token={token}></SelectIdolList>
-                  }}
-                  keyExtractor={(item, index) => index.toString()} >
-                </FlatList>
+                <View style={{flexDirection: 'row'}}>
+                  <TouchableOpacity onPress={ () => this.SortByFollower() }>
+                    <Text style={styles.selectFilterText}>인기순</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={ () => this.SortByKoran() }>
+                    <Text style={styles.selectFilterText}>가나다순</Text>
+                  </TouchableOpacity>
+                </View>
+                {this.state.unfollow_idol_id.map((item, index) => (
+                  <SelectIdolList name={item.idol_name} followNum={item.total_followers} key={index} id={item.id} token={token}></SelectIdolList>
+                ))} 
               </View>
             </ScrollView>
           </View>
@@ -114,18 +127,18 @@ const styles = StyleSheet.create({
       fontWeight: '600',
       fontSize: 20
     },
-    followList: {
-      // height: '30%',
+    selectFilterText: {
+      marginLeft: 30,
+      paddingBottom: 20,
+      fontSize: 12,
     },
     followListFalse: {
       height: 0
     },
     unfollowList: {
-      // height: '50%',
       marginBottom: 15
     },
     unfollowListFalse: {
-      // height: '80%',
       marginBottom: 15
     },
     idolCard: {

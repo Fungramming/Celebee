@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { View, Text, StyleSheet, Image, Dimensions, TouchableOpacity } from "react-native";
 import { connect } from "react-redux";
 import { fetchIdolRequest } from "../../actions/users";
-import { config } from '../../actions/types'
 
 class SelectIdolList extends Component {
   constructor(props) {
@@ -32,15 +31,9 @@ class SelectIdolList extends Component {
       ...prevState,
       toggle : btntoggle     
     }))
+
     const followOrNot = this.state.toggle ? 1 : 0
     const id = this.props.id    
-
-    // if( this.props.toggleFalse === false) {
-    //   this.setState(prevState => ({
-    //     ...prevState,
-    //     toggle : true     
-    //   }))
-    // }
 
     let payload = {
       follow: followOrNot,
@@ -48,6 +41,7 @@ class SelectIdolList extends Component {
       token: this.state.token
     }
   
+    console.log('payload :', payload);
     this.props.fetchIdolRequest(payload)
   }
 
@@ -108,12 +102,12 @@ const styles = StyleSheet.create({
     marginBottom: 5
   },
   idolPhoto: {
-      backgroundColor: '#dedede',
-      borderRadius: 25,
-      marginBottom: 10,
-      marginRight: 15,
-      width: 73,
-      height: 73
+    backgroundColor: '#dedede',
+    borderRadius: 25,
+    marginBottom: 10,
+    marginRight: 15,
+    width: 73,
+    height: 73
   },
   idolTextGroup: {
     flexDirection: 'column',

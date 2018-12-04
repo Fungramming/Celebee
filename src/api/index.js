@@ -2,7 +2,7 @@ import { config } from '../actions/types'
 
 export default Api = {
     checkUser : async (payload) => {
-        console.log('API index - payload :', payload);
+        console.log('checkUser - payload :', payload);
         try{
             const response = await fetch( config + 'user/mypage/', {
                 method: 'POST',
@@ -14,7 +14,7 @@ export default Api = {
                     token: payload
                 }),
             })
-            console.log('API index - response :', response);
+            console.log('checkUser - response :', response);
             const ok = response.ok
             if ( ok === true ) {
                 const result = {
