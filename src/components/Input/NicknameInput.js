@@ -158,7 +158,7 @@ export default  connect(mapStateToProps,mapDispatchToProps)(NicknameInput);
 const styles = StyleSheet.create({
   nicknameView: {
     position: 'relative',
-    flex: 3,
+    // flex: 3,
     alignSelf: 'stretch',
   },
   nicknameTitle: {

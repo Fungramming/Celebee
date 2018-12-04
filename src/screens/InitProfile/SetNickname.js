@@ -98,7 +98,15 @@ class SetNickname extends Component {
     return (
       <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>      
         <Text style={styles.title}>셀레비에서 사용할{"\n"}프로필을 완성해주세요.</Text>
-        <PhotoInput onInitPhoto={this.initPhoto}></PhotoInput>     
+        {/* <PhotoInput onInitPhoto={this.initPhoto}></PhotoInput>      */}
+        <NicknameInput 
+          title={"닉네임"}
+          onValidFunc={this.validFunc}
+        ></NicknameInput>
+        <NicknameInput 
+          title={"닉네임"}
+          onValidFunc={this.validFunc}
+        ></NicknameInput>
         <NicknameInput 
           title={"닉네임"}
           onValidFunc={this.validFunc}
@@ -138,11 +146,12 @@ export default  connect(mapStateToProps,mapDispatchToProps)(SetNickname);
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "#fefefe",
+    height: Dimensions.get('screen').height,
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingTop: 50,
-    paddingHorizontal: 12,
+    // alignItems: 'center',
+    // // justifyContent: 'space-between',
+    // paddingTop: 50,
+    // paddingHorizontal: 12,
   },
   title: {
     color: 'black',
@@ -156,7 +165,7 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     paddingBottom: 20,
     width: Dimensions.get('window').width,
-    alignSelf: 'flex-end',
+    // alignSelf: 'flex-end',
     textAlign: 'center',
     fontSize: 20,
   }

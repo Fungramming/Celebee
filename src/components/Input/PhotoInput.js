@@ -131,8 +131,8 @@ export default connect(mapStateToProps, mapDispatchToProps)(EditMyProfile)
 const styles = StyleSheet.create({
     container: {
         backgroundColor: "#fefefe",
-        flex: 1,
-        alignItems: 'center',
+        // flex: 1,
+        // alignItems: 'center',
         justifyContent: 'center',
         paddingHorizontal: 12,
     },
