@@ -9,4 +9,7 @@ export const ADD_USER_INFO = "ADD_USER_INFO";
 export const UPDATE_USER_INFO = "UPDATE_USER_INFO";
 export const FETCH_IDOL_REQUEST = "FETCH_IDOL_REQUEST";
 export const FETCH_IDOL = "FETCH_IDOL";
+export const CHECK_USER = "CHECK_USER";
+export const CHECK_USER_REQUEST = "CHECK_USER_REQUEST";
+
 

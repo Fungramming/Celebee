@@ -1,4 +1,14 @@
-import { config, FETCH_USER_REQUEST, FETCH_USER, UPDATE_USER_INFO, INIT_USER_INFO, ADD_USER_INFO_REQUEST, ADD_USER_INFO, FETCH_IDOL_REQUEST, FETCH_IDOL, ASYNC_INIT_USER_INFO } from '../actions/types'
+import { 
+    config, 
+    ASYNC_INIT_USER_INFO, 
+    CHECK_USER_REQUEST, 
+    CHECK_USER,
+    INIT_USER_INFO,  
+    FETCH_USER_REQUEST, 
+    FETCH_USER, 
+    FETCH_IDOL_REQUEST, 
+    FETCH_IDOL, 
+} from '../actions/types'
 
 const initialState = {
     userInfo : {
@@ -10,7 +20,8 @@ const initialState = {
         unfollow_idol_id: []
     },
     idolToggle: true,
-    token: ''
+    token: '',
+    userValid: ''
 }
 
 const userReducer = (state = initialState, action) => {
@@ -38,6 +49,23 @@ const userReducer = (state = initialState, action) => {
                 },
                 token: action.payload.token,
             }
+        case CHECK_USER_REQUEST:
+            return {  
+                ...state,
+                token: action.payload
+            }
+        case CHECK_USER:
+            if(!action.payload.userValid){
+                return {  
+                    ...state,
+                    userValid: action.payload.userValid,                
+                }
+            }
+            return {  
+                ...state,
+                userValid: action.payload.userValid,                
+                userInfo: action.payload.userInfo,
+            }
         case FETCH_USER_REQUEST:
             return {
                 ...state
@@ -52,11 +80,6 @@ const userReducer = (state = initialState, action) => {
                 ...state,
             }
         case FETCH_IDOL:               
-            return {
-                ...state,
-                userInfo: action.payload                       
-            }
-        case UPDATE_USER_INFO:                                 
             return {
                 ...state,
                 userInfo: action.payload                       

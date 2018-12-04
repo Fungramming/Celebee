@@ -9,7 +9,6 @@ import {
   TouchableOpacity,
   AppRegistry,
   Dimensions,
-  Button,
   Image,
   Platform
 } from "react-native";
@@ -20,10 +19,12 @@ import RNKakaoLogins from 'react-native-kakao-logins'
 import { LoginManager, AccessToken } from 'react-native-fbsdk'
 import { GoogleSignin } from 'react-native-google-signin';
 import { connect } from "react-redux";
-import { initUserInfo } from "../../actions/users";
+import { initUserInfo, checkUserRequest } from "../../actions/users";
 import AppIntro from 'react-native-app-intro';
 
-import {SetNicknameScreen} from '../Navigation'
+import {MainApp, SetNicknameScreen} from '../Navigation'
+import {AuthValid} from '../Navigation'
+
 
 var config = {
   apiKey: "AIzaSyDI0yDEw3xg9eCQphgJbf95_RCIOPVlKH0",
@@ -42,6 +43,8 @@ class Login extends Component {
       userInfo: {}, 
       isLoading: false,
       showRealApp: false,
+      userValid: this.props.userValid,
+      token: this.props.token
     }
   }
 
@@ -54,24 +57,48 @@ class Login extends Component {
     })
   }
 
-  // 유저 토근 저장 
+  // 유저 토근 저장 / 유저 판별 후 페이지 이동
+
+  componentDidUpdate(prevProps, prevState) {
+    console.log('this.state :', this.state);
+      console.log('4 prevProps.userValid :',  prevProps.userValid);
+      console.log('5 this.props.userValid :', this.props.userValid);
+      console.log('this.state :', this.state);
+      if ( prevProps.userValid !== this.props.userValid) {
+        this.setState(prevState => ({
+          ...prevState,
+          userValid: this.props.userValid
+        }))  
+        this.saveUserToken(this.state.token)
+      }
+      
+    }
+
+  checkUserRequest(token) {
+    this.props.checkUser(token)
+  } 
+
   saveUserToken = async (data) => {
     await AsyncStorage.setItem('userToken', data)
-    // await AsyncStorage.setItem('userToken', JSON.stringify(data))
+    console.log('this.props.userValid :', this.props.userValid);
+    if (this.props.userValid === true) {
+      MainApp()
+    } else {
+      SetNicknameScreen()
+    }
   }
 
   initUser = (supplier, data) => {
     console.log('data :', data);
-    let userInfo = {
-     
-    }
+    let userInfo = {}
     switch(supplier){
       case "facebook":
-        fetch('https://graph.facebook.com/v2.5/me?fields=email,name &access_token=' + data)
+        fetch('https://graph.facebook.com/v2.5/me?fields=email,name &access_token=' + data.accessToken)
         .then((response) => response.json())
         .then((json) => {
           userInfo.email = json.email
-          userInfo.token = data
+          userInfo.token = data.uId
+          console.log('face userInfo.token :', userInfo.token);
           this.props.init(userInfo)
         })
         .catch(() => {
@@ -79,10 +106,8 @@ class Login extends Component {
         })      
         break;
       case "google": 
-        userInfo.email = data.googleEmail
-        // userInfo.email = data.user.email    
+        userInfo.email = data.googleEmail 
         userInfo.token = data.accessToken
-        // userInfo.token = data.accessToken
         this.props.init(userInfo)
         break;        
       case "kakao":      
@@ -101,6 +126,7 @@ class Login extends Component {
         if (result.isCancelled) {
           Alert.alert('Whoops!', 'You cancelled the sign in.');
         } else {
+          console.log('facebook result :', result);
           AccessToken.getCurrentAccessToken()
             .then((data) => {         
 
@@ -109,18 +135,22 @@ class Login extends Component {
               })
 
               const {accessToken} = data            
-              _this.initUser("facebook",accessToken)
+
               const credential = firebase.auth.FacebookAuthProvider.credential(data.accessToken);
+              let user = firebase.auth().currentUser;
+              let uId = user.uid
               return firebase.auth().signInAndRetrieveDataWithCredential(credential)
+
               .then(() => {
 
                 this.setState({
                   isLoading: false
                 })
-                  _this.saveUserToken(credential.accessToken)
-                  SetNicknameScreen()                
-                })
-                .catch((error) => {
+                _this.initUser("facebook", {uId: uId, accessToken: accessToken})
+                _this.checkUserRequest(uId)
+                _this.saveUserToken(uId)
+
+                }).catch((error) => {
                   console.log(error.message);
                 });
             });
@@ -139,6 +169,7 @@ class Login extends Component {
     let _this = this;
     let credential;
     let googleEmail;
+    let uId;
     GoogleSignin.signIn().then((data) => {
 
       this.setState({
@@ -149,16 +180,19 @@ class Login extends Component {
 
       // create a new firebase credential with the token
       credential = firebase.auth.GoogleAuthProvider.credential(data.idToken, data.accessToken)
+      let user = firebase.auth().currentUser;
+      uId = user.uid
       return firebase.auth().signInAndRetrieveDataWithCredential(credential)
     }).then(() => { 
-      
+
       this.setState({
         isLoading: false
       })
-      _this.initUser("google",{googleEmail: googleEmail, accessToken: credential.accessToken})
-      _this.saveUserToken(credential.accessToken)
       
-      SetNicknameScreen()
+      _this.initUser("google",{googleEmail: googleEmail, accessToken: uId})
+      _this.checkUserRequest(uId)
+      _this.saveUserToken(uId)
+
     }).catch((error) => {
       console.log(`Login fail with error: ${error}`);
     })
@@ -180,13 +214,13 @@ class Login extends Component {
             } 
               console.log('result :', result);
               _this.initUser("kakao", {token: token, email: result.email})
+              _this.checkUserRequest(token)
               _this.saveUserToken(token)
           })
         }
       this.setState({
         isLoading: true
       })
-      SetNicknameScreen()
     })
   }
 
@@ -276,13 +310,18 @@ class Login extends Component {
 const mapStateToProps = state => {
   return {
       userInfo: state.user.userInfo,   // Mount 될때 initialState 를 가져옴 , this.props 로. users 는 actios 에서의 users.js 의 이름
+      userValid: state.user.userValid,
+      token: state.user.token
   }
 }
 const mapDispatchToProps = dispatch => {
   return {
-      init: (userInfo) => {
-          dispatch(initUserInfo(userInfo))
-      }
+    init: (userInfo) => {
+      dispatch(initUserInfo(userInfo))
+    },
+    checkUser: (userInfo) => {
+      dispatch(checkUserRequest(userInfo))
+    }
   }
 }
 

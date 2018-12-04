@@ -30,31 +30,56 @@ class SetNickname extends Component {
       },
     }
   }
-
-  componentDidUpdate(prevProps) {
-    if (prevProps.userInfo.photo !== this.props.userInfo.photo) {
+  shouldComponentUpdate(prevProps, prevState) {
+    console.log('1 this.props :', this.props);
+    console.log('2 prevProps :', prevProps);
+    console.log('prevState :', prevState);
+    if ( prevState.userInfo.nickname !== this.state.userInfo.nickname) {
       this.setState(prevState => ({
         userInfo: {
           ...prevState.userInfo,
-          nickname : this.props.userInfo.nickname,
+          email: this.props.userInfo.email,
+          // nickname: this.props.userInfo.nickname,
           photo: this.props.userInfo.photo     
         },
       }))  
     }
+    console.log('this.state :', this.state);
+    return true
   }
+  // componentDidUpdate(prevProps, prevState) {
+  //   console.log('1 this.props :', this.props);
+  //   console.log('2 prevProps :', prevProps);
+  //   console.log('prevState :', prevState);
+  //   if ( prevState.userInfo.nickname !== this.state.userInfo.nickname) {
+  //     this.setState(prevState => ({
+  //       userInfo: {
+  //         ...prevState.userInfo,
+  //         email: this.props.userInfo.email,
+  //         // nickname: this.props.userInfo.nickname,
+  //         photo: this.props.userInfo.photo     
+  //       },
+  //     }))  
+  //   }
+  //   console.log('this.state :', this.state);
+
+  // }
 
   validFunc = (state) => {
+    console.log('valid state :', state);
     this.setState(prevState => ({
       userInfo: {
         ...prevState.userInfo,
-        email : state.userInfo.email,
+        email: state.userInfo.email,
         nickname : state.userInfo.nickname            
       },
       valid: state.valid
-    }))    
+    }))
+    console.log('!!!!!this.state :', this.state);
   }
 
   addUserInfo = () => {
+    console.log('here this.state :', this.state);
     this.props.fetchUserInfoRequest(this.state)
     SelectIdolScreen()
   }

@@ -7,7 +7,9 @@ import {
   Button,
   AsyncStorage
 } from "react-native";
-import {LoginApp, MainApp} from '../Navigation'
+// import {AuthValid} from '../Navigation'
+import {LoginApp} from '../Navigation'
+import { initUserInfo, checkUserRequest } from "../../actions/users";
 
 class Setting extends Component {
   // static navigationOptions = {

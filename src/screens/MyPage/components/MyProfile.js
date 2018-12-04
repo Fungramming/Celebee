@@ -10,6 +10,11 @@ class MyProfile extends Component {
     }
   }  
 
+  componentDidMount() {
+    console.log('this.state.userInfo!!! :', this.state.userInfo);
+    console.log('typeof this.state.userInfo.photo :', typeof this.state.userInfo.photo);
+  }
+
   componentDidUpdate(prevProps) {
     if ( prevProps.userInfo.nickname !== this.props.userInfo.nickname || prevProps.userInfo.photo !== this.props.userInfo.photo) {
       this.setState(prevState => ({
@@ -25,12 +30,12 @@ class MyProfile extends Component {
   render() {
     return (
       <View style={styles.myProfileBox}>
-        {this.state.userInfo.photo == null? <FastImage
+        {this.state.userInfo.photo == '../../../assets/user.png'? <FastImage
           style={styles.photo}
           source={require('../../../../assets/user.png')}
         />  : <FastImage
         style={styles.photo}
-        source={{uri: typeof this.state.userInfo.photo == 'object' ? this.state.userInfo.photo.uri : this.state.userInfo.photo}}
+        source={{uri: typeof this.state.userInfo.photo === 'object' ? this.state.userInfo.photo.uri : this.state.userInfo.photo}}
       />  }   
         <View>
           <Text style={styles.nickName}>{this.state.userInfo.nickname}</Text>
@@ -76,6 +81,7 @@ const styles = StyleSheet.create({
 
 
 const mapStateToProps = state => {
+  console.log('myprogitl state :', state);
   return {      
       userInfo: state.user.userInfo,   // Mount 될때 initialState 를 가져옴 , this.props 로. users 는 actios 에서의 users.js 의 이름
   }

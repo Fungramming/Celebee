@@ -1,27 +1,50 @@
+import { 
+  config, 
+  ASYNC_INIT_USER_INFO, 
+  CHECK_USER_REQUEST, 
+  CHECK_USER, 
+  INIT_USER_INFO,  
+  FETCH_USER_REQUEST, 
+  FETCH_USER, 
+  FETCH_IDOL_REQUEST, 
+  FETCH_IDOL, 
+} from '../actions/types'
 import { call, put, takeLatest } from 'redux-saga/effects'
 
-import { UPDATE_USER_INFO, INIT_USER_INFO, FETCH_USER_REQUEST, FETCH_USER, ADD_USER_INFO_REQUEST, ADD_USER_INFO, FETCH_IDOL_REQUEST, FETCH_IDOL, ASYNC_INIT_USER_INFO } from '../actions/types'
 import Api from '../api'
 
-function* fetchUserInfoRequest(action) {
+function* checkUserRequestSaga(action) {    
+  console.log('userSaga this.props :', this.props);
+  try {
+      console.log('checkUserRequestSaga action :', action);    
+      const payload = yield call(Api.checkUser, action.payload)
+      console.log('checkUserRequestSaga payload :', payload);
+      yield put({type: CHECK_USER, payload})
+  } catch (e) {
+
+  }
+}
+
+function* fetchUserInfoRequestSaga(action) {
   try {                     
     const payload = yield call(Api.fetchUserInfo, action.payload)
     yield put({type: FETCH_USER, payload})
   } catch (e) {
+
   }
 }
 
-function* fetchIdolRequest(action) {    
+function* fetchIdolRequestSaga(action) {    
   try {                     
       const payload = yield call(Api.fetchIdol, action.payload)
       yield put({type: FETCH_IDOL, payload})
   } catch (e) {
+
   }
 }
 
 export const userSagas = [
-  takeLatest(FETCH_USER_REQUEST, fetchUserInfoRequest),
-  takeLatest(FETCH_IDOL_REQUEST, fetchIdolRequest)
+  takeLatest(CHECK_USER_REQUEST, checkUserRequestSaga),
+  takeLatest(FETCH_USER_REQUEST, fetchUserInfoRequestSaga),
+  takeLatest(FETCH_IDOL_REQUEST, fetchIdolRequestSaga),
 ]
-
-  

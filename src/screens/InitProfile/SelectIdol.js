@@ -100,9 +100,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginTop: 5
   },
-  // selectHeaderTextWrap: {
-  //   marginTop: 35,
-  // },
   selectHeaderText: {
     fontSize: 22,
     fontWeight: 'bold',

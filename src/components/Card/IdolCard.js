@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { View, Text, StyleSheet, Image, Dimensions, TouchableOpacity } from "react-native";
 import { connect } from "react-redux";
 import { fetchIdolRequest } from "../../actions/users";
-import { config } from '../../actions/types'
 
 class SelectIdolList extends Component {
   constructor(props) {
@@ -26,21 +25,15 @@ class SelectIdolList extends Component {
     }    
   }
 
-  onFetchIdol() {
+  onFetchIdolRequest() {
     const btntoggle = !this.state.toggle
     this.setState(prevState => ({
       ...prevState,
       toggle : btntoggle     
     }))
+
     const followOrNot = this.state.toggle ? 1 : 0
     const id = this.props.id    
-
-    // if( this.props.toggleFalse === false) {
-    //   this.setState(prevState => ({
-    //     ...prevState,
-    //     toggle : true     
-    //   }))
-    // }
 
     let payload = {
       follow: followOrNot,
@@ -48,7 +41,8 @@ class SelectIdolList extends Component {
       token: this.state.token
     }
   
-    this.props.fetchIdol(payload)
+    console.log('payload :', payload);
+    this.props.fetchIdolRequest(payload)
   }
 
   render() {
@@ -69,7 +63,7 @@ class SelectIdolList extends Component {
             <Text style={styles.followingNum}>{this.props.followNum}명이 팔로우합니다.</Text>
           </View>
           <View>
-            <TouchableOpacity style={buttonBg} onPress={ () => this.onFetchIdol() }>
+            <TouchableOpacity style={buttonBg} onPress={ () => this.onFetchIdolRequest() }>
               <Text style={{color:'#fff', fontSize: 16}}>{textValue}</Text>
             </TouchableOpacity>
           </View>
@@ -89,7 +83,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchIdol: (userIdol) => {
+    fetchIdolRequest: (userIdol) => {
       dispatch(fetchIdolRequest(userIdol))
     }
   }
@@ -108,12 +102,12 @@ const styles = StyleSheet.create({
     marginBottom: 5
   },
   idolPhoto: {
-      backgroundColor: '#dedede',
-      borderRadius: 25,
-      marginBottom: 10,
-      marginRight: 15,
-      width: 73,
-      height: 73
+    backgroundColor: '#dedede',
+    borderRadius: 25,
+    marginBottom: 10,
+    marginRight: 15,
+    width: 73,
+    height: 73
   },
   idolTextGroup: {
     flexDirection: 'column',

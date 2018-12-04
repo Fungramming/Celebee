@@ -38,8 +38,8 @@ class EditMyProfile extends Component {
         }
     }  
 
-    componentDidUpdate(prevState) {
-        if(prevState.userInfo.photo !== this.state.userInfo.photo){
+    componentDidUpdate(prevProps, prevState) {
+        if(prevProps.userInfo.photo && prevState.userInfo.photo !== this.state.userInfo.photo){
             this.props.onInitPhoto(this.state.userInfo.photo)
         }
     }
