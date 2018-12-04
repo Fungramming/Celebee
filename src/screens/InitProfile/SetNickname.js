@@ -11,12 +11,11 @@ import {
 } from "react-native";
 import { connect } from "react-redux";
 
-import { addUserInfo, fetchUserInfoRequest } from "../../actions/users";
+import { fetchUserInfoRequest } from "../../actions/users";
 import NicknameInput from "../../components/Input/NicknameInput"
 import PhotoInput from "../../components/Input/PhotoInput"
 
-import { MyApp, SelectIdolScreen } from '../Navigation'
-
+import { SelectIdolScreen } from '../Navigation'
 
 class SetNickname extends Component { 
   constructor(props) {
@@ -33,8 +32,6 @@ class SetNickname extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    console.log('@@@@@@@@@@@prevProps :', prevProps);
-    console.log('@@@@@@@@@@@@@@@this.state :', this.state);
     if (prevProps.userInfo.photo !== this.props.userInfo.photo) {
       this.setState(prevState => ({
         userInfo: {
@@ -43,13 +40,10 @@ class SetNickname extends Component {
           photo: this.props.userInfo.photo     
         },
       }))  
-      console.log('changed this.state :', this.state);
     }
   }
 
   validFunc = (state) => {
-    console.log('전달 받은 :', state);    
-    console.log(' brfore this.state.userInfo :', this.state.userInfo);
     this.setState(prevState => ({
       userInfo: {
         ...prevState.userInfo,
@@ -61,9 +55,7 @@ class SetNickname extends Component {
   }
 
   addUserInfo = () => {
-    console.log('this.state.userInfo :', this.state.userInfo);
     this.props.fetchUserInfoRequest(this.state)
-    // this.props.add(this.state.userInfo)
     SelectIdolScreen()
   }
 
@@ -103,10 +95,9 @@ class SetNickname extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log('state :', state);
   return {
       userInfo: state.user.userInfo,   // Mount 될때 initialState 를 가져옴 , this.props 로. users 는 actios 에서의 users.js 의 이름
-      token: state.token
+      token: state.user.token
   }
 }
 const mapDispatchToProps = dispatch => {
@@ -133,10 +124,7 @@ const styles = StyleSheet.create({
     width: "100%",
     fontSize: 25,
     fontWeight: '600'
-  },
-  nickNameView: {
-    alignSelf: 'stretch',
-  },
+  },  
   selectBtn: {
     color:'#fff',
     backgroundColor: '#bbbbbb',

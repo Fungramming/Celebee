@@ -31,7 +31,6 @@ const IMAGE_PICKER_OPTIONS = {
 class EditMyProfile extends Component {               
     constructor(props) {
         super(props);
-        // Navigation.events().bindComponent(this);  
 
         this.state = { 
             token: props.token,
@@ -43,51 +42,6 @@ class EditMyProfile extends Component {
         if(prevState.userInfo.photo !== this.state.userInfo.photo){
             this.props.onInitPhoto(this.state.userInfo.photo)
         }
-    }
-
-    // navigationButtonPressed({ buttonId }) {
-    //     // will be called when "buttonOne" is clicked
-    //     if(buttonId == "pressComplete"){
-
-    //         const formData = new FormData();
-    //         formData.append('token', this.state.token)
-    //         formData.append('nickname', this.state.userInfo.nickname);
-    //         // photo가 바뀌었을때 조건: photo param 추가            
-    //         if(this.state.userInfo.photo.uri !== undefined){
-    //             formData.append('photo', {
-    //                 uri: this.state.userInfo.photo.uri,
-    //                 name: this.state.userInfo.photo.name,
-    //                 type: "image/jpeg"
-    //             })
-    //         }                         
-
-    //         fetch( config + 'user/mypage-edit/', {
-    //             method: 'POST',
-    //             headers: {
-    //                 'Accept': 'application/json',
-    //                 'Content-Type': 'multipart/form-data',
-    //             },
-    //             body:formData,
-    //         }).then((data) => {
-    //             console.log('11data :', data);
-    //             let result =  JSON.parse(data._bodyInit);  
-                                   
-    //             this.setState(prevState => ({
-    //                 ...prevState,
-    //                 userInfo : result.result
-    //             }))
-
-    //             Navigation.popToRoot(this.props.componentId);
-    //             this.props.update(this.state.userInfo)
-
-    //         }).catch((error) => {
-    //             console.log('error :', error);
-    //         });            
-    //     }
-    // }
-
-    componentDidMount() {
-        console.log('this.state :', this.state);
     }
 
     onEditPhoto = () => {

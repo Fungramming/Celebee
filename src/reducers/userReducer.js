@@ -26,55 +26,27 @@ const userReducer = (state = initialState, action) => {
                 token: action.payload.token
             }
         case ASYNC_INIT_USER_INFO:
-                return {  
-                    ...state,
-                    userInfo: {
-                        id: action.payload.result.id,
-                        nickname: action.payload.result.nickname,
-                        email: action.payload.result.email,
-                        photo: action.payload.result.photo,
-                        follow_idol_id: action.payload.result.follow_idol_id,
-                        unfollow_idol_id: action.payload.result.unfollow_idol_id
-                    },
-                    token: action.payload.token,
-                }       
+            return {  
+                ...state,
+                userInfo: {
+                    id: action.payload.result.id,
+                    nickname: action.payload.result.nickname,
+                    email: action.payload.result.email,
+                    photo: action.payload.result.photo,
+                    follow_idol_id: action.payload.result.follow_idol_id,
+                    unfollow_idol_id: action.payload.result.unfollow_idol_id
+                },
+                token: action.payload.token,
+            }
         case FETCH_USER_REQUEST:
             return {
                 ...state
-            }     
+            }
         case FETCH_USER:
             return {
-                ...state
-            }    
-        case ADD_USER_INFO_REQUEST:
-            return {
-                ...state
-            }
-        case ADD_USER_INFO:
-            fetch( config + 'register/', {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    'token': state.token,
-                    'nickname':  action.payload.nickname,
-                    'email':  action.payload.email
-                }),
-            }).then((data) => {
-                console.log('?data :', data);                
-            }).catch((error) => {
-                console.log('error :', error);
-            });   
-            return {
                 ...state,
-                userInfo: {
-                    ...state.userInfo,
-                    nickname: action.payload.nickname,
-                    email: action.payload.email
-                },
-            } 
+                userInfo: action.payload   
+            }     
         case FETCH_IDOL_REQUEST:            
             return {
                 ...state,
@@ -83,12 +55,12 @@ const userReducer = (state = initialState, action) => {
             return {
                 ...state,
                 userInfo: action.payload                       
-            } 
+            }
         case UPDATE_USER_INFO:                                 
             return {
                 ...state,
                 userInfo: action.payload                       
-            }             
+            }
         default:
             return state;    
     }
