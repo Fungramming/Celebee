@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { StyleSheet, KeyboardAvoidingView } from 'react-native'
+import { StyleSheet, KeyboardAvoidingView, View, ScrollView } from 'react-native'
 import { connect } from 'react-redux'
 import { Navigation } from 'react-native-navigation'
 
@@ -76,14 +76,24 @@ class EditMyProfile extends Component {
 
   render() {
     return (
-      <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>      
-        <PhotoInput onInitPhoto={this.initPhoto}></PhotoInput>
-        <NicknameInput
-            thisScreen = { this.constructor.name }
-            title = {"닉네임"}
-            onValidFunc={this.validFunc}
-        ></NicknameInput>
-      </KeyboardAvoidingView>
+        <View style={[styles.outerContainer]} >
+            <View style={styles.container}>
+                <ScrollView  
+                    showsVerticalScrollIndicator={false} 
+                    ref={ref => this.editscrollView = ref}
+                    onContentSizeChange={(contentWidth, contentHeight)=>{        
+                    this.editscrollView.scrollToEnd()}}>                
+                {/* <KeyboardAvoidingView behavior="padding" enabled> */}
+                    <PhotoInput onInitPhoto={this.initPhoto}></PhotoInput>
+                    <NicknameInput 
+                        title={"닉네임"}
+                        onValidFunc={this.validFunc}
+                        style={{paddingBottom:200}}
+                    ></NicknameInput>            
+                {/* </KeyboardAvoidingView> */}
+                </ScrollView>
+            </View>
+        </View>
     )
   }
 }
@@ -106,11 +116,13 @@ const mapDispatchToProps = dispatch => {
 export default connect(mapStateToProps, mapDispatchToProps)(EditMyProfile)
 
 const styles = StyleSheet.create({
-    container: {
+    outerContainer: {
         backgroundColor: "#fefefe",
         flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-        paddingHorizontal: 12,
-    }
+    // height: Dimensions.get('screen').height
+    },
+    container: {
+    flex:1,
+    paddingHorizontal: 20,
+    },
 })

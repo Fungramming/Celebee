@@ -115,7 +115,7 @@ class NicknameInput extends Component {
   render() {
     const {title} = this.props
     return (
-      <KeyboardAvoidingView style={styles.nicknameView} behavior="padding">
+      <View style={styles.nicknameView} behavior="padding">
         <Text style={styles.nicknameTitle}>{title}</Text>
         <View>
           <TextInput 
@@ -129,13 +129,15 @@ class NicknameInput extends Component {
           <TouchableOpacity style={styles.closeCircle} onPress={this.clearText.bind(this)}>
             <Icon name="close" color="#722784" size={24}></Icon>
           </TouchableOpacity> 
-          <View style={ this.state.valid.alertText ? '' : {display:"none"}}>
-            <Text style={this.state.valid.available ? styles.greenText : styles.redText}>
-              {this.state.valid.available ? '사용가능한 닉네임 입니다.' : '이미 사용중인 닉네임 입니다.'}
-            </Text>
-          </View>     
+          <View style={{position:"absolute", bottom: -25}}>
+            <View style={this.state.valid.alertText ? '' : {display:"none"}}>
+              <Text style={this.state.valid.available ? styles.greenText : styles.redText}>
+                {this.state.valid.available ? '사용가능한 닉네임 입니다.' : '이미 사용중인 닉네임 입니다.'}
+              </Text>
+            </View>     
+          </View>
         </View>                 
-      </KeyboardAvoidingView>
+      </View>
     )
   }
 }
@@ -158,7 +160,7 @@ export default  connect(mapStateToProps,mapDispatchToProps)(NicknameInput);
 const styles = StyleSheet.create({
   nicknameView: {
     position: 'relative',
-    // flex: 3,
+    paddingBottom: 50,
     alignSelf: 'stretch',
   },
   nicknameTitle: {

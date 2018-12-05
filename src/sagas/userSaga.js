@@ -16,9 +16,7 @@ import Api from '../api'
 function* checkUserRequestSaga(action) {    
   console.log('userSaga this.props :', this.props);
   try {
-      console.log('checkUserRequestSaga action :', action);    
       const payload = yield call(Api.checkUser, action.payload)
-      console.log('checkUserRequestSaga payload :', payload);
       yield put({type: CHECK_USER, payload})
   } catch (e) {
 

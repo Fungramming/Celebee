@@ -7,8 +7,9 @@ import {
   TouchableOpacity,
   Dimensions,
   KeyboardAvoidingView,
-  AsyncStorage
+  ScrollView
 } from "react-native";
+
 import { connect } from "react-redux";
 
 import { fetchUserInfoRequest } from "../../actions/users";
@@ -28,45 +29,28 @@ class SetNickname extends Component {
         alertText: false,
         completeButton: false
       },
+      imageStyle: {
+        width: 100,
+        height: 100,
+        borderRadius: 28
+      }
     }
+
   }
-  shouldComponentUpdate(prevProps, prevState) {
-    console.log('1 this.props :', this.props);
-    console.log('2 prevProps :', prevProps);
-    console.log('prevState :', prevState);
+
+  componentDidUpdate(prevProps, prevState) {
     if ( prevState.userInfo.nickname !== this.state.userInfo.nickname) {
       this.setState(prevState => ({
         userInfo: {
           ...prevState.userInfo,
           email: this.props.userInfo.email,
-          // nickname: this.props.userInfo.nickname,
           photo: this.props.userInfo.photo     
         },
       }))  
     }
-    console.log('this.state :', this.state);
-    return true
   }
-  // componentDidUpdate(prevProps, prevState) {
-  //   console.log('1 this.props :', this.props);
-  //   console.log('2 prevProps :', prevProps);
-  //   console.log('prevState :', prevState);
-  //   if ( prevState.userInfo.nickname !== this.state.userInfo.nickname) {
-  //     this.setState(prevState => ({
-  //       userInfo: {
-  //         ...prevState.userInfo,
-  //         email: this.props.userInfo.email,
-  //         // nickname: this.props.userInfo.nickname,
-  //         photo: this.props.userInfo.photo     
-  //       },
-  //     }))  
-  //   }
-  //   console.log('this.state :', this.state);
-
-  // }
 
   validFunc = (state) => {
-    console.log('valid state :', state);
     this.setState(prevState => ({
       userInfo: {
         ...prevState.userInfo,
@@ -75,11 +59,9 @@ class SetNickname extends Component {
       },
       valid: state.valid
     }))
-    console.log('!!!!!this.state :', this.state);
   }
 
   addUserInfo = () => {
-    console.log('here this.state :', this.state);
     this.props.fetchUserInfoRequest(this.state)
     SelectIdolScreen()
   }
@@ -93,36 +75,41 @@ class SetNickname extends Component {
       },
     }))    
   }
-
+  
   render() {
+    console.log('this.state.vis :', this.state.visibleHeight);
     return (
-      <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>      
-        <Text style={styles.title}>셀레비에서 사용할{"\n"}프로필을 완성해주세요.</Text>
-        {/* <PhotoInput onInitPhoto={this.initPhoto}></PhotoInput>      */}
-        <NicknameInput 
-          title={"닉네임"}
-          onValidFunc={this.validFunc}
-        ></NicknameInput>
-        <NicknameInput 
-          title={"닉네임"}
-          onValidFunc={this.validFunc}
-        ></NicknameInput>
-        <NicknameInput 
-          title={"닉네임"}
-          onValidFunc={this.validFunc}
-        ></NicknameInput>
-        <TouchableOpacity             
-            disabled={!this.state.valid.completeButton} 
-            onPress={this.addUserInfo}
-          >
-            <Text style={[ 
-                styles.selectBtn,                                      
-                this.state.valid.available? {backgroundColor: "#722784"} : {backgroundColor: "#bbbbbb"} 
-              ]}>
-              완료
-            </Text>
-        </TouchableOpacity>       
-      </KeyboardAvoidingView>
+          <View style={[styles.outerContainer]} >
+              <View style={styles.container}>
+                  <ScrollView  
+                      showsVerticalScrollIndicator={false} 
+                      ref={ref => this.scrollView = ref}
+                      onContentSizeChange={(contentWidth, contentHeight)=>{        
+                        this.scrollView.scrollToEnd()}}>                
+                    <KeyboardAvoidingView behavior="padding" enabled>
+                        <Text style={styles.title}>셀레비에서 사용할{"\n"}프로필을 완성해주세요.</Text>
+                        <PhotoInput onInitPhoto={this.initPhoto}></PhotoInput>
+                        <NicknameInput 
+                          title={"닉네임 설정"}
+                          onValidFunc={this.validFunc}
+                          style={{paddingBottom:200}}
+                        ></NicknameInput>            
+                    </KeyboardAvoidingView>
+                  </ScrollView>
+              </View>
+              <TouchableOpacity             
+                  disabled={!this.state.valid.completeButton} 
+                  onPress={this.addUserInfo}
+                  style={{alignSelf: 'flex-end' }}
+                >
+                  <Text style={[ 
+                      styles.selectBtn,                                      
+                      this.state.valid.available? {backgroundColor: "#722784"} : {backgroundColor: "#bbbbbb"} 
+                    ]}>
+                    완료
+                  </Text>
+              </TouchableOpacity>    
+          </View>
     );
   }
 }
@@ -144,18 +131,18 @@ const mapDispatchToProps = dispatch => {
 export default  connect(mapStateToProps,mapDispatchToProps)(SetNickname);
 
 const styles = StyleSheet.create({
-  container: {
+  outerContainer: {
     backgroundColor: "#fefefe",
-    height: Dimensions.get('screen').height,
     flex: 1,
-    // alignItems: 'center',
-    // // justifyContent: 'space-between',
-    // paddingTop: 50,
-    // paddingHorizontal: 12,
+  },
+  container: {
+    flex:1,
+    paddingHorizontal: 20,
   },
   title: {
     color: 'black',
     width: "100%",
+    paddingTop: 30,
     fontSize: 25,
     fontWeight: '600'
   },  
@@ -165,7 +152,6 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     paddingBottom: 20,
     width: Dimensions.get('window').width,
-    // alignSelf: 'flex-end',
     textAlign: 'center',
     fontSize: 20,
   }

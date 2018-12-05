@@ -64,32 +64,36 @@ class Login extends Component {
       console.log('4 prevProps.userValid :',  prevProps.userValid);
       console.log('5 this.props.userValid :', this.props.userValid);
       console.log('this.state :', this.state);
-      if ( prevProps.userValid !== this.props.userValid) {
-        this.setState(prevState => ({
+      if ( prevProps.userValid !== this.props.userValid) {              
+        this.setState(prevState=> ({
           ...prevState,
           userValid: this.props.userValid
-        }))  
-        this.saveUserToken(this.state.token)
-      }
-      
+        }))
+        if( this.props.userValid == true){
+            MainApp()
+          }  else if( this.props.userValid == false ){
+            SetNicknameScreen()        
+          } 
+      }      
     }
 
-  checkUserRequest(token) {
-    this.props.checkUser(token)
+  checkUserRequest = async (token) => {
+    await this.props.checkUser(token)
+    // if(this.props.userValid == false){
+    //   SetNicknameScreen()              
+    // }
   } 
 
   saveUserToken = async (data) => {
-    await AsyncStorage.setItem('userToken', data)
-    console.log('this.props.userValid :', this.props.userValid);
-    if (this.props.userValid === true) {
-      MainApp()
-    } else {
-      SetNicknameScreen()
+    try {
+      await AsyncStorage.setItem('userToken', data)
+
+    } catch (e) {
+
     }
   }
 
   initUser = (supplier, data) => {
-    console.log('data :', data);
     let userInfo = {}
     switch(supplier){
       case "facebook":

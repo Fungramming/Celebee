@@ -3,11 +3,12 @@ import {
   View,
   Text,
   StyleSheet,
-  TextInput,
   TouchableOpacity,
-  Dimensions,
-  KeyboardAvoidingView,
-  AsyncStorage
+  Platform,
+  LayoutAnimation,
+  UIManager,
+  Keyboard,
+  Dimensions
 } from "react-native";
 import { connect } from "react-redux";
 
@@ -35,13 +36,60 @@ class EditMyProfile extends Component {
         this.state = { 
             token: props.token,
             userInfo: props.userInfo,
+            imageStyle: {
+                width: 100,
+                height: 100,
+                borderRadius: 28
+            }
         }
+
+        // if (Platform.OS === 'android') {
+        //     UIManager.setLayoutAnimationEnabledExperimental(true);
+        //   }
+
     }  
 
+    // componentWillMount () {
+    //     // Keyboard.addListener('keyboardDidShow', this.keyboardWillShow.bind(this))
+    //     // Keyboard.addListener('keyboardDidHide', this.keyboardWillHide.bind(this))
+    // }
+
+    // keyboardWillShow (e) {
+    //     // LayoutAnimation.configureNext(LayoutAnimation.Presets.linear);
+    //     // LayoutAnimation.configureNext(CustomLayoutAnimation);
+    //     // let newSize = Dimensions.get('window').height - e.endCoordinates.height
+    //     this.setState(prevState => ({
+    //       ...prevState,
+    //       // visibleHeight: newSize,
+    //       imageStyle: { width: 70, height: 70, borderRadius: 12}      
+          
+    //     }))
+    //     console.log('show this.state :', this.state);
+    //   } 
+      
+    //   keyboardWillHide (e) {
+    //     this.setState(prevState => ({
+    //       ...prevState,
+    //       // visibleHeight: Dimensions.get('window').height,
+    //       imageStyle: { width: 100, height: 100, borderRadius: 28}      
+    //     }))
+    //     console.log('after this.state :', this.state);
+    
+    //   }  
+
     componentDidUpdate(prevProps, prevState) {
+
         if(prevProps.userInfo.photo && prevState.userInfo.photo !== this.state.userInfo.photo){
             this.props.onInitPhoto(this.state.userInfo.photo)
         }
+        // if(prevProps.imageStyle.width !== this.props.imageStyle.width) {
+        //     this.setState(prevState => ({
+        //         ...prevState,
+        //         imageStyle: this.props.imageStyle
+        //     }))
+        //     console.log('this.state.size :', this.state.imageStyle);
+        // }
+
     }
 
     onEditPhoto = () => {
@@ -64,7 +112,7 @@ class EditMyProfile extends Component {
                 let newWidth = 100;
                 let newHeight = 100;    
                 let compressFormat = 'JPEG'; // or 'PNG'
-                let quality = 80; // out of 100                               
+                let quality = 100; // out of 100                               
 
                 ImageResizer.createResizedImage(imageUri, newWidth, newHeight, compressFormat, quality).then((resizedImageUri) => {
 
@@ -85,12 +133,13 @@ class EditMyProfile extends Component {
     }
     validFunc = (state) => {
         this.setState(prevState => ({
-          userInfo: {
-            ...prevState.userInfo,
-            email : state.userInfo.email,
-            nickname : state.userInfo.nickname            
-          },
-          valid: state.valid
+            ...prevState,
+            userInfo: {
+                ...prevState.userInfo,
+                email : state.userInfo.email,
+                nickname : state.userInfo.nickname            
+            },
+            valid: state.valid
         }))    
       }
   render() {
@@ -98,10 +147,10 @@ class EditMyProfile extends Component {
         <View style={styles.photoBox}>
             <TouchableOpacity onPress={this.onEditPhoto.bind(this)}>
             {this.state.userInfo.photo == '../../../assets/user.png'? <FastImage
-                style={styles.photo}
+                style={[styles.photo, this.state.imageStyle]}                
                 source={require('../../../assets/user.png')}
                 />  : <FastImage
-                style={styles.photo}
+                style={[styles.photo, this.state.imageStyle]}
                 source={{uri: typeof this.state.userInfo.photo == 'object' ? this.state.userInfo.photo.uri : this.state.userInfo.photo}}
             />  }          
                 <Icon style={styles.photoIcon} name="camera"></Icon>
@@ -114,7 +163,7 @@ class EditMyProfile extends Component {
 const mapStateToProps = state => {
     return {      
         userInfo: state.user.userInfo,   // Mount 될때 initialState 를 가져옴 , this.props 로. users 는 actios 에서의 users.js 의 이름
-        token: state.user.token
+        token: state.user.token,
     }
 }
 
@@ -142,10 +191,7 @@ const styles = StyleSheet.create({
     },
     photo: {
       backgroundColor: '#dedede',
-      borderRadius: 28,
-      marginRight: 10,
-      width: 100,
-      height: 100
+      marginRight: 10     
     },
     photoIcon: {
         position: 'absolute',

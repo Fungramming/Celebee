@@ -24,24 +24,20 @@ class AuthValidScreen extends Component {
       this.loadApp()
     }
 
-    componentDidUpdate(prevProps, prevState) {
-      if (prevProps.userValid !== this.props.userValid ) {
-        this.setState({
-          userValid: this.props.userValid
-        })
-        console.log('this.state :', this.state);
-        if (this.props.userValid === true) {
-          MainApp()
-        } else {
-          LoginApp()
-        }
-      }
-    }
-
     // AsyncStorage에 유저토큰 값 확인 후 유저 판별 함수 실행
     loadApp = async () => {
-      const userToken = await AsyncStorage.getItem('userToken')
-      this.props.checkUserRequest(userToken)
+      try {
+        const userToken = await AsyncStorage.getItem('userToken') 
+        console.log(' userToken != null :',  userToken !== null);
+        if( userToken !== null){
+          MainApp()
+          this.props.checkUserRequest(userToken)
+        }  else if( userToken == null ){
+          LoginApp()
+        } 
+      } catch (e) {
+
+      }     
     }
   
     render() {

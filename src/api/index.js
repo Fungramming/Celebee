@@ -14,7 +14,7 @@ export default Api = {
                     token: payload
                 }),
             })
-            console.log('checkUser - response :', response);
+            console.log('checj yser response :', response);
             const ok = response.ok
             if ( ok === true ) {
                 let userInfo = JSON.parse(response._bodyInit)

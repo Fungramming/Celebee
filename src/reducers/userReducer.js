@@ -1,6 +1,5 @@
 import { 
-    config, 
-    ASYNC_INIT_USER_INFO, 
+    LOGOUT,
     CHECK_USER_REQUEST, 
     CHECK_USER,
     INIT_USER_INFO,  
@@ -36,18 +35,10 @@ const userReducer = (state = initialState, action) => {
                 },
                 token: action.payload.token
             }
-        case ASYNC_INIT_USER_INFO:
-            return {  
+       case LOGOUT:
+            return {
                 ...state,
-                userInfo: {
-                    id: action.payload.result.id,
-                    nickname: action.payload.result.nickname,
-                    email: action.payload.result.email,
-                    photo: action.payload.result.photo,
-                    follow_idol_id: action.payload.result.follow_idol_id,
-                    unfollow_idol_id: action.payload.result.unfollow_idol_id
-                },
-                token: action.payload.token,
+                userValid: false
             }
         case CHECK_USER_REQUEST:
             return {  

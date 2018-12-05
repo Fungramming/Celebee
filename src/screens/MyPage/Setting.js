@@ -9,7 +9,8 @@ import {
 } from "react-native";
 // import {AuthValid} from '../Navigation'
 import {LoginApp} from '../Navigation'
-import { initUserInfo, checkUserRequest } from "../../actions/users";
+import { connect } from "react-redux";
+import { logout, initUserInfo, checkUserRequest } from "../../actions/users";
 
 class Setting extends Component {
   // static navigationOptions = {
@@ -18,6 +19,7 @@ class Setting extends Component {
 
   signOut = async () => {
     AsyncStorage.clear()
+    this.props.logout()
     LoginApp()
   }
 
@@ -32,7 +34,20 @@ class Setting extends Component {
     );
   }
 }
-export default Setting;
+const mapStateToProps = state => {
+  return {
+      userValid: state.user.userValid,
+  }
+}
+const mapDispatchToProps = dispatch => {
+  return {
+    logout: (userInfo) => {
+      dispatch(logout(userInfo))
+    },
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Setting);
 
 const styles = StyleSheet.create({
   container: {

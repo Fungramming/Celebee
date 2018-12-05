@@ -1,5 +1,5 @@
 import {
-    ASYNC_INIT_USER_INFO, 
+    LOGOUT, 
     CHECK_USER_REQUEST,
     CHECK_USER, 
     INIT_USER_INFO,
@@ -9,9 +9,9 @@ import {
     FETCH_IDOL, 
 } from './types'
 
-export const asyncInitUserInfo = userInfo => {
+export const logout = userInfo => {
     return {
-        type: ASYNC_INIT_USER_INFO,
+        type: LOGOUT,
         payload: userInfo
     }
 }
