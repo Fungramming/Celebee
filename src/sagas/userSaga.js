@@ -14,7 +14,7 @@ import { call, put, takeLatest } from 'redux-saga/effects'
 import Api from '../api'
 
 function* checkUserRequestSaga(action) {    
-  console.log('userSaga this.props :', this.props);
+  console.log('userSaga this.props :', action);
   try {
       const payload = yield call(Api.checkUser, action.payload)
       yield put({type: CHECK_USER, payload})

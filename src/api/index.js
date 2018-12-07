@@ -11,7 +11,8 @@ export default Api = {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    token: payload
+                    token: payload.userToken,
+                    nickname: payload.nickname
                 }),
             })
             console.log('checj yser response :', response);

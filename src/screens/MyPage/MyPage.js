@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View,StyleSheet, Dimensions, TouchableOpacity } from 'react-native'
+import { Text, View,StyleSheet, Dimensions, TouchableOpacity, WebView } from 'react-native'
 import MyProfile from './components/MyProfile'
 import MyIdol from './components/MyIdol'
 import Icon from 'react-native-vector-icons/AntDesign';

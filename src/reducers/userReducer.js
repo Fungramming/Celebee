@@ -37,7 +37,16 @@ const userReducer = (state = initialState, action) => {
             }
        case LOGOUT:
             return {
-                ...state,
+                userInfo : {
+                    id: '',
+                    nickname: '',
+                    email: '',
+                    photo: '../../../assets/user.png',
+                    follow_idol_id: [],
+                    unfollow_idol_id: []
+                },
+                idolToggle: true,
+                token: '',
                 userValid: false
             }
         case CHECK_USER_REQUEST:

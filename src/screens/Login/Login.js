@@ -40,7 +40,7 @@ class Login extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      userInfo: {}, 
+      userInfo: this.props.userInfo, 
       isLoading: false,
       showRealApp: false,
       userValid: this.props.userValid,
@@ -64,67 +64,77 @@ class Login extends Component {
       console.log('4 prevProps.userValid :',  prevProps.userValid);
       console.log('5 this.props.userValid :', this.props.userValid);
       console.log('this.state :', this.state);
-      if ( prevProps.userValid !== this.props.userValid) {              
+      if ( prevProps.userValid !== this.props.userValid) {
+        console.log('on@@@@@@@@@@@@@@@@@@@@@@@@@@')
         this.setState(prevState=> ({
           ...prevState,
-          userValid: this.props.userValid
+          userInfo: this.props.userInfo,
+          userValid: this.props.userValid,
+          token: this.props.token,
         }))
-        if( this.props.userValid == true){
-            MainApp()
-          }  else if( this.props.userValid == false ){
-            SetNicknameScreen()        
-          } 
+        this.navi()
+
+        console.log('after this.state :',this.state);
+
       }      
     }
 
   checkUserRequest = async (token) => {
     await this.props.checkUser(token)
-    // if(this.props.userValid == false){
-    //   SetNicknameScreen()              
-    // }
+    await this.navi()
   } 
 
+  navi = () => {
+    if( this.props.userValid == true){
+      MainApp()
+    }  else if( this.props.userValid == false ){
+      SetNicknameScreen()        
+    } 
+  }
+
   saveUserToken = async (data) => {
-    try {
-      await AsyncStorage.setItem('userToken', data)
-
-    } catch (e) {
-
-    }
+      await AsyncStorage.setItem('userToken', data)      
   }
 
   initUser = (supplier, data) => {
-    let userInfo = {}
+    
     switch(supplier){
       case "facebook":
         fetch('https://graph.facebook.com/v2.5/me?fields=email,name &access_token=' + data.accessToken)
         .then((response) => response.json())
         .then((json) => {
-          userInfo.email = json.email
-          userInfo.token = data.uId
-          console.log('face userInfo.token :', userInfo.token);
-          this.props.init(userInfo)
+          let fUserInfo = {}
+          fUserInfo.email = json.email
+          fUserInfo.token = data.FUId
+          console.log('face userInfo.token :', fUserInfo.token);
+          this.props.init(fUserInfo)
         })
         .catch(() => {
           reject('ERROR GETTING DATA FROM FACEBOOK')
         })      
         break;
       case "google": 
-        userInfo.email = data.googleEmail 
-        userInfo.token = data.accessToken
-        this.props.init(userInfo)
+        let gUserInfo = {}
+        console.log('google data :', data);
+        gUserInfo.email = data.googleEmail 
+        gUserInfo.token = data.GUId
+        this.props.init(gUserInfo)
         break;        
       case "kakao":      
-        userInfo.token = data.token
-        userInfo.email = data.email
-        this.props.init(userInfo)
+        let kUserInfo = {}
+        kUserInfo.token = data.token
+        kUserInfo.email = data.email
+        this.props.init(kUserInfo)
         break;  
     }  
   }
   
   _onLoginFacebook() {
     var _this = this;
-    
+    let accessToken
+    let credential
+    let FUser
+    let FUId
     LoginManager.logInWithReadPermissions(['public_profile', 'email'])
     .then((result) => {
         if (result.isCancelled) {
@@ -138,26 +148,41 @@ class Login extends Component {
                 isLoading: true
               })
 
-              const {accessToken} = data            
+              accessToken = data.accessToken            
 
-              const credential = firebase.auth.FacebookAuthProvider.credential(data.accessToken);
-              let user = firebase.auth().currentUser;
-              let uId = user.uid
-              return firebase.auth().signInAndRetrieveDataWithCredential(credential)
+              credential = firebase.auth.FacebookAuthProvider.credential(data.accessToken);
+              firebase.auth().signInAndRetrieveDataWithCredential(credential)
+               
+              // async () => {
+              //   firebase.auth().signInAndRetrieveDataWithCredential(credential)
+              //   FUser = await firebase.auth().currentUser;
+              //   FUId = await FUser.uid
+              // } 
+              // FUser = firebase.auth().currentUser;
+              
 
-              .then(() => {
+            })
+            .then(() => {
+              console.log('fcredential :', credential);
+              console.log('FUser :', FUser);
+              // FUId = FUser.uid
+              this.setState({
+                isLoading: false
+              })
+              // console.log('FUser :', FUser);
+              // console.log('FUId :', FUId);
+              // _this.initUser("facebook", {FUId: FUId, accessToken: accessToken})
+              // _this.checkUserRequest(FUId)
+              // _this.saveUserToken(FUId)
 
-                this.setState({
-                  isLoading: false
-                })
-                _this.initUser("facebook", {uId: uId, accessToken: accessToken})
-                _this.checkUserRequest(uId)
-                _this.saveUserToken(uId)
+              this.initUser("facebook", {FUId: credential.accessToken, accessToken: accessToken})
+              _this.checkUserRequest(credential.accessToken)
+              _this.saveUserToken(credential.accessToken)
 
-                }).catch((error) => {
-                  console.log(error.message);
-                });
-            });
+
+              }).catch((error) => {
+                console.log(error.message);
+              });
         }
       },
       (error) => {
@@ -173,7 +198,8 @@ class Login extends Component {
     let _this = this;
     let credential;
     let googleEmail;
-    let uId;
+    let GUId;
+    let GUser;
     GoogleSignin.signIn().then((data) => {
 
       this.setState({
@@ -184,18 +210,32 @@ class Login extends Component {
 
       // create a new firebase credential with the token
       credential = firebase.auth.GoogleAuthProvider.credential(data.idToken, data.accessToken)
-      let user = firebase.auth().currentUser;
-      uId = user.uid
-      return firebase.auth().signInAndRetrieveDataWithCredential(credential)
+      firebase.auth().signInAndRetrieveDataWithCredential(credential)
+
+      console.log('gcredential :', credential);
+      // GUser = firebase.auth().currentUser;
+      // GUId = GUser.uid
+
+      // firebase.auth().signInAndRetrieveDataWithCredential(credential)
+      // async () => {
+      //   GUser = await firebase.auth().currentUser;
+      //   GUId = await GUser.uid
+      // } 
     }).then(() => { 
+      console.log('credential :', credential);
+      console.log('GUser :', GUser);
+      // GUser = firebase.auth().currentUser;
+      // GUId = GUser.uid
+
 
       this.setState({
         isLoading: false
       })
-      
-      _this.initUser("google",{googleEmail: googleEmail, accessToken: uId})
-      _this.checkUserRequest(uId)
-      _this.saveUserToken(uId)
+      console.log('GUser :', GUser);
+      console.log('GUId :', GUId);
+      _this.initUser("google",{googleEmail: googleEmail, GUId: credential.accessToken})
+      _this.checkUserRequest(credential.accessToken)
+      _this.saveUserToken(credential.accessToken)
 
     }).catch((error) => {
       console.log(`Login fail with error: ${error}`);

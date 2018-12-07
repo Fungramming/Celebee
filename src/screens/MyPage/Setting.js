@@ -11,16 +11,29 @@ import {
 import {LoginApp} from '../Navigation'
 import { connect } from "react-redux";
 import { logout, initUserInfo, checkUserRequest } from "../../actions/users";
+import firebase from 'firebase'
+
+import RNRestart from 'react-native-restart'; // Import package from node modules
+ 
+// Immediately reload the React Native Bundle
 
 class Setting extends Component {
   // static navigationOptions = {
   //   headerTitle: '환경설정'
   // }
 
-  signOut = async () => {
-    AsyncStorage.clear()
-    this.props.logout()
+  signOut = () => {
+     this.props.logout()
+    //  AsyncStorage.clear()
+     console.log('firebase.auth().currentUser.uid :', firebase.auth().currentUser.uid);
+     console.log('firebase.auth().currentUser.uid :', firebase.auth().currentUser);
+     console.log(' firebase.auth().signOut:', firebase.auth().signOut); 
+    //  firebase.auth().signOut()
+     console.log('firebase.auth().currentUser.uid :', firebase.auth().currentUser.uid);
+     console.log('firebase.auth().currentUser.uid :', firebase.auth().currentUser);
     LoginApp()
+    // RNRestart.Restart();
+
   }
 
   render() {
@@ -36,6 +49,7 @@ class Setting extends Component {
 }
 const mapStateToProps = state => {
   return {
+      token: state.user.token,
       userValid: state.user.userValid,
   }
 }

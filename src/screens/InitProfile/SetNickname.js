@@ -63,6 +63,7 @@ class SetNickname extends Component {
 
   addUserInfo = () => {
     this.props.fetchUserInfoRequest(this.state)
+    AsyncStorage.setItem('nickname', this.state.userInfo.nickname)      
     SelectIdolScreen()
   }
 

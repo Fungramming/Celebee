@@ -170,6 +170,7 @@ configurations.all {
 }
 
 dependencies {
+    compile project(':react-native-restart')
     compile project(':react-native-image-resizer')
     compile project(':react-native-fast-image')
     compile project(':react-native-kakao-logins')
