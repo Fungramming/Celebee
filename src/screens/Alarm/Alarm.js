@@ -6,19 +6,19 @@ import {
   TouchableOpacity
 } from "react-native";
 
-class News extends Component {
+class Alarm extends Component {
 
   render() {
     return (
       <View style={styles.container}>
-        <Text>News</Text>
+        <Text>알림</Text>
       </View>
     );
   }
 }
 
 
-export default News;
+export default Alarm;
 
 const styles = StyleSheet.create({
   container: {

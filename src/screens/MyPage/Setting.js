@@ -23,14 +23,8 @@ class Setting extends Component {
   // }
 
   signOut = () => {
-     this.props.logout()
-    //  AsyncStorage.clear()
-     console.log('firebase.auth().currentUser.uid :', firebase.auth().currentUser.uid);
-     console.log('firebase.auth().currentUser.uid :', firebase.auth().currentUser);
-     console.log(' firebase.auth().signOut:', firebase.auth().signOut); 
-    //  firebase.auth().signOut()
-     console.log('firebase.auth().currentUser.uid :', firebase.auth().currentUser.uid);
-     console.log('firebase.auth().currentUser.uid :', firebase.auth().currentUser);
+    this.props.logout()
+    AsyncStorage.clear()
     LoginApp()
     // RNRestart.Restart();
 

@@ -37,6 +37,7 @@ const userReducer = (state = initialState, action) => {
             }
        case LOGOUT:
             return {
+                // ...state,
                 userInfo : {
                     id: '',
                     nickname: '',

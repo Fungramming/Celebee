@@ -76,28 +76,29 @@ class EditMyProfile extends Component {
 
   render() {
     return (
-        // <View style={[styles.outerContainer]} >
-        //     <View style={styles.container}>
-        //         <ScrollView  
-        //             showsVerticalScrollIndicator={false} 
-        //             ref={ref => this.editscrollView = ref}
-        //             onContentSizeChange={(contentWidth, contentHeight)=>{        
-        //             this.editscrollView.scrollToEnd()}}>                
-        //         {/* <KeyboardAvoidingView behavior="padding" enabled> */}
-        //             <PhotoInput onInitPhoto={this.initPhoto}></PhotoInput>
-        //             <NicknameInput 
-        //                 title={"닉네임"}
-        //                 onValidFunc={this.validFunc}
-        //                 style={{paddingBottom:200}}
-        //             ></NicknameInput>            
-        //         {/* </KeyboardAvoidingView> */}
-        //         </ScrollView>
-        //     </View>
-        // </View>
-        <WebView
-        source={{uri: 'https://github.com/facebook/react-native'}}
-        onLoad={e => console.log(e.nativeEvent.progress)}
-      />
+        <View style={[styles.outerContainer]} >
+            <View style={styles.container}>
+                <ScrollView  
+                    showsVerticalScrollIndicator={false} 
+                    ref={ref => this.editscrollView = ref}
+                    onContentSizeChange={(contentWidth, contentHeight)=>{        
+                    this.editscrollView.scrollToEnd()}}>                
+                {/* <KeyboardAvoidingView behavior="padding" enabled> */}
+                    <PhotoInput onInitPhoto={this.initPhoto}></PhotoInput>
+                    <NicknameInput 
+                        title={"닉네임"}
+                        onValidFunc={this.validFunc}
+                        thisScreen="EditMyProfile"
+                        style={{paddingBottom:200}}
+                    ></NicknameInput>            
+                {/* </KeyboardAvoidingView> */}
+                </ScrollView>
+            </View>
+        </View>
+    //     <WebView
+    //     source={{uri: 'https://github.com/facebook/react-native'}}
+    //     onLoad={e => console.log(e.nativeEvent.progress)}
+    //   />
     )
   }
 }

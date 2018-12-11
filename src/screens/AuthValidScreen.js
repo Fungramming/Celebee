@@ -28,11 +28,10 @@ class AuthValidScreen extends Component {
     loadApp = async () => {
       try {
         const userToken = await AsyncStorage.getItem('userToken') 
-        const nickname = await AsyncStorage.getItem('nickname') 
-        console.log(' userToken != null :',  userToken !== null);
+        console.log('userToken :', userToken);
         if( userToken !== null){
+          this.props.checkUserRequest(userToken)
           MainApp()
-          this.props.checkUserRequest({userToken: userToken, nickname: nickname})
         }  else if( userToken == null ){
           LoginApp()
         } 

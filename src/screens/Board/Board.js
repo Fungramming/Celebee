@@ -6,19 +6,19 @@ import {
   TouchableOpacity
 } from "react-native";
 
-class Search extends Component {
+class Board extends Component {
 
   render() {
     return (
       <View style={styles.container}>
-        <Text>검색</Text>
+        <Text>Board</Text>
       </View>
     );
   }
 }
 
 
-export default Search;
+export default Board;
 
 const styles = StyleSheet.create({
   container: {

@@ -25,8 +25,11 @@ class NicknameInput extends Component {
 
   componentDidMount() {
     // 닉네임 텍스트 
+    console.log('this.props :', this.props);
+    console.log('this.props.thisScreen :', this.props.thisScreen);
     if(this.props.thisScreen == "EditMyProfile"){
       this.currentNickname();
+      console.log('11 :', 11);
     };    
   }
 

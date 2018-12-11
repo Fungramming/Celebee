@@ -107,7 +107,7 @@ android {
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
-        // multiDexEnabled true
+        multiDexEnabled true
     }
     //for react-native-navigation
     compileOptions {
@@ -170,6 +170,7 @@ configurations.all {
 }
 
 dependencies {
+  
     compile project(':react-native-restart')
     compile project(':react-native-image-resizer')
     compile project(':react-native-fast-image')

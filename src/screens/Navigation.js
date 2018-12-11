@@ -5,9 +5,10 @@ import Login from './Login/Login'
 import Auth from './AuthValidScreen'
 import SetNickname from './InitProfile/SetNickname'
 import SelectIdol from './InitProfile/SelectIdol'
-import Schedulue from './Schedule/Schedule'
-import News from './News/News'
-import Search from './Search/Search.js'
+import Feed from './Feed/Feed'
+import FeedCalendar from './Feed/FeedCalendar'
+import Board from './Board/Board'
+import Alarm from './Alarm/Alarm.js'
 import MyPage from './MyPage/MyPage' 
 import EditIdol from './MyPage/EditIdol' 
 import EditMyProfile from './MyPage/EditMyProfile' 
@@ -18,9 +19,10 @@ export const AUTH_SCREEN = 'Celebee.AuthScreen';
 export const LOGIN_SCREEN = 'Celebee.LoginScreen';
 export const SET_NICKNAME_SCREEN = 'Celebee.NicknameScreen';
 export const SELECT_IDOL_SCREEN = 'Celebee.IdolScreen';
-export const SCHEDULE_SCREEN = 'Celebee.ScheduleScreen';
-export const NEWS_SCREEN = 'Celebee.NewsScreen';
-export const SEARCH_SCREEN = 'Celebee.SearchScreen';
+export const FEED_SCREEN = 'Celebee.FeedScreen';
+export const FEED_CALENDAR_SCREEN = 'Celebee.FeedCalendarScreen';
+export const BOARD_SCREEN = 'Celebee.BoardScreen';
+export const ALARM_SCREEN = 'Celebee.AlarmScreen';
 export const MYPAGE_SCREEN = 'Celebee.MyPageScreen';
 export const MYPAGE_EDIT_IDOL_SCREEN = 'Celebee.MyPageEditIdolScreen';
 export const MYPAGE_EDIT_PROFILE_SCREEN = 'Celebee.MyPageEditProfileScreen';
@@ -32,9 +34,10 @@ Screens.set(AUTH_SCREEN, Auth)
 Screens.set(LOGIN_SCREEN, Login)
 Screens.set(SET_NICKNAME_SCREEN, SetNickname)
 Screens.set(SELECT_IDOL_SCREEN, SelectIdol)
-Screens.set(SCHEDULE_SCREEN, Schedulue)
-Screens.set(NEWS_SCREEN, News)
-Screens.set(SEARCH_SCREEN, Search)
+Screens.set(FEED_SCREEN, Feed)
+Screens.set(FEED_CALENDAR_SCREEN, FeedCalendar)
+Screens.set(BOARD_SCREEN, Board)
+Screens.set(ALARM_SCREEN, Alarm)
 Screens.set(MYPAGE_SCREEN, MyPage)
 Screens.set(MYPAGE_EDIT_IDOL_SCREEN, EditIdol)
 Screens.set(MYPAGE_EDIT_PROFILE_SCREEN, EditMyProfile)
@@ -85,7 +88,7 @@ export const SelectIdolScreen = () => Navigation.setRoot({
   }
 });
 
-// MainApp 네비게이션 함수 정의
+// MainApp 바텀 네비게텝이션 텝 정의
 export const MainApp = () => Navigation.setRoot({
   root: {
     bottomTabs: {
@@ -95,16 +98,16 @@ export const MainApp = () => Navigation.setRoot({
           stack: {
             children: [{
               component: {
-                name: SCHEDULE_SCREEN,
+                name: FEED_SCREEN,
               },
             }],
             options: {
               topBar: {
-                text: '스케줄'
+                text: '피드'
               },
               bottomTab: {
-                text: '스케줄',
-                testID: 'SCHEDULE_SCREEN',
+                text: '피드',
+                testID: 'FEED_SCREEN',
                 icon: require('../../assets/user.png'),
               },
             },
@@ -114,13 +117,13 @@ export const MainApp = () => Navigation.setRoot({
           stack: {
             children: [{
               component: {
-                name: NEWS_SCREEN,
+                name: BOARD_SCREEN,
               },
             }],
             options: {
               bottomTab: {
-                text: '뉴스',
-                testID: 'NEWS_SCREEN',
+                text: '게시판',
+                testID: 'BOARD_SCREEN',
                 icon: require('../../assets/user.png'),
               },
             },
@@ -130,13 +133,13 @@ export const MainApp = () => Navigation.setRoot({
           stack: {
             children: [{
               component: {
-                name: SEARCH_SCREEN,
+                name: ALARM_SCREEN,
               },
             }],
             options: {
               bottomTab: {
-                text: '검색',
-                testID: 'SEARCH_SCREEN',
+                text: '알림',
+                testID: 'ALARM_SCREEN',
                 icon: require('../../assets/user.png'),
               },
             },
@@ -161,6 +164,17 @@ export const MainApp = () => Navigation.setRoot({
       ]
     },
   },
+});
+
+export const FeedCalendarScreen = () => Navigation.setRoot({
+  root: {
+    component: {
+      name: FEED_CALENDAR_SCREEN,
+      passProps: {
+        text: 'Select Idol screen'
+      },
+    },
+  }
 });
 
 export const SettingScreen = () => Navigation.setRoot({

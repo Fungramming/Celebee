@@ -7,7 +7,8 @@ import {
   TouchableOpacity,
   Dimensions,
   KeyboardAvoidingView,
-  ScrollView
+  ScrollView,
+  AsyncStorage
 } from "react-native";
 
 import { connect } from "react-redux";
@@ -63,7 +64,6 @@ class SetNickname extends Component {
 
   addUserInfo = () => {
     this.props.fetchUserInfoRequest(this.state)
-    AsyncStorage.setItem('nickname', this.state.userInfo.nickname)      
     SelectIdolScreen()
   }
 

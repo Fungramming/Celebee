@@ -81,7 +81,7 @@ class Login extends Component {
 
   checkUserRequest = async (token) => {
     await this.props.checkUser(token)
-    await this.navi()
+    // await this.navi()
   } 
 
   navi = () => {
@@ -93,7 +93,7 @@ class Login extends Component {
   }
 
   saveUserToken = async (data) => {
-      await AsyncStorage.setItem('userToken', data)      
+      await AsyncStorage.setItem('userToken',data)      
   }
 
   initUser = (supplier, data) => {
@@ -103,10 +103,10 @@ class Login extends Component {
         fetch('https://graph.facebook.com/v2.5/me?fields=email,name &access_token=' + data.accessToken)
         .then((response) => response.json())
         .then((json) => {
+          console.log('json :', json);
           let fUserInfo = {}
           fUserInfo.email = json.email
-          fUserInfo.token = data.FUId
-          console.log('face userInfo.token :', fUserInfo.token);
+          fUserInfo.token = data.accessToken
           this.props.init(fUserInfo)
         })
         .catch(() => {
@@ -117,7 +117,7 @@ class Login extends Component {
         let gUserInfo = {}
         console.log('google data :', data);
         gUserInfo.email = data.googleEmail 
-        gUserInfo.token = data.GUId
+        gUserInfo.token = data.accessToken
         this.props.init(gUserInfo)
         break;        
       case "kakao":      
@@ -131,58 +131,47 @@ class Login extends Component {
   
   _onLoginFacebook() {
     var _this = this;
-    let accessToken
-    let credential
-    let FUser
-    let FUId
+    let accessToken;
     LoginManager.logInWithReadPermissions(['public_profile', 'email'])
     .then((result) => {
         if (result.isCancelled) {
           Alert.alert('Whoops!', 'You cancelled the sign in.');
         } else {
-          console.log('facebook result :', result);
           AccessToken.getCurrentAccessToken()
             .then((data) => {         
-
+              console.log('face data :', data);
               this.setState({
                 isLoading: true
               })
 
               accessToken = data.accessToken            
-
-              credential = firebase.auth.FacebookAuthProvider.credential(data.accessToken);
-              firebase.auth().signInAndRetrieveDataWithCredential(credential)
-               
-              // async () => {
-              //   firebase.auth().signInAndRetrieveDataWithCredential(credential)
-              //   FUser = await firebase.auth().currentUser;
-              //   FUId = await FUser.uid
-              // } 
-              // FUser = firebase.auth().currentUser;
               
+              // this.initUser("facebook", {accessToken: accessToken})
+              // console.log('data. :',data.applicationID);
+              // console.log('this.props.token :', this.props[data.applicationID]); 
+              // // 새로운 유저 일수도, 기존유저 다시로그인일수도
+              // if(this.props[data.applicationID] !== accessToken){
+                
+              // }
+              // let tokens = {
+              //   prev: this.props.token,
+              //   currunt: accessToken
+              // }
 
+              this.initUser("facebook", {accessToken: accessToken})
+              
+              _this.checkUserRequest(accessToken)
+              _this.saveUserToken(accessToken)
             })
             .then(() => {
-              console.log('fcredential :', credential);
-              console.log('FUser :', FUser);
-              // FUId = FUser.uid
+            
               this.setState({
                 isLoading: false
               })
-              // console.log('FUser :', FUser);
-              // console.log('FUId :', FUId);
-              // _this.initUser("facebook", {FUId: FUId, accessToken: accessToken})
-              // _this.checkUserRequest(FUId)
-              // _this.saveUserToken(FUId)
 
-              this.initUser("facebook", {FUId: credential.accessToken, accessToken: accessToken})
-              _this.checkUserRequest(credential.accessToken)
-              _this.saveUserToken(credential.accessToken)
-
-
-              }).catch((error) => {
-                console.log(error.message);
-              });
+            }).catch((error) => {
+              console.log(error.message);
+            });
         }
       },
       (error) => {
@@ -196,46 +185,26 @@ class Login extends Component {
   
   _onLoginGoggle = () => {
     let _this = this;
-    let credential;
+    let accessToken;
     let googleEmail;
-    let GUId;
-    let GUser;
     GoogleSignin.signIn().then((data) => {
-
+      console.log('google data :', data);
       this.setState({
         isLoading: true
       })
 
       googleEmail = data.user.email
-
-      // create a new firebase credential with the token
-      credential = firebase.auth.GoogleAuthProvider.credential(data.idToken, data.accessToken)
-      firebase.auth().signInAndRetrieveDataWithCredential(credential)
-
-      console.log('gcredential :', credential);
-      // GUser = firebase.auth().currentUser;
-      // GUId = GUser.uid
-
-      // firebase.auth().signInAndRetrieveDataWithCredential(credential)
-      // async () => {
-      //   GUser = await firebase.auth().currentUser;
-      //   GUId = await GUser.uid
-      // } 
+      accessToken = data.accessToken            
+  
     }).then(() => { 
-      console.log('credential :', credential);
-      console.log('GUser :', GUser);
-      // GUser = firebase.auth().currentUser;
-      // GUId = GUser.uid
-
-
+     
       this.setState({
         isLoading: false
       })
-      console.log('GUser :', GUser);
-      console.log('GUId :', GUId);
-      _this.initUser("google",{googleEmail: googleEmail, GUId: credential.accessToken})
-      _this.checkUserRequest(credential.accessToken)
-      _this.saveUserToken(credential.accessToken)
+      
+      _this.initUser("google",{googleEmail: googleEmail, accessToken: accessToken})
+      _this.checkUserRequest(accessToken)
+      _this.saveUserToken(accessToken)
 
     }).catch((error) => {
       console.log(`Login fail with error: ${error}`);
@@ -246,6 +215,7 @@ class Login extends Component {
     let _this = this;
     let token;
     RNKakaoLogins.login((error, result) => {
+      console.log('kakao result :', result);
       token = result.token
       if (error) {
         console.log('error :', error);
