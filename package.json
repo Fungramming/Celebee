@@ -13,6 +13,7 @@
     "react": "16.5.2",
     "react-native": "0.57.1",
     "react-native-app-intro": "https://github.com/merryjs/react-native-app-intro",
+    "react-native-calendars": "^1.21.0",
     "react-native-fast-image": "^5.1.1",
     "react-native-fbsdk": "^0.8.0",
     "react-native-google-signin": "^1.0.0-rc7",
@@ -27,8 +28,7 @@
     "react-router-native": "^4.3.0",
     "redux": "^4.0.1",
     "redux-logger": "^3.0.6",
-    "redux-saga": "^0.16.2",
-    "redux-thunk": "^2.3.0"
+    "redux-saga": "^0.16.2"
   },
   "devDependencies": {
     "@babel/runtime": "7.0.0",
