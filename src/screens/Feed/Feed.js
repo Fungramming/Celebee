@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Platform, SafeAreaView, PixelRatio, ListView, View, Text, StyleSheet, TouchableOpacity, TextInput, DatePickerIOS, FlatList} from "react-native";
+import { Platform, SafeAreaView, StatusBar, PixelRatio, ListView, View, Text, StyleSheet, TouchableOpacity, TextInput, DatePickerIOS, FlatList} from "react-native";
 import { connect } from 'react-redux'
 import FeedCard from '../../components/Card/FeedCard'
 
@@ -50,6 +50,7 @@ class Feed extends Component {
     let options = { year: 'numeric', month: 'long', day: 'numeric' };
     return (
       <SafeAreaView style={styles.container}>
+        <StatusBar barStyle="dark-content"/>
         <View style={styles.header}>
           <Text style={styles.date}>{this.state.chosenDate.toLocaleDateString('ko-KR', options)}</Text>
           <TouchableOpacity onPress={() => this._onToggleDate()}>
