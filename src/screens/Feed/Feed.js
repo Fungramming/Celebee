@@ -102,7 +102,8 @@ export default connect(mapStateToProps)(Feed)
 
 const styles = StyleSheet.create({
   container: {
-    marginLeft: 12
+    backgroundColor:"#ffffff",
+    paddingLeft: 12,
     // flex: 1,
     // justifyContent: 'center',
   },
