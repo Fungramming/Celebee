@@ -13,10 +13,6 @@ import { connect } from "react-redux";
 import { logout, initUserInfo, checkUserRequest } from "../../actions/users";
 import firebase from 'firebase'
 
-import RNRestart from 'react-native-restart'; // Import package from node modules
- 
-// Immediately reload the React Native Bundle
-
 class Setting extends Component {
   // static navigationOptions = {
   //   headerTitle: '환경설정'
@@ -26,8 +22,6 @@ class Setting extends Component {
     this.props.logout()
     AsyncStorage.clear()
     LoginApp()
-    // RNRestart.Restart();
-
   }
 
   render() {

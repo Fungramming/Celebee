@@ -1,100 +1,135 @@
 import React, { Component } from "react";
-import { Platform, View, Text, StyleSheet, TouchableOpacity, TextInput } from "react-native";
-import IdolIndicator from './components/IdolIndicator'
+import { Platform, SafeAreaView, PixelRatio, ListView, View, Text, StyleSheet, TouchableOpacity, TextInput, DatePickerIOS, FlatList} from "react-native";
+import { connect } from 'react-redux'
+import FeedCard from '../../components/Card/FeedCard'
 
-// import { WheelPicker, DatePicker, TimePicker } from 'react-native-wheel-picker-android'
-
-import { DatePicker } from 'react-native-wheel-picker-free'
-
-const wheelPickerData = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday','Saturday'];
-const now = new Date()
-
-const dateData = []
-
-for (let i = 1900; i < 2050; i++) {
-    dateData.push(i.toString())
+class IdolList extends Component {
+  render() {
+    return (
+      <View>
+        <Text style={styles.idolName}>{this.props.name}</Text>
+      </View>
+    )
+  }
 }
-
 class Feed extends Component {
   static options() {
     return {
-      topBar: {        
+      topBar: {
         visible: false,
         drawBehind: true,
-        language: ''
       }
-    };
-  }
-
-  constructor(props){
-    super(props);
-    this.state = {
     }
   }
-  onItemSelected(event){
-    // do something
+
+  constructor(props) {
+    super(props);
+    this.state = { 
+      chosenDate: new Date(),
+      follow_idol_id: this.props.userInfo.follow_idol_id,
+      toggleDate: false
+    };
+    this.setDate = this.setDate.bind(this);
   }
 
-  onDateSelected(date){
-    // do something
+  setDate(newDate) {
+    this.setState({
+      chosenDate: newDate
+    })
   }
 
-  onTimeSelected(date){
-    // do something
+  _onToggleDate() {
+    const toggle = !this.state.toggleDate;
+    this.setState(prevState => ({
+      ...prevState,
+      toggleDate: toggle
+    }))
   }
-
-  _onPickerConform(){}
 
   render() {
+    let options = { year: 'numeric', month: 'long', day: 'numeric' };
     return (
-      <View style={styles.container}>
-        <Text style={styles.header}>HEADER</Text>
-        {/* <DatePicker mode="date" /> */}
-        {/* <WheelPicker
-           onItemSelected={(event)=>this.onItemSelected(event)}
-           isCurved
-           data={wheelPickerData}
-           style={styles.wheelPicker}/>
-         <DatePicker
-           initDate={now.toISOString()}
-           onDateSelected={(date)=>this.onDateSelected(date)}/>
-         <TimePicker
-           initDate={now.toISOString()}
-           onTimeSelected={(date)=>this.onTimeSelected(date)}/> */}
-
-<DatePicker
-    ref={(dialog) => {
-        this.datePickerDialog = dialog
-    }}
-    yearData={dateData}
-    selectData={new Date()}
-    onChange={this._onPickerConform}
-    keepShowModal={false}
-    formatCharacter="-"
-    cancleText="取消"
-    finishText="确定"
-    title="出生年月日"
-    modalColor="#0000"
-/>
-        <IdolIndicator></IdolIndicator>
-        <Text>feed</Text>
-      </View>
+      <SafeAreaView style={styles.container}>
+        <View style={styles.header}>
+          <Text style={styles.date}>{this.state.chosenDate.toLocaleDateString('ko-KR', options)}</Text>
+          <TouchableOpacity onPress={() => this._onToggleDate()}>
+            <Text style={{paddingLeft: 18, fontSize: 18, fontWeight: 'bold'}}>+</Text>
+          </TouchableOpacity>
+          <Text>월간 캘린더</Text>
+          <Text>검색</Text>
+        </View>
+        {this.state.toggleDate 
+        ? 
+          <DatePickerIOS
+          date={this.state.chosenDate}
+          mode='date'
+          locale='kor'
+          onDateChange={this.setDate}
+        />
+        : null
+        }
+        <FlatList
+          horizontal={true}
+          showsHorizontalScrollIndicator={false}
+          data={this.props.userInfo.follow_idol_id}
+          renderItem={({item}) => {
+              return <IdolList name={item.idol_name}></IdolList> 
+          }}
+          keyExtractor={(item, index) => index.toString()} 
+          style={
+            {
+              marginLeft: -17,
+              paddingLeft: 29, 
+              borderBottomColor: 'rgb(200, 200, 200)', 
+              borderBottomWidth: 2.5
+            }
+          }
+        />
+        <FeedCard></FeedCard>
+      </SafeAreaView>
     );
   }
 }
-export default Feed;
+
+const mapStateToProps = state => {
+  return {
+      userInfo: state.user.userInfo,   // Mount 될때 initialState 를 가져옴 , this.props 로. users 는 actios 에서의 users.js 의 이름
+  }
+}
+
+export default connect(mapStateToProps)(Feed)
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#fff'
+    marginLeft: 12
+    // flex: 1,
+    // justifyContent: 'center',
   },
   header: {
-    alignSelf: "flex-start"
+    paddingTop: 18,
+    paddingBottom: 18,
+    // paddingLeft: 18,
+    flexWrap: 'wrap', 
+    alignItems: 'flex-start',
+    flexDirection:'row',
   },
-  wheelPicker: {
-    width: 200,
-    height: 150
+  date: {
+    fontSize: 20, 
+    fontWeight: 'bold',
+    // flexDirection:'column',
+  },
+  btn: {
+    backgroundColor: 'rgb(240,240,240)'
+  },
+  idolName: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: '#878787',
+    textAlign: 'center',
+    // backgroundColor: 'purple',
+    // marginTop: 14,
+    marginBottom: 12,
+    marginRight: 26,
+    height: 17,
   }
 });
-
