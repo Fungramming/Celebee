@@ -41,9 +41,7 @@ class Feed extends Component {
     };
     this.setDate = this.setDate.bind(this);
   }
-  setModalVisible(visible) {
-    this.setState({modalVisible: visible});
-  }
+  
   setDate(newDate) {
     this.setState({
       chosenDate: newDate,
@@ -57,38 +55,9 @@ class Feed extends Component {
       ...prevState,
       toggleDate: toggle
     }))
-    console.log('Platform.OS  :', Platform.OS );
     if(Platform.OS == "android") {
       this.setDateAndroid()
     }
-  }
-
-  //  openAndroidDatePicker = async () => {
-  //   let minDate =  new Date('2017.12.12').toISOString()
-  //   let maxDate =  new Date('2019.12.12').toISOString()
-  //   console.log('minDate :', minDate);
-  //   try {
-  //     const {action, year, month, day} = await DatePickerAndroid.open({
-  //       date: new Date(),
-  //       // mode:"spinner"
-  //     });
-  //     if (action !== DatePickerAndroid.dismissedAction) {
-  //       // Selected year, month (0-11), day
-  //       // console.log('action :', `${day}/${month + 1}/${year}`);
-  //       console.log('day, month, year :', day, month, year);
-  //       console.log('action :', action);
-  //       this.setState({ androidDate: `${day}/${month + 1}/${year}` });
-  //     }
-  //   } catch ({code, message}) {
-  //     console.warn('Cannot open date picker', message);
-  //   }
-  // }
-
-  test111() {
-    this.setState(prevState => ({
-      ...prevState,
-      foo: '2020.10.10'
-    }))
   }
 
   setDateAndroid = async () => {
@@ -96,14 +65,11 @@ class Feed extends Component {
       const {
         action, year, month, day,
       } = await DatePickerAndroid.open({
-      date: new Date(),
-      minDate: new Date(),
+        date: new Date(),
+        minDate: new Date(),
       });
       if (action !== DatePickerAndroid.dismissedAction) {
-        console.log('this.state.chosenDate :', this.state.chosenDate);
-        console.log('new Date(year, month, day) :', new Date(year, month, day));
         this.setState({ chosenDate: new Date(year, month, day) });
-        // this.setState({ androidDate: `${day}/${month + 1}/${year}` });
       }
     } catch ({ code, message }) {
       console.warn('Cannot open date picker', message);
@@ -124,7 +90,7 @@ class Feed extends Component {
           <Text>월간 캘린더</Text>
           <Text>검색</Text>
         </View>       
-        {/* {this.state.toggleDate 
+        {this.state.toggleDate && Platform.OS == 'ios'
         ? 
           <DatePickerIOS
           date={this.state.chosenDate}
@@ -133,160 +99,8 @@ class Feed extends Component {
           onDateChange={this.setDate}
         />
         : null
-        } */}
-        <ScrollView>              
-        <TouchableOpacity
-          onPress={() => {
-            this.setModalVisible(true);
-          }}>
-          <Text>Show Modal</Text>
-        </TouchableOpacity>
-        <Modal
-          animationType="slide"
-          transparent={false}
-          visible={this.state.modalVisible}
-          onRequestClose={() => {
-            this.setState(prevState=>({
-              ...prevState,
-              modalVisible: false
-            }))
-          }}>
-          <View style={{marginTop: 22}}>
-            <View>
-            <Calendar          
-              current={this.state.foo}
-                  monthFormat={'yyyy년 MM월'}
-                  onDayPress={this.onDayPress}
-                  style={styles.calendar}
-                  // hideDayNames={true}
-                  hideArrows={true}
-                  markedDates={{[this.state.selected]: {selected: true, disableTouchEvent: true, selectedDotColor: 'orange'}}}
-            />
-             {/* <Calendar
-                    style={styles.calendar}
-                    onDayLongPress={this.onDayLongPress}
-                    hideExtraDays
-                    monthFormat={'yyyy MM'}
-                    current={'2018-03-01'}
-                    minDate={'2018-03-01'}
-                    markingType={'custom'}
-                    markedDates={{
-                      '2018-03-01': {
-                        customStyles: {
-                          container: {
-                            backgroundColor: 'white',
-                            elevation: 2
-                          },
-                          text: {
-                            color: 'blue',
-                          },
-                        }
-                      },
-                      '2018-03-08': {selected: true},
-                      '2018-03-09': {
-                        customStyles: {
-                          container: {
-                            backgroundColor: 'red',
-                            elevation: 4,
-                          },
-                          text: {
-                            color: 'white',
-                          },
-                        }
-                      },
-                      '2018-03-10': {disabled: true},
-                      '2018-03-14': {
-                        customStyles: {
-                          container: {
-                            backgroundColor: 'green',
-                          },
-                          text: {
-                            color: 'white',
-                          },
-                        },
-                      },
-                      '2018-03-15': {
-                        customStyles: {
-                          container: {
-                            backgroundColor: 'black',
-                            elevation: 2
-                          },
-                          text: {
-                            color: 'yellow',
-                          },
-                        }
-                      },
-                      '2018-03-20': {
-                        customStyles: {
-                          container: {
-                            backgroundColor: 'pink',
-                            elevation: 4,
-                          },
-                          text: {
-                            color: 'blue',
-                          },
-                        }
-                      },
-                      '2018-03-21': {disabled: true},
-                      '2018-03-28': {
-                        customStyles: {
-                          container: {
-                            backgroundColor: 'green',
-                          },
-                          text: {
-                            color: 'black',
-                            fontWeight: 'bold'
-                          },
-                        },
-                      },
-                      '2018-03-29': {
-                        customStyles: {
-                          container: {
-                            backgroundColor: 'white',
-                            elevation: 2
-                          },
-                          text: {
-                            color: 'blue',
-                          },
-                        }
-                      },
-                      '2018-03-30': {
-                        customStyles: {
-                          container: {
-                            backgroundColor: 'violet',
-                            elevation: 4,
-                            borderColor: 'red',
-                            borderWidth: 5,
-                          },
-                          text: {
-                            marginTop: 3,
-                            fontSize: 11,
-                            color: 'yellow',
-                          },
-                        }
-                      },
-                      '2018-03-31': {
-                        customStyles: {
-                          container: {
-                            backgroundColor: 'green',
-                            borderRadius: 0,
-                          },
-                          text: {
-                            color: 'white',
-                          },
-                        },
-                      }}}
-                    hideArrows={false}
-                  /> */}       
-              <TouchableHighlight
-                onPress={() => {
-                  this.test111();
-                }}>
-                <Text>Hide Modal</Text>
-              </TouchableHighlight>
-            </View>
-          </View>
-        </Modal>        
+        }
+        <ScrollView>                             
         <FlatList
                   horizontal={true}
                   showsHorizontalScrollIndicator={false}
