@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View, Image, StyleSheet, FlatList } from 'react-native'
+import { Text, View, Image, StyleSheet, FlatList, Dimensions, TouchableOpacity} from 'react-native'
 
 class FeedItems extends Component {
   render() {
@@ -28,7 +28,7 @@ export default class FeedCard extends Component {
           photo: require('../../../assets/user.png'),
           title: 'Really Bad Boy 컴백 티저 최초 공개!'
         },
-    ],
+      ],
       video: [
         {
           photo: require('../../../assets/user.png'),
@@ -43,16 +43,35 @@ export default class FeedCard extends Component {
           title: 'Really Bad Boy 컴백 티저 최초 공개!'
         },
       ],
+      toggleDetail: false
     };
+  }
+
+  _onToggleDetail() {
+    const toggle = !this.state.toggleDetail;
+    this.setState(prevState => ({
+      ...prevState,
+      toggleDetail: toggle
+    }))
   }
 
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.header}>
-          <Text style={styles.headerTitle}> 스케줄, 기사 제목 영역 </Text>
-          <Text style={styles.headerSubText}> PM 06:00 | 스케줄 장소 및 방송 채널 입력 </Text>
-        </View>
+        <TouchableOpacity style={styles.feedHeader} onPress={() => this._onToggleDetail()}>
+          <Text style={styles.feedHeaderTitle}> 스케줄, 기사 제목 영역 </Text>
+          <Text style={styles.feedHeaderSubText}> PM 06:00 | 스케줄 장소 및 방송 채널 입력 </Text>
+        </TouchableOpacity>
+        {this.state.toggleDetail 
+          ? 
+          <Text style={styles.feedDetail} onPress={() => this._onToggleDetail()}>
+            <Text>피드 상세 내용</Text>
+            <Text style={styles.feedDetailText}>
+              생방송 SBS 인기가요 - 사전 녹화 * 일 시 : 2018. 12. 09. (일) 09:00 AM * 장 소 : SBS 등촌동 공개홀 상단의 시간은 입장 번호 배정 시작 시간이니 착오 없으시기 바라며, 입장 시간은 일정하지 않고 방송국 상황에 따라 달라질 수 있으니, 가급적 일찍 도착해 주시기 바랍니다. 많은 참여 부탁 드립니다. [ 참여 방법 ] http://redvelvet.smtown.com/ 참여방법은 해당 링크를 참조해주세요!
+            </Text>
+          </Text>
+          : null
+        }
         <View style={{marginHorizontal: -12}}>
           <Text style={styles.feedItemsTitle}>뉴 스</Text>
           <FlatList
@@ -77,6 +96,11 @@ export default class FeedCard extends Component {
             keyExtractor={(item, index) => index.toString()} 
           />
         </View>
+        <View style={styles.feedBottom}>
+          <Text>좋아요</Text>
+          <Text>댓글</Text>
+          <Text>공유</Text>
+        </View>
       </View>
     )
   }
@@ -84,39 +108,53 @@ export default class FeedCard extends Component {
 
 const styles = StyleSheet.create({
   container: {
+    paddingLeft: 12,
+    paddingBottom: 25,
+    flexDirection:'column',
+    // height: Dimensions.get('window').height,
     // flex: 1,
     // alignItems: 'center',
     // justifyContent: 'center'
   },
-  header: {
-    paddingTop: 18,
-    paddingBottom: 15,
+  feedHeader: {
+    height: 72,
+    paddingTop: 14,
+    paddingBottom: 14,
     marginHorizontal: -17,
     marginBottom: 8,
-    // flexWrap: 'wrap', 
-    // alignItems: 'flex-start',
-    // flexDirection:'row',
+    borderTopColor: 'rgb(200, 200, 200)', 
+    borderTopWidth: 0.25,
     borderBottomColor: 'rgb(200, 200, 200)', 
-    borderBottomWidth: 0.25
+    borderBottomWidth: 0.25,
+    position: 'relative',
   },
-  headerTitle: {
+  feedHeaderTitle: {
     fontSize: 20,
     fontWeight: 'bold',
     height: 24,
     marginBottom: 5,
     marginHorizontal: 13,
   },
-  headerSubText: {
+  feedHeaderSubText: {
     fontSize: 14,
     height: 24,
     marginHorizontal: 13,
     color: '#505050',
   },
-  feedItems: {
-    width: 220,
-    marginRight: 10.5,
-    marginBottom: 20,
-    paddingLeft: 10.5,
+  feedDetail: {
+    height: 500,
+    width: Dimensions.get('window').width,
+    paddingLeft: 12,
+    paddingRight: 12,
+    paddingTop: 12,
+    backgroundColor: '#f5f5f5',
+    position: 'absolute',
+    top: 72,
+    zIndex: 99
+  },
+  feedDetailText: {
+    color: '#505050',
+    fontSize: 16,
   },
   feedItemsTitle: {
     fontSize: 18,
@@ -124,6 +162,12 @@ const styles = StyleSheet.create({
     color: '#505050',
     marginBottom: 10,
     marginHorizontal: 12
+  },
+  feedItems: {
+    width: 220,
+    marginRight: 10.5,
+    marginBottom: 20,
+    paddingLeft: 10.5,
   },
   feedItemsImg: {
     width: 220,
@@ -133,4 +177,10 @@ const styles = StyleSheet.create({
   feedItemsText: {
     margin: 5,
   },
+  feedBottom: {
+    height: 30,
+    backgroundColor: 'yellow',
+    flexDirection: 'row',
+    alignContent: 'flex-end'
+  }
 });
