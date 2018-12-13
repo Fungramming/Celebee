@@ -196,7 +196,7 @@ class Feed extends Component {
             />          
               <TouchableOpacity
                 onPress={() => {
-                  this.test111();
+                  this.test111(false);
                 }}>
                 <Text>Hide Modal</Text>
               </TouchableOpacity>
