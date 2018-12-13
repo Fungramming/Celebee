@@ -83,6 +83,10 @@ class Feed extends Component {
     this.setState({modalVisible: visible});
   }
 
+  test111(close) {
+    this.setState({modalVisible: close});
+  }
+
   onDayPress(date) {
     console.log('date :', date);
   }
@@ -160,16 +164,18 @@ const workout = {key:'workout', color: 'green'};
                   hideArrows={true}
                   // markedDates={{[this.state.chosenDate]: {selected: true, disableTouchEvent: true, selectedDotColor: 'orange'}}}
                   markedDates={{
-                    '2018-12-12': {selected: true, marked: true, selectedColor: 'white',dotColor: 'purple'},
-                    '2018-12-13': {marked: true},
-                    '2018-12-14': {marked: true, dotColor: 'purple', activeOpacity: 0},
-                    '2018-12-15': {disabled: true, disableTouchEvent: true}
+                    '2018-12-12': {selected: true, marked: true},
+                    '2018-12-13': {selected: true, marked: true},
+                    '2018-12-14': {selected: true, marked: true},
+                    '2018-12-15': {disabled: true, disableTouchEvent: true},
+                    '2018-12-16': {selected: true, marked: true, selectedColor: 'black'},
+                    '2018-12-22': {selected: true, marked: true, selectedColor: 'black'},
                   }}
                   
             />          
               <TouchableOpacity
                 onPress={() => {
-                  this.test111();
+                  this.test111(false);
                 }}>
                 <Text>Hide Modal</Text>
               </TouchableOpacity>
