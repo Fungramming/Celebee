@@ -81,7 +81,7 @@ class Login extends Component {
 
   checkUserRequest = async (token) => {
     await this.props.checkUser(token)
-    // await this.navi()
+    await this.navi()
   } 
 
   navi = () => {

@@ -3,7 +3,7 @@ package com.celebee;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
-import com.avishayil.rnrestart.ReactNativeRestartPackage;
+// import com.avishayil.rnrestart.ReactNativeRestartPackage;
 import fr.bamlab.rnimageresizer.ImageResizerPackage;
 import com.dylanvann.fastimage.FastImageViewPackage;
 import com.dooboolab.kakaologins.RNKakaoLoginsPackage;
@@ -112,8 +112,8 @@ public class MainApplication extends NavigationApplication {
             new ImagePickerPackage(),
             new FBSDKPackage(mCallbackManager),
             new ImageResizerPackage(),
-            new FastImageViewPackage(),
-            new ReactNativeRestartPackage()
+            new FastImageViewPackage()
+            // new ReactNativeRestartPackage()
 
         );
     }

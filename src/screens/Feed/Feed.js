@@ -13,16 +13,39 @@ import {
   FlatList, Modal } from "react-native";
 import { connect } from 'react-redux'
 import FeedCard from '../../components/Card/FeedCard'
-import { Calendar, CalendarList, Agenda } from 'react-native-calendars';
-class IdolList extends Component {
-  render() {
-    return (
-      <View>
-        <Text style={styles.idolName}>{this.props.name}</Text>
-      </View>
-    )
+import { Calendar, LocaleConfig, CalendarList, Agenda } from 'react-native-calendars';
+
+import { FeedCalendarScreen } from '../Navigation'
+
+// 달력 출력 폼 설정
+  const today = (() => {
+    var d = new Date(),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+
+    return [year, month, day].join('-')
+  })()
+
+  LocaleConfig.locales['kr'] = {
+    monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+    monthNamesShort: ['1.','2.','3.','4.','5.','6.','7.','8.','9.','10.','11.','12.'],
+    dayNames: ['일요일', '월요일','화요일','수요일','목요일','금요일','토요일'],
+    dayNamesShort: ['일', '월','화','수','목','금','토']
+  };
+  LocaleConfig.defaultLocale = 'kr';
+  class IdolList extends Component {
+    render() {
+      return (
+        <View>
+          <Text style={styles.idolName}>{this.props.name}</Text>
+        </View>
+      )
+    }
   }
-}
 
 class Feed extends Component {
   static options() {
@@ -40,15 +63,23 @@ class Feed extends Component {
       chosenDate: new Date(),
       follow_idol_id: this.props.userInfo.follow_idol_id,
       toggleDate: false,
-      modalVisible : false
+      modalVisible: false,
+      selectedDay: today,
+      markedDates: {
+        // '2018-12-12': {selected: true, marked: true, selectedColor: 'white', dotColor: 'purple'},
+        '2018-12-12': {marked: true, dotColor: "purple"},
+        '2018-12-13': {marked: true},
+        '2018-12-14': {selected: true, marked: true, dotColor: 'purple', activeOpacity: 0},
+        '2018-12-15': {disabled: true, disableTouchEvent: true}
+      }
     };
     this.setDate = this.setDate.bind(this);
+    this.onDayPress = this.onDayPress.bind(this);
   }
   
   setDate(newDate) {
     this.setState({
       chosenDate: newDate,
-      androidDate: newDate
     })
   }
 
@@ -59,11 +90,11 @@ class Feed extends Component {
       toggleDate: toggle
     }))
     if(Platform.OS == "android") {
-      this.setDateAndroid()
+      this.toggleDateAndroid()
     }
   }
 
-  setDateAndroid = async () => {
+  toggleDateAndroid = async () => {
     try {
       const {
         action, year, month, day,
@@ -83,15 +114,17 @@ class Feed extends Component {
     this.setState({modalVisible: visible});
   }
 
-  onDayPress(date) {
-    console.log('date :', date);
+  onDayPress(day) {
+    console.log('day :', day);
+    this.setState(prevState => ({
+      ...prevState,
+      selectedDay: day.dateString
+    }))
   }
 
   render() {
-    let options = { year: 'numeric', month: 'long', day: 'numeric' };
-    const vacation = {key:'vacation', color: 'red', selectedDotColor: 'blue'};
-    const massage = {key:'massage', color: 'blue', selectedDotColor: 'blue'};
-const workout = {key:'workout', color: 'green'};
+    // 날짜 출력 폼
+    let options = { year: 'numeric', month: 'long', day: 'numeric' };  
     return (
       <SafeAreaView>
         <View style={styles.container}>
@@ -101,7 +134,9 @@ const workout = {key:'workout', color: 'green'};
               {this.state.chosenDate.toLocaleDateString('ko-KR', options)}
               &nbsp;<Text style={{paddingLeft: 18, fontSize: 18, fontWeight: 'bold'}}>+</Text>
             </Text>
-            <Text>월간 캘린더</Text>
+            <TouchableOpacity onPress={FeedCalendarScreen}>
+              <Text>월간 캘린더</Text>
+            </TouchableOpacity>
             <Text>검색</Text>
           </View>
           {this.state.toggleDate && Platform.OS == 'ios'
@@ -139,7 +174,7 @@ const workout = {key:'workout', color: 'green'};
           <Text>Show Modal</Text>
         </TouchableOpacity>
         <Modal  
-    style={{backgroundColor: 'black',}}
+          style={{backgroundColor: 'black',}}
           animationType="slide"
           transparent={false}
           visible={this.state.modalVisible}
@@ -152,20 +187,12 @@ const workout = {key:'workout', color: 'green'};
           <View style={{marginTop: 22}}>
             <View>
             <Calendar
-              current={this.state.foo}
-                  monthFormat={'yyyy년 MM월'}
-                  onDayPress={this.onDayPress}
-                  style={styles.calendar}
-                  // hideDayNames={true}
-                  hideArrows={true}
-                  // markedDates={{[this.state.chosenDate]: {selected: true, disableTouchEvent: true, selectedDotColor: 'orange'}}}
-                  markedDates={{
-                    '2018-12-12': {selected: true, marked: true, selectedColor: 'white',dotColor: 'purple'},
-                    '2018-12-13': {marked: true},
-                    '2018-12-14': {marked: true, dotColor: 'purple', activeOpacity: 0},
-                    '2018-12-15': {disabled: true, disableTouchEvent: true}
-                  }}
-                  
+              monthFormat={'yyyy년 MM월'}
+              onDayPress={this.onDayPress}
+              style={styles.calendar}
+              // hideDayNames={true}
+              hideArrows={true}
+              markedDates={{[this.state.selectedDay]: {selected: true, disableTouchEvent: true, }}}
             />          
               <TouchableOpacity
                 onPress={() => {
@@ -185,8 +212,7 @@ const workout = {key:'workout', color: 'green'};
           <ScrollView showsVerticalScrollIndicator={false}>
             <FeedCard></FeedCard>
             <FeedCard></FeedCard>
-            <FeedCard></FeedCard>
-            
+            <FeedCard></FeedCard>            
           </ScrollView>
         </View>
       </SafeAreaView>
