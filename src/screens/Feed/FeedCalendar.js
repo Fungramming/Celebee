@@ -53,7 +53,21 @@ class FeedCalendar extends Component {
       chosenDate: new Date(),
       follow_idol_id: this.props.userInfo.follow_idol_id,
       toggleDate: false,
-      selectedDay: today
+      selectedDay: today,
+      fureSchedules: { 
+        '2018-12-14': { marked: true, dotColor: 'purple',},
+        '2018-12-15': { marked: true, dotColor: 'purple',},
+        '2018-12-16': { marked: true, dotColor: 'purple',},
+        '2018-12-17': { marked: true, dotColor: 'purple',},
+        '2018-12-19': {marked: true, dotColor: 'purple',}
+      },
+      schedules: { 
+        '2018-12-14': { marked: true, dotColor: 'purple',},
+        '2018-12-15': { marked: true, dotColor: 'purple',},
+        '2018-12-16': { marked: true, dotColor: 'purple',},
+        '2018-12-17': { marked: true, dotColor: 'purple',},
+        '2018-12-19': {marked: true, dotColor: 'purple',}
+      }
     };
     this.onDayPress = this.onDayPress.bind(this);
     this.backButton = this.backButton.bind(this);
@@ -63,12 +77,35 @@ class FeedCalendar extends Component {
     MainApp()
   }
 
-  onDayPress(day) {
-    console.log('day :', day);
+  onDayPress(date) {
+    console.log('date :', date);
+    // this.setState(prevState => ({
+    //   ...prevState,
+    //   selectedDay: day.dateString,
+    //   schedules: {
+    //     ...prevState.schedules,
+    //     [day.dateString]: { selected: true}
+    //   }
+    // }))
+  
+    let selectedDate = {
+      ...this.state.fureSchedules[date.dateString],
+      selected: true
+    }
+    console.log('selectedDate :', selectedDate);
+
+        
+        let mergedSchedules = {...this.state.fureSchedules, [date.dateString] : selectedDate}
+    console.log('mergedSchedules :', mergedSchedules);
     this.setState(prevState => ({
       ...prevState,
-      selectedDay: day.dateString
+      schedules: {
+        ...prevState.fureSchedules,
+        [date.dateString] : selectedDate
+      }
     }))
+    console.log('this.state.schedules :', this.state.schedules);
+
   }
 
   render() {    
@@ -100,14 +137,10 @@ class FeedCalendar extends Component {
               monthFormat={'yyyy년 MM월'}
               onDayPress={this.onDayPress}
               // hideDayNames={true}
+              hideExtraDays
               hideArrows={true}
-              // markedDates={{[this.state.selectedDay]: {selected: true, disableTouchEvent: true, }}}
-              markedDates={{                
-                '2018-12-14': { marked: true, dotColor: 'purple',},
-                '2018-12-15': {disabled: true, disableTouchEvent: true},
-                '2018-12-15': {marked: true, dotColor: "purple"},
-                [this.state.selectedDay]: {selected: true, disableTouchEvent: true, }
-              }}
+              markedDates={this.state.schedules}
+              // markedDates={this.state.schedules}
             />   
       </SafeAreaView>
     )

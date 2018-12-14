@@ -192,7 +192,7 @@ class Feed extends Component {
               style={styles.calendar}
               // hideDayNames={true}
               hideArrows={true}
-              markedDates={{[this.state.selectedDay]: {selected: true, disableTouchEvent: true, }}}
+              markedDates={{[this.state.selectedDay]: {selected: true, marked: true}}}
             />          
               <TouchableOpacity
                 onPress={() => {
