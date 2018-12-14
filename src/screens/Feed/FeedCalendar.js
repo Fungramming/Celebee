@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import {SafeAreaView, StyleSheet, Text, View, TouchableOpacity, FlatList } from 'react-native'
+import {SafeAreaView, StyleSheet, Text, View, TouchableOpacity, FlatList, Dimensions, Platform } from 'react-native'
 import { connect } from 'react-redux'
-import { Navigation } from 'react-native-navigation'
 import { MainApp } from '../Navigation'
+import Modal from "react-native-modal";
 
 import { Calendar, LocaleConfig} from 'react-native-calendars';
 
@@ -54,6 +54,7 @@ class FeedCalendar extends Component {
       follow_idol_id: this.props.userInfo.follow_idol_id,
       toggleDate: false,
       selectedDay: today,
+      selected: false,
       fureSchedules: { 
         '2018-12-14': { marked: true, dotColor: 'purple',},
         '2018-12-15': { marked: true, dotColor: 'purple',},
@@ -99,16 +100,16 @@ class FeedCalendar extends Component {
     console.log('mergedSchedules :', mergedSchedules);
     this.setState(prevState => ({
       ...prevState,
+      selected: true,
       schedules: {
         ...prevState.fureSchedules,
         [date.dateString] : selectedDate
       }
     }))
     console.log('this.state.schedules :', this.state.schedules);
-
   }
 
-  render() {    
+  render() {
     return (
       <SafeAreaView>
         <TouchableOpacity onPress={this.backButton}>
@@ -134,14 +135,34 @@ class FeedCalendar extends Component {
           />
         </View>
         <Calendar
-              monthFormat={'yyyy년 MM월'}
-              onDayPress={this.onDayPress}
-              // hideDayNames={true}
-              hideExtraDays
-              hideArrows={true}
-              markedDates={this.state.schedules}
-              // markedDates={this.state.schedules}
-            />   
+          monthFormat={'yyyy년 MM월'}
+          onDayPress={this.onDayPress}
+          // hideDayNames={true}
+          hideExtraDays
+          hideArrows={true}
+          markedDates={this.state.schedules}
+        />
+        {/* <Modal 
+          isVisible={this.state.selected}
+          onSwipe={() => this.setState(prevState => ({ 
+            ...prevState,
+            selected: false
+            }))
+          }
+          swipeDirection="down"
+          backdropOpacity='0.7'
+          style={{flex:1, justifyContent: "flex-end", margin: 0}}
+        >
+          <View style={{ backgroundColor: 'red', height: 350}}>
+            <Text style={{ textAlign: 'center', backgroundColor: 'white'}}>I am the modal content!</Text>
+            <Text>I am the modal content!</Text>
+          </View>
+        </Modal> */}
+        <View style={{ backgroundColor: 'red', height: 350}}>
+          <Text style={{ textAlign: 'center', backgroundColor: 'black'}}>스케주우우우우우우울우우우우우우울</Text>
+          <Text>스케주우우우우우우울우우우우우우울</Text>
+        </View>
+
       </SafeAreaView>
     )
   }
