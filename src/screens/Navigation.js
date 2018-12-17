@@ -1,4 +1,7 @@
 import { StatusBar } from 'react-native'
+import React, { Component } from "react";
+
+import Icon from 'react-native-vector-icons/Feather';
 import {Navigation} from 'react-native-navigation';
 
 import Login from './Login/Login'
@@ -13,6 +16,23 @@ import MyPage from './MyPage/MyPage'
 import EditIdol from './MyPage/EditIdol' 
 import EditMyProfile from './MyPage/EditMyProfile' 
 import Setting from './MyPage/Setting' 
+
+async function prepareIcons() {
+  const icons = await Promise.all([
+    Icon.getImageSource('layers', 30),
+    Icon.getImageSource('clipboard', 30),
+    Icon.getImageSource('bell', 30),
+    Icon.getImageSource('user', 30),
+  ]);
+  const [feed, board, alarm, mypage] = icons;
+  
+  console.log('icons :', icons);
+  console.log('icons.feed :', icons[0].uri);
+  return icons;
+}
+
+const iconSet = prepareIcons()
+console.log('iconSet :', iconSet._55);
 
 // 스크린 이름 및 const 정의
 export const AUTH_SCREEN = 'Celebee.AuthScreen';
@@ -108,7 +128,7 @@ export const MainApp = () => Navigation.setRoot({
               bottomTab: {
                 text: '피드',
                 testID: 'FEED_SCREEN',
-                icon: require('../../assets/user.png'),
+                icon: require('../../assets/feed.png'),
               },
             },
           },
@@ -124,7 +144,7 @@ export const MainApp = () => Navigation.setRoot({
               bottomTab: {
                 text: '게시판',
                 testID: 'BOARD_SCREEN',
-                icon: require('../../assets/user.png'),
+                icon: require('../../assets/board.png'),
               },
             },
           },
@@ -140,7 +160,7 @@ export const MainApp = () => Navigation.setRoot({
               bottomTab: {
                 text: '알림',
                 testID: 'ALARM_SCREEN',
-                icon: require('../../assets/user.png'),
+                icon: require('../../assets/alarm.png'),
               },
             },
           },
@@ -156,7 +176,7 @@ export const MainApp = () => Navigation.setRoot({
               bottomTab: {
                 text: '마이페이지',
                 testID: 'MYPAGE_SCREEN',
-                icon: require('../../assets/user.png'),
+                icon: require('../../assets/mypage.png'),
               },
             },
           },

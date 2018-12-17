@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Text, View, Image, StyleSheet, FlatList, Dimensions, TouchableOpacity} from 'react-native'
+import Icon from 'react-native-vector-icons/Feather';
 
 class FeedItems extends Component {
   render() {
@@ -97,9 +98,13 @@ export default class FeedCard extends Component {
           />
         </View>
         <View style={styles.feedBottom}>
-          <Text>좋아요</Text>
-          <Text>댓글</Text>
-          <Text>공유</Text>
+            <View style={styles.feedBottomLeft}>
+              <Icon name='heart' size={25} style={{paddingRight: 22}}/>
+              <Icon name='message-circle' size={25}/>
+            </View>
+            <View style={styles.feedBottomRight}>
+              <Icon name='share-2' size={25}/>
+            </View>
         </View>
       </View>
     )
@@ -179,8 +184,13 @@ const styles = StyleSheet.create({
   },
   feedBottom: {
     height: 30,
-    backgroundColor: 'yellow',
     flexDirection: 'row',
-    alignContent: 'flex-end'
-  }
+  },
+  feedBottomLeft: {
+    flexDirection: 'row',
+    marginRight: 'auto',
+  },
+  feedBottomRight: {
+    paddingRight: 12
+  },
 });

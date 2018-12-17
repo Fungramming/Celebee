@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import {SafeAreaView, StyleSheet, Text, View, TouchableOpacity, FlatList, Dimensions, Platform } from 'react-native'
 import { connect } from 'react-redux'
 import { MainApp } from '../Navigation'
-import Modal from "react-native-modal";
 
 import { Calendar, LocaleConfig} from 'react-native-calendars';
 
@@ -142,22 +141,6 @@ class FeedCalendar extends Component {
           hideArrows={true}
           markedDates={this.state.schedules}
         />
-        {/* <Modal 
-          isVisible={this.state.selected}
-          onSwipe={() => this.setState(prevState => ({ 
-            ...prevState,
-            selected: false
-            }))
-          }
-          swipeDirection="down"
-          backdropOpacity='0.7'
-          style={{flex:1, justifyContent: "flex-end", margin: 0}}
-        >
-          <View style={{ backgroundColor: 'red', height: 350}}>
-            <Text style={{ textAlign: 'center', backgroundColor: 'white'}}>I am the modal content!</Text>
-            <Text>I am the modal content!</Text>
-          </View>
-        </Modal> */}
         <View style={{ backgroundColor: 'red', height: 350}}>
           <Text style={{ textAlign: 'center', backgroundColor: 'black'}}>스케주우우우우우우울우우우우우우울</Text>
           <Text>스케주우우우우우우울우우우우우우울</Text>

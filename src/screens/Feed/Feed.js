@@ -10,7 +10,8 @@ import {
   TouchableOpacity, 
   DatePickerIOS, 
   DatePickerAndroid,
-  FlatList, Modal } from "react-native";
+  FlatList } from "react-native";
+import Icon from 'react-native-vector-icons/Feather';
 import { connect } from 'react-redux'
 import FeedCard from '../../components/Card/FeedCard'
 import { Calendar, LocaleConfig, CalendarList, Agenda } from 'react-native-calendars';
@@ -63,7 +64,6 @@ class Feed extends Component {
       chosenDate: new Date(),
       follow_idol_id: this.props.userInfo.follow_idol_id,
       toggleDate: false,
-      modalVisible: false,
       selectedDay: today,
       markedDates: {
         // '2018-12-12': {selected: true, marked: true, selectedColor: 'white', dotColor: 'purple'},
@@ -110,10 +110,6 @@ class Feed extends Component {
     }
   };
 
-  setModalVisible(visible) {
-    this.setState({modalVisible: visible});
-  }
-
   onDayPress(day) {
     console.log('day :', day);
     this.setState(prevState => ({
@@ -132,12 +128,13 @@ class Feed extends Component {
           <View style={styles.header}>
             <Text style={styles.date} onPress={() => this._onToggleDate()}>
               {this.state.chosenDate.toLocaleDateString('ko-KR', options)}
-              &nbsp;<Text style={{paddingLeft: 18, fontSize: 18, fontWeight: 'bold'}}>+</Text>
+              &nbsp;
+              {this.state.toggleDate ? <Icon name='chevron-up' size={22}/> : <Icon name='chevron-down' size={22}/>}
             </Text>
             <TouchableOpacity onPress={FeedCalendarScreen}>
-              <Text>월간 캘린더</Text>
+              <Icon name='calendar' style={{paddingRight: 12}} size={22}/>
             </TouchableOpacity>
-            <Text>검색</Text>
+            <Icon name='search' style={{paddingRight: 12}} size={22}/>
           </View>
           {this.state.toggleDate && Platform.OS == 'ios'
           ? <DatePickerIOS
@@ -167,48 +164,6 @@ class Feed extends Component {
               }
             />
           </View>
-          <TouchableOpacity
-          onPress={() => {
-            this.setModalVisible(true);
-          }}>
-          <Text>Show Modal</Text>
-        </TouchableOpacity>
-        <Modal  
-          style={{backgroundColor: 'black',}}
-          animationType="slide"
-          transparent={false}
-          visible={this.state.modalVisible}
-          onRequestClose={() => {
-            this.setState(prevState=>({
-              ...prevState,
-              modalVisible: false
-            }))
-          }}>
-          <View style={{marginTop: 22}}>
-            <View>
-            <Calendar
-              monthFormat={'yyyy년 MM월'}
-              onDayPress={this.onDayPress}
-              style={styles.calendar}
-              // hideDayNames={true}
-              hideArrows={true}
-              markedDates={{[this.state.selectedDay]: {selected: true, marked: true}}}
-            />          
-              <TouchableOpacity
-                onPress={() => {
-                  this.test111(false);
-                }}>
-                <Text>Hide Modal</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-          <TouchableOpacity
-          onPress={() => {
-            this.setModalVisible(true);
-          }}>
-          <Text>Show Modal</Text>
-        </TouchableOpacity>
-        </Modal>   
           <ScrollView showsVerticalScrollIndicator={false}>
             <FeedCard></FeedCard>
             <FeedCard></FeedCard>
@@ -242,9 +197,7 @@ const styles = StyleSheet.create({
   header: {
     paddingTop: 10,
     paddingBottom: 17,
-    paddingLeft: 12,
-    flexWrap: 'wrap', 
-    alignItems: 'flex-start',
+    paddingLeft: 12, 
     flexDirection:'row',
     position: 'relative',
     zIndex: 999
@@ -252,6 +205,7 @@ const styles = StyleSheet.create({
   date: {
     fontSize: 20, 
     fontWeight: 'bold',
+    marginRight: 'auto'
   },
   datePicker: {
     height: 0,
