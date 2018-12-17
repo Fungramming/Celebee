@@ -8,8 +8,10 @@ import {
     Image
 } from "react-native";
 import {connect} from 'react-redux'
-import { checkUserRequest } from "../actions/users";
+import { Navigation } from "react-native-navigation"
 import SplashScreen from 'react-native-splash-screen';
+
+import { checkUserRequest } from "../actions/users";
 import {LoginApp, MainApp} from './Navigation'
 class AuthValidScreen extends Component {
 
@@ -20,6 +22,11 @@ class AuthValidScreen extends Component {
       }
     }
     componentDidMount() {
+      Navigation.setDefaultOptions({
+        bottomTabs: {
+          titleDisplayMode: 'alwaysShow'
+        }
+      });
       SplashScreen.hide()
       this.loadApp()
     }
