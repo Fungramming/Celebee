@@ -17,8 +17,9 @@ import Icon from 'react-native-vector-icons/Feather';
 import { connect } from 'react-redux'
 import FeedCard from '../../components/Card/FeedCard'
 import { Calendar, LocaleConfig, CalendarList, Agenda } from 'react-native-calendars';
+import { Navigation } from 'react-native-navigation'
 
-import { FeedCalendarScreen } from '../Navigation'
+import { FeedCalendarScreen, FEED_LINK_SCREEN } from '../Navigation'
 
 // 달력 출력 폼 설정
   const today = (() => {
@@ -62,6 +63,8 @@ class Feed extends Component {
 
   constructor(props) {
     super(props);
+    Navigation.events().bindComponent(this);  
+
     this.state = { 
       chosenDate: new Date(),
       follow_idol_id: this.props.userInfo.follow_idol_id,
@@ -78,6 +81,7 @@ class Feed extends Component {
     this.setDate = this.setDate.bind(this);
     this.onDayPress = this.onDayPress.bind(this);
     this.watchScroll = this.watchScroll.bind(this);
+    this.onLinkPress = this.onLinkPress.bind(this)
   }
   
   setDate(newDate) {
@@ -114,7 +118,6 @@ class Feed extends Component {
   };
 
   onDayPress(day) {
-    console.log('day :', day);
     this.setState(prevState => ({
       ...prevState,
       selectedDay: day.dateString
@@ -143,7 +146,17 @@ class Feed extends Component {
 
     // console.log('this.state.scrollPosition :', this.state.scrollPosition);
   }
- 
+  
+  onLinkPress() {
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: FEED_LINK_SCREEN,
+        passProps: {
+          url: 'https://naver.com',          
+        },
+      }
+    })
+  }
 
   render() {
     // 날짜 출력 폼
@@ -197,7 +210,7 @@ class Feed extends Component {
           onScroll={ (event) => this.watchScroll(event) } 
             // onScrollEndDrag={()=>{console.log('111 :', 111)}} 
             showsVerticalScrollIndicator={false}>
-            <FeedCard></FeedCard>
+            <FeedCard onLink = {this.onLinkPress}></FeedCard>
             <FeedCard></FeedCard>
             <FeedCard></FeedCard>            
           </ScrollView>

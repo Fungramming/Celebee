@@ -5,7 +5,7 @@ import MyIdol from './components/MyIdol'
 import Icon from 'react-native-vector-icons/AntDesign';
 import {connect} from 'react-redux'
 import { Navigation } from 'react-native-navigation'
-import {MYPAGE_EDIT_IDOL_SCREEN, MYPAGE_EDIT_PROFILE_SCREEN, MYPAGE_SETTING_SCREEN} from '../Navigation'
+import { MYPAGE_EDIT_IDOL_SCREEN, MYPAGE_EDIT_PROFILE_SCREEN, MYPAGE_SETTING_SCREEN } from '../Navigation'
 
 class MyPage extends Component {  
   static options(passProps) {

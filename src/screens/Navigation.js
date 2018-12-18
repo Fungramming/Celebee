@@ -10,6 +10,7 @@ import SetNickname from './InitProfile/SetNickname'
 import SelectIdol from './InitProfile/SelectIdol'
 import Feed from './Feed/Feed'
 import FeedCalendar from './Feed/FeedCalendar'
+import FeedLink from './Feed/FeedLink'
 import Board from './Board/Board'
 import Alarm from './Alarm/Alarm.js'
 import MyPage from './MyPage/MyPage' 
@@ -24,6 +25,7 @@ export const SET_NICKNAME_SCREEN = 'Celebee.NicknameScreen';
 export const SELECT_IDOL_SCREEN = 'Celebee.IdolScreen';
 export const FEED_SCREEN = 'Celebee.FeedScreen';
 export const FEED_CALENDAR_SCREEN = 'Celebee.FeedCalendarScreen';
+export const FEED_LINK_SCREEN = 'Celebee.FeedLinkScreen'
 export const BOARD_SCREEN = 'Celebee.BoardScreen';
 export const ALARM_SCREEN = 'Celebee.AlarmScreen';
 export const MYPAGE_SCREEN = 'Celebee.MyPageScreen';
@@ -39,6 +41,7 @@ Screens.set(SET_NICKNAME_SCREEN, SetNickname)
 Screens.set(SELECT_IDOL_SCREEN, SelectIdol)
 Screens.set(FEED_SCREEN, Feed)
 Screens.set(FEED_CALENDAR_SCREEN, FeedCalendar)
+Screens.set(FEED_LINK_SCREEN, FeedLink)
 Screens.set(BOARD_SCREEN, Board)
 Screens.set(ALARM_SCREEN, Alarm)
 Screens.set(MYPAGE_SCREEN, MyPage)
@@ -175,6 +178,17 @@ export const FeedCalendarScreen = () => Navigation.setRoot({
       name: FEED_CALENDAR_SCREEN,
       passProps: {
         text: 'Select Idol screen'
+      },
+    },
+  }
+});
+
+export const FeedLinkScreen = () => Navigation.setRoot({
+  root: {
+    component: {
+      name: FEED_LINK_SCREEN,
+      passProps: {
+        text: 'feed link screen'
       },
     },
   }
