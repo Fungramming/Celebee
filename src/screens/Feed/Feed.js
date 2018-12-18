@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { 
+  Share,
   Platform, 
   SafeAreaView, 
   StatusBar, 
@@ -134,6 +135,7 @@ class Feed extends Component {
 
     // console.log('this.state.scrollPosition :', this.state.scrollPosition);
   }
+ 
 
   render() {
     // 날짜 출력 폼
