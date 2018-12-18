@@ -11,31 +11,35 @@ export default Api = {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    token: payload
+                    uid: payload.uid, 
+                    token: payload.accessToken
                 }),
             })
-            const ok = response.ok
-            if ( ok === true ) {
-                let userInfo = JSON.parse(response._bodyInit)
-                if(userInfo.result.photo == null){
-                    userInfo.result.photo = '../../../assets/user.png'
-                }
+            console.log('response :', response);
+            const result = JSON.parse(response._bodyInit)
+            if ( result.result === "fail" ) {
+                console.log('2 :', 2);
                 const result = {
-                    userValid: ok,
-                    userInfo: userInfo.result
-                }
-                return result
-            } else {
-                const result = {
-                    userValid: ok,
+                    userValid: false,
                     userInfo : {
-                        id: '',
+                        uid: payload.uid,
                         nickname: '',
                         email: '',
                         photo: '../../../assets/user.png',
                         follow_idol_id: [],
                         unfollow_idol_id: []
                     },
+                }
+                return result                               
+            } else {
+                console.log('1 :', 1);
+                let userInfo = JSON.parse(response._bodyInit)
+                if(userInfo.result.photo == null){
+                    userInfo.result.photo = '../../../assets/user.png'
+                }
+                const result = {
+                    userValid: true,
+                    userInfo: userInfo.result
                 }
                 return result
             }
@@ -54,6 +58,7 @@ export default Api = {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
+                    'uid': payload.userInfo.uid,
                     'token': payload.token,
                     'nickname': payload.userInfo.nickname,
                     'email': payload.userInfo.email

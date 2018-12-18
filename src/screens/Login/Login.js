@@ -72,39 +72,40 @@ class Login extends Component {
           userValid: this.props.userValid,
           token: this.props.token,
         }))
-        this.navi()
-
-        console.log('after this.state :',this.state);
-
+        console.log('222 :', 222);
+        // this.navi()
       }      
     }
 
-  checkUserRequest = async (token) => {
-    await this.props.checkUser(token)
-    await this.navi()
+  checkUserRequest =  (token) => {
+    this.props.checkUser(token)
+    setTimeout(()=>{
+      this.navi()
+    }, 10)
   } 
 
   navi = () => {
-    if( this.props.userValid == true){
+    console.log('this.props.userValid :', this.props.userValid);
+    if( this.props.userValid == true){  //기존 유저
       MainApp()
-    }  else if( this.props.userValid == false ){
-      SetNicknameScreen()        
+    }  else if( this.props.userValid == false && this.props.userInfo.nickname === "" ){  //새로운 유저
+      SetNicknameScreen()
     } 
   }
 
   saveUserToken = async (data) => {
-      await AsyncStorage.setItem('userToken',data)      
+      await AsyncStorage.setItem('user', JSON.stringify(data))      
   }
 
   initUser = (supplier, data) => {
-    
+    console.log('initdata :', data);
     switch(supplier){
       case "facebook":
         fetch('https://graph.facebook.com/v2.5/me?fields=email,name &access_token=' + data.accessToken)
         .then((response) => response.json())
         .then((json) => {
-          console.log('json :', json);
           let fUserInfo = {}
+          fUserInfo.uid = data.uid
           fUserInfo.email = json.email
           fUserInfo.token = data.accessToken
           this.props.init(fUserInfo)
@@ -115,15 +116,17 @@ class Login extends Component {
         break;
       case "google": 
         let gUserInfo = {}
-        console.log('google data :', data);
+        gUserInfo.uid = data.uid
         gUserInfo.email = data.googleEmail 
         gUserInfo.token = data.accessToken
         this.props.init(gUserInfo)
         break;        
       case "kakao":      
         let kUserInfo = {}
-        kUserInfo.token = data.token
+        kUserInfo.uid = data.uid
         kUserInfo.email = data.email
+        kUserInfo.token = data.token
+        console.log('kUserInfo :', kUserInfo);
         this.props.init(kUserInfo)
         break;  
     }  
@@ -143,28 +146,16 @@ class Login extends Component {
               this.setState({
                 isLoading: true
               })
+              console.log('fdata :', data);
+              uid = data.userID
+              accessToken = data.accessToken                                       
 
-              accessToken = data.accessToken            
+              this.initUser("facebook", { uid: uid, accessToken: accessToken})
               
-              // this.initUser("facebook", {accessToken: accessToken})
-              // console.log('data. :',data.applicationID);
-              // console.log('this.props.token :', this.props[data.applicationID]); 
-              // // 새로운 유저 일수도, 기존유저 다시로그인일수도
-              // if(this.props[data.applicationID] !== accessToken){
-                
-              // }
-              // let tokens = {
-              //   prev: this.props.token,
-              //   currunt: accessToken
-              // }
-
-              this.initUser("facebook", {accessToken: accessToken})
-              
-              _this.checkUserRequest(accessToken)
-              _this.saveUserToken(accessToken)
+              _this.checkUserRequest({ uid: uid, accessToken: accessToken})
+              _this.saveUserToken({ uid: uid, accessToken: accessToken})
             })
             .then(() => {
-            
               this.setState({
                 isLoading: false
               })
@@ -193,18 +184,18 @@ class Login extends Component {
         isLoading: true
       })
 
+      uid = data.user.id
       googleEmail = data.user.email
       accessToken = data.accessToken            
   
     }).then(() => { 
-     
       this.setState({
         isLoading: false
       })
       
-      _this.initUser("google",{googleEmail: googleEmail, accessToken: accessToken})
-      _this.checkUserRequest(accessToken)
-      _this.saveUserToken(accessToken)
+      _this.initUser("google",{ uid: uid, googleEmail: googleEmail, accessToken: accessToken})
+      _this.checkUserRequest({ uid: uid, accessToken: accessToken})
+      _this.saveUserToken({ uid: uid, accessToken: accessToken})
 
     }).catch((error) => {
       console.log(`Login fail with error: ${error}`);
@@ -225,11 +216,13 @@ class Login extends Component {
             if (error) {
               console.log('error :', error);
               return
-            } 
-              console.log('result :', result);
-              _this.initUser("kakao", {token: token, email: result.email})
-              _this.checkUserRequest(token)
-              _this.saveUserToken(token)
+            }               
+              uid = result.id
+              _this.initUser("kakao", {uid: uid, accessToken: token, email: result.email})
+              _this.checkUserRequest({uid: uid, accessToken: token})
+              // console.log('object :', object);
+              // _this.navi()
+              _this.saveUserToken({uid: uid, accessToken: token})
           })
         }
       this.setState({

@@ -39,7 +39,7 @@ const userReducer = (state = initialState, action) => {
             return {
                 // ...state,
                 userInfo : {
-                    id: '',
+                    uid: '',
                     nickname: '',
                     email: '',
                     photo: '../../../assets/user.png',
@@ -53,7 +53,11 @@ const userReducer = (state = initialState, action) => {
         case CHECK_USER_REQUEST:
             return {  
                 ...state,
-                token: action.payload
+                userInfo: {
+                    ...state.userInfo,
+                    uid: action.payload.uid
+                },
+                token: action.payload.accessToken
             }
         case CHECK_USER:
             if(!action.payload.userValid){
