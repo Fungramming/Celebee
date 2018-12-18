@@ -7,7 +7,8 @@ import {
   TouchableWithoutFeedback,
   TouchableOpacity, 
   FlatList, 
-  Dimensions, 
+  Dimensions,
+  ScrollView,
   Platform,
   DatePickerIOS,
   DatePickerAndroid } from 'react-native'
@@ -15,6 +16,9 @@ import Icon from 'react-native-vector-icons/Feather';
 import { connect } from 'react-redux'
 import { Calendar, LocaleConfig} from 'react-native-calendars';
 import { MainApp, FeedCalendarScreen } from '../Navigation'
+
+import ScheduleHeader from '../../../src/screens/Feed/components/ScheduleHeader'
+import IdolIndicator from '../../../src/screens/Feed/components/IdolIndicator'
 
 // 달력 출력 폼 설정
 const today = (() => {
@@ -36,16 +40,6 @@ LocaleConfig.locales['kr'] = {
   dayNamesShort: ['일', '월','화','수','목','금','토']
 };
 LocaleConfig.defaultLocale = 'kr';
-
-class IdolList extends Component {
-  render() {
-    return (
-      <View>
-        <Text style={styles.idolName}>{this.props.name}</Text>
-      </View>
-    )
-  }
-}
 
 class FeedCalendar extends Component {
   static options() {
@@ -170,8 +164,8 @@ class FeedCalendar extends Component {
             <Icon name='layers' style={{paddingRight: 12}} size={22}/>
           </TouchableOpacity>
           <Icon name='search' style={{paddingRight: 12}} size={22}/>
-
         </View>
+
         {this.state.toggleDate && Platform.OS == 'ios'
         ? <DatePickerIOS
           date={this.state.chosenDate}
@@ -182,24 +176,9 @@ class FeedCalendar extends Component {
         />
         : null
         }
-        <View style={{height: 30}}>
-          <FlatList
-            horizontal={true}
-            showsHorizontalScrollIndicator={false}
-            data={this.props.userInfo.follow_idol_id}
-            renderItem={({item}) => {
-                return <IdolList style={styles.idolList} name={item.idol_name}></IdolList> 
-            }}
-            keyExtractor={(item, index) => index.toString()}
-            style={
-              {                  
-                paddingLeft: 29, 
-                borderBottomColor: 'rgb(200, 200, 200)',
-                borderBottomWidth: 2
-              }
-            }
-          />
-        </View>
+
+        <IdolIndicator/>
+
         <Calendar
           current={this.state.chosenDate}
           monthFormat={'yyyy년 MM월'}
@@ -209,10 +188,15 @@ class FeedCalendar extends Component {
           hideArrows={true}
           markedDates={this.state.schedules}
         />
-        <View style={{ backgroundColor: 'red', height: 350}}>
-          <Text style={{ textAlign: 'center', backgroundColor: 'black'}}>스케주우우우우우우울우우우우우우울</Text>
-          <Text>스케주우우우우우우울우우우우우우울</Text>
-        </View>
+
+        <ScrollView
+          ref="scrollView"
+          style={styles.scrollArea}
+          // scrollEventThrottle={16}
+          // onScroll={ console.log('hahahaah')} 
+          showsVerticalScrollIndicator={false}>
+          <ScheduleHeader/>           
+        </ScrollView>
 
       </SafeAreaView>
     )
@@ -258,14 +242,8 @@ const styles = StyleSheet.create({
     left: 0,
     zIndex: 998,
   },
-  idolList: {
-    height: 0,
-  },
-  idolName: {
-    fontSize: 14,
-    fontWeight: 'bold',
-    color: '#878787',
-    textAlign: 'center',
-    marginRight: 26,
+  scrollArea: {
+    paddingLeft: 12,
+    height: 360
   }
 });

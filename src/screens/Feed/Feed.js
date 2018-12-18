@@ -11,13 +11,14 @@ import {
   DatePickerIOS, 
   DatePickerAndroid,
   NativeModules,
-  FlatList } from "react-native";
+} from "react-native";
 import Icon from 'react-native-vector-icons/Feather';
 import { connect } from 'react-redux'
 import FeedCard from '../../components/Card/FeedCard'
 import { Calendar, LocaleConfig, CalendarList, Agenda } from 'react-native-calendars';
 
 import { FeedCalendarScreen } from '../Navigation'
+import IdolIndicator from '../../../src/screens/Feed/components/IdolIndicator'
 
 // 달력 출력 폼 설정
   const today = (() => {
@@ -39,15 +40,6 @@ import { FeedCalendarScreen } from '../Navigation'
     dayNamesShort: ['일', '월','화','수','목','금','토']
   };
   LocaleConfig.defaultLocale = 'KR';
-  class IdolList extends Component {
-    render() {
-      return (
-        <View>
-          <Text style={styles.idolName}>{this.props.name}</Text>
-        </View>
-      )
-    }
-  }
 
 class Feed extends Component {
   static options() {
@@ -161,6 +153,7 @@ class Feed extends Component {
             </TouchableOpacity>
             <Icon name='search' style={{paddingRight: 12}} size={22}/>
           </View>
+
           {this.state.toggleDate && Platform.OS == 'ios'
           ? <DatePickerIOS
             date={this.state.chosenDate}
@@ -171,34 +164,19 @@ class Feed extends Component {
           />
           : null
           }
-          <View style={{height: 30}}>
-            <FlatList
-              horizontal={true}
-              showsHorizontalScrollIndicator={false}
-              data={this.props.userInfo.follow_idol_id}
-              renderItem={({item}) => {
-                  return <IdolList style={styles.idolList} name={item.idol_name}></IdolList> 
-              }}
-              keyExtractor={(item, index) => index.toString()}
-              style={
-                {                  
-                  paddingLeft: 29, 
-                  borderBottomColor: 'rgb(200, 200, 200)',
-                  borderBottomWidth: 2
-                }
-              }
-            />
-          </View>
+
+          <IdolIndicator />
+
           <ScrollView
-          ref="scrollView"
-          scrollEventThrottle={16}
-          onScroll={ () => this.watchScroll() } 
-            // onScrollEndDrag={()=>{console.log('111 :', 111)}} 
+            ref="scrollView"
+            scrollEventThrottle={16}
+            onScroll={ () => this.watchScroll() } 
             showsVerticalScrollIndicator={false}>
             <FeedCard></FeedCard>
             <FeedCard></FeedCard>
             <FeedCard></FeedCard>            
           </ScrollView>
+
         </View>
       </SafeAreaView>
     );
@@ -244,14 +222,4 @@ const styles = StyleSheet.create({
     left: 0,
     zIndex: 998,
   },
-  idolList: {
-    height: 0,
-  },
-  idolName: {
-    fontSize: 14,
-    fontWeight: 'bold',
-    color: '#878787',
-    textAlign: 'center',
-    marginRight: 26,
-  }
 });
