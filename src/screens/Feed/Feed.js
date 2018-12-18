@@ -10,6 +10,7 @@ import {
   TouchableOpacity, 
   DatePickerIOS, 
   DatePickerAndroid,
+  NativeModules,
   FlatList } from "react-native";
 import Icon from 'react-native-vector-icons/Feather';
 import { connect } from 'react-redux'
@@ -75,6 +76,7 @@ class Feed extends Component {
     };
     this.setDate = this.setDate.bind(this);
     this.onDayPress = this.onDayPress.bind(this);
+    this.watchScroll = this.watchScroll.bind(this);
   }
   
   setDate(newDate) {
@@ -116,6 +118,29 @@ class Feed extends Component {
       ...prevState,
       selectedDay: day.dateString
     }))
+  }
+  
+  watchScroll = (event) => {
+  const RCTUIManager = NativeModules.UIManager
+  const sv = this.refs['scrollView']
+  RCTUIManager.measure(sv.getInnerViewNode(), (...data) => {
+    console.log(data[5], 111)
+  })
+    // const nEvent = event.nativeEvent;
+
+    // this.setState({
+    //     scrollPosition: nEvent.contentOffset.y
+    // });
+
+    // if ((nEvent.contentOffset.y +
+    //     nEvent.layoutMeasurement.height) >=
+    //         nEvent.contentSize.height) {
+    //     this.setState({ bottomVisible: false });
+    // } else {
+    //     this.setState({ bottomVisible: true });
+    // }
+
+    // console.log('this.state.scrollPosition :', this.state.scrollPosition);
   }
 
   render() {
@@ -164,7 +189,11 @@ class Feed extends Component {
               }
             />
           </View>
-          <ScrollView showsVerticalScrollIndicator={false}>
+          <ScrollView
+          ref="scrollView"
+          onScroll={ (event) => this.watchScroll(event) } 
+            // onScrollEndDrag={()=>{console.log('111 :', 111)}} 
+            showsVerticalScrollIndicator={false}>
             <FeedCard></FeedCard>
             <FeedCard></FeedCard>
             <FeedCard></FeedCard>            
