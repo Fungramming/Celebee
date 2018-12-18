@@ -20,7 +20,11 @@ class MyPage extends Component {
           {
             id: 'toSettingScreen',
             icon: require('../../../assets/user.png'),
-            disableIconTint: false,
+            testID: 'logoutButton',
+            disableIconTint: true,
+            showAsAction: 'always',
+            buttonFontSize: 14,
+            buttonFontWeight: '600',
           }
         ]
       }
