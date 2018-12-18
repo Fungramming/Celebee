@@ -8,12 +8,12 @@ import {
   TouchableOpacity, 
   FlatList, 
   Dimensions, 
-  Platform, 
+  Platform,
+  DatePickerIOS,
   DatePickerAndroid } from 'react-native'
+import Icon from 'react-native-vector-icons/Feather';
 import { connect } from 'react-redux'
-
 import { Calendar, LocaleConfig} from 'react-native-calendars';
-
 import { MainApp, FeedCalendarScreen } from '../Navigation'
 
 // 달력 출력 폼 설정
@@ -80,12 +80,14 @@ class FeedCalendar extends Component {
         '2018-12-19': {marked: true, dotColor: 'purple',}
       }
     };
+    this.setDate = this.setDate.bind(this);
     this.onDayPress = this.onDayPress.bind(this);
-    this.backButton = this.backButton.bind(this);
   }
 
-  backButton() {
-    MainApp()
+  setDate(newDate) {
+    this.setState({
+      chosenDate: newDate,
+    })
   }
 
   makeDate(year, month, day) {
@@ -160,15 +162,26 @@ class FeedCalendar extends Component {
           <TouchableWithoutFeedback onPress={() => this._onToggleDate()}>
             <Text style={styles.date}>
               {this.state.chosenDate.toLocaleDateString('ko-KR', options)}
-              &nbsp;<Text style={{paddingLeft: 18, fontSize: 18, fontWeight: 'bold'}}>+</Text>
+              &nbsp;
+              {this.state.toggleDate ? <Icon name='chevron-up' size={22}/> : <Icon name='chevron-down' size={22}/>}
             </Text>        
           </TouchableWithoutFeedback>
-          <Text>검색</Text>
+          <TouchableOpacity onPress={MainApp}>
+            <Icon name='layers' style={{paddingRight: 12}} size={22}/>
+          </TouchableOpacity>
+          <Icon name='search' style={{paddingRight: 12}} size={22}/>
+
         </View>
-        {/* <TouchableOpacity onPress={this.backButton}>
-          <Text>뒤로가기</Text>
-        </TouchableOpacity>
-        <Text> FeedCalendar </Text> */}
+        {this.state.toggleDate && Platform.OS == 'ios'
+        ? <DatePickerIOS
+          date={this.state.chosenDate}
+          mode='date'
+          locale='kor'
+          onDateChange={this.setDate}
+          style={styles.datePicker}
+        />
+        : null
+        }
         <View style={{height: 30}}>
           <FlatList
             horizontal={true}
@@ -229,9 +242,6 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     paddingBottom: 17,
     paddingLeft: 12,
-    // flex: 1,
-    // flexWrap: 'wrap', 
-    // alignItems: 'flex-start',
     flexDirection:'row',
     position: 'relative',
     zIndex: 999
@@ -239,6 +249,7 @@ const styles = StyleSheet.create({
   date: {
     fontSize: 20, 
     fontWeight: 'bold',
+    marginRight: 'auto'
   },
   datePicker: {
     height: 0,

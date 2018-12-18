@@ -191,7 +191,8 @@ class Feed extends Component {
           </View>
           <ScrollView
           ref="scrollView"
-          onScroll={ (event) => this.watchScroll(event) } 
+          scrollEventThrottle={16}
+          onScroll={ () => this.watchScroll() } 
             // onScrollEndDrag={()=>{console.log('111 :', 111)}} 
             showsVerticalScrollIndicator={false}>
             <FeedCard></FeedCard>
