@@ -73,7 +73,6 @@ class Login extends Component {
           token: this.props.token,
         }))
         console.log('222 :', 222);
-        // this.navi()
       }      
     }
 
@@ -81,7 +80,7 @@ class Login extends Component {
     this.props.checkUser(token)
     setTimeout(()=>{
       this.navi()
-    }, 10)
+    }, 1000)
   } 
 
   navi = () => {
@@ -143,9 +142,7 @@ class Login extends Component {
           AccessToken.getCurrentAccessToken()
             .then((data) => {         
               console.log('face data :', data);
-              this.setState({
-                isLoading: true
-              })
+              
               console.log('fdata :', data);
               uid = data.userID
               accessToken = data.accessToken                                       
@@ -154,10 +151,11 @@ class Login extends Component {
               
               _this.checkUserRequest({ uid: uid, accessToken: accessToken})
               _this.saveUserToken({ uid: uid, accessToken: accessToken})
+
             })
             .then(() => {
               this.setState({
-                isLoading: false
+                isLoading: true
               })
 
             }).catch((error) => {
@@ -180,22 +178,21 @@ class Login extends Component {
     let googleEmail;
     GoogleSignin.signIn().then((data) => {
       console.log('google data :', data);
-      this.setState({
-        isLoading: true
-      })
+      
 
       uid = data.user.id
       googleEmail = data.user.email
       accessToken = data.accessToken            
   
     }).then(() => { 
-      this.setState({
-        isLoading: false
-      })
       
       _this.initUser("google",{ uid: uid, googleEmail: googleEmail, accessToken: accessToken})
       _this.checkUserRequest({ uid: uid, accessToken: accessToken})
       _this.saveUserToken({ uid: uid, accessToken: accessToken})
+
+      this.setState({
+        isLoading: true
+      })
 
     }).catch((error) => {
       console.log(`Login fail with error: ${error}`);
@@ -220,8 +217,6 @@ class Login extends Component {
               uid = result.id
               _this.initUser("kakao", {uid: uid, accessToken: token, email: result.email})
               _this.checkUserRequest({uid: uid, accessToken: token})
-              // console.log('object :', object);
-              // _this.navi()
               _this.saveUserToken({uid: uid, accessToken: token})
           })
         }

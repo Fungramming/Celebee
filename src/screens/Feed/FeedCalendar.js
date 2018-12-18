@@ -11,7 +11,6 @@ import {
   Platform, 
   DatePickerAndroid } from 'react-native'
 import { connect } from 'react-redux'
-import { MainApp } from '../Navigation'
 
 import { Calendar, LocaleConfig} from 'react-native-calendars';
 
