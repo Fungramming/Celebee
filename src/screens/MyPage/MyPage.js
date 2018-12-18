@@ -19,12 +19,17 @@ class MyPage extends Component {
         rightButtons: [
           {
             id: 'toSettingScreen',
-            icon: require('../../../assets/user.png'),
+            icon: require('../../../assets/feed.png'),
+            // selectedIcon: require('../../../assets/alarm.png'),
             testID: 'logoutButton',
             disableIconTint: true,
             showAsAction: 'always',
-            buttonFontSize: 14,
-            buttonFontWeight: '600',
+            // buttonFontSize: 10,
+            // buttonFontWeight: '600',
+            color: '#722784',
+            weight: '200',
+            enabled: true,
+            disabledColor: 'grey'
           }
         ]
       }

@@ -17,23 +17,6 @@ import EditIdol from './MyPage/EditIdol'
 import EditMyProfile from './MyPage/EditMyProfile' 
 import Setting from './MyPage/Setting' 
 
-async function prepareIcons() {
-  const icons = await Promise.all([
-    Icon.getImageSource('layers', 30),
-    Icon.getImageSource('clipboard', 30),
-    Icon.getImageSource('bell', 30),
-    Icon.getImageSource('user', 30),
-  ]);
-  const [feed, board, alarm, mypage] = icons;
-  
-  console.log('icons :', icons);
-  console.log('icons.feed :', icons[0].uri);
-  return icons;
-}
-
-const iconSet = prepareIcons()
-console.log('iconSet :', iconSet._55);
-
 // 스크린 이름 및 const 정의
 export const AUTH_SCREEN = 'Celebee.AuthScreen';
 export const LOGIN_SCREEN = 'Celebee.LoginScreen';
