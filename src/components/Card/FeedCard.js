@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View, Image, StyleSheet, FlatList, Dimensions, TouchableOpacity} from 'react-native'
+import { Share, Text, View, Image, StyleSheet, FlatList, Dimensions, TouchableOpacity} from 'react-native'
 import Icon from 'react-native-vector-icons/Feather';
 
 class FeedItems extends Component {
@@ -56,6 +56,14 @@ export default class FeedCard extends Component {
     }))
   }
 
+  test() {
+    Share.share({
+      message: 'BAM: we\'re helping your business with awesome React Native apps',
+      url: 'http://bam.tech',
+      title: 'Wow, did you see that?'
+    })
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -102,9 +110,10 @@ export default class FeedCard extends Component {
               <Icon name='heart' size={25} style={{paddingRight: 22}}/>
               <Icon name='message-circle' size={25}/>
             </View>
-            <View style={styles.feedBottomRight}>
+            <TouchableOpacity onPress={()=> this.test()} style={styles.feedBottomRight}>
+              <Text>SHARE</Text>
               <Icon name='share-2' size={25}/>
-            </View>
+            </TouchableOpacity>
         </View>
       </View>
     )

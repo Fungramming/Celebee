@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { 
+  Share,
   Platform, 
   SafeAreaView, 
   StatusBar, 
@@ -142,6 +143,7 @@ class Feed extends Component {
 
     // console.log('this.state.scrollPosition :', this.state.scrollPosition);
   }
+ 
 
   render() {
     // 날짜 출력 폼
@@ -190,6 +192,7 @@ class Feed extends Component {
             />
           </View>
           <ScrollView
+          scrollEventThrottle={16}
           ref="scrollView"
           onScroll={ (event) => this.watchScroll(event) } 
             // onScrollEndDrag={()=>{console.log('111 :', 111)}} 
