@@ -30,7 +30,7 @@ class EditMyProfile extends Component {
     constructor(props) {
         super(props);
         Navigation.events().bindComponent(this);  
-
+        
         this.state = { 
             token: props.token,
             userInfo: props.userInfo,
@@ -94,11 +94,7 @@ class EditMyProfile extends Component {
                 {/* </KeyboardAvoidingView> */}
                 </ScrollView>
             </View>
-        </View>
-    //     <WebView
-    //     source={{uri: 'https://github.com/facebook/react-native'}}
-    //     onLoad={e => console.log(e.nativeEvent.progress)}
-    //   />
+        </View>  
     )
   }
 }

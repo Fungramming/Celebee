@@ -16,6 +16,7 @@ class FeedItems extends Component {
 export default class FeedCard extends Component {
   constructor(props) {
     super(props);
+
     this.state = { 
       news: [
         {
@@ -47,6 +48,8 @@ export default class FeedCard extends Component {
       ],
       toggleDetail: false
     };
+
+    this.onLinkPress = this.onLinkPress.bind(this)
   }
 
   _onToggleDetail() {
@@ -57,6 +60,10 @@ export default class FeedCard extends Component {
     }))
   }
 
+  onLinkPress() {
+    this.props.onLink()
+  }
+  
   shareContents() {
     Share.share({
       message: 'BAM: we\'re helping your business with awesome React Native apps',
@@ -86,7 +93,11 @@ export default class FeedCard extends Component {
             showsHorizontalScrollIndicator={false}
             data={this.state.news}
             renderItem={({item}) => {
-                return <FeedItems photo={item.photo} title={item.title}></FeedItems> 
+                return (
+                  <TouchableOpacity onPress={ this.onLinkPress }>
+                    <FeedItems photo={item.photo} title={item.title}></FeedItems> 
+                  </TouchableOpacity>
+                )
             }}
             keyExtractor={(item, index) => index.toString()} 
           />
