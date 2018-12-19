@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View, WebView, StyleSheet, TouchableOpacity } from 'react-native'
+import { SafeAreaView, Text, View, WebView, StyleSheet, TouchableOpacity } from 'react-native'
 import { Navigation } from 'react-native-navigation';
 import Icon from 'react-native-vector-icons/Feather';
 
@@ -41,7 +41,7 @@ export default class LinkView extends Component {
   render() {
     console.log('url this.props :', this.props);
     return (
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
         <View style={styles.header}>                
           <TouchableOpacity onPress={this.onBackButton}>
             <Icon name='arrow-down-left' style={{paddingRight: 12}} size={22}/>
@@ -65,7 +65,7 @@ export default class LinkView extends Component {
           source={{uri: this.props.url}}      
           style={{flex:1}}
         />
-      </View>
+      </SafeAreaView>
     )
   }
 }
