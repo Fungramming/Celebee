@@ -7,12 +7,18 @@ import {
   TouchableWithoutFeedback,
   TouchableOpacity, 
   FlatList, 
-  Dimensions, 
-  Platform, 
+  Dimensions,
+  ScrollView,
+  Platform,
+  DatePickerIOS,
   DatePickerAndroid } from 'react-native'
+import Icon from 'react-native-vector-icons/Feather';
 import { connect } from 'react-redux'
 import { Calendar, LocaleConfig} from 'react-native-calendars';
 import { Navigation } from 'react-native-navigation';
+
+import ScheduleHeader from '../../../src/screens/Feed/components/ScheduleHeader'
+import IdolIndicator from '../../../src/screens/Feed/components/IdolIndicator'
 
 // 달력 출력 폼 설정
 const today = (() => {
@@ -34,16 +40,6 @@ LocaleConfig.locales['kr'] = {
   dayNamesShort: ['일', '월','화','수','목','금','토']
 };
 LocaleConfig.defaultLocale = 'kr';
-
-class IdolList extends Component {
-  render() {
-    return (
-      <View>
-        <Text style={styles.idolName}>{this.props.name}</Text>
-      </View>
-    )
-  }
-}
 
 class FeedCalendar extends Component {
   static options() {
@@ -78,8 +74,15 @@ class FeedCalendar extends Component {
         '2018-12-19': {marked: true, dotColor: 'purple',}
       }
     };
-    this.onDayPress = this.onDayPress.bind(this);
+    this.setDate = this.setDate.bind(this);
+    this.onPressDay = this.onPressDay.bind(this);
     this.onBackButton = this.onBackButton.bind(this);
+  }
+
+  setDate(newDate) {
+    this.setState({
+      chosenDate: newDate,
+    })
   }
 
   makeDate(year, month, day) {
@@ -94,7 +97,7 @@ class FeedCalendar extends Component {
     return [year, month, day].join('-')
   }
 
-  onDayPress(date) {    
+  onPressDay(date) {    
     // DATEPICKER 리턴값과 캘린더 리턴값이 다름
     if(date.dateString == undefined){
       date = date
@@ -154,49 +157,51 @@ class FeedCalendar extends Component {
     let options = { year: 'numeric', month: 'long', day: 'numeric' };  
     return (
       <SafeAreaView>
-        <View style={styles.header}>
-          <TouchableOpacity onPress={this.onBackButton}>
-            <Text>백</Text>
-          </TouchableOpacity>
+        <View style={styles.header}>        
           <TouchableWithoutFeedback onPress={() => this._onToggleDate()}>
             <Text style={styles.date}>
               {this.state.chosenDate.toLocaleDateString('ko-KR', options)}
-              &nbsp;<Text style={{paddingLeft: 18, fontSize: 18, fontWeight: 'bold'}}>+</Text>
+              &nbsp;
+              {this.state.toggleDate ? <Icon name='chevron-up' size={22}/> : <Icon name='chevron-down' size={22}/>}
             </Text>        
           </TouchableWithoutFeedback>
-          <Text>검색</Text>
-        </View>      
-        <View style={{height: 30}}>
-          <FlatList
-            horizontal={true}
-            showsHorizontalScrollIndicator={false}
-            data={this.props.userInfo.follow_idol_id}
-            renderItem={({item}) => {
-                return <IdolList style={styles.idolList} name={item.idol_name}></IdolList> 
-            }}
-            keyExtractor={(item, index) => index.toString()}
-            style={
-              {                  
-                paddingLeft: 29, 
-                borderBottomColor: 'rgb(200, 200, 200)',
-                borderBottomWidth: 2
-              }
-            }
-          />
+          <TouchableOpacity onPress={this.onBackButton}>
+            <Icon name='layers' style={{paddingRight: 12}} size={22}/>
+          </TouchableOpacity>
+          <Icon name='search' style={{paddingRight: 12}} size={22}/>
         </View>
+
+        {this.state.toggleDate && Platform.OS == 'ios'
+        ? <DatePickerIOS
+          date={this.state.chosenDate}
+          mode='date'
+          locale='kor'
+          onDateChange={this.setDate}
+          style={styles.datePicker}
+        />
+        : null
+        }
+
+        <IdolIndicator/>
+
         <Calendar
           current={this.state.chosenDate}
           monthFormat={'yyyy년 MM월'}
-          onDayPress={this.onDayPress}
+          onDayPress={this.onPressDay}
           // hideDayNames={true}
           hideExtraDays
           hideArrows={true}
           markedDates={this.state.schedules}
         />
-        <View style={{ backgroundColor: 'red', height: 350}}>
-          <Text style={{ textAlign: 'center', backgroundColor: 'black'}}>스케주우우우우우우울우우우우우우울</Text>
-          <Text>스케주우우우우우우울우우우우우우울</Text>
-        </View>
+
+        <ScrollView
+          ref="scrollView"
+          style={styles.scrollArea}
+          // scrollEventThrottle={16}
+          // onScroll={ console.log('hahahaah')} 
+          showsVerticalScrollIndicator={false}>
+          <ScheduleHeader/>           
+        </ScrollView>
 
       </SafeAreaView>
     )
@@ -226,9 +231,6 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     paddingBottom: 17,
     paddingLeft: 12,
-    // flex: 1,
-    // flexWrap: 'wrap', 
-    // alignItems: 'flex-start',
     flexDirection:'row',
     position: 'relative',
     zIndex: 999
@@ -236,6 +238,7 @@ const styles = StyleSheet.create({
   date: {
     fontSize: 20, 
     fontWeight: 'bold',
+    marginRight: 'auto'
   },
   datePicker: {
     height: 0,
@@ -244,14 +247,8 @@ const styles = StyleSheet.create({
     left: 0,
     zIndex: 998,
   },
-  idolList: {
-    height: 0,
-  },
-  idolName: {
-    fontSize: 14,
-    fontWeight: 'bold',
-    color: '#878787',
-    textAlign: 'center',
-    marginRight: 26,
+  scrollArea: {
+    paddingLeft: 12,
+    height: 360
   }
 });

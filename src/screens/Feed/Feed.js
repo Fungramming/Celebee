@@ -12,14 +12,15 @@ import {
   DatePickerIOS, 
   DatePickerAndroid,
   NativeModules,
-  FlatList } from "react-native";
+} from "react-native";
 import Icon from 'react-native-vector-icons/Feather';
 import { connect } from 'react-redux'
-import FeedCard from '../../components/Card/FeedCard'
 import { Calendar, LocaleConfig, CalendarList, Agenda } from 'react-native-calendars';
 import { Navigation } from 'react-native-navigation'
 
+import FeedCard from '../../components/Card/FeedCard'
 import { FEED_CALENDAR_SCREEN, FEED_LINK_SCREEN } from '../Navigation'
+import IdolIndicator from '../../../src/screens/Feed/components/IdolIndicator'
 
 // 달력 출력 폼 설정
   const today = (() => {
@@ -41,15 +42,6 @@ import { FEED_CALENDAR_SCREEN, FEED_LINK_SCREEN } from '../Navigation'
     dayNamesShort: ['일', '월','화','수','목','금','토']
   };
   LocaleConfig.defaultLocale = 'KR';
-  class IdolList extends Component {
-    render() {
-      return (
-        <View>
-          <Text style={styles.idolName}>{this.props.name}</Text>
-        </View>
-      )
-    }
-  }
 
 class Feed extends Component {
   static options() {
@@ -79,10 +71,9 @@ class Feed extends Component {
       }
     };
     this.setDate = this.setDate.bind(this);
-    this.onDayPress = this.onDayPress.bind(this);
     this.watchScroll = this.watchScroll.bind(this);
-    this.onLinkPress = this.onLinkPress.bind(this)
-    this.onCalendarPress = this.onCalendarPress.bind(this)
+    this.onPressLink = this.onPressLink.bind(this)
+    this.onPressCalendar = this.onPressCalendar.bind(this)
   }
   
   setDate(newDate) {
@@ -117,13 +108,6 @@ class Feed extends Component {
       console.warn('Cannot open date picker', message);
     }
   };
-
-  onDayPress(day) {
-    this.setState(prevState => ({
-      ...prevState,
-      selectedDay: day.dateString
-    }))
-  }
   
   watchScroll = (event) => {
   const RCTUIManager = NativeModules.UIManager
@@ -149,7 +133,7 @@ class Feed extends Component {
     // console.log('this.state.scrollPosition :', this.state.scrollPosition);
   }
   
-  onLinkPress() {
+  onPressLink() {
     Navigation.push(this.props.componentId, {
       component: {
         name: FEED_LINK_SCREEN,
@@ -165,15 +149,10 @@ class Feed extends Component {
     })
   }
 
-  onCalendarPress() {
+  onPressCalendar() {
     Navigation.push(this.props.componentId, {
       component: {  
-        name: FEED_CALENDAR_SCREEN, 
-        options: { 
-          bottomTabs: { 
-            visible: false, drawBehind: true, animate: true 
-          }
-        }  
+        name: FEED_CALENDAR_SCREEN,         
       }
     })
   }
@@ -192,11 +171,12 @@ class Feed extends Component {
               &nbsp;
               {this.state.toggleDate ? <Icon name='chevron-up' size={22}/> : <Icon name='chevron-down' size={22}/>}
             </Text>
-            <TouchableOpacity onPress={this.onCalendarPress}>
+            <TouchableOpacity onPress={this.onPressCalendar}>
               <Icon name='calendar' style={{paddingRight: 12}} size={22}/>
             </TouchableOpacity>
             <Icon name='search' style={{paddingRight: 12}} size={22}/>
           </View>
+
           {this.state.toggleDate && Platform.OS == 'ios'
           ? <DatePickerIOS
             date={this.state.chosenDate}
@@ -207,34 +187,19 @@ class Feed extends Component {
           />
           : null
           }
-          <View style={{height: 30}}>
-            <FlatList
-              horizontal={true}
-              showsHorizontalScrollIndicator={false}
-              data={this.props.userInfo.follow_idol_id}
-              renderItem={({item}) => {
-                  return <IdolList style={styles.idolList} name={item.idol_name}></IdolList> 
-              }}
-              keyExtractor={(item, index) => index.toString()}
-              style={
-                {                  
-                  paddingLeft: 29, 
-                  borderBottomColor: 'rgb(200, 200, 200)',
-                  borderBottomWidth: 2
-                }
-              }
-            />
-          </View>
+
+          <IdolIndicator />
+
           <ScrollView
-          scrollEventThrottle={16}
-          ref="scrollView"
-          onScroll={ (event) => this.watchScroll(event) } 
-            // onScrollEndDrag={()=>{console.log('111 :', 111)}} 
+            ref="scrollView"
+            scrollEventThrottle={16}
+            onScroll={ () => this.watchScroll() } 
             showsVerticalScrollIndicator={false}>
-            <FeedCard onLink = {this.onLinkPress}></FeedCard>
-            <FeedCard onLink = {this.onLinkPress}></FeedCard>
-            <FeedCard onLink = {this.onLinkPress}></FeedCard>            
+            <FeedCard onLink = {this.onPressLink}></FeedCard>
+            <FeedCard onLink = {this.onPressLink}></FeedCard>
+            <FeedCard onLink = {this.onPressLink}></FeedCard>            
           </ScrollView>
+
         </View>
       </SafeAreaView>
     );
@@ -280,14 +245,4 @@ const styles = StyleSheet.create({
     left: 0,
     zIndex: 998,
   },
-  idolList: {
-    height: 0,
-  },
-  idolName: {
-    fontSize: 14,
-    fontWeight: 'bold',
-    color: '#878787',
-    textAlign: 'center',
-    marginRight: 26,
-  }
 });

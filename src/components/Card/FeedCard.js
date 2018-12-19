@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import { Share, Text, View, Image, StyleSheet, FlatList, Dimensions, TouchableOpacity} from 'react-native'
+import { Share, Text, View, Image, StyleSheet, FlatList, Dimensions, TouchableOpacity, TouchableWithoutFeedback} from 'react-native'
 import Icon from 'react-native-vector-icons/Feather';
+import ScheduleHeader from '../../../src/screens/Feed/components/ScheduleHeader'
 
 class FeedItems extends Component {
   render() {
@@ -48,7 +49,7 @@ export default class FeedCard extends Component {
       toggleDetail: false
     };
 
-    this.onLinkPress = this.onLinkPress.bind(this)
+    this.onPressLink = this.onPressLink.bind(this)
   }
 
   _onToggleDetail() {
@@ -59,11 +60,11 @@ export default class FeedCard extends Component {
     }))
   }
 
-  onLinkPress() {
+  onPressLink() {
     this.props.onLink()
   }
-
-  test() {
+  
+  shareContents() {
     Share.share({
       message: 'BAM: we\'re helping your business with awesome React Native apps',
       url: 'http://bam.tech',
@@ -74,10 +75,7 @@ export default class FeedCard extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <TouchableOpacity style={styles.feedHeader} onPress={() => this._onToggleDetail()}>
-          <Text style={styles.feedHeaderTitle}> 스케줄, 기사 제목 영역 </Text>
-          <Text style={styles.feedHeaderSubText}> PM 06:00 | 스케줄 장소 및 방송 채널 입력 </Text>
-        </TouchableOpacity>
+        <ScheduleHeader detail={() => this._onToggleDetail()}/>
         {this.state.toggleDetail 
           ? 
           <Text style={styles.feedDetail} onPress={() => this._onToggleDetail()}>
@@ -96,8 +94,8 @@ export default class FeedCard extends Component {
             data={this.state.news}
             renderItem={({item}) => {
                 return (
-                  // <TouchableOpacity onPress={this.onLinkPress(this.state.news.uri)}> 이런시으로 들어가려나
-                  <TouchableOpacity onPress={ this.onLinkPress}>
+                  // <TouchableOpacity onPress={this.onPressLink(this.state.news.uri)}> 이런시으로 들어가려나
+                  <TouchableOpacity onPress={ this.onPressLink}>
                     <FeedItems photo={item.photo} title={item.title}></FeedItems> 
                   </TouchableOpacity>
                 )
@@ -122,10 +120,9 @@ export default class FeedCard extends Component {
               <Icon name='heart' size={25} style={{paddingRight: 22}}/>
               <Icon name='message-circle' size={25}/>
             </View>
-            <TouchableOpacity onPress={()=> this.test()} style={styles.feedBottomRight}>
-              <Text>SHARE</Text>
+            <TouchableWithoutFeedback style={styles.feedBottomRight} onPress={() => this.shareContents()}>
               <Icon name='share-2' size={25}/>
-            </TouchableOpacity>
+            </TouchableWithoutFeedback>
         </View>
       </View>
     )
@@ -137,35 +134,6 @@ const styles = StyleSheet.create({
     paddingLeft: 12,
     paddingBottom: 25,
     flexDirection:'column',
-    // height: Dimensions.get('window').height,
-    // flex: 1,
-    // alignItems: 'center',
-    // justifyContent: 'center'
-  },
-  feedHeader: {
-    height: 72,
-    paddingTop: 14,
-    paddingBottom: 14,
-    marginHorizontal: -17,
-    marginBottom: 8,
-    borderTopColor: 'rgb(200, 200, 200)', 
-    borderTopWidth: 0.25,
-    borderBottomColor: 'rgb(200, 200, 200)', 
-    borderBottomWidth: 0.25,
-    position: 'relative',
-  },
-  feedHeaderTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    height: 24,
-    marginBottom: 5,
-    marginHorizontal: 13,
-  },
-  feedHeaderSubText: {
-    fontSize: 14,
-    height: 24,
-    marginHorizontal: 13,
-    color: '#505050',
   },
   feedDetail: {
     height: 500,

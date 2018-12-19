@@ -12,19 +12,24 @@ class MyPage extends Component {
     return {
       topBar: {
         title: {
-          text: '마이페이지'
+          text: '마이페이지',
+          hideOnScroll: true
         },
         visible: true,
         animate: false,
         rightButtons: [
           {
             id: 'toSettingScreen',
-            icon: require('../../../assets/user.png'),
+            icon: require('../../../assets/alarm.png'),
             testID: 'logoutButton',
             disableIconTint: true,
             showAsAction: 'always',
-            buttonFontSize: 14,
-            buttonFontWeight: '600',
+            // buttonFontSize: 10,
+            // buttonFontWeight: '600',
+            color: '#262626',
+            weight: '100',
+            enabled: true,
+            disabledColor: 'grey'
           }
         ]
       }
