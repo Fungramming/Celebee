@@ -193,7 +193,7 @@ class Feed extends Component {
             <TouchableOpacity onPress={this.onPressCalendar}>
               <Icon name='calendar' style={{paddingRight: 12}} size={22}/>
             </TouchableOpacity>
-            <Icon name='search' style={{paddingRight: 12}} size={22}/>
+            <Icon name='search' size={22}/>
           </View>
 
           {this.state.toggleDate && Platform.OS == 'ios'
