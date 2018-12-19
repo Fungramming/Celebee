@@ -112,7 +112,7 @@ export const MainApp = () => Navigation.setRoot({
                 text: '피드',
                 testID: 'FEED_SCREEN',
                 icon: require('../../assets/feed.png'),
-                selectedIcon: require('../../assets/board.png'),
+                // selectedIcon: require('../../assets/board.png'),
                 iconColor: '#262626',
                 selectedIconColor: "#722784",
                 selectedTextColor: "#722784",
@@ -136,7 +136,7 @@ export const MainApp = () => Navigation.setRoot({
                 text: '게시판',
                 testID: 'BOARD_SCREEN',
                 icon: require('../../assets/board.png'),
-                selectedIcon: require('../../assets/alarm.png'),
+                // selectedIcon: require('../../assets/alarm.png'),
                 iconColor: '#262626',
                 selectedIconColor: "#722784",
                 selectedTextColor: "#722784"
@@ -156,7 +156,7 @@ export const MainApp = () => Navigation.setRoot({
                 text: '알림',
                 testID: 'ALARM_SCREEN',
                 icon: require('../../assets/alarm.png'),
-                selectedIcon: require('../../assets/mypage.png'),
+                // selectedIcon: require('../../assets/mypage.png'),
                 iconColor: '#262626',
                 selectedIconColor: "#722784",
                 selectedTextColor: "#722784"
@@ -176,7 +176,7 @@ export const MainApp = () => Navigation.setRoot({
                 text: '마이페이지',
                 testID: 'MYPAGE_SCREEN',
                 icon: require('../../assets/mypage.png'),
-                selectedIcon: require('../../assets/feed.png'),
+                // selectedIcon: require('../../assets/feed.png'),
                 iconColor: '#262626',
                 selectedIconColor: "#722784",
                 selectedTextColor: "#722784"

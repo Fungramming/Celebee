@@ -155,8 +155,17 @@ class Feed extends Component {
         name: FEED_CALENDAR_SCREEN,         
       }
     })
+    this.toggleDateFalse()
   }
 
+  toggleDateFalse() {
+    if (this.state.toggleDate) {
+      this.setState(prevState => ({
+        ...prevState,
+        toggleDate: false
+      }))
+    } 
+  }
   
   render() {
     // 날짜 출력 폼
@@ -193,7 +202,7 @@ class Feed extends Component {
           <ScrollView
             ref="scrollView"
             scrollEventThrottle={16}
-            onScroll={ () => this.watchScroll() } 
+            onScroll={ () => this.watchScroll() }
             showsVerticalScrollIndicator={false}>
             <FeedCard onLink = {this.onPressLink}></FeedCard>
             <FeedCard onLink = {this.onPressLink}></FeedCard>
@@ -228,7 +237,7 @@ const styles = StyleSheet.create({
   header: {
     paddingTop: 10,
     paddingBottom: 17,
-    paddingLeft: 12, 
+    paddingHorizontal: 12,
     flexDirection:'row',
     position: 'relative',
     zIndex: 999

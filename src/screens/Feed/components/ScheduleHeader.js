@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Text, View, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, Dimensions, Image } from 'react-native'
+import Icon from 'react-native-vector-icons/Feather';
 
 class ScheduleHeader extends Component {
   constructor(props){
@@ -9,13 +10,24 @@ class ScheduleHeader extends Component {
 
   render() {
     return (
-      <View style={styles.feedHeader}>
-        <TouchableWithoutFeedback onPress={this.props.detail}>
-          <View>
-            <Text style={styles.feedHeaderTitle}> 스케줄, 기사 제목 영역 </Text>
-            <Text style={styles.feedHeaderSubText}> PM 06:00 | 스케줄 장소 및 방송 채널 입력 </Text>
-          </View>
-        </TouchableWithoutFeedback>
+      <View>
+        {/* <TouchableWithoutFeedback style={{widht: Dimensions.get('window').width}} onPress={this.props.detail}> */}
+          <TouchableWithoutFeedback onPress={this.props.detail} style={styles.feedHeader}>
+            <View style={{flexDirection: 'row'}}>
+              <Image
+                source={require("../../../../assets/user.png")}
+                style={styles.feedHeaderPhoto}
+              />
+              <View style={styles.feedHeaderTextWrap}>
+                <Text style={styles.feedHeaderText}> 스케줄, 기사 제목 영역 </Text>
+                <Text style={styles.feedHeaderSubText}> PM 06:00 | 스케줄 장소 및 방송 채널 입력 </Text>
+              </View>
+              <TouchableOpacity>
+                <Icon style={styles.feedHeaderAlarm} name='bell' size={25}/>
+              </TouchableOpacity>
+            </View>
+          </TouchableWithoutFeedback>
+        {/* </TouchableWithoutFeedback> */}
       </View>
     )
   }
@@ -23,30 +35,41 @@ class ScheduleHeader extends Component {
 
 const styles = StyleSheet.create({
   feedHeader: {
-    height: 72,
-    paddingTop: 14,
-    paddingBottom: 14,
-    marginHorizontal: -17,
-    marginBottom: 8,
-    borderTopColor: 'rgb(200, 200, 200)', 
-    borderTopWidth: 0.25,
-    borderBottomColor: 'rgb(200, 200, 200)', 
-    borderBottomWidth: 0.25,
-    position: 'relative',
+    width: Dimensions.get('window').width,
+    paddingTop: 10,
+    paddingBottom: 17,
+    paddingHorizontal: 12,
+    flexDirection:'row',
   },
-  feedHeaderTitle: {
+  feedHeaderPhoto: {
+    backgroundColor: '#dedede',
+    borderRadius: 20,
+    marginVertical: 12,
+    width: 55,
+    height: 55,
+    flexDirection: 'row',
+  },
+  feedHeaderTextWrap: {
+    width: 300,
+    flexDirection: 'column',
+  },
+  feedHeaderText: {
     fontSize: 20,
     fontWeight: 'bold',
-    height: 24,
-    marginBottom: 5,
+    marginTop: 15,
     marginHorizontal: 13,
   },
   feedHeaderSubText: {
     fontSize: 14,
-    height: 24,
     marginHorizontal: 13,
+    marginVertical: 8,
     color: '#505050',
   },
+  feedHeaderAlarm: {
+    position: 'absolute',
+    top: 25,
+    right: 0
+  }
 })
 
 export default ScheduleHeader

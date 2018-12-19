@@ -120,7 +120,7 @@ export default class FeedCard extends Component {
               <Icon name='heart' size={25} style={{paddingRight: 22}}/>
               <Icon name='message-circle' size={25}/>
             </View>
-            <TouchableWithoutFeedback style={styles.feedBottomRight} onPress={() => this.shareContents()}>
+            <TouchableWithoutFeedback onPress={() => this.shareContents()}>
               <Icon name='share-2' size={25}/>
             </TouchableWithoutFeedback>
         </View>
@@ -131,15 +131,17 @@ export default class FeedCard extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    paddingLeft: 12,
+    // paddingLeft: 12,
     paddingBottom: 25,
+    paddingHorizontal: 12,
     flexDirection:'column',
+    borderTopColor: '#f2f2f2',
+    borderTopWidth: 1.25,
   },
   feedDetail: {
     height: 500,
     width: Dimensions.get('window').width,
-    paddingLeft: 12,
-    paddingRight: 12,
+    paddingHorizontal: 12,
     paddingTop: 12,
     backgroundColor: '#f5f5f5',
     position: 'absolute',
@@ -159,9 +161,8 @@ const styles = StyleSheet.create({
   },
   feedItems: {
     width: 220,
-    marginRight: 10.5,
+    marginHorizontal: 10.5,
     marginBottom: 20,
-    paddingLeft: 10.5,
   },
   feedItemsImg: {
     width: 220,
@@ -178,8 +179,5 @@ const styles = StyleSheet.create({
   feedBottomLeft: {
     flexDirection: 'row',
     marginRight: 'auto',
-  },
-  feedBottomRight: {
-    paddingRight: 12
   },
 });

@@ -248,7 +248,7 @@ const styles = StyleSheet.create({
     zIndex: 998,
   },
   scrollArea: {
-    paddingLeft: 12,
+    paddingHorizontal: 12,
     height: 360
   }
 });
