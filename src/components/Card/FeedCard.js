@@ -120,9 +120,9 @@ export default class FeedCard extends Component {
               <Icon name='heart' size={25} style={{paddingRight: 22}}/>
               <Icon name='message-circle' size={25}/>
             </View>
-            <TouchableWithoutFeedback style={styles.feedBottomRight} onPress={() => this.shareContents()}>
+            <TouchableOpacity style={styles.feedBottomRight} onPress={() => this.shareContents()}>
               <Icon name='share-2' size={25}/>
-            </TouchableWithoutFeedback>
+            </TouchableOpacity>
         </View>
       </View>
     )

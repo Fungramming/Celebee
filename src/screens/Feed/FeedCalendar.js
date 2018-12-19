@@ -17,6 +17,7 @@ import { connect } from 'react-redux'
 import { Calendar, LocaleConfig} from 'react-native-calendars';
 import { Navigation } from 'react-native-navigation';
 
+// import { FEED_CALENDAR_TOP_BAR } from '../Navigation'
 import ScheduleHeader from '../../../src/screens/Feed/components/ScheduleHeader'
 import IdolIndicator from '../../../src/screens/Feed/components/IdolIndicator'
 
@@ -41,16 +42,7 @@ LocaleConfig.locales['kr'] = {
 };
 LocaleConfig.defaultLocale = 'kr';
 
-class FeedCalendar extends Component {
-  static options() {
-    return {
-      topBar: {
-        visible: false,
-        drawBehind: true,
-      }
-    }
-  }
-
+class FeedCalendar extends Component {  
   constructor(props) {
     super(props);
     this.state = { 
@@ -75,7 +67,7 @@ class FeedCalendar extends Component {
       }
     };
     this.setDate = this.setDate.bind(this);
-    this.onPressDay = this.onPressDay.bind(this);
+    this.onDayPress = this.onDayPress.bind(this);
     this.onBackButton = this.onBackButton.bind(this);
   }
 
@@ -97,7 +89,7 @@ class FeedCalendar extends Component {
     return [year, month, day].join('-')
   }
 
-  onPressDay(date) {    
+  onDayPress(date) {    
     // DATEPICKER 리턴값과 캘린더 리턴값이 다름
     if(date.dateString == undefined){
       date = date
@@ -158,13 +150,13 @@ class FeedCalendar extends Component {
     return (
       <SafeAreaView>
         <View style={styles.header}>        
-          <TouchableWithoutFeedback onPress={() => this._onToggleDate()}>
+          <TouchableOpacity onPress={() => this._onToggleDate()}>
             <Text style={styles.date}>
               {this.state.chosenDate.toLocaleDateString('ko-KR', options)}
               &nbsp;
               {this.state.toggleDate ? <Icon name='chevron-up' size={22}/> : <Icon name='chevron-down' size={22}/>}
             </Text>        
-          </TouchableWithoutFeedback>
+          </TouchableOpacity>
           <TouchableOpacity onPress={this.onBackButton}>
             <Icon name='layers' style={{paddingRight: 12}} size={22}/>
           </TouchableOpacity>
@@ -187,7 +179,7 @@ class FeedCalendar extends Component {
         <Calendar
           current={this.state.chosenDate}
           monthFormat={'yyyy년 MM월'}
-          onDayPress={this.onPressDay}
+          onDayPress={this.onDayPress}
           // hideDayNames={true}
           hideExtraDays
           hideArrows={true}
@@ -219,6 +211,7 @@ export default connect(mapStateToProps)(FeedCalendar)
 const styles = StyleSheet.create({
   container: {
     height: '100%',
+    backgroundColor: "#ffffff"
   },
   calendar: {
     borderTopWidth: 1,

@@ -98,8 +98,9 @@ class Feed extends Component {
       const {
         action, year, month, day,
       } = await DatePickerAndroid.open({
-        date: new Date(),
-        minDate: new Date(),
+        date: this.state.chosenDate,
+        // minDate: new Date(),
+        // maxDate: new Date(),
       });
       if (action !== DatePickerAndroid.dismissedAction) {
         this.setState({ chosenDate: new Date(year, month, day) });
@@ -141,8 +142,11 @@ class Feed extends Component {
           url: 'https://naver.com',          
         },
         options: { 
+          topBar: {
+            visible: false, drawBehind: true,  
+          },
           bottomTabs: { 
-            visible: false, drawBehind: true, animate: true 
+            visible: false, drawBehind: true,
           }
         }
       }
@@ -153,8 +157,14 @@ class Feed extends Component {
     Navigation.push(this.props.componentId, {
       component: {  
         name: FEED_CALENDAR_SCREEN,         
-      }
-    })
+        options:{
+          topBar:{
+            visible: false,
+            drawBehind: true,
+          }
+        }
+      },     
+    })  
   }
 
   

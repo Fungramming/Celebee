@@ -23,9 +23,17 @@ class AuthValidScreen extends Component {
     }
     componentDidMount() {
       Navigation.setDefaultOptions({
+        topBar: {
+          animate: false,
+        },
         bottomTabs: {
           titleDisplayMode: 'alwaysShow'
-        }
+        },
+        animations: {
+          push: {
+            enabled: false,
+          }
+        },
       });
       SplashScreen.hide()
       this.loadApp()
