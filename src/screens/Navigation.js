@@ -9,6 +9,7 @@ import Auth from './AuthValidScreen'
 import SetNickname from './InitProfile/SetNickname'
 import SelectIdol from './InitProfile/SelectIdol'
 import Feed from './Feed/Feed'
+import FeedCalendarTopBar from './Feed/components/FeedCalendarTopBar'
 import FeedCalendar from './Feed/FeedCalendar'
 import FeedLink from './Feed/FeedLink'
 import Board from './Board/Board'
@@ -24,6 +25,7 @@ export const LOGIN_SCREEN = 'Celebee.LoginScreen';
 export const SET_NICKNAME_SCREEN = 'Celebee.NicknameScreen';
 export const SELECT_IDOL_SCREEN = 'Celebee.IdolScreen';
 export const FEED_SCREEN = 'Celebee.FeedScreen';
+// export const FEED_CALENDAR_TOP_BAR = 'Celebee.FeedCalendarTopBar';
 export const FEED_CALENDAR_SCREEN = 'Celebee.FeedCalendarScreen';
 export const FEED_LINK_SCREEN = 'Celebee.FeedLinkScreen'
 export const BOARD_SCREEN = 'Celebee.BoardScreen';
@@ -40,6 +42,7 @@ Screens.set(LOGIN_SCREEN, Login)
 Screens.set(SET_NICKNAME_SCREEN, SetNickname)
 Screens.set(SELECT_IDOL_SCREEN, SelectIdol)
 Screens.set(FEED_SCREEN, Feed)
+// Screens.set(FEED_CALENDAR_TOP_BAR, FeedCalendarTopBar)
 Screens.set(FEED_CALENDAR_SCREEN, FeedCalendar)
 Screens.set(FEED_LINK_SCREEN, FeedLink)
 Screens.set(BOARD_SCREEN, Board)
