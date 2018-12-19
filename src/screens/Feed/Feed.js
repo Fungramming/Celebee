@@ -19,7 +19,7 @@ import FeedCard from '../../components/Card/FeedCard'
 import { Calendar, LocaleConfig, CalendarList, Agenda } from 'react-native-calendars';
 import { Navigation } from 'react-native-navigation'
 
-import { FeedCalendarScreen, FEED_LINK_SCREEN } from '../Navigation'
+import { FEED_CALENDAR_SCREEN, FEED_LINK_SCREEN } from '../Navigation'
 
 // 달력 출력 폼 설정
   const today = (() => {
@@ -82,6 +82,7 @@ class Feed extends Component {
     this.onDayPress = this.onDayPress.bind(this);
     this.watchScroll = this.watchScroll.bind(this);
     this.onLinkPress = this.onLinkPress.bind(this)
+    this.onCalendarPress = this.onCalendarPress.bind(this)
   }
   
   setDate(newDate) {
@@ -130,6 +131,7 @@ class Feed extends Component {
   RCTUIManager.measure(sv.getInnerViewNode(), (...data) => {
     console.log(data[5], 111)
   })
+    // 정확성이 떨어지는 코드
     // const nEvent = event.nativeEvent;
 
     // this.setState({
@@ -154,10 +156,29 @@ class Feed extends Component {
         passProps: {
           url: 'https://naver.com',          
         },
+        options: { 
+          bottomTabs: { 
+            visible: false, drawBehind: true, animate: true 
+          }
+        }
       }
     })
   }
 
+  onCalendarPress() {
+    Navigation.push(this.props.componentId, {
+      component: {  
+        name: FEED_CALENDAR_SCREEN, 
+        options: { 
+          bottomTabs: { 
+            visible: false, drawBehind: true, animate: true 
+          }
+        }  
+      }
+    })
+  }
+
+  
   render() {
     // 날짜 출력 폼
     let options = { year: 'numeric', month: 'long', day: 'numeric' };  
@@ -171,7 +192,7 @@ class Feed extends Component {
               &nbsp;
               {this.state.toggleDate ? <Icon name='chevron-up' size={22}/> : <Icon name='chevron-down' size={22}/>}
             </Text>
-            <TouchableOpacity onPress={FeedCalendarScreen}>
+            <TouchableOpacity onPress={this.onCalendarPress}>
               <Icon name='calendar' style={{paddingRight: 12}} size={22}/>
             </TouchableOpacity>
             <Icon name='search' style={{paddingRight: 12}} size={22}/>
@@ -211,8 +232,8 @@ class Feed extends Component {
             // onScrollEndDrag={()=>{console.log('111 :', 111)}} 
             showsVerticalScrollIndicator={false}>
             <FeedCard onLink = {this.onLinkPress}></FeedCard>
-            <FeedCard></FeedCard>
-            <FeedCard></FeedCard>            
+            <FeedCard onLink = {this.onLinkPress}></FeedCard>
+            <FeedCard onLink = {this.onLinkPress}></FeedCard>            
           </ScrollView>
         </View>
       </SafeAreaView>

@@ -11,10 +11,8 @@ import {
   Platform, 
   DatePickerAndroid } from 'react-native'
 import { connect } from 'react-redux'
-
 import { Calendar, LocaleConfig} from 'react-native-calendars';
-
-import { MainApp, FeedCalendarScreen } from '../Navigation'
+import { Navigation } from 'react-native-navigation';
 
 // 달력 출력 폼 설정
 const today = (() => {
@@ -81,11 +79,7 @@ class FeedCalendar extends Component {
       }
     };
     this.onDayPress = this.onDayPress.bind(this);
-    this.backButton = this.backButton.bind(this);
-  }
-
-  backButton() {
-    MainApp()
+    this.onBackButton = this.onBackButton.bind(this);
   }
 
   makeDate(year, month, day) {
@@ -152,11 +146,18 @@ class FeedCalendar extends Component {
     }
   };
 
+  onBackButton() {
+    Navigation.pop(this.props.componentId);
+  }
+
   render() {
     let options = { year: 'numeric', month: 'long', day: 'numeric' };  
     return (
       <SafeAreaView>
         <View style={styles.header}>
+          <TouchableOpacity onPress={this.onBackButton}>
+            <Text>백</Text>
+          </TouchableOpacity>
           <TouchableWithoutFeedback onPress={() => this._onToggleDate()}>
             <Text style={styles.date}>
               {this.state.chosenDate.toLocaleDateString('ko-KR', options)}
@@ -164,11 +165,7 @@ class FeedCalendar extends Component {
             </Text>        
           </TouchableWithoutFeedback>
           <Text>검색</Text>
-        </View>
-        {/* <TouchableOpacity onPress={this.backButton}>
-          <Text>뒤로가기</Text>
-        </TouchableOpacity>
-        <Text> FeedCalendar </Text> */}
+        </View>      
         <View style={{height: 30}}>
           <FlatList
             horizontal={true}

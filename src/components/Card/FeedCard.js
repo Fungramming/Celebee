@@ -96,7 +96,8 @@ export default class FeedCard extends Component {
             data={this.state.news}
             renderItem={({item}) => {
                 return (
-                  <TouchableOpacity onPress={ this.onLinkPress }>
+                  // <TouchableOpacity onPress={this.onLinkPress(this.state.news.uri)}> 이런시으로 들어가려나
+                  <TouchableOpacity onPress={ this.onLinkPress}>
                     <FeedItems photo={item.photo} title={item.title}></FeedItems> 
                   </TouchableOpacity>
                 )
