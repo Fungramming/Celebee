@@ -43,6 +43,7 @@ yarn-error.log
 !/node_modules/
 /node_modules/*
 !/node_modules/react-native-calendars
+!/node_modules/react-native-multiselect-view
 
 # BUCK
 buck-out/
