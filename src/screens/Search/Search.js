@@ -24,6 +24,7 @@ class Search extends Component {
       searchedWordsVisible: false
     }
     this.dismissKeyboard = this.dismissKeyboard.bind(this)
+    this.deleteSearchedWord = this.deleteSearchedWord.bind(this)
   }
 
   componentDidMount() {
@@ -50,15 +51,18 @@ class Search extends Component {
 
     if( typeof this.state.searchedWords == 'undefined'){
       searchedWords = []
-      searchedWords.push(text)
+      searchedWords.unshift(text)
     } else {
       searchedWords = this.state.searchedWords
+      // 최근 검색어 5개 제한
       if(searchedWords.length >= 5){
-        searchedWords.shift()
+        searchedWords.pop()
       }
-      searchedWords.push(text)
+      // 검색어 중복 제한
+      if(searchedWords.indexOf(text) == -1) {
+        searchedWords.unshift(text)
+      }
     }
-    console.log('searchedWords :',typeof searchedWords);
     let data = { 
       uid: this.state.uid, 
       accessToken: this.state.token,
@@ -69,13 +73,25 @@ class Search extends Component {
       ...prevState,
       searchedWords: searchedWords
     }))
-    console.log('data :', data);
 
     AsyncStorage.setItem('user', JSON.stringify(data))      
   }
 
-  deleteSearchedWord = async (data) => {
-    await AsyncStorage.setItem('user', JSON.stringify(data))      
+  deleteSearchedWord = (text) => {
+    let searchedWords = this.state.searchedWords;
+    searchedWords.splice(searchedWords.indexOf(text), 1);
+    let data = { 
+      uid: this.state.uid, 
+      accessToken: this.state.token,
+      searchedWords: searchedWords
+    }
+
+    this.setState(prevState => ({
+      ...prevState,
+      searchedWords: searchedWords
+    }))
+
+    AsyncStorage.setItem('user', JSON.stringify(data))      
   }
 
   updateText(text) {
@@ -115,14 +131,19 @@ class Search extends Component {
           <View>
             <Text style={styles.tilte}>최근 검색어</Text>        
             <FlatList
-              horizontal={true}
+              style={{flexDirection: 'column'}}
               showsHorizontalScrollIndicator={false}
               data={this.state.searchedWords}
               renderItem={({item}) => {
                   return (
-                    <TouchableOpacity onPress={console.log('11 :', 11)}>
-                      <Text style={styles.searchedWords}>{item}</Text>
-                    </TouchableOpacity>
+                    <View style={styles.searchedWords}>
+                      <TouchableOpacity onPress={console.log('11 :', 11)}>
+                        <Text style={styles.searchedWord}>{item}</Text>
+                      </TouchableOpacity>
+                      <TouchableOpacity onPress={() => {this.deleteSearchedWord(item)}}>
+                        <Text style={styles.removeBtn}>제거</Text>
+                      </TouchableOpacity>                      
+                    </View>
                   )
               }}
               keyExtractor={(item, index) => index.toString()} 
@@ -171,6 +192,17 @@ const styles = StyleSheet.create({
     fontSize: 20
   },
   searchedWords: {
-    width: Dimensions.get('window').width
+    borderColor: "#cecece",
+    borderBottomWidth:1,
+    flexDirection: 'row', 
+    width: '100%'
+  },
+  searchedWord: {
+    fontSize: 16,
+    paddingVertical: 10,
+    width: Dimensions.get('window').width - 70
+  },
+  removeBtn: {
+    paddingVertical: 10,
   }
 })
