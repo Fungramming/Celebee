@@ -9,7 +9,7 @@ import Auth from './AuthValidScreen'
 import SetNickname from './InitProfile/SetNickname'
 import SelectIdol from './InitProfile/SelectIdol'
 import Feed from './Feed/Feed'
-import FeedCalendarTopBar from './Feed/components/FeedCalendarTopBar'
+// import FeedCalendarTopBar from './Feed/components/FeedCalendarTopBar'
 import FeedCalendar from './Feed/FeedCalendar'
 import FeedLink from './Feed/FeedLink'
 import Board from './Board/Board'
@@ -17,6 +17,7 @@ import Alarm from './Alarm/Alarm.js'
 import MyPage from './MyPage/MyPage' 
 import EditIdol from './MyPage/EditIdol' 
 import EditMyProfile from './MyPage/EditMyProfile' 
+import Search from './Search/Search'
 import Setting from './MyPage/Setting' 
 
 // 스크린 이름 및 const 정의
@@ -33,6 +34,7 @@ export const ALARM_SCREEN = 'Celebee.AlarmScreen';
 export const MYPAGE_SCREEN = 'Celebee.MyPageScreen';
 export const MYPAGE_EDIT_IDOL_SCREEN = 'Celebee.MyPageEditIdolScreen';
 export const MYPAGE_EDIT_PROFILE_SCREEN = 'Celebee.MyPageEditProfileScreen';
+export const SEARCH_SCREEN = 'Celebee.SearchScreen'
 export const MYPAGE_SETTING_SCREEN = 'Celebee.MyPageSettingScreen';
 
 // Screens Map() 함수
@@ -50,6 +52,7 @@ Screens.set(ALARM_SCREEN, Alarm)
 Screens.set(MYPAGE_SCREEN, MyPage)
 Screens.set(MYPAGE_EDIT_IDOL_SCREEN, EditIdol)
 Screens.set(MYPAGE_EDIT_PROFILE_SCREEN, EditMyProfile)
+Screens.set(SEARCH_SCREEN, Search)
 Screens.set(MYPAGE_SETTING_SCREEN, Setting)
 
 // LoginApp 네비게이션 함수 정의
@@ -213,6 +216,17 @@ export const FeedLinkScreen = () => Navigation.setRoot({
     },
   }
 });
+
+export const SearchScreen = () => Navigation.setRoot({
+  root: {
+    component: {
+      name: SEARCH_SCREEN,
+      passProps: {
+        text: 'search screen'
+      }
+    }
+  }
+})
 
 export const SettingScreen = () => Navigation.setRoot({
   root: {

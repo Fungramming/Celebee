@@ -309,6 +309,7 @@ class Login extends Component {
     }
   }
 }
+
 const mapStateToProps = state => {
   return {
       userInfo: state.user.userInfo,   // Mount 될때 initialState 를 가져옴 , this.props 로. users 는 actios 에서의 users.js 의 이름
