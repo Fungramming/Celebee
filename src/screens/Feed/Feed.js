@@ -22,6 +22,7 @@ import { Navigation } from 'react-native-navigation'
 import FeedCard from '../../components/Card/FeedCard'
 import { FEED_CALENDAR_SCREEN, FEED_LINK_SCREEN } from '../Navigation'
 import IdolIndicator from '../../../src/screens/Feed/components/IdolIndicator'
+import SearchButton from '../../components/button/SearchButton'
 
 // 달력 출력 폼 설정
   const today = (() => {
@@ -210,7 +211,7 @@ class Feed extends Component {
             <TouchableOpacity onPress={this.onPressCalendar}>
               <Icon name='calendar' style={{paddingRight: 12}} size={22}/>
             </TouchableOpacity>
-            <Icon name='search' size={22}/>
+            <SearchButton componentId={this.props.componentId}/>
           </View>
 
           {this.state.toggleDate && Platform.OS == 'ios'

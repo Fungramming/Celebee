@@ -23,7 +23,9 @@ import Modal from "react-native-modal";
 import ScheduleHeader from '../../../src/screens/Feed/components/ScheduleHeader'
 import IdolIndicator from '../../../src/screens/Feed/components/IdolIndicator'
 import FeedCard from '../../components/Card/FeedCard'
+import SearchButton from '../../components/button/SearchButton'
 import { FEED_CALENDAR_SCREEN, FEED_LINK_SCREEN } from '../Navigation'
+
 
 // 달력 출력 폼 설정
 const today = (() => {
@@ -45,6 +47,22 @@ LocaleConfig.locales['kr'] = {
   dayNamesShort: ['일', '월','화','수','목','금','토']
 };
 LocaleConfig.defaultLocale = 'kr';
+
+class DayNames extends Component {
+  render() {
+    return (    
+    <View style={styles.dayNamesBox}>
+        <Text style={[styles.dayNames, {color: '#FF0000'}]}>일</Text>
+        <Text style={[styles.dayNames]}>월</Text>
+        <Text style={[styles.dayNames]}>화</Text>
+        <Text style={[styles.dayNames]}>수</Text>    
+        <Text style={[styles.dayNames]}>목</Text>
+        <Text style={[styles.dayNames]}>금</Text>
+        <Text style={[styles.dayNames, {color: '#0258BB'}]}>토</Text>        
+      </View>
+    )
+  }
+}
 
 class FeedCalendar extends Component {  
   constructor(props) {
@@ -200,7 +218,7 @@ class FeedCalendar extends Component {
           <TouchableOpacity onPress={this.onBackButton}>
             <Icon name='layers' style={{paddingRight: 12}} size={22}/>
           </TouchableOpacity>
-          <Icon name='search' style={{paddingRight: 12}} size={22}/>
+          <SearchButton componentId={this.props.componentId}/>          
         </View>
 
         {this.state.toggleDate && Platform.OS == 'ios'
@@ -215,7 +233,7 @@ class FeedCalendar extends Component {
         }
 
         <IdolIndicator/>
-
+        <DayNames />
         <Calendar
           current={this.state.chosenDate}
           monthFormat={'yyyy년 MM월'}
@@ -289,6 +307,18 @@ const styles = StyleSheet.create({
     flexDirection:'row',
     position: 'relative',
     zIndex: 999
+  },
+  dayNamesBox: {
+    borderColor: '#eee',
+    borderBottomWidth: 1,
+    flexDirection: 'row', 
+    paddingVertical: 5,
+    marginHorizontal: 10,
+    justifyContent: 'space-around'
+  },
+  dayNames: {
+    textAlign: 'center',
+    fontSize: 12,
   },
   date: {
     fontSize: 20, 
