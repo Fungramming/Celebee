@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Text, SafeAreaView, View, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, Dimensions, Image } from 'react-native'
 import Icon from 'react-native-vector-icons/Feather';
 import Modal from "react-native-modal";
+import MultiSelectView from 'react-native-multiselect-view'
 
 class ScheduleHeader extends Component {
   constructor(props){
@@ -12,6 +13,7 @@ class ScheduleHeader extends Component {
       isSelectedTime: false,
       oClock: false,
       fiveMinAgo: false,
+      times: ['정시', '5분 전', '10분 전', '15분 전', '30분 전', '1시간 전', '2시간 전', '3시간 전', '12시간 전', '1일 전', '2일 전', '1주일 전',]
     };
     this._toggleModal = this._toggleModal.bind(this)
     this.setAlarm = this.setAlarm.bind(this)
@@ -64,7 +66,7 @@ class ScheduleHeader extends Component {
             {/* 알람 모달 */}
             <Modal isVisible={this.state.isAlarmModalVisible} style={{justifyContent: "flex-end", margin: 0}} backdropOpacity={0.2} deviceHeight={Dimensions.get('window').height}>
               <Icon name='x' size={25} style={styles.alarmToggleBtn} onPress={this._toggleModal} />
-              <View style={styles.alarmContentsWrap}>
+              {/* <View style={styles.alarmContentsWrap}>
                 <TouchableOpacity style={{width: '33%'}} onPress={this.selectedTime}>
                   <Text style={[styles.alarmTxt, this.state.isSelectedTime ? changeText : null]}>정시</Text>
                 </TouchableOpacity>
@@ -104,7 +106,20 @@ class ScheduleHeader extends Component {
                 <TouchableOpacity onPress={this.setAlarm}>
                   <Text style={styles.alarmComp}>확인</Text>
                 </TouchableOpacity>
+              </View> */}
+              <View style={styles.alarmContentsWrap}>
+                <MultiSelectView
+                  ref='list2'
+                  data={this.state.times}
+                  inactiveContainerStyle={styles.alarmTxt}
+                  // activeTextStyle={styles.activeText}
+                  // inactiveTextStyle={styles.inactiveText}
+                />
+                <TouchableOpacity onPress={this.setAlarm}>
+                  <Text style={styles.alarmComp}>확인</Text>
+                </TouchableOpacity>
               </View>
+
             </Modal>
 
           </View>
@@ -170,10 +185,10 @@ const styles = StyleSheet.create({
     borderRadius: 15
   },
   alarmTxt: {
-    fontSize: 14,
-    textAlign: 'center',
-    paddingVertical: 20,
-    color: '#252525'
+    // fontSize: 14,
+    // textAlign: 'center',
+    // paddingVertical: 20,
+    // color: '#252525'
   },
   alarmComp: {
     width: Dimensions.get('window').width -24, 
@@ -181,8 +196,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#fff', 
     fontSize: 18,
-    paddingVertical: 14, 
-    borderRadius: 15, 
+    paddingVertical: 10, 
+    borderRadius: 15,
     marginTop: 5
   }
 })
