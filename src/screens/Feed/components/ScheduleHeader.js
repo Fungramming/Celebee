@@ -179,8 +179,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#fff', 
     fontSize: 18,
-    paddingVertical: 14, 
-    borderRadius: 15, 
+    paddingVertical: 10, 
+    borderRadius: 15,
     marginTop: 5
   }
 })
