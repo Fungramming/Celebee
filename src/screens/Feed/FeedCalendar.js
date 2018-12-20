@@ -17,10 +17,13 @@ import Icon from 'react-native-vector-icons/Feather';
 import { connect } from 'react-redux'
 import { Calendar, LocaleConfig} from 'react-native-calendars';
 import { Navigation } from 'react-native-navigation';
+import Modal from "react-native-modal";
 
 // import { FEED_CALENDAR_TOP_BAR } from '../Navigation'
 import ScheduleHeader from '../../../src/screens/Feed/components/ScheduleHeader'
 import IdolIndicator from '../../../src/screens/Feed/components/IdolIndicator'
+import FeedCard from '../../components/Card/FeedCard'
+import { FEED_CALENDAR_SCREEN, FEED_LINK_SCREEN } from '../Navigation'
 
 // 달력 출력 폼 설정
 const today = (() => {
@@ -65,11 +68,17 @@ class FeedCalendar extends Component {
         '2018-12-16': { marked: true, dotColor: 'purple',},
         '2018-12-17': { marked: true, dotColor: 'purple',},
         '2018-12-19': {marked: true, dotColor: 'purple',}
-      }
+      },
+
+      isFeedModalVisible: true
+
     };
     this.setDate = this.setDate.bind(this);
     this.onDayPress = this.onDayPress.bind(this);
     this.onBackButton = this.onBackButton.bind(this);
+    this.onToggleDate = this.onToggleDate.bind(this);
+    this.onToggleModal = this.onToggleModal.bind(this);
+    this.onPressLink = this.onPressLink.bind(this);
   }
 
   setDate(newDate) {
@@ -112,7 +121,14 @@ class FeedCalendar extends Component {
     }))    
   }
 
-  _onToggleDate() {
+  onToggleModal() {
+    this.setState(prevState => ({ 
+      ...prevState,
+      isFeedModalVisible: !this.state.isFeedModalVisible 
+    }));
+  }
+
+  onToggleDate() {
     const toggle = !this.state.toggleDate;
     this.setState(prevState => ({
       ...prevState,
@@ -146,13 +162,37 @@ class FeedCalendar extends Component {
     Navigation.pop(this.props.componentId);
   }
 
+  onPressLink() {
+    this.setState(prevState => ({
+      ...prevState,
+      isFeedModalVisible: false
+    }))
+
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: FEED_LINK_SCREEN,
+        passProps: {
+          url: 'https://naver.com',          
+        },
+        options: { 
+          topBar: {
+            visible: false, drawBehind: true,  
+          },
+          bottomTabs: { 
+            visible: false, drawBehind: true,
+          }
+        }
+      }
+    })
+  }
+
   render() {
     let options = { year: 'numeric', month: 'long', day: 'numeric' };  
     return (
       <SafeAreaView>
         <StatusBar barStyle="dark-content"/>
         <View style={styles.header}>        
-          <Text style={styles.date} onPress={() => this._onToggleDate()}>
+          <Text style={styles.date} onPress={this.onToggleDate}>
             {this.state.chosenDate.toLocaleDateString('ko-KR', options)}
             &nbsp;
             {this.state.toggleDate ? <Icon name='chevron-up' size={22}/> : <Icon name='chevron-down' size={22}/>}
@@ -189,11 +229,33 @@ class FeedCalendar extends Component {
         <ScrollView
           ref="scrollView"
           style={styles.scrollArea}
-          // scrollEventThrottle={16}
-          // onScroll={ console.log('hahahaah')} 
           showsVerticalScrollIndicator={false}>
-          <ScheduleHeader/>           
+          <View onPress={this.onToggleModal}>
+            <ScheduleHeader />
+          </View>
         </ScrollView>
+
+        {/* <FlatList
+          // horizontal={true}
+          showsVerticalScrollIndicator={false}
+          // data={this.state.follow_idol_id}
+          renderItem={() => {
+            return <TouchableOpacity onPress={this.onToggleModal}><ScheduleHeader /></TouchableOpacity>
+          }}
+          keyExtractor={(item, index) => index.toString()} 
+        >
+        </FlatList> */}
+
+
+        {/* 피드 모달 */}
+
+          <Modal isVisible={this.state.isFeedModalVisible} style={{justifyContent: "center", margin: 0}} deviceHeight={Dimensions.get('window').height}>
+            <Text style={styles.feedToggleBtn} onPress={this.onToggleModal} />
+            <View>
+              <FeedCard onLink={this.onPressLink}/>
+            </View>
+          </Modal>
+
 
       </SafeAreaView>
     )
@@ -242,6 +304,12 @@ const styles = StyleSheet.create({
   },
   scrollArea: {
     paddingHorizontal: 12,
-    height: 360
-  }
+    height: 292
+  },
+  feedToggleBtn: {
+    position: 'absolute',
+    top: 0,
+    height: Dimensions.get('window').height, 
+    width: Dimensions.get('window').width 
+  },
 });

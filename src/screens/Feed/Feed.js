@@ -8,7 +8,8 @@ import {
   View, 
   Text, 
   StyleSheet, 
-  TouchableOpacity, 
+  TouchableOpacity,
+  Dimensions,
   DatePickerIOS, 
   DatePickerAndroid,
   NativeModules,
@@ -61,7 +62,13 @@ class Feed extends Component {
       chosenDate: new Date(),
       follow_idol_id: this.props.userInfo.follow_idol_id,
       toggleDate: false,
+
+      toggleDetail: false,
+
       selectedDay: today,
+
+      // isModalVisible: false,
+
       markedDates: {
         // '2018-12-12': {selected: true, marked: true, selectedColor: 'white', dotColor: 'purple'},
         '2018-12-12': {marked: true, dotColor: "purple"},
@@ -74,6 +81,8 @@ class Feed extends Component {
     this.watchScroll = this.watchScroll.bind(this);
     this.onPressLink = this.onPressLink.bind(this)
     this.onPressCalendar = this.onPressCalendar.bind(this)
+    this.onToggleDetail = this.onToggleDetail.bind(this)
+    this.onToggleDate = this.onToggleDate.bind(this)
   }
   
   setDate(newDate) {
@@ -82,7 +91,15 @@ class Feed extends Component {
     })
   }
 
-  _onToggleDate() {
+  onToggleDetail() {
+    const toggle = !this.state.toggleDetail;
+    this.setState(prevState => ({
+      ...prevState,
+      toggleDetail: toggle
+    }))
+  }
+
+  onToggleDate() {
     const toggle = !this.state.toggleDate;
     this.setState(prevState => ({
       ...prevState,
@@ -185,7 +202,7 @@ class Feed extends Component {
         <View style={styles.container}>
           <StatusBar barStyle="dark-content"/>
           <View style={styles.header}>
-            <Text style={styles.date} onPress={() => this._onToggleDate()}>
+            <Text style={styles.date} onPress={this.onToggleDate}>
               {this.state.chosenDate.toLocaleDateString('ko-KR', options)}
               &nbsp;
               {this.state.toggleDate ? <Icon name='chevron-up' size={22}/> : <Icon name='chevron-down' size={22}/>}
@@ -214,9 +231,21 @@ class Feed extends Component {
             scrollEventThrottle={16}
             onScroll={ () => this.watchScroll() }
             showsVerticalScrollIndicator={false}>
-            <FeedCard onLink = {this.onPressLink}></FeedCard>
-            <FeedCard onLink = {this.onPressLink}></FeedCard>
-            <FeedCard onLink = {this.onPressLink}></FeedCard>            
+            <FeedCard onLink = {this.onPressLink} detail={this.onToggleDetail}></FeedCard>
+            <FeedCard onLink = {this.onPressLink} detail={this.onToggleDetail}></FeedCard>
+            <FeedCard onLink = {this.onPressLink} detail={this.onToggleDetail}></FeedCard>        
+
+            {this.state.toggleDetail 
+              ? 
+              <Text style={styles.feedDetail} onPress={this.onToggleDetail}>
+                <Text>피드 상세 내용</Text>
+                <Text style={styles.feedDetailText}>
+                  생방송 SBS 인기가요 - 사전 녹화 * 일 시 : 2018. 12. 09. (일) 09:00 AM * 장 소 : SBS 등촌동 공개홀 상단의 시간은 입장 번호 배정 시작 시간이니 착오 없으시기 바라며, 입장 시간은 일정하지 않고 방송국 상황에 따라 달라질 수 있으니, 가급적 일찍 도착해 주시기 바랍니다. 많은 참여 부탁 드립니다. [ 참여 방법 ] http://redvelvet.smtown.com/ 참여방법은 해당 링크를 참조해주세요!
+                </Text>
+              </Text>
+              : null
+            }
+
           </ScrollView>
 
         </View>
@@ -263,5 +292,20 @@ const styles = StyleSheet.create({
     top: -107,
     left: 0,
     zIndex: 998,
+  },
+  feedDetail: {
+    height: 490,
+    width: Dimensions.get('window').width,
+    paddingHorizontal: 12,
+    paddingTop: 12,
+    marginTop: 10,
+    backgroundColor: '#f5f5f5',
+    position: 'absolute',
+    top: 72,
+    zIndex: 99
+  },
+  feedDetailText: {
+    color: '#505050',
+    fontSize: 16,
   },
 });
