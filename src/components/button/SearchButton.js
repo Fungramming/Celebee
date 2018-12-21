@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View } from 'react-native'
+import { Text, View, Image, TouchableOpacity } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 
 import { SEARCH_SCREEN } from '../../screens/Navigation'
@@ -22,7 +22,9 @@ export default class SearchButton extends Component {
   render() {
     return (
       <View>
-        <Text onPress={this.onPressSearch}> searchButton </Text>
+        <TouchableOpacity onPress={this.onPressSearch}>
+          <Image style={{width: 25, height: 25, marginLeft: 15}} source={require('../../../assets/search.png')} />
+        </TouchableOpacity>
       </View>
     )
   }

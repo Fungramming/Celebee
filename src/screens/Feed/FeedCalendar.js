@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import { 
   SafeAreaView, 
   StyleSheet, 
-  Text, 
+  Text,
+  Image, 
   View, 
   TouchableWithoutFeedback,
   TouchableOpacity, 
@@ -216,7 +217,7 @@ class FeedCalendar extends Component {
             {this.state.toggleDate ? <Icon name='chevron-up' size={22}/> : <Icon name='chevron-down' size={22}/>}
           </Text>        
           <TouchableOpacity onPress={this.onBackButton}>
-            <Icon name='layers' style={{paddingRight: 12}} size={22}/>
+            <Image style={styles.iconSize} source={require('../../../assets/feed.png')} />
           </TouchableOpacity>
           <SearchButton componentId={this.props.componentId}/>          
         </View>
@@ -303,7 +304,7 @@ const styles = StyleSheet.create({
   header: {
     paddingTop: 10,
     paddingBottom: 17,
-    paddingLeft: 12,
+    paddingHorizontal: 12,
     flexDirection:'row',
     position: 'relative',
     zIndex: 999
@@ -342,4 +343,8 @@ const styles = StyleSheet.create({
     height: Dimensions.get('window').height, 
     width: Dimensions.get('window').width 
   },
+  iconSize: {
+    width: 25,
+    height: 25
+  }
 });
