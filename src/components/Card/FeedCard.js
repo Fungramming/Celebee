@@ -51,6 +51,14 @@ export default class FeedCard extends Component {
     this.onPressLink = this.onPressLink.bind(this)
   }
   
+  componentDidMount() {
+    console.log('this.props :', this.props);
+    this.setState(prevState=>({
+      ...prevState,
+      date: this.props.date
+    }))
+  }
+  
   onPressLink() {
     this.props.onLink()
   }
@@ -67,7 +75,7 @@ export default class FeedCard extends Component {
     return (
       <View style={styles.container}>
         <ScheduleHeader detail={this.props.detail}/>
-
+        <Text>{this.state.date}</Text>
         <View style={{marginHorizontal: -12}}>
           <Text style={styles.feedItemsTitle}>뉴 스</Text>
           <FlatList

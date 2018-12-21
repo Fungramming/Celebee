@@ -58,9 +58,10 @@ class ScheduleHeader extends Component {
               <Text style={styles.feedHeaderText}> 스케줄, 기사 제목 영역 </Text>
               <Text style={styles.feedHeaderSubText}> PM 06:00 | 스케줄 장소 및 방송 채널 입력 </Text>
             </View>
-            <TouchableOpacity onPress={this._toggleModal} >
-              {/* <Icon style={styles.feedHeaderAlarm} onPress={this._toggleModal} name='bell' size={25}/> */}
-              <Text>gogogogogo</Text>
+            <TouchableOpacity style={styles.feedHeaderAlarm} onPress={this._toggleModal} >
+              <Image  
+                style={[, { width:30, height: 30}]}
+                source={require('../../../../assets/alarm.png')}></Image>
             </TouchableOpacity>
 
             {/* 알람 모달 */}
@@ -164,9 +165,8 @@ const styles = StyleSheet.create({
   feedHeaderAlarm: {
     position: 'absolute',
     top: 25,
-    right: 100,
+    right: 0,
     zIndex: 999999,
-    backgroundColor:'yellow'
   },
   alarmToggleBtn: {
     color:'#fff', 
