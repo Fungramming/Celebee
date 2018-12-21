@@ -128,7 +128,7 @@ class Search extends Component {
           <View>
 
           </View>
-          {this.state.searchedWordsVisible ? 
+          {this.state.searchedWordsVisible && this.state.searchedWords.length > 0 ?  
           <View>
             <Text style={styles.tilte}>최근 검색어</Text>        
             <FlatList

@@ -6,6 +6,7 @@ import {
   SafeAreaView, 
   StatusBar, 
   ScrollView, 
+  FlatList,
   View, 
   Text, 
   StyleSheet, 
@@ -64,20 +65,10 @@ class Feed extends Component {
       chosenDate: new Date(),
       follow_idol_id: this.props.userInfo.follow_idol_id,
       toggleDate: false,
-
       toggleDetail: false,
-
-      selectedDay: today,
-
-      // isModalVisible: false,
-
-      markedDates: {
-        // '2018-12-12': {selected: true, marked: true, selectedColor: 'white', dotColor: 'purple'},
-        '2018-12-12': {marked: true, dotColor: "purple"},
-        '2018-12-13': {marked: true},
-        '2018-12-14': {selected: true, marked: true, dotColor: 'purple', activeOpacity: 0},
-        '2018-12-15': {disabled: true, disableTouchEvent: true}
-      }
+      selectedDay: today,           
+      testData: ["2010-10-10","2010-10-11"],
+      refreshing: false
     };
     this.setDate = this.setDate.bind(this);
     this.watchScroll = this.watchScroll.bind(this);
@@ -85,6 +76,8 @@ class Feed extends Component {
     this.onPressCalendar = this.onPressCalendar.bind(this)
     this.onToggleDetail = this.onToggleDetail.bind(this)
     this.onToggleDate = this.onToggleDate.bind(this)
+    this.onEndReached = this.onEndReached.bind(this)
+    this.onRefresh = this.onRefresh.bind(this)
   }
   
   setDate(newDate) {
@@ -196,6 +189,20 @@ class Feed extends Component {
     } 
   }
   
+  onEndReached() {
+    let newA = this.state.testData
+    console.log('newA', newA)
+    this.setState(prevState => ({
+      ...prevState,
+      testData: [...prevState.testData, "2010-10-12", "2010-10-13"]
+    }));
+    console.log('this.state.testData', this.state)
+  }
+
+  onRefresh() {
+    console.log('111111111111111111111111111111111', 111111111111111111111111111111111)
+  }
+
   render() {
     // 날짜 출력 폼
     let options = { year: 'numeric', month: 'long', day: 'numeric' };  
@@ -229,7 +236,22 @@ class Feed extends Component {
 
           <IdolIndicator />
 
-          <ScrollView
+          <FlatList
+
+            data={this.state.testData}
+            initialNumToRender={20}
+            onEndReachedThreshold={0.2}
+            onEndReached={this.onEndReached}
+            refreshing={this.state.refreshing}
+            onRefresh={this.onRefresh}
+            showsVerticalScrollIndicator={false}
+            renderItem={({ item }) => {
+              return <FeedCard date={item}></FeedCard>                              
+            }}
+            keyExtractor={(index) => index.toString()}
+          />
+
+          {/* <ScrollView
             ref="scrollView"
             scrollEventThrottle={16}
             onScroll={ () => this.watchScroll() }
@@ -249,7 +271,7 @@ class Feed extends Component {
               : null
             }
 
-          </ScrollView>
+          </ScrollView> */}
 
         </View>
       </SafeAreaView>
