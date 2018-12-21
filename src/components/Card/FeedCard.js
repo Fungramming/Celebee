@@ -60,6 +60,7 @@ export default class FeedCard extends Component {
   }
   
   onPressLink() {
+    console.log('this.props :', this.props);
     this.props.onLink()
   }
   

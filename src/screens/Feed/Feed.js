@@ -246,7 +246,7 @@ class Feed extends Component {
             onRefresh={this.onRefresh}
             showsVerticalScrollIndicator={false}
             renderItem={({ item }) => {
-              return <FeedCard date={item}></FeedCard>                              
+              return <FeedCard onLink = {this.onPressLink} detail={this.onToggleDetail} date={item}></FeedCard>                              
             }}
             keyExtractor={(index) => index.toString()}
           />
