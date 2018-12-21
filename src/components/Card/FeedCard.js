@@ -46,9 +46,11 @@ export default class FeedCard extends Component {
           title: 'Really Bad Boy 컴백 티저 최초 공개!'
         },
       ],
+      toggleDetail: false,
     };
 
     this.onPressLink = this.onPressLink.bind(this)
+    this.onToggleDetail = this.onToggleDetail.bind(this)
   }
   
   componentDidMount() {
@@ -64,6 +66,14 @@ export default class FeedCard extends Component {
     this.props.onLink()
   }
   
+  onToggleDetail() {
+    const toggle = !this.state.toggleDetail;
+    this.setState(prevState => ({
+      ...prevState,
+      toggleDetail: toggle
+    }))
+  }
+
   shareContents() {
     Share.share({
       message: 'BAM: we\'re helping your business with awesome React Native apps',
@@ -75,8 +85,19 @@ export default class FeedCard extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <ScheduleHeader detail={this.props.detail}/>
+        <ScheduleHeader detail={this.onToggleDetail}/>
+        {this.state.toggleDetail 
+          ? 
+          <Text style={styles.feedDetail}>
+            <Text>피드 상세 내용</Text>
+            <Text style={styles.feedDetailText}>
+              생방송 SBS 인기가요 - 사전 녹화 * 일 시 : 2018. 12. 09. (일) 09:00 AM * 장 소 : SBS 등촌동 공개홀 상단의 시간은 입장 번호 배정 시작 시간이니 착오 없으시기 바라며, 입장 시간은 일정하지 않고 방송국 상황에 따라 달라질 수 있으니, 가급적 일찍 도착해 주시기 바랍니다. 많은 참여 부탁 드립니다. [ 참여 방법 ] http://redvelvet.smtown.com/ 참여방법은 해당 링크를 참조해주세요!
+            </Text>
+          </Text>
+          : null
+        }
         <Text>{this.state.date}</Text>
+
         <View style={{marginHorizontal: -12}}>
           <Text style={styles.feedItemsTitle}>뉴 스</Text>
           <FlatList
@@ -132,6 +153,21 @@ const styles = StyleSheet.create({
     borderTopColor: '#f2f2f2',
     borderTopWidth: 1.25,
     backgroundColor: '#fff'
+  },
+  feedDetail: {
+    height: 508,
+    width: Dimensions.get('window').width,
+    paddingHorizontal: 12,
+    paddingTop: 12,
+    marginTop: 10,
+    backgroundColor: '#f5f5f5',
+    position: 'absolute',
+    top: 72,
+    zIndex: 99
+  },
+  feedDetailText: {
+    color: '#505050',
+    fontSize: 16,
   },
   feedItemsTitle: {
     fontSize: 18,
