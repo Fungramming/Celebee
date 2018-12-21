@@ -9,7 +9,8 @@ import {
   TouchableWithoutFeedback, 
   TouchableOpacity,
   Dimensions,
-  Keyboard 
+  Keyboard,
+  Image
 } from 'react-native'
 import { connect } from "react-redux";
 import Icon from 'react-native-vector-icons/AntDesign';
@@ -112,7 +113,7 @@ class Search extends Component {
       <TouchableWithoutFeedback onPress={this.dismissKeyboard}>
         <View style={styles.container}>            
           <View style={styles.searchBar}>
-            <Icon name="search1" size={24}></Icon>
+            <Image style={{width: 25, height: 25}} source={require('../../../assets/search.png')} />            
             <TextInput 
                 ref={(input) => { this.textInput = input; }}
                 style={styles.textInput}

@@ -99,11 +99,15 @@ export default class FeedCard extends Component {
         </View>
         <View style={styles.feedBottom}>
             <View style={styles.feedBottomLeft}>
-              <Icon name='heart' size={25} style={{paddingRight: 22}}/>
-              <Icon name='message-circle' size={25}/>
+              <TouchableOpacity style={{paddingRight: 22}}>
+                <Image style={styles.iconSize} source={require('../../../assets/like.png')} />
+              </TouchableOpacity>
+              <TouchableOpacity>
+                <Image style={styles.iconSize} source={require('../../../assets/comment.png')} />
+              </TouchableOpacity>
             </View>
             <TouchableOpacity style={styles.feedBottomRight} onPress={() => this.shareContents()}>
-              <Icon name='share-2' size={25}/>
+              <Image style={styles.iconSize} source={require('../../../assets/share.png')} />
             </TouchableOpacity>
         </View>
       </View>
@@ -148,4 +152,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginRight: 'auto',
   },
+  iconSize: {
+    width: 25,
+    height: 25
+  }
 });

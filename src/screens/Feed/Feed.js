@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { 
   Share,
+  Image,
   Platform, 
   SafeAreaView, 
   StatusBar, 
@@ -206,10 +207,11 @@ class Feed extends Component {
             <Text style={styles.date} onPress={this.onToggleDate}>
               {this.state.chosenDate.toLocaleDateString('ko-KR', options)}
               &nbsp;
-              {this.state.toggleDate ? <Icon name='chevron-up' size={22}/> : <Icon name='chevron-down' size={22}/>}
+              {this.state.toggleDate ? <Image style={styles.iconSize} source={require('../../../assets/up.png')}/> : <Image style={styles.iconSize} source={require('../../../assets/down.png')}/> }
+              {/* {this.state.toggleDate ? <Icon name='chevron-up' size={22}/> : <Icon name='chevron-down' size={22}/>} */}
             </Text>
             <TouchableOpacity onPress={this.onPressCalendar}>
-              <Icon name='calendar' style={{paddingRight: 12}} size={22}/>
+              <Image style={styles.iconSize} source={require('../../../assets/calendar.png')} />
             </TouchableOpacity>
             <SearchButton componentId={this.props.componentId}/>
           </View>
@@ -309,4 +311,8 @@ const styles = StyleSheet.create({
     color: '#505050',
     fontSize: 16,
   },
+  iconSize: {
+    width: 25,
+    height: 25
+  }
 });
