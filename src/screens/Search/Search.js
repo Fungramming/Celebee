@@ -36,12 +36,14 @@ class Search extends Component {
     try {
       let user = await AsyncStorage.getItem('user') 
       user = JSON.parse(user)
+      if(user.searchedWords == undefined){
+        user.searchedWords = []
+      }
       this.setState({
         uid: user.uid,
         token: user.accessToken,
         searchedWords: user.searchedWords
       }) 
-      console.log('after this.state :', this.state);
     } catch (e) {
 
     }     

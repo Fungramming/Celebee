@@ -14,7 +14,7 @@ import {
   StatusBar,
   DatePickerIOS,
   DatePickerAndroid } from 'react-native'
-import Icon from 'react-native-vector-icons/Feather';
+import Icon from 'react-native-vector-icons/Entypo';
 import { connect } from 'react-redux'
 import { Calendar, LocaleConfig} from 'react-native-calendars';
 import { Navigation } from 'react-native-navigation';
@@ -26,7 +26,6 @@ import IdolIndicator from '../../../src/screens/Feed/components/IdolIndicator'
 import FeedCard from '../../components/Card/FeedCard'
 import SearchButton from '../../components/button/SearchButton'
 import { FEED_CALENDAR_SCREEN, FEED_LINK_SCREEN } from '../Navigation'
-
 
 // 달력 출력 폼 설정
 const today = (() => {
@@ -100,6 +99,10 @@ class FeedCalendar extends Component {
     this.onPressLink = this.onPressLink.bind(this);
   }
 
+  componentDidMount() {
+    this.onDayPress(this.state.chosenDate)
+  }
+
   setDate(newDate) {
     this.setState({
       chosenDate: newDate,
@@ -119,6 +122,7 @@ class FeedCalendar extends Component {
   }
 
   onDayPress(date) {    
+    console.log('date', date)
     // DATEPICKER 리턴값과 캘린더 리턴값이 다름
     if(date.dateString == undefined){
       date = date
@@ -214,14 +218,14 @@ class FeedCalendar extends Component {
           <Text style={styles.date} onPress={this.onToggleDate}>
             {this.state.chosenDate.toLocaleDateString('ko-KR', options)}
             &nbsp;
-            {this.state.toggleDate ? <Icon name='chevron-up' size={22}/> : <Icon name='chevron-down' size={22}/>}
+            {Platform.OS == "android"?<Icon name="popup" size={22} /> :this.state.toggleDate ? <Image style={styles.iconSize} source={require('../../../assets/up.png')}/> : <Image style={styles.iconSize} source={require('../../../assets/down.png')}/> }
+            {/* {this.state.toggleDate ? <Icon name='chevron-up' size={22}/> : <Icon name='chevron-down' size={22}/>} */}
           </Text>        
           <TouchableOpacity onPress={this.onBackButton}>
             <Image style={styles.iconSize} source={require('../../../assets/feed.png')} />
           </TouchableOpacity>
           <SearchButton componentId={this.props.componentId}/>          
         </View>
-
         {this.state.toggleDate && Platform.OS == 'ios'
         ? <DatePickerIOS
           date={this.state.chosenDate}
@@ -232,19 +236,16 @@ class FeedCalendar extends Component {
         />
         : null
         }
-
         <IdolIndicator/>
         <DayNames />
         <Calendar
           current={this.state.chosenDate}
           monthFormat={'yyyy년 MM월'}
           onDayPress={this.onDayPress}
-          // hideDayNames={true}
           hideExtraDays
           hideArrows={true}
           markedDates={this.state.schedules}
         />
-
         <ScrollView
           ref="scrollView"
           style={styles.scrollArea}
@@ -253,18 +254,6 @@ class FeedCalendar extends Component {
             <ScheduleHeader />
           </View>
         </ScrollView>
-
-        {/* <FlatList
-          // horizontal={true}
-          showsVerticalScrollIndicator={false}
-          // data={this.state.follow_idol_id}
-          renderItem={() => {
-            return <TouchableOpacity onPress={this.onToggleModal}><ScheduleHeader /></TouchableOpacity>
-          }}
-          keyExtractor={(item, index) => index.toString()} 
-        >
-        </FlatList> */}
-
 
         {/* 피드 모달 */}
 

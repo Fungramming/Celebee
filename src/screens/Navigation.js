@@ -13,6 +13,7 @@ import Feed from './Feed/Feed'
 import FeedCalendar from './Feed/FeedCalendar'
 import FeedLink from './Feed/FeedLink'
 import Board from './Board/Board'
+import Comments from '../components/Modal/CommentModal'
 import Alarm from './Alarm/Alarm.js'
 import MyPage from './MyPage/MyPage' 
 import EditIdol from './MyPage/EditIdol' 
@@ -30,6 +31,7 @@ export const FEED_SCREEN = 'Celebee.FeedScreen';
 export const FEED_CALENDAR_SCREEN = 'Celebee.FeedCalendarScreen';
 export const FEED_LINK_SCREEN = 'Celebee.FeedLinkScreen'
 export const BOARD_SCREEN = 'Celebee.BoardScreen';
+export const COMMENTS_MODAL = 'Celebee.CommentsModal';
 export const ALARM_SCREEN = 'Celebee.AlarmScreen';
 export const MYPAGE_SCREEN = 'Celebee.MyPageScreen';
 export const MYPAGE_EDIT_IDOL_SCREEN = 'Celebee.MyPageEditIdolScreen';
@@ -48,6 +50,7 @@ Screens.set(FEED_SCREEN, Feed)
 Screens.set(FEED_CALENDAR_SCREEN, FeedCalendar)
 Screens.set(FEED_LINK_SCREEN, FeedLink)
 Screens.set(BOARD_SCREEN, Board)
+Screens.set(COMMENTS_MODAL, Comments)
 Screens.set(ALARM_SCREEN, Alarm)
 Screens.set(MYPAGE_SCREEN, MyPage)
 Screens.set(MYPAGE_EDIT_IDOL_SCREEN, EditIdol)
@@ -219,6 +222,17 @@ export const SearchScreen = () => Navigation.setRoot({
       name: SEARCH_SCREEN,
       passProps: {
         text: 'search screen'
+      }
+    }
+  }
+})
+
+export const CommentsModal = () => Navigation.setRoot({
+  root: {
+    component: {
+      name: COMMENTS_MODAL,
+      passProps: {
+        text: 'comment modal'
       }
     }
   }

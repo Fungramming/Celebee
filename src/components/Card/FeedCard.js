@@ -1,7 +1,20 @@
 import React, { Component } from 'react'
-import { Share, Text, View, Image, StyleSheet, FlatList, Dimensions, TouchableOpacity, TouchableWithoutFeedback} from 'react-native'
+import { 
+  Share, 
+  Text, 
+  View, 
+  Image, 
+  StyleSheet, 
+  FlatList, 
+  Dimensions, 
+  TouchableOpacity, 
+  TouchableWithoutFeedback
+  } from 'react-native'
+import { Navigation } from 'react-native-navigation'
+
 import Icon from 'react-native-vector-icons/Feather';
 import ScheduleHeader from '../../../src/screens/Feed/components/ScheduleHeader'
+import {COMMENTS_MODAL } from '../../screens/Navigation'
 
 class FeedItems extends Component {
   render() {
@@ -16,7 +29,7 @@ class FeedItems extends Component {
 export default class FeedCard extends Component {
   constructor(props) {
     super(props);
-
+    Navigation.events().bindComponent(this);  
     this.state = { 
       news: [
         {
@@ -49,6 +62,8 @@ export default class FeedCard extends Component {
     };
 
     this.onPressLink = this.onPressLink.bind(this)
+    this.onPressComment = this.onPressComment.bind(this)
+
   }
   
   componentDidMount() {
@@ -64,6 +79,14 @@ export default class FeedCard extends Component {
     this.props.onLink()
   }
   
+  onPressComment() {
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: COMMENTS_MODAL,
+      }
+    })
+  }
+
   shareContents() {
     Share.share({
       message: 'BAM: we\'re helping your business with awesome React Native apps',
@@ -111,7 +134,7 @@ export default class FeedCard extends Component {
               <TouchableOpacity style={{paddingRight: 22}}>
                 <Image style={styles.iconSize} source={require('../../../assets/like.png')} />
               </TouchableOpacity>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={this.onPressComment}>
                 <Image style={styles.iconSize} source={require('../../../assets/comment.png')} />
               </TouchableOpacity>
             </View>
