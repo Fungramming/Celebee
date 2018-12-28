@@ -15,6 +15,8 @@
 		00E356F31AD99517003FC87E /* CelebeeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* CelebeeTests.m */; };
 		0406A19B21D5BD4D0060DD96 /* libRNImagePicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AA9392021800B7C000BC72F /* libRNImagePicker.a */; };
 		040B480121A3EE5300D4EA69 /* libReactNativeNavigation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 040B47F821A3EDE800D4EA69 /* libReactNativeNavigation.a */; };
+		0452A38421D5CC4D00029349 /* libRCTImageResizer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F63AFE2121CCAA2900929D7D /* libRCTImageResizer.a */; };
+		0452A3B321D5CD0700029349 /* libRNKakaoLogins.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A26E6622182DD2C009D643F /* libRNKakaoLogins.a */; };
 		0477240521D4798C0043E459 /* RCTRootView.m in Frameworks */ = {isa = PBXBuildFile; fileRef = 0477240421D4798B0043E459 /* RCTRootView.m */; };
 		0477240721D479D80043E459 /* RCTRootView.h in Frameworks */ = {isa = PBXBuildFile; fileRef = 0477240621D479D80043E459 /* RCTRootView.h */; };
 		0477245021D47B8E0043E459 /* RCTConvert.h in Frameworks */ = {isa = PBXBuildFile; fileRef = 0477241F21D47B8E0043E459 /* RCTConvert.h */; };
@@ -534,6 +536,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0452A38421D5CC4D00029349 /* libRCTImageResizer.a in Frameworks */,
 				0406A19B21D5BD4D0060DD96 /* libRNImagePicker.a in Frameworks */,
 				04BF3DC521D4DDF30072F545 /* libFastImage.a in Frameworks */,
 				0477245421D4B6D60043E459 /* libSplashScreen.a in Frameworks */,
@@ -542,6 +545,7 @@
 				0477240521D4798C0043E459 /* RCTRootView.m in Frameworks */,
 				040B480121A3EE5300D4EA69 /* libReactNativeNavigation.a in Frameworks */,
 				0477245121D4A82B0043E459 /* libRNGoogleSignin.a in Frameworks */,
+				0452A3B321D5CD0700029349 /* libRNKakaoLogins.a in Frameworks */,
 				1AA5072021808C5E007AA070 /* GoogleSymbolUtilities.framework in Frameworks */,
 				1AE5882621802BFB0026D836 /* FBSDKLoginKit.framework in Frameworks */,
 				ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */,

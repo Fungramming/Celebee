@@ -96,6 +96,7 @@ class EditMyProfile extends Component {
                         }
                     }));
                     
+                    console.log('@@@@@@@@@@@@@@@@@@@@@Image this.state', _this.state)
                 }).catch((err) => {
                     // Oops, something went wrong. Check that the filename is correct and
                     // inspect err to get more details.

@@ -11,6 +11,7 @@ class SelectIdolList extends Component {
       userInfo: this.props.userInfo,    
       toggle: this.props.idolToggle,
     }
+    this.onFetchIdolRequest = this.onFetchIdolRequest.bind(this)
   }
 
   componentDidUpdate() {
@@ -63,7 +64,7 @@ class SelectIdolList extends Component {
             <Text style={styles.followingNum}>{this.props.followNum}명이 팔로우합니다.</Text>
           </View>
           <View>
-            <TouchableOpacity style={buttonBg} onPress={ () => this.onFetchIdolRequest() }>
+            <TouchableOpacity style={buttonBg} onPress={this.onFetchIdolRequest}>
               <Text style={{color:'#fff', fontSize: 16}}>{textValue}</Text>
             </TouchableOpacity>
           </View>
