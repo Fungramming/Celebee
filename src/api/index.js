@@ -120,5 +120,26 @@ export default Api = {
         catch(e){
 
         }      
+    },
+
+    fetchFeed : async (payload) => {
+        try {
+            let response = await fetch( config + 'user/myidols/', {
+                method: 'post',
+                headers: {
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                        'token': payload.token
+                    },
+                    body: JSON.stringify({
+                        date: payload.date,
+                    })
+                }
+            })
+        }
+        catch(e) {
+            
+        }
     }
 }

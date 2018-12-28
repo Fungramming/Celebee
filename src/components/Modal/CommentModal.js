@@ -95,6 +95,7 @@ export default connect(mapStateToProps)(CommentModal);
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: "#fefefe"
   },  
   filter:{
     borderBottomColor: "#cecece",

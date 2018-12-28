@@ -2,13 +2,15 @@ import React, { Component } from 'react'
 import { SafeAreaView, Text, View, WebView, StyleSheet, TouchableOpacity } from 'react-native'
 import { Navigation } from 'react-native-navigation';
 import Icon from 'react-native-vector-icons/Feather';
+import Modal from "react-native-modal";
 
+import CommentModal from "../../components/Modal/CommentModal"
 
 export default class LinkView extends Component {
   constructor(props){
     super(props)
     this.state = {
-
+      isModalVisible: false
     }
     this.onPressLike = this.onPressLike.bind(this);
     this.onPressShare = this.onPressShare.bind(this);
@@ -31,12 +33,12 @@ export default class LinkView extends Component {
 
   onPressComment() {
     console.log('onPressComment')
+    this.setState({ isModalVisible: !this.state.isModalVisible });
   }
 
   onPressShare() {
     console.log('onPressShare')
   }
-
 
   render() {
     console.log('url this.props :', this.props);
@@ -61,6 +63,19 @@ export default class LinkView extends Component {
             </TouchableOpacity>
           </View>
         </View>
+        <Modal 
+          isVisible={this.state.isModalVisible}
+          onSwipe={() => this.setState({ isVisible: false })}
+          swipeDirection="down"
+          >
+          <View style={{ flex: 1 }}>
+            <Text>Hello!</Text>
+            <TouchableOpacity onPress= {this.onPressComment}>
+              <Text>Hide me!</Text>
+            </TouchableOpacity>
+            <CommentModal/>
+          </View>
+        </Modal>
         <WebView
           source={{uri: this.props.url}}      
           style={{flex:1}}
