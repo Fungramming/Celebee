@@ -13,6 +13,7 @@
 		00C302E91ABCBA2D00DB3ED1 /* libRCTNetwork.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302DC1ABCB9D200DB3ED1 /* libRCTNetwork.a */; };
 		00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302E41ABCB9EE00DB3ED1 /* libRCTVibration.a */; };
 		00E356F31AD99517003FC87E /* CelebeeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* CelebeeTests.m */; };
+		0406A19B21D5BD4D0060DD96 /* libRNImagePicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AA9392021800B7C000BC72F /* libRNImagePicker.a */; };
 		040B480121A3EE5300D4EA69 /* libReactNativeNavigation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 040B47F821A3EDE800D4EA69 /* libReactNativeNavigation.a */; };
 		0477240521D4798C0043E459 /* RCTRootView.m in Frameworks */ = {isa = PBXBuildFile; fileRef = 0477240421D4798B0043E459 /* RCTRootView.m */; };
 		0477240721D479D80043E459 /* RCTRootView.h in Frameworks */ = {isa = PBXBuildFile; fileRef = 0477240621D479D80043E459 /* RCTRootView.h */; };
@@ -533,6 +534,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0406A19B21D5BD4D0060DD96 /* libRNImagePicker.a in Frameworks */,
 				04BF3DC521D4DDF30072F545 /* libFastImage.a in Frameworks */,
 				0477245421D4B6D60043E459 /* libSplashScreen.a in Frameworks */,
 				0477245021D47B8E0043E459 /* RCTConvert.h in Frameworks */,
