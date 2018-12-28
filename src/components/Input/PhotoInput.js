@@ -49,34 +49,6 @@ class EditMyProfile extends Component {
 
     }  
 
-    // componentWillMount () {
-    //     // Keyboard.addListener('keyboardDidShow', this.keyboardWillShow.bind(this))
-    //     // Keyboard.addListener('keyboardDidHide', this.keyboardWillHide.bind(this))
-    // }
-
-    // keyboardWillShow (e) {
-    //     // LayoutAnimation.configureNext(LayoutAnimation.Presets.linear);
-    //     // LayoutAnimation.configureNext(CustomLayoutAnimation);
-    //     // let newSize = Dimensions.get('window').height - e.endCoordinates.height
-    //     this.setState(prevState => ({
-    //       ...prevState,
-    //       // visibleHeight: newSize,
-    //       imageStyle: { width: 70, height: 70, borderRadius: 12}      
-          
-    //     }))
-    //     console.log('show this.state :', this.state);
-    //   } 
-      
-    //   keyboardWillHide (e) {
-    //     this.setState(prevState => ({
-    //       ...prevState,
-    //       // visibleHeight: Dimensions.get('window').height,
-    //       imageStyle: { width: 100, height: 100, borderRadius: 28}      
-    //     }))
-    //     console.log('after this.state :', this.state);
-    
-    //   }  
-
     componentDidUpdate(prevProps, prevState) {
 
         if(prevProps.userInfo.photo && prevState.userInfo.photo !== this.state.userInfo.photo){
