@@ -9,13 +9,13 @@ export default Api = {
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
+                    'token': payload.accessToken
                 },
                 body: JSON.stringify({
                     uid: payload.uid, 
-                    token: payload.accessToken
                 }),
             })
-            console.log('response :', response);
+            console.log('this response :', response);
             const result = JSON.parse(response._bodyInit)
             if ( result.result === "fail" ) {
                 console.log('2 :', 2);
@@ -51,21 +51,21 @@ export default Api = {
 
     fetchUserInfo : async (payload) => {
         try{
+        
             let responseA = await fetch( config + 'register/', {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
+                    'token': payload.token
                 },
                 body: JSON.stringify({
                     'uid': payload.userInfo.uid,
-                    'token': payload.token,
                     'nickname': payload.userInfo.nickname,
                     'email': payload.userInfo.email
                 }),
             })
             let formData = new FormData();
-            formData.append('token', payload.token)
             formData.append('nickname', payload.userInfo.nickname);
 
             // photo가 바뀌었을때 조건: photo param 추가
@@ -81,6 +81,7 @@ export default Api = {
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'multipart/form-data',
+                    'token': payload.token
                 },
                 body:formData,
             })
@@ -103,11 +104,11 @@ export default Api = {
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
+                    'token': payload.token
                 },
                 body: JSON.stringify({
                     follow: payload.follow,
                     idol_id: payload.idol_id,
-                    token: payload.token
                 }),
             })
             let data = JSON.parse(response._bodyInit)

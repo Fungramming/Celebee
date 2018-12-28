@@ -16,13 +16,13 @@ import {
   DatePickerAndroid,
   NativeModules,
 } from "react-native";
-import Icon from 'react-native-vector-icons/Feather';
+import Icon from 'react-native-vector-icons/Entypo';
 import { connect } from 'react-redux'
 import { Calendar, LocaleConfig, CalendarList, Agenda } from 'react-native-calendars';
 import { Navigation } from 'react-native-navigation'
 
 import FeedCard from '../../components/Card/FeedCard'
-import { FEED_CALENDAR_SCREEN, FEED_LINK_SCREEN } from '../Navigation'
+import { FEED_CALENDAR_SCREEN, FEED_LINK_SCREEN, COMMENT_MODAL } from '../Navigation'
 import IdolIndicator from '../../../src/screens/Feed/components/IdolIndicator'
 import SearchButton from '../../components/button/SearchButton'
 
@@ -214,7 +214,7 @@ class Feed extends Component {
             <Text style={styles.date} onPress={this.onToggleDate}>
               {this.state.chosenDate.toLocaleDateString('ko-KR', options)}
               &nbsp;
-              {this.state.toggleDate ? <Image style={styles.iconSize} source={require('../../../assets/up.png')}/> : <Image style={styles.iconSize} source={require('../../../assets/down.png')}/> }
+              {Platform.OS == "android"?<Icon name="popup" size={22} /> :this.state.toggleDate ? <Image style={styles.iconSize} source={require('../../../assets/up.png')}/> : <Image style={styles.iconSize} source={require('../../../assets/down.png')}/> }
               {/* {this.state.toggleDate ? <Icon name='chevron-up' size={22}/> : <Icon name='chevron-down' size={22}/>} */}
             </Text>
             <TouchableOpacity onPress={this.onPressCalendar}>
@@ -237,7 +237,6 @@ class Feed extends Component {
           <IdolIndicator />
 
           <FlatList
-
             data={this.state.testData}
             initialNumToRender={20}
             onEndReachedThreshold={0.2}
@@ -246,7 +245,14 @@ class Feed extends Component {
             onRefresh={this.onRefresh}
             showsVerticalScrollIndicator={false}
             renderItem={({ item }) => {
-              return <FeedCard onLink = {this.onPressLink} detail={this.onToggleDetail} date={item}></FeedCard>                           
+              return (
+                <FeedCard 
+                  onLink={this.onPressLink} 
+                  detail={this.onToggleDetail} 
+                  date={item}
+                  componentId={this.props.componentId}
+                  ></FeedCard>                              
+                )
             }}
             keyExtractor={(index) => index.toString()}
           />

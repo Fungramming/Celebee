@@ -50,49 +50,7 @@ class ScheduleHeader extends Component {
             <Modal isVisible={this.state.isAlarmModalVisible} style={{position: 'relative', justifyContent: "flex-end", margin: 0}} backdropOpacity={0.2} deviceHeight={Dimensions.get('window').height}>
               <TouchableOpacity style={styles.alarmToggleBtn} onPress={this._toggleModal} >
                 <Image style={styles.iconSize} source={require('../../../../assets/cancle.png')} />
-              </TouchableOpacity>
-              {/* <Image style={[styles.alarmToggleBtn, styles.iconSize]} onPress={this._toggleModal} source={require('../../../../assets/cancle.png')} /> */}
-              {/* <View style={styles.alarmContentsWrap}>
-                <TouchableOpacity style={{width: '33%'}} onPress={this.selectedTime}>
-                  <Text style={[styles.alarmTxt, this.state.isSelectedTime ? changeText : null]}>정시</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={{width: '33%'}} onPress={this.selectedTime}>
-                  <Text style={[styles.alarmTxt, this.state.isSelectedTime ? changeText : null]}>5분 전</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={{width: '33%'}}>
-                  <Text style={styles.alarmTxt}>10분 전</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={{width: '33%'}}>
-                  <Text style={styles.alarmTxt}>15분 전</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={{width: '33%'}}>
-                  <Text style={styles.alarmTxt}>30분 전</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={{width: '33%'}}>
-                  <Text style={styles.alarmTxt}>1시간 전</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={{width: '33%'}}>
-                  <Text style={styles.alarmTxt}>2시간 전</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={{width: '33%'}}>
-                  <Text style={styles.alarmTxt}>3시간 전</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={{width: '33%'}}>
-                  <Text style={styles.alarmTxt}>12시간 전</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={{width: '33%'}}>
-                  <Text style={styles.alarmTxt}>1일 전</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={{width: '33%'}}>
-                  <Text style={styles.alarmTxt}>2일 전</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={{width: '33%'}}>
-                  <Text style={styles.alarmTxt}>1주일 전</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={this.setAlarm}>
-                  <Text style={styles.alarmComp}>확인</Text>
-                </TouchableOpacity>
-              </View> */}
+              </TouchableOpacity>            
               <View style={styles.alarmContentsWrap}>
                 <MultiSelectView
                   ref='list2'
