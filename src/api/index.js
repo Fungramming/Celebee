@@ -51,11 +51,22 @@ export default Api = {
 
     fetchUserInfo : async (payload) => {
         try{
+
+            // const headers = () => {
+            //     const h = new Header();
+            //     h.append('Content-type', 'application/json')
+
+
+            // }
+
             let responseA = await fetch( config + 'register/', {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
+                    // 'Authorization': "Basic " + payload.token
+                    // 'Authorization': "Bearer " + payload.token
+                    // 'Authorization': payload.token
                 },
                 body: JSON.stringify({
                     'uid': payload.userInfo.uid,
