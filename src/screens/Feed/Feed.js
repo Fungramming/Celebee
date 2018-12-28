@@ -74,7 +74,7 @@ class Feed extends Component {
     this.watchScroll = this.watchScroll.bind(this);
     this.onPressLink = this.onPressLink.bind(this)
     this.onPressCalendar = this.onPressCalendar.bind(this)
-    this.onToggleDetail = this.onToggleDetail.bind(this)
+    // this.onToggleDetail = this.onToggleDetail.bind(this)
     this.onToggleDate = this.onToggleDate.bind(this)
     this.onEndReached = this.onEndReached.bind(this)
     this.onRefresh = this.onRefresh.bind(this)
@@ -86,13 +86,13 @@ class Feed extends Component {
     })
   }
 
-  onToggleDetail() {
-    const toggle = !this.state.toggleDetail;
-    this.setState(prevState => ({
-      ...prevState,
-      toggleDetail: toggle
-    }))
-  }
+  // onToggleDetail() {
+  //   const toggle = !this.state.toggleDetail;
+  //   this.setState(prevState => ({
+  //     ...prevState,
+  //     toggleDetail: toggle
+  //   }))
+  // }
 
   onToggleDate() {
     const toggle = !this.state.toggleDate;
@@ -256,28 +256,16 @@ class Feed extends Component {
             }}
             keyExtractor={(index) => index.toString()}
           />
-
-          {/* <ScrollView
-            ref="scrollView"
-            scrollEventThrottle={16}
-            onScroll={ () => this.watchScroll() }
-            showsVerticalScrollIndicator={false}>
-            <FeedCard onLink = {this.onPressLink} detail={this.onToggleDetail}></FeedCard>
-            <FeedCard onLink = {this.onPressLink} detail={this.onToggleDetail}></FeedCard>
-            <FeedCard onLink = {this.onPressLink} detail={this.onToggleDetail}></FeedCard>        
-
-            {this.state.toggleDetail 
-              ? 
-              <Text style={styles.feedDetail} onPress={this.onToggleDetail}>
-                <Text>피드 상세 내용</Text>
-                <Text style={styles.feedDetailText}>
-                  생방송 SBS 인기가요 - 사전 녹화 * 일 시 : 2018. 12. 09. (일) 09:00 AM * 장 소 : SBS 등촌동 공개홀 상단의 시간은 입장 번호 배정 시작 시간이니 착오 없으시기 바라며, 입장 시간은 일정하지 않고 방송국 상황에 따라 달라질 수 있으니, 가급적 일찍 도착해 주시기 바랍니다. 많은 참여 부탁 드립니다. [ 참여 방법 ] http://redvelvet.smtown.com/ 참여방법은 해당 링크를 참조해주세요!
-                </Text>
+          {/* {this.state.toggleDetail 
+            ? 
+            <Text style={styles.feedDetail} onPress={this.onToggleDetail}>
+              <Text>피드 상세 내용</Text>
+              <Text style={styles.feedDetailText}>
+                생방송 SBS 인기가요 - 사전 녹화 * 일 시 : 2018. 12. 09. (일) 09:00 AM * 장 소 : SBS 등촌동 공개홀 상단의 시간은 입장 번호 배정 시작 시간이니 착오 없으시기 바라며, 입장 시간은 일정하지 않고 방송국 상황에 따라 달라질 수 있으니, 가급적 일찍 도착해 주시기 바랍니다. 많은 참여 부탁 드립니다. [ 참여 방법 ] http://redvelvet.smtown.com/ 참여방법은 해당 링크를 참조해주세요!
               </Text>
-              : null
-            }
-
-          </ScrollView> */}
+            </Text>
+            : null
+          } */}
 
         </View>
       </SafeAreaView>
@@ -324,21 +312,21 @@ const styles = StyleSheet.create({
     left: 0,
     zIndex: 998,
   },
-  feedDetail: {
-    height: 490,
-    width: Dimensions.get('window').width,
-    paddingHorizontal: 12,
-    paddingTop: 12,
-    marginTop: 10,
-    backgroundColor: '#f5f5f5',
-    position: 'absolute',
-    top: 72,
-    zIndex: 99
-  },
-  feedDetailText: {
-    color: '#505050',
-    fontSize: 16,
-  },
+  // feedDetail: {
+  //   height: 490,
+  //   width: Dimensions.get('window').width,
+  //   paddingHorizontal: 12,
+  //   paddingTop: 12,
+  //   marginTop: 10,
+  //   backgroundColor: '#f5f5f5',
+  //   position: 'absolute',
+  //   top: 72,
+  //   zIndex: 99
+  // },
+  // feedDetailText: {
+  //   color: '#505050',
+  //   fontSize: 16,
+  // },
   iconSize: {
     width: 25,
     height: 25
