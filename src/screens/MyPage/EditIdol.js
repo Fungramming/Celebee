@@ -33,6 +33,18 @@ class EditIdol extends Component {
         }
     }
 
+    componentDidUpdate(prevProps) {
+      if ( prevProps.userInfo.follow_idol_id !== this.props.userInfo.follow_idol_id || prevProps.userInfo.unfollow_idol_id !== this.props.userInfo.unfollow_idol_id) {
+        setTimeout(()=>{
+          this.setState(prevState => ({
+              ...prevState,
+              follow_idol_id: this.props.userInfo.follow_idol_id,
+              unfollow_idol_id: this.props.userInfo.unfollow_idol_id     
+          }))           
+        }, 10)
+        
+      }
+    }
     navigationButtonPressed({ buttonId }) {
       if(buttonId == "backToMypage"){
         Navigation.popToRoot(this.props.componentId);        
@@ -74,7 +86,7 @@ class EditIdol extends Component {
                   data={this.state.follow_idol_id}
                   renderItem={({item}) => {
                     const toggleFalse = false
-                    return <SelectIdolList name={item.idol_name} followNum={item.total_followers} toggleFalse={toggleFalse} id={item.id} token={token}></SelectIdolList>
+                    return <SelectIdolList name={item.idol_name} followNum={item.total_followers} toggleValid={false} id={item.id} token={token}></SelectIdolList>
                   }}
                   keyExtractor={(item, index) => index.toString()} >
                 </FlatList>
@@ -91,7 +103,7 @@ class EditIdol extends Component {
                   </TouchableOpacity>
                 </View>
                 {this.state.unfollow_idol_id.map((item, index) => (
-                  <SelectIdolList name={item.idol_name} followNum={item.total_followers} key={index} id={item.id} token={token}></SelectIdolList>
+                  <SelectIdolList name={item.idol_name} followNum={item.total_followers} toggleValid={true} key={index} id={item.id} token={token}></SelectIdolList>
                 ))} 
               </View>
             </ScrollView>

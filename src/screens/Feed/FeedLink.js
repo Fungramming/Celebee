@@ -17,7 +17,7 @@ export default class LinkView extends Component {
     this.onPressSave = this.onPressSave.bind(this);
     this.onPressComment = this.onPressComment.bind(this);
     this.onBackButton = this.onBackButton.bind(this);
-
+    this.onSwipe = this.onSwipe.bind(this);
   }
   onBackButton() {
     Navigation.pop(this.props.componentId);
@@ -38,6 +38,11 @@ export default class LinkView extends Component {
 
   onPressShare() {
     console.log('onPressShare')
+  }
+
+  onSwipe() {
+    console.log('11111111111111111 :', 11111111111111111);
+    this.setState({ isVisible: false })
   }
 
   render() {
@@ -65,7 +70,7 @@ export default class LinkView extends Component {
         </View>
         <Modal 
           isVisible={this.state.isModalVisible}
-          onSwipe={() => this.setState({ isVisible: false })}
+          onSwipe={ this.onSwipe }
           swipeDirection="down"
           >
           <View style={{ flex: 1 }}>
