@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { SafeAreaView, Text, View, WebView, StyleSheet, TouchableOpacity } from 'react-native'
+import { SafeAreaView, Text, View, WebView, StyleSheet, TouchableOpacity, Dimensions, Image } from 'react-native'
 import { Navigation } from 'react-native-navigation';
 import Icon from 'react-native-vector-icons/Feather';
 import Modal from "react-native-modal";
@@ -18,6 +18,7 @@ export default class LinkView extends Component {
     this.onPressComment = this.onPressComment.bind(this);
     this.onBackButton = this.onBackButton.bind(this);
     this.onSwipe = this.onSwipe.bind(this);
+    this.toggleModal = this.toggleModal.bind(this);
   }
   onBackButton() {
     Navigation.pop(this.props.componentId);
@@ -42,7 +43,15 @@ export default class LinkView extends Component {
 
   onSwipe() {
     console.log('11111111111111111 :', 11111111111111111);
-    this.setState({ isVisible: false })
+    this.setState({ isModalVisible: false })
+  }
+
+  
+  toggleModal() {
+    this.setState(prevState => ({ 
+      ...prevState,
+      isModalVisible: false
+    }));
   }
 
   render() {
@@ -68,18 +77,15 @@ export default class LinkView extends Component {
             </TouchableOpacity>
           </View>
         </View>
-        <Modal 
+        <Modal     
+          style={{position: 'relative', justifyContent: "flex-end", margin: 0, }} backdropOpacity={0.2} deviceHeight={Dimensions.get('window').height}
           isVisible={this.state.isModalVisible}
           onSwipe={ this.onSwipe }
           swipeDirection="down"
           >
-          <View style={{ flex: 1 }}>
-            <Text>Hello!</Text>
-            <TouchableOpacity onPress= {this.onPressComment}>
-              <Text>Hide me!</Text>
-            </TouchableOpacity>
+            <TouchableOpacity style={styles.alarmToggleBtn} onPress={this.toggleModal} >
+            </TouchableOpacity>         
             <CommentModal/>
-          </View>
         </Modal>
         <WebView
           source={{uri: this.props.url}}      
@@ -107,5 +113,12 @@ const styles = StyleSheet.create({
   headerButtons: {
     flexDirection: 'row',
     marginLeft: 'auto'
+  },
+  alarmToggleBtn: {
+    paddingRight: 12,
+    paddingBottom: 5, 
+    height: 50, 
+    paddingLeft: Dimensions.get('window').width,
+    alignSelf: 'flex-end' 
   },
 });

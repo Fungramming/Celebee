@@ -14,11 +14,16 @@ class ScheduleHeader extends Component {
       fiveMinAgo: false,
       times: ['정시', '5분 전', '10분 전', '15분 전', '30분 전', '1시간 전', '2시간 전', '3시간 전', '12시간 전', '1일 전', '2일 전', '1주일 전',]
     };
-    this._toggleModal = this._toggleModal.bind(this)
+    this.toggleModal = this.toggleModal.bind(this)
+    this.onSwipe = this.onSwipe.bind(this);
     this.setAlarm = this.setAlarm.bind(this)
   }  
 
-  _toggleModal() {
+  onSwipe() {
+    this.setState({ isAlarmModalVisible: false })
+  }
+
+  toggleModal() {
     this.setState(prevState => ({ 
       ...prevState,
       isAlarmModalVisible: !this.state.isAlarmModalVisible 
@@ -26,7 +31,7 @@ class ScheduleHeader extends Component {
   }
 
   setAlarm() {
-    this._toggleModal()
+    this.toggleModal()
   }
 
   render() {
@@ -42,28 +47,28 @@ class ScheduleHeader extends Component {
               <Text style={styles.feedHeaderText}> 스케줄, 기사 제목 영역 </Text>
               <Text style={styles.feedHeaderSubText}> PM 06:00 | 스케줄 장소 및 방송 채널 입력 </Text>
             </View>
-            <TouchableOpacity style={styles.feedHeaderAlarm} onPress={this._toggleModal} >
+            <TouchableOpacity style={styles.feedHeaderAlarm} onPress={this.toggleModal} >
               <Image style={styles.iconSize} source={require('../../../../assets/alarm.png')}/>
             </TouchableOpacity>
 
             {/* 알람 모달 */}
-            <Modal isVisible={this.state.isAlarmModalVisible} style={{position: 'relative', justifyContent: "flex-end", margin: 0}} backdropOpacity={0.2} deviceHeight={Dimensions.get('window').height}>
-              <TouchableOpacity style={styles.alarmToggleBtn} onPress={this._toggleModal} >
-                <Image style={styles.iconSize} source={require('../../../../assets/cancle.png')} />
+            <Modal 
+              onSwipe={ this.onSwipe }
+              swipeDirection="down"
+              isVisible={this.state.isAlarmModalVisible} 
+              style={{position: 'relative', justifyContent: "flex-end", margin: 0}} backdropOpacity={0.2} deviceHeight={Dimensions.get('window').height}>
+              <TouchableOpacity style={styles.alarmToggleBtn} onPress={this.toggleModal} >
               </TouchableOpacity>            
               <View style={styles.alarmContentsWrap}>
                 <MultiSelectView
                   ref='list2'
                   data={this.state.times}
-                  inactiveContainerStyle={styles.alarmTxt}
-                  // activeTextStyle={styles.activeText}
-                  // inactiveTextStyle={styles.inactiveText}
+                  inactiveContainerStyle={styles.alarmTxt}                  
                 />
                 <TouchableOpacity onPress={this.setAlarm}>
                   <Text style={styles.alarmComp}>확인</Text>
                 </TouchableOpacity>
               </View>
-
             </Modal>
 
           </View>
@@ -114,7 +119,7 @@ const styles = StyleSheet.create({
   alarmToggleBtn: {
     paddingRight: 12,
     paddingBottom: 5, 
-    paddingTop: Dimensions.get('window').height - 310, 
+    height: Dimensions.get('window').height - 310, 
     paddingLeft: Dimensions.get('window').width,
     alignSelf: 'flex-end' 
   },
