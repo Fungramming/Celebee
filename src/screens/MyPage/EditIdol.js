@@ -35,14 +35,11 @@ class EditIdol extends Component {
 
     componentDidUpdate(prevProps) {
       if ( prevProps.userInfo.follow_idol_id !== this.props.userInfo.follow_idol_id || prevProps.userInfo.unfollow_idol_id !== this.props.userInfo.unfollow_idol_id) {
-        setTimeout(()=>{
-          this.setState(prevState => ({
-              ...prevState,
-              follow_idol_id: this.props.userInfo.follow_idol_id,
-              unfollow_idol_id: this.props.userInfo.unfollow_idol_id     
-          }))           
-        }, 10)
-        
+        this.setState(prevState => ({
+            ...prevState,
+            follow_idol_id: this.props.userInfo.follow_idol_id,
+            unfollow_idol_id: this.props.userInfo.unfollow_idol_id     
+        }))
       }
     }
     navigationButtonPressed({ buttonId }) {

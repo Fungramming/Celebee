@@ -8,14 +8,14 @@ class SelectIdolList extends Component {
     super(props);
     this.state = { 
       token: this.props.token,
-      userInfo: this.props.userInfo,    
+      userInfo: this.props.userInfo,
       toggle: this.props.idolToggle,
     }
     this.onFetchIdolRequest = this.onFetchIdolRequest.bind(this)
   }
 
   componentWillMount() {
-    if (this.props.toggleFalse === false) {
+    if (this.props.toggleValid === false) {
       this.setState(prevState => ({
         ...prevState,
         toggle : false     
@@ -24,10 +24,12 @@ class SelectIdolList extends Component {
   }
 
   onFetchIdolRequest() {
-    const btntoggle = !this.state.toggle
+    console.log('@@@@@@@@@@@@@@@@@this.state.userInfo :', this.state.userInfo);
     this.setState(prevState => ({
       ...prevState,
-      toggle : btntoggle     
+      userInfo: {
+
+      }
     }))
 
     const followOrNot = this.state.toggle ? 1 : 0
@@ -40,6 +42,9 @@ class SelectIdolList extends Component {
     }
   
     this.props.fetchIdolRequest(payload)
+
+    console.log('#################this.state.userInfo :', this.state.userInfo);
+
   }
 
   render() {
@@ -61,7 +66,6 @@ class SelectIdolList extends Component {
           </View>
           <View>
             <TouchableOpacity style={buttonBg} onPress={ () => this.onFetchIdolRequest() }>
-            {/* <TouchableOpacity style={buttonBg} onPress={ () => this.onFetchIdolRequest() }> */}
               <Text style={{color:'#fff', fontSize: 16}}>{textValue}</Text>
             </TouchableOpacity>
           </View>
