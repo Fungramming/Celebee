@@ -14,9 +14,6 @@ class SelectIdolList extends Component {
     this.onFetchIdolRequest = this.onFetchIdolRequest.bind(this)
   }
 
-  componentDidUpdate() {
-    console.log('!@@this.props :', this);
-  }
   componentWillMount() {
     if (this.props.toggleFalse === false) {
       this.setState(prevState => ({
@@ -42,13 +39,12 @@ class SelectIdolList extends Component {
       token: this.state.token
     }
   
-    console.log('payload :', payload);
     this.props.fetchIdolRequest(payload)
   }
 
   render() {
 
-    const {toggle} = this.state;
+    const toggle = this.props.toggleValid
     const textValue = toggle ? "팔로우" : "팔로잉";
     const buttonBg = toggle ? styles.followBtn : styles.followingBtn
     
@@ -64,7 +60,8 @@ class SelectIdolList extends Component {
             <Text style={styles.followingNum}>{this.props.followNum}명이 팔로우합니다.</Text>
           </View>
           <View>
-            <TouchableOpacity style={buttonBg} onPress={this.onFetchIdolRequest}>
+            <TouchableOpacity style={buttonBg} onPress={ () => this.onFetchIdolRequest() }>
+            {/* <TouchableOpacity style={buttonBg} onPress={ () => this.onFetchIdolRequest() }> */}
               <Text style={{color:'#fff', fontSize: 16}}>{textValue}</Text>
             </TouchableOpacity>
           </View>

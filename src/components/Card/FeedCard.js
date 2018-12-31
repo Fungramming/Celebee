@@ -14,7 +14,7 @@ import { Navigation } from 'react-native-navigation'
 
 import Icon from 'react-native-vector-icons/Feather';
 import ScheduleHeader from '../../../src/screens/Feed/components/ScheduleHeader'
-import {COMMENTS_MODAL } from '../../screens/Navigation'
+import { COMMENTS_MODAL } from '../../screens/Navigation'
 
 class FeedItems extends Component {
   render() {

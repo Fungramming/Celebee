@@ -2,20 +2,22 @@ import React, { Component } from 'react'
 import { SafeAreaView, Text, View, WebView, StyleSheet, TouchableOpacity } from 'react-native'
 import { Navigation } from 'react-native-navigation';
 import Icon from 'react-native-vector-icons/Feather';
+import Modal from "react-native-modal";
 
+import CommentModal from "../../components/Modal/CommentModal"
 
 export default class LinkView extends Component {
   constructor(props){
     super(props)
     this.state = {
-
+      isModalVisible: false
     }
     this.onPressLike = this.onPressLike.bind(this);
     this.onPressShare = this.onPressShare.bind(this);
     this.onPressSave = this.onPressSave.bind(this);
     this.onPressComment = this.onPressComment.bind(this);
     this.onBackButton = this.onBackButton.bind(this);
-
+    this.onSwipe = this.onSwipe.bind(this);
   }
   onBackButton() {
     Navigation.pop(this.props.componentId);
@@ -31,12 +33,17 @@ export default class LinkView extends Component {
 
   onPressComment() {
     console.log('onPressComment')
+    this.setState({ isModalVisible: !this.state.isModalVisible });
   }
 
   onPressShare() {
     console.log('onPressShare')
   }
 
+  onSwipe() {
+    console.log('11111111111111111 :', 11111111111111111);
+    this.setState({ isVisible: false })
+  }
 
   render() {
     console.log('url this.props :', this.props);
@@ -61,6 +68,19 @@ export default class LinkView extends Component {
             </TouchableOpacity>
           </View>
         </View>
+        <Modal 
+          isVisible={this.state.isModalVisible}
+          onSwipe={ this.onSwipe }
+          swipeDirection="down"
+          >
+          <View style={{ flex: 1 }}>
+            <Text>Hello!</Text>
+            <TouchableOpacity onPress= {this.onPressComment}>
+              <Text>Hide me!</Text>
+            </TouchableOpacity>
+            <CommentModal/>
+          </View>
+        </Modal>
         <WebView
           source={{uri: this.props.url}}      
           style={{flex:1}}
