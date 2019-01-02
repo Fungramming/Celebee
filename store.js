@@ -5,8 +5,7 @@ import { createLogger } from 'redux-logger';
 const logger = createLogger(); 
 
 const rootReducer = combineReducers({
-    user: userReducer,
-    auth: 'test'
+    user: userReducer
 });
 
 const configureStore = () => {

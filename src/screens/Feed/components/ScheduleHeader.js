@@ -43,10 +43,12 @@ class ScheduleHeader extends Component {
               source={require("../../../../assets/user.png")}
               style={styles.feedHeaderPhoto}
             />
-            <View style={styles.feedHeaderTextWrap}>
-              <Text style={styles.feedHeaderText}> 스케줄, 기사 제목 영역 </Text>
-              <Text style={styles.feedHeaderSubText}> PM 06:00 | 스케줄 장소 및 방송 채널 입력 </Text>
-            </View>
+            <TouchableOpacity onPress={this.props.onPressSchedule}>
+              <View style={styles.feedHeaderTextWrap}>
+                <Text style={styles.feedHeaderText}> 스케줄, 기사 제목 영역 </Text>
+                <Text style={styles.feedHeaderSubText}> PM 06:00 | 스케줄 장소 및 방송 채널 입력 </Text>
+              </View>
+            </TouchableOpacity>  
             <TouchableOpacity style={styles.feedHeaderAlarm} onPress={this.toggleModal} >
               <Image style={styles.iconSize} source={require('../../../../assets/alarm.png')}/>
             </TouchableOpacity>

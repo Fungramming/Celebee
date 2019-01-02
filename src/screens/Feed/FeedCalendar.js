@@ -88,7 +88,7 @@ class FeedCalendar extends Component {
         '2018-12-19': {marked: true, dotColor: 'purple',}
       },
 
-      isFeedModalVisible: true
+      isFeedModalVisible: false
 
     };
     this.setDate = this.setDate.bind(this);
@@ -145,6 +145,7 @@ class FeedCalendar extends Component {
   }
 
   onToggleModal() {
+    console.log('1111111111111', 1111111111111)
     this.setState(prevState => ({ 
       ...prevState,
       isFeedModalVisible: !this.state.isFeedModalVisible 
@@ -214,6 +215,7 @@ class FeedCalendar extends Component {
     return (
       <SafeAreaView>
         <StatusBar barStyle="dark-content"/>
+        {/* header */}        
         <View style={styles.header}>        
           <Text style={styles.date} onPress={this.onToggleDate}>
             {this.state.chosenDate.toLocaleDateString('ko-KR', options)}
@@ -246,25 +248,20 @@ class FeedCalendar extends Component {
           hideArrows={true}
           markedDates={this.state.schedules}
         />
+        {/* schedules */}
         <ScrollView
           ref="scrollView"
           style={styles.scrollArea}
           showsVerticalScrollIndicator={false}>
-          <View onPress={this.onToggleModal}>
-            <ScheduleHeader />
-          </View>
+            <ScheduleHeader onPressSchedule={this.onToggleModal}/>
         </ScrollView>
-
         {/* 피드 모달 */}
-
-          <Modal isVisible={this.state.isFeedModalVisible} style={{justifyContent: "center", margin: 0}} deviceHeight={Dimensions.get('window').height}>
-            <Text style={styles.feedToggleBtn} onPress={this.onToggleModal} />
-            <View>
-              <FeedCard onLink={this.onPressLink} componentId={this.props.componentId}/>
-            </View>
-          </Modal>
-
-
+        <Modal isVisible={this.state.isFeedModalVisible} style={{justifyContent: "center", margin: 0}} deviceHeight={Dimensions.get('window').height}>
+          <Text style={styles.feedToggleBtn} onPress={this.onToggleModal} />
+          <View>
+            <FeedCard onLink={this.onPressLink} componentId={this.props.componentId}/>
+          </View>
+        </Modal>
       </SafeAreaView>
     )
   }

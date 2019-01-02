@@ -1,5 +1,15 @@
 import React, { Component } from 'react'
-import { SafeAreaView, Text, View, WebView, StyleSheet, TouchableOpacity, Dimensions, Image } from 'react-native'
+import { 
+  SafeAreaView, 
+  Text, 
+  View, 
+  WebView, 
+  StyleSheet, 
+  TouchableOpacity, 
+  Dimensions, 
+  Image, 
+  KeyboardAvoidingView 
+} from 'react-native'
 import { Navigation } from 'react-native-navigation';
 import Icon from 'react-native-vector-icons/Feather';
 import Modal from "react-native-modal";
@@ -58,7 +68,7 @@ export default class LinkView extends Component {
     console.log('url this.props :', this.props);
     return (
       <SafeAreaView style={styles.container}>
-        <View style={styles.header}>                
+        <View style={styles.header}>
           <TouchableOpacity onPress={this.onBackButton}>
             <Icon name='arrow-down-left' style={{paddingRight: 12}} size={22}/>
           </TouchableOpacity>
@@ -77,14 +87,14 @@ export default class LinkView extends Component {
             </TouchableOpacity>
           </View>
         </View>
-        <Modal     
+        <Modal
           style={{position: 'relative', justifyContent: "flex-end", margin: 0, }} backdropOpacity={0.2} deviceHeight={Dimensions.get('window').height}
           isVisible={this.state.isModalVisible}
           onSwipe={ this.onSwipe }
           swipeDirection="down"
           >
             <TouchableOpacity style={styles.alarmToggleBtn} onPress={this.toggleModal} >
-            </TouchableOpacity>         
+            </TouchableOpacity>
             <CommentModal/>
         </Modal>
         <WebView

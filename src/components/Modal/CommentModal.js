@@ -1,5 +1,15 @@
 import React, { Component } from 'react'
-import { Text, View, StyleSheet, Dimensions, Image, TouchableOpacity } from 'react-native'
+import { 
+  Text, 
+  View, 
+  StyleSheet, 
+  Dimensions, 
+  Image, 
+  TouchableOpacity, 
+  TextInput,
+  KeyboardAvoidingView,
+  ScrollView 
+} from 'react-native'
 import { connect } from "react-redux";
 
 class CoComment extends Component {
@@ -28,6 +38,11 @@ class CommentModal extends Component {
       }
     };
   }
+
+  onSubmit() {
+    console.log("게시되었습니다.")
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -38,51 +53,67 @@ class CommentModal extends Component {
           <TouchableOpacity style={{marginLeft: 15}}>
             <Text>좋아요순</Text>
           </TouchableOpacity>
-        </View>      
-        <View style={{paddingHorizontal: 20, flexDirection: 'row'}}>
-          <Image
-            source={require("../../../assets/user.png")}
-            style={styles.feedHeaderPhoto}
-            />
-          <View style={styles.feedHeaderTextWrap}>
-            <View style={styles.headerText}>
-              <Text style={styles.userName}>비투비임현시규</Text>
-              <Text>2시간 전</Text>
+        </View>    
+        <ScrollView>
+          <KeyboardAvoidingView>
+            <View style={{paddingHorizontal: 20, flexDirection: 'row'}}>
+              <Image
+                source={require("../../../assets/user.png")}
+                style={styles.feedHeaderPhoto}
+                />
+              <View style={styles.feedHeaderTextWrap}>
+                <View style={styles.headerText}>
+                  <Text style={styles.userName}>비투비임현시규</Text>
+                  <Text>2시간 전</Text>
+                </View>
+                <Text style={styles.feedHeaderSubText}>몸도 한참 노곤노곤한게 뜨끈한 물에 한숨 지지고 나와 식헤 뚜악</Text>
+              </View>           
             </View>
-            <Text style={styles.feedHeaderSubText}>몸도 한참 노곤노곤한게 뜨끈한 물에 한숨 지지고 나와 식헤 뚜악</Text>
-          </View>           
-        </View>
-        <View style={{paddingHorizontal: 20, flexDirection: 'row'}}>
-          <Image
-            source={require("../../../assets/user.png")}
-            style={styles.feedHeaderPhoto}
-            />
-          <View style={styles.feedHeaderTextWrap}>
-            <View style={styles.headerText}>
-              <Text style={styles.userName}>비투비임현시규</Text>
-              <Text>2시간 전</Text>
+            <View style={{paddingHorizontal: 20, flexDirection: 'row'}}>
+              <Image
+                source={require("../../../assets/user.png")}
+                style={styles.feedHeaderPhoto}
+                />
+              <View style={styles.feedHeaderTextWrap}>
+                <View style={styles.headerText}>
+                  <Text style={styles.userName}>비투비임현시규</Text>
+                  <Text>2시간 전</Text>
+                </View>
+                <Text style={styles.feedHeaderSubText}>몸도 한참 노곤노곤한게 뜨끈한 물에 한숨 지지고 나와 식헤 뚜악</Text>
+              </View>           
             </View>
-            <Text style={styles.feedHeaderSubText}>몸도 한참 노곤노곤한게 뜨끈한 물에 한숨 지지고 나와 식헤 뚜악</Text>
-          </View>           
-        </View>
-        <View style={{paddingHorizontal: 20, flexDirection: 'row'}}>
-          <Image
-            source={require("../../../assets/user.png")}
-            style={styles.feedHeaderPhoto}
-            />
-          <View style={styles.feedHeaderTextWrap}>
-            <View style={styles.headerText}>
-              <Text style={styles.userName}>비투비임현시규</Text>
-              <Text>2시간 전</Text>
+            <View style={{paddingHorizontal: 20, flexDirection: 'row'}}>
+              <Image
+                source={require("../../../assets/user.png")}
+                style={styles.feedHeaderPhoto}
+                />
+              <View style={styles.feedHeaderTextWrap}>
+                <View style={styles.headerText}>
+                  <Text style={styles.userName}>비투비임현시규</Text>
+                  <Text>2시간 전</Text>
+                </View>
+                <Text style={styles.feedHeaderSubText}>몸도 한참 노곤노곤한게 뜨끈한 물에 한숨 지지고 나와 식헤 뚜악</Text>
+              </View>           
             </View>
-            <Text style={styles.feedHeaderSubText}>몸도 한참 노곤노곤한게 뜨끈한 물에 한숨 지지고 나와 식헤 뚜악</Text>
-          </View>           
+          </KeyboardAvoidingView>
+        </ScrollView>
+        <View style={[styles.textInput, {backgroundColor: "#fefefe"}]}>
+          <TextInput 
+              ref={(input) => { this.textInput = input; }}
+              // style={styles.textInput} 
+              maxLength={12}
+              placeholder="12자 이내의 닉네임을 설정해 주세요"
+              onChangeText={(text) => this.checkNickname(text)}
+              returnKeyType="done"            
+            />
+          <TouchableOpacity onPress={this.onSubmit}>
+            <Text>게시</Text>
+          </TouchableOpacity>  
         </View>
       </View>
     )
   }
 }
-
 
 const mapStateToProps = state => {
   return {
@@ -140,5 +171,15 @@ const styles = StyleSheet.create({
     marginHorizontal: 13,
     marginVertical: 8,
     color: '#505050',
+  },
+  textInput: {
+    borderColor: "#cecece",
+    borderWidth: 1,
+    flexDirection:'row',
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginTop: "auto",
+    paddingVertical: 5,
+    paddingHorizontal: 10
   }
 })
