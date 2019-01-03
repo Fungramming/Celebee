@@ -50,6 +50,7 @@ class SelectIdolList extends Component {
   render() {
 
     const toggle = this.props.toggleValid
+    const selectToggle = this.props.selectToggleValid
     const textValue = toggle ? "팔로우" : "팔로잉";
     const buttonBg = toggle ? styles.followBtn : styles.followingBtn
     

@@ -112,9 +112,25 @@ export default Api = {
                 }),
             })
             let data = JSON.parse(response._bodyInit)
+            console.log('!!!data.result', data.result)
             if(data.result.photo == null){
                 data.result.photo = "../../../assets/user.png"
             }
+            let idolList = []
+            let followIdol = data.result.follow_idol_id;
+            let unFollowIdol = data.result.unfollow_idol_id;
+            console.log('followIdol', followIdol)
+            console.log('unFollowIdol', unFollowIdol)
+            for(let i=0; i < followIdol.length; i++){
+                followIdol[i].toggle = true
+            } 
+            for(let i=0; i < unFollowIdol.length; i++){
+                unFollowIdol[i].toggle = false
+            }
+
+            idolList.concat(followIdol)
+            idolList.concat(unFollowIdol)
+            console.log('@@@idolList', idolList)
             return data.result
         }
         catch(e){

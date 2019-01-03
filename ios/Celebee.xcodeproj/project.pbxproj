@@ -79,6 +79,7 @@
 		B748EA5D002D42038B21F20C /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 235D9CA088F4490F889C6566 /* SystemConfiguration.framework */; };
 		BC167F0E05C64E33A31095B2 /* FontAwesome5_Solid.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CAB93F5B52A940E3B6F8AB40 /* FontAwesome5_Solid.ttf */; };
 		C6334440E0FF4C0F81D52C1C /* FontAwesome5_Brands.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B42EBBA3F5FA4591BA483E1F /* FontAwesome5_Brands.ttf */; };
+		F6E167FB21DDEEC5004B4414 /* libRCTFBSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F6E167F921DDEC9D004B4414 /* libRCTFBSDK.a */; };
 		FDC124013C204040A114B46D /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7A67E2F33C9B401B874F074B /* Feather.ttf */; };
 /* End PBXBuildFile section */
 
@@ -180,20 +181,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = 9FD355121D3E4A2900D06170;
 			remoteInfo = RNGoogleSignin;
-		};
-		1AA5071121808BCE007AA070 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 1AA5070D21808BCE007AA070 /* RNGoogleSignin.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 9FD355121D3E4A2900D06170;
-			remoteInfo = RNGoogleSignin;
-		};
-		1AA9391C21800B7C000BC72F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = EEA52F1EEE194015B60E25A5 /* RCTFBSDK.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 9350E0F11CE3B0920041D815;
-			remoteInfo = RCTFBSDK;
 		};
 		1AA9391F21800B7C000BC72F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -447,6 +434,13 @@
 			remoteGlobalIDString = 5D72D2E81C16249000E22EC1;
 			remoteInfo = RCTImageResizer;
 		};
+		F6E167F821DDEC9D004B4414 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F6E167F421DDEC9D004B4414 /* RCTFBSDK.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 9350E0F11CE3B0920041D815;
+			remoteInfo = RCTFBSDK;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -475,7 +469,6 @@
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
 		1A21B8CA2186E2E800CB9B1A /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		1A26E6762182DDBD009D643F /* KakaoOpenSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = KakaoOpenSDK.framework; sourceTree = "<group>"; };
-		1AA5070D21808BCE007AA070 /* RNGoogleSignin.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNGoogleSignin.xcodeproj; path = "../../.nvm/versions/node/v8.12.0/lib/node_modules/react-native-google-signin/ios/RNGoogleSignin.xcodeproj"; sourceTree = "<group>"; };
 		1AA5071321808C5D007AA070 /* GoogleAuthUtilities.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleAuthUtilities.framework; sourceTree = "<group>"; };
 		1AA5071421808C5D007AA070 /* GoogleUtilities.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleUtilities.framework; sourceTree = "<group>"; };
 		1AA5071521808C5D007AA070 /* GoogleAppUtilities.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleAppUtilities.framework; sourceTree = "<group>"; };
@@ -520,7 +513,7 @@
 		CAB93F5B52A940E3B6F8AB40 /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Solid.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Solid.ttf"; sourceTree = "<group>"; };
 		EA6FBE3FA85A414988729079 /* FontAwesome5_Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Regular.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Regular.ttf"; sourceTree = "<group>"; };
 		EDC6445E3FAA4E4EBFD1F6F9 /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
-		EEA52F1EEE194015B60E25A5 /* RCTFBSDK.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTFBSDK.xcodeproj; path = "../node_modules/react-native-fbsdk/ios/RCTFBSDK.xcodeproj"; sourceTree = "<group>"; };
+		F6E167F421DDEC9D004B4414 /* RCTFBSDK.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTFBSDK.xcodeproj; path = "../../Downloads/react-native-fbsdk-0.9.0/ios/RCTFBSDK.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -544,6 +537,7 @@
 				0477240721D479D80043E459 /* RCTRootView.h in Frameworks */,
 				0477240521D4798C0043E459 /* RCTRootView.m in Frameworks */,
 				040B480121A3EE5300D4EA69 /* libReactNativeNavigation.a in Frameworks */,
+				F6E167FB21DDEEC5004B4414 /* libRCTFBSDK.a in Frameworks */,
 				0477245121D4A82B0043E459 /* libRNGoogleSignin.a in Frameworks */,
 				0452A3B321D5CD0700029349 /* libRNKakaoLogins.a in Frameworks */,
 				1AA5072021808C5E007AA070 /* GoogleSymbolUtilities.framework in Frameworks */,
@@ -743,14 +737,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		1AA5070E21808BCE007AA070 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				1AA5071221808BCE007AA070 /* libRNGoogleSignin.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		1AA938ED21800B7B000BC72F /* Recovered References */ = {
 			isa = PBXGroup;
 			children = (
@@ -771,14 +757,6 @@
 			children = (
 				1AA9392421800B7C000BC72F /* libRNVectorIcons.a */,
 				1AA9392621800B7C000BC72F /* libRNVectorIcons-tvOS.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		1AA9391721800B7C000BC72F /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				1AA9391D21800B7C000BC72F /* libRCTFBSDK.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -840,7 +818,6 @@
 			isa = PBXGroup;
 			children = (
 				040B47CC21A3EDE800D4EA69 /* ReactNativeNavigation.xcodeproj */,
-				1AA5070D21808BCE007AA070 /* RNGoogleSignin.xcodeproj */,
 				5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
 				00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */,
@@ -852,8 +829,8 @@
 				139105B61AF99BAD00B5F7CC /* RCTSettings.xcodeproj */,
 				832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */,
 				00C302DF1ABCB9EE00DB3ED1 /* RCTVibration.xcodeproj */,
+				F6E167F421DDEC9D004B4414 /* RCTFBSDK.xcodeproj */,
 				139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */,
-				EEA52F1EEE194015B60E25A5 /* RCTFBSDK.xcodeproj */,
 				48D8E178CBBC4FBEA5EAE436 /* RNImagePicker.xcodeproj */,
 				C9185C28286546E2BEDEE8AE /* SplashScreen.xcodeproj */,
 				B90D01DCE52A4D50BB74C3BE /* RNVectorIcons.xcodeproj */,
@@ -945,6 +922,14 @@
 			isa = PBXGroup;
 			children = (
 				F63AFE1E21CCAA2900929D7D /* libFastImage.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F6E167F521DDEC9D004B4414 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F6E167F921DDEC9D004B4414 /* libRCTFBSDK.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1081,8 +1066,8 @@
 					ProjectRef = ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */;
 				},
 				{
-					ProductGroup = 1AA9391721800B7C000BC72F /* Products */;
-					ProjectRef = EEA52F1EEE194015B60E25A5 /* RCTFBSDK.xcodeproj */;
+					ProductGroup = F6E167F521DDEC9D004B4414 /* Products */;
+					ProjectRef = F6E167F421DDEC9D004B4414 /* RCTFBSDK.xcodeproj */;
 				},
 				{
 					ProductGroup = 00C302B61ABCB90400DB3ED1 /* Products */;
@@ -1131,10 +1116,6 @@
 				{
 					ProductGroup = 1AA5070221808B75007AA070 /* Products */;
 					ProjectRef = C241E23D8A174429B77AD86B /* RNGoogleSignin.xcodeproj */;
-				},
-				{
-					ProductGroup = 1AA5070E21808BCE007AA070 /* Products */;
-					ProjectRef = 1AA5070D21808BCE007AA070 /* RNGoogleSignin.xcodeproj */;
 				},
 				{
 					ProductGroup = 1AA9391321800B7C000BC72F /* Products */;
@@ -1246,20 +1227,6 @@
 			fileType = archive.ar;
 			path = libRNGoogleSignin.a;
 			remoteRef = 1AA5070521808B75007AA070 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		1AA5071221808BCE007AA070 /* libRNGoogleSignin.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libRNGoogleSignin.a;
-			remoteRef = 1AA5071121808BCE007AA070 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		1AA9391D21800B7C000BC72F /* libRCTFBSDK.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libRCTFBSDK.a;
-			remoteRef = 1AA9391C21800B7C000BC72F /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		1AA9392021800B7C000BC72F /* libRNImagePicker.a */ = {
@@ -1505,6 +1472,13 @@
 			fileType = archive.ar;
 			path = libRCTImageResizer.a;
 			remoteRef = F63AFE2021CCAA2900929D7D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		F6E167F921DDEC9D004B4414 /* libRCTFBSDK.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRCTFBSDK.a;
+			remoteRef = F6E167F821DDEC9D004B4414 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -1760,6 +1734,7 @@
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../node_modules/react-native-kakao-logins/ios/Frameworks\"",
+					"\"$(SRCROOT)/../node_modules/react-native-fbsdk/ios/RCTFBSDK.xcodeproj\"",
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/New\\ Group",
@@ -1807,6 +1782,7 @@
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../node_modules/react-native-kakao-logins/ios/Frameworks\"",
+					"\"$(SRCROOT)/../node_modules/react-native-fbsdk/ios/RCTFBSDK.xcodeproj\"",
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/New\\ Group",

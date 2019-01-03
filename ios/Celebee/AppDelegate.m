@@ -48,10 +48,9 @@
  */
 
 #import "AppDelegate.h"
-
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
-#import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <RNGoogleSignin/RNGoogleSignin.h>
 #import "RNSplashScreen.h"
 #import <ReactNativeNavigation/ReactNativeNavigation.h>
@@ -65,6 +64,9 @@
   [ReactNativeNavigation bootstrap:jsCodeLocation launchOptions:launchOptions];
   
   [RNSplashScreen show];
+  
+  [[FBSDKApplicationDelegate sharedInstance] application:application
+                           didFinishLaunchingWithOptions:launchOptions];
   
   return YES;
   
