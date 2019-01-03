@@ -86,13 +86,13 @@ class Feed extends Component {
     })
   }
 
-  // onToggleDetail() {
-  //   const toggle = !this.state.toggleDetail;
-  //   this.setState(prevState => ({
-  //     ...prevState,
-  //     toggleDetail: toggle
-  //   }))
-  // }
+  onToggleDetail() {
+    const toggle = !this.state.toggleDetail;
+    this.setState(prevState => ({
+      ...prevState,
+      toggleDetail: toggle
+    }))
+  }
 
   onToggleDate() {
     const toggle = !this.state.toggleDate;

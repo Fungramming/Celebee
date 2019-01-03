@@ -102,7 +102,7 @@ class CommentModal extends Component {
               ref={(input) => { this.textInput = input; }}
               // style={styles.textInput} 
               maxLength={12}
-              placeholder="12자 이내의 닉네임을 설정해 주세요"
+              placeholder="댓글을 작성해보세요, 꿀 떨어짐"
               onChangeText={(text) => this.checkNickname(text)}
               returnKeyType="done"            
             />

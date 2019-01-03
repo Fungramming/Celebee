@@ -35,20 +35,23 @@ class ScheduleHeader extends Component {
   }
 
   render() {
+    const {onPressSchedule, detail} = this.props
+    let toggleSchedule;
+    if(detail) toggleSchedule = detail
+    else if(onPressSchedule) toggleSchedule = onPressSchedule
+    
     return (
       <View>
-        <TouchableWithoutFeedback onPress={this.props.detail} style={styles.feedHeader}>
+        <TouchableWithoutFeedback onPress={toggleSchedule} style={styles.feedHeader}>
           <View style={{flexDirection: 'row'}}>
             <Image
               source={require("../../../../assets/user.png")}
               style={styles.feedHeaderPhoto}
             />
-            <TouchableOpacity onPress={this.props.onPressSchedule}>
               <View style={styles.feedHeaderTextWrap}>
                 <Text style={styles.feedHeaderText}> 스케줄, 기사 제목 영역 </Text>
                 <Text style={styles.feedHeaderSubText}> PM 06:00 | 스케줄 장소 및 방송 채널 입력 </Text>
               </View>
-            </TouchableOpacity>  
             <TouchableOpacity style={styles.feedHeaderAlarm} onPress={this.toggleModal} >
               <Image style={styles.iconSize} source={require('../../../../assets/alarm.png')}/>
             </TouchableOpacity>
