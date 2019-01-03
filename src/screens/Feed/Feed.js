@@ -193,12 +193,10 @@ class Feed extends Component {
   
   onEndReached() {
     let newA = this.state.testData
-    console.log('newA', newA)
     this.setState(prevState => ({
       ...prevState,
       testData: [...prevState.testData, "2010-10-12", "2010-10-13"]
     }));
-    console.log('this.state.testData', this.state)
   }
 
   onRefresh() {

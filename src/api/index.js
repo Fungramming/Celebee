@@ -126,18 +126,20 @@ export default Api = {
     
     fetchFeed : async (payload) => {
         try {
+            console.log('@@!!!payload :', payload);
             let response = await fetch( config + 'schedules/', {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
-                    'token': payload.token
+                    'token': payload
                 },
                 body: JSON.stringify({
-                    schedule_date: '2018-12-27',
+                    schedule_date: '2018-12-28',
                 })
             })
-            let data = JSON.parse(response)
+            console.log('@@@@@@@response :', response);
+            let data = JSON.parse(response._bodyInit)
             console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@data', data)
             return data
         }
