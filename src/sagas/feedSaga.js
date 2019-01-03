@@ -1,24 +1,24 @@
 import { 
   config, 
-  ASYNC_INIT_USER_INFO, 
-  CHECK_USER_REQUEST, 
-  CHECK_USER, 
-  INIT_USER_INFO,  
-  FETCH_USER_REQUEST, 
-  FETCH_USER, 
-  FETCH_IDOL_REQUEST, 
-  FETCH_IDOL, 
+  FETCH_FEED_REQUEST,
+  FETCH_FEED
 } from '../actions/types'
 import { call, put, takeLatest } from 'redux-saga/effects'
 
 import Api from '../api'
 
-function* FeedRequestSaga(action) {    
-  console.log('userSaga this.props :', action);
+function* fetchFeedRequestSaga(action) {
+  console.log('#$#@$@#$#@$@action', action)
   try {
+      // const payload = yield call(Api.fetchFeed)
       const payload = yield call(Api.fetchFeed, action.payload)
-      yield put({type: CHECK_USER, payload})
+      yield put({type: FETCH_FEED, payload})
+      // yield put({type: FETCH_FEED})
   } catch (e) {
 
   }
 }
+
+export const feedSagas = [
+  takeLatest(FETCH_FEED_REQUEST, fetchFeedRequestSaga),
+]

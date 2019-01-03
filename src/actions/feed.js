@@ -1,65 +1,17 @@
 import {
-  LOGOUT, 
-  CHECK_USER_REQUEST,
-  CHECK_USER, 
-  INIT_USER_INFO,
-  FETCH_USER_REQUEST, 
-  FETCH_USER, 
-  FETCH_IDOL_REQUEST, 
-  FETCH_IDOL, 
+  FETCH_FEED_REQUEST,
+  FETCH_FEED
 } from './types'
 
-export const logout = userInfo => {
+export const fetchFeed = feed => {
   return {
-      type: LOGOUT,
-      payload: userInfo
+      type: FETCH_FEED,
+      payload: feed
   }
 }
-
-export const checkUser = userInfo => {
+export const fetchFeedRequest = feed => {
   return {
-      type: CHECK_USER,
-      payload: userInfo
-  }
-}
-export const checkUserRequest = userInfo => {
-  return {
-      type: CHECK_USER_REQUEST,
-      payload: userInfo
-  }
-}
-
-export const initUserInfo = userInfo => {
-  return {
-      type: INIT_USER_INFO,
-      payload: userInfo
-  }
-}
-
-export const fetchUserInfoRequest = userInfo => {
-  return {
-      type: FETCH_USER_REQUEST,
-      payload: userInfo
-  }
-}
-
-export const fetchUserInfo = userInfo => {
-  return {
-      type: FETCH_USER,
-      payload: userInfo
-  }
-}
-
-export const fetchIdolRequest = (userIdol) => {
-  return {
-      type: FETCH_IDOL_REQUEST,
-      payload: userIdol
-  }
-}
-
-export const fetchIdol = userIdol => {
-  return {
-      type: FETCH_IDOL,
-      payload: userIdol
+      type: FETCH_FEED_REQUEST,
+      payload: feed
   }
 }

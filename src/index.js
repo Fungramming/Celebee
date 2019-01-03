@@ -9,13 +9,16 @@ import { createLogger } from 'redux-logger';
 import createSagaMiddleware from 'redux-saga'
 
 import userReducer from './reducers/userReducer'
+import feedReducer from './reducers/feedReducer'
 import rootSaga from './sagas'
 
 const logger = createLogger(); 
 const sagaMiddleware = createSagaMiddleware()
 
 const rootReducer = combineReducers({
-  user: userReducer
+  user: userReducer,
+  feed: feedReducer,
+  
 });
 
 const configureStore = createStore(
