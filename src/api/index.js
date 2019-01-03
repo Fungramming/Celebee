@@ -122,21 +122,24 @@ export default Api = {
         }      
     },
 
+    //================================= Feed
+    
     fetchFeed : async (payload) => {
         try {
-            let response = await fetch( config + 'user/myidols/', {
-                method: 'post',
+            let response = await fetch( config + 'schedules/', {
+                method: 'POST',
                 headers: {
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json',
-                        'token': payload.token
-                    },
-                    body: JSON.stringify({
-                        date: payload.date,
-                    })
-                }
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'token': payload.token
+                },
+                body: JSON.stringify({
+                    schedule_date: '2018-12-27',
+                })
             })
+            let data = JSON.parse(response)
+            console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@data', data)
+            return data
         }
         catch(e) {
             

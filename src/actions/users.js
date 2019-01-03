@@ -50,7 +50,7 @@ export const fetchUserInfo = userInfo => {
     }
 }
 
-export const fetchIdolRequest = (userIdol) => {
+export const fetchIdolRequest = userIdol => {
     return {
         type: FETCH_IDOL_REQUEST,
         payload: userIdol

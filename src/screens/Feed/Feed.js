@@ -25,6 +25,7 @@ import FeedCard from '../../components/Card/FeedCard'
 import { FEED_CALENDAR_SCREEN, FEED_LINK_SCREEN, COMMENT_MODAL } from '../Navigation'
 import IdolIndicator from '../../../src/screens/Feed/components/IdolIndicator'
 import SearchButton from '../../components/button/SearchButton'
+import { fetchFeedRequest } from "../../actions/feed";
 
 // 달력 출력 폼 설정
   const today = (() => {
@@ -68,7 +69,8 @@ class Feed extends Component {
       toggleDetail: false,
       selectedDay: today,           
       testData: ["2010-10-10","2010-10-11"],
-      refreshing: false
+      refreshing: false,
+      token: this.props.token
     };
     this.setDate = this.setDate.bind(this);
     this.watchScroll = this.watchScroll.bind(this);
@@ -79,7 +81,7 @@ class Feed extends Component {
     this.onEndReached = this.onEndReached.bind(this)
     this.onRefresh = this.onRefresh.bind(this)
   }
-  
+
   setDate(newDate) {
     this.setState({
       chosenDate: newDate,
@@ -211,6 +213,9 @@ class Feed extends Component {
         <View style={styles.container}>
           <StatusBar barStyle="dark-content"/>
           <View style={styles.header}>
+            <TouchableOpacity onPress={this.props.feed(this.state.token)}>
+              <Text>fetchFeed</Text>
+            </TouchableOpacity>
             <Text style={styles.date} onPress={this.onToggleDate}>
               {this.state.chosenDate.toLocaleDateString('ko-KR', options)}
               &nbsp;
@@ -256,16 +261,6 @@ class Feed extends Component {
             }}
             keyExtractor={(index) => index.toString()}
           />
-          {/* {this.state.toggleDetail 
-            ? 
-            <Text style={styles.feedDetail} onPress={this.onToggleDetail}>
-              <Text>피드 상세 내용</Text>
-              <Text style={styles.feedDetailText}>
-                생방송 SBS 인기가요 - 사전 녹화 * 일 시 : 2018. 12. 09. (일) 09:00 AM * 장 소 : SBS 등촌동 공개홀 상단의 시간은 입장 번호 배정 시작 시간이니 착오 없으시기 바라며, 입장 시간은 일정하지 않고 방송국 상황에 따라 달라질 수 있으니, 가급적 일찍 도착해 주시기 바랍니다. 많은 참여 부탁 드립니다. [ 참여 방법 ] http://redvelvet.smtown.com/ 참여방법은 해당 링크를 참조해주세요!
-              </Text>
-            </Text>
-            : null
-          } */}
 
         </View>
       </SafeAreaView>
@@ -276,10 +271,20 @@ class Feed extends Component {
 const mapStateToProps = state => {
   return {
       userInfo: state.user.userInfo,   // Mount 될때 initialState 를 가져옴 , this.props 로. users 는 actios 에서의 users.js 의 이름
+      feedList: state.feed.schedule,
+      token: state.user.token
   }
 }
 
-export default connect(mapStateToProps)(Feed)
+const mapDispatchToProps = dispatch => {
+  return {
+    feed: (token) => {
+      dispatch(fetchFeedRequest(token))
+    },
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Feed)
 
 const styles = StyleSheet.create({
   container: {
@@ -312,21 +317,6 @@ const styles = StyleSheet.create({
     left: 0,
     zIndex: 998,
   },
-  // feedDetail: {
-  //   height: 490,
-  //   width: Dimensions.get('window').width,
-  //   paddingHorizontal: 12,
-  //   paddingTop: 12,
-  //   marginTop: 10,
-  //   backgroundColor: '#f5f5f5',
-  //   position: 'absolute',
-  //   top: 72,
-  //   zIndex: 99
-  // },
-  // feedDetailText: {
-  //   color: '#505050',
-  //   fontSize: 16,
-  // },
   iconSize: {
     width: 25,
     height: 25

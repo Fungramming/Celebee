@@ -35,9 +35,8 @@ const userReducer = (state = initialState, action) => {
                 },
                 token: action.payload.token
             }
-       case LOGOUT:
+        case LOGOUT:
             return {
-                // ...state,
                 userInfo : {
                     uid: '',
                     nickname: '',
