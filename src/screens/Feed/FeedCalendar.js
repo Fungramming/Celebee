@@ -99,10 +99,6 @@ class FeedCalendar extends Component {
     this.onPressLink = this.onPressLink.bind(this);
   }
 
-  componentDidMount() {
-    this.onDayPress(this.state.chosenDate)
-  }
-
   setDate(newDate) {
     this.setState({
       chosenDate: newDate,
@@ -122,26 +118,30 @@ class FeedCalendar extends Component {
   }
 
   onDayPress(date) {    
-    console.log('date', date)
     // DATEPICKER 리턴값과 캘린더 리턴값이 다름
-    if(date.dateString == undefined){
-      date = date
-    } else if(date.dateString){
-      date = date.dateString
-    }
-    let selectedDate = {
-      ...this.state.fureSchedules[date],
-      selected: true
-    }
-    
-    this.setState(prevState => ({
-      ...prevState,
-      selected: true,
-      schedules: {
-        ...prevState.fureSchedules,
-        [date] : selectedDate
+    let a = 0;
+    if(a == 0){
+      console.log('date', date)
+      if(date.dateString == undefined){
+        date = date
+      } else if(date.dateString){
+        date = date.dateString
       }
-    }))    
+      let selectedDate = {
+        ...this.state.fureSchedules[date],
+        selected: true
+      }
+      
+      this.setState(prevState => ({
+        ...prevState,
+        selected: true,
+        schedules: {
+          ...prevState.fureSchedules,
+          [date] : selectedDate
+        }
+      }))         
+      a = 1
+    }
   }
 
   onToggleModal() {

@@ -80,6 +80,7 @@ class Feed extends Component {
     this.onToggleDate = this.onToggleDate.bind(this)
     this.onEndReached = this.onEndReached.bind(this)
     this.onRefresh = this.onRefresh.bind(this)
+    this.fetchFeed = this.fetchFeed.bind(this)
   }
 
   setDate(newDate) {
@@ -203,15 +204,22 @@ class Feed extends Component {
     console.log('111111111111111111111111111111111', 111111111111111111111111111111111)
   }
 
+  fetchFeed() {
+    console.log('this.state.chosenDate.toLocaleDateString', this.state.chosenDate) 
+    let date = "18.12.28"
+    this.props.feed(date)
+  }
+
   render() {
     // 날짜 출력 폼
     let options = { year: 'numeric', month: 'long', day: 'numeric' };  
+
     return (
       <SafeAreaView>
         <View style={styles.container}>
           <StatusBar barStyle="dark-content"/>
           <View style={styles.header}>
-            <TouchableOpacity onPress={this.props.feed(this.state.token)}>
+            <TouchableOpacity onPress={this.fetchFeed}>
               <Text>fetchFeed</Text>
             </TouchableOpacity>
             <Text style={styles.date} onPress={this.onToggleDate}>
