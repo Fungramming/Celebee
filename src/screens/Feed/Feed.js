@@ -206,8 +206,13 @@ class Feed extends Component {
 
   fetchFeed() {
     console.log('this.state.chosenDate.toLocaleDateString', this.state.chosenDate) 
-    let date = "18.12.28"
-    this.props.feed(date)
+    
+    let payload = {
+      token: this.state.token,
+      date : "18.12.28"
+    }
+    
+    this.props.feed(payload)
   }
 
   render() {

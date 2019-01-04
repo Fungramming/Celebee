@@ -4,7 +4,7 @@ import {
 } from '../actions/types'
 
 const initialState = {
-    "schedule": [
+    schedules: [
         {
             "date": "",
             "id": '',
@@ -28,6 +28,7 @@ const feedReducer = (state = initialState, action) => {
         case FETCH_FEED:
             return {
                 ...state,
+                schedules: action.payload
             }
         default:
             return state;    
