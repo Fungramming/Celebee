@@ -175,16 +175,17 @@ export default Api = {
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
-                    'token': payload
+                    'token': payload.token
                 },
                 body: JSON.stringify({
-                    schedule_date: '2018-12-28',
+                    schedule_date: '2018-12-27',
+                    index: 1
                 })
             })
             console.log('@@@@@@@response :', response);
             let data = JSON.parse(response._bodyInit)
             console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@data', data)
-            return data
+            return data.schedules
         }
         catch(e) {
             
