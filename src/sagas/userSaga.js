@@ -34,6 +34,7 @@ function* fetchUserInfoRequestSaga(action) {
 
 function* fetchIdolRequestSaga(action) {    
   try {                     
+      console.log('!$%#%^&@#$#!action :', action);
       const payload = yield call(Api.fetchIdol, action.payload)
       yield put({type: FETCH_IDOL, payload})
   } catch (e) {

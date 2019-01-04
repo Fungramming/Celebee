@@ -27,7 +27,8 @@ export default Api = {
                         email: '',
                         photo: '../../../assets/user.png',
                         follow_idol_id: [],
-                        unfollow_idol_id: []
+                        unfollow_idol_id: [],
+                        idol_list: []
                     },
                 }
                 return result                               
@@ -85,10 +86,24 @@ export default Api = {
                 },
                 body:formData,
             })
+    
+            let responseC = await fetch( config + 'idols/', {
+                method: 'GET'
+            })     
+            let idolList = JSON.parse(responseC._bodyInit)
+
+            for(let i = 0; i < idolList.idols.length; i++){
+                idolList.idols[i].toggle = false
+            }
+
             let data = JSON.parse(responseB._bodyInit)
             if(data.result.photo == null){
                 data.result.photo = "../../../assets/user.png"
             }
+
+            // idolList 추가
+            data.result.idol_list = idolList.idols
+            
             return data.result
 
         }
@@ -99,6 +114,7 @@ export default Api = {
     
     fetchIdol : async (payload) => {
         try{
+            console.log('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&payload :', payload);
             let response = await fetch( config + 'user/follow/', {
                 method: 'POST',
                 headers: {
@@ -111,26 +127,37 @@ export default Api = {
                     idol_id: payload.idol_id,
                 }),
             })
+
             let data = JSON.parse(response._bodyInit)
             console.log('!!!data.result', data.result)
+
             if(data.result.photo == null){
                 data.result.photo = "../../../assets/user.png"
             }
-            let idolList = []
-            let followIdol = data.result.follow_idol_id;
-            let unFollowIdol = data.result.unfollow_idol_id;
-            console.log('followIdol', followIdol)
-            console.log('unFollowIdol', unFollowIdol)
-            for(let i=0; i < followIdol.length; i++){
-                followIdol[i].toggle = true
-            } 
-            for(let i=0; i < unFollowIdol.length; i++){
-                unFollowIdol[i].toggle = false
-            }
 
-            idolList.concat(followIdol)
-            idolList.concat(unFollowIdol)
-            console.log('@@@idolList', idolList)
+            // let idolList = []
+            // let followIdol = data.result.follow_idol_id;
+            // let unFollowIdol = data.result.unfollow_idol_id;
+
+            // console.log('followIdol', followIdol)
+            // console.log('unFollowIdol', unFollowIdol)
+
+            // for(let i=0; i < followIdol.length; i++){
+            //     followIdol[i].toggle = true
+            // } 
+            // for(let i=0; i < unFollowIdol.length; i++){
+            //     unFollowIdol[i].toggle = false
+            // }
+
+            // idolList = idolList.concat(followIdol)
+            // idolList = idolList.concat(unFollowIdol)
+            // console.log('@@@idolList', idolList)
+
+            // data.result.follow_idol_id = followIdol
+            // data.result.unfollow_idol_id = unFollowIdol
+            // data.result.idol_list = idolList
+            // console.log('after data.result', data.result)
+            // console.log('after idolList', idolList)
             return data.result
         }
         catch(e){
