@@ -4,6 +4,7 @@ import {
   Text,
   StyleSheet,
   TextInput,
+  SafeAreaView,
   TouchableOpacity,
   Dimensions,
   KeyboardAvoidingView,
@@ -80,8 +81,8 @@ class SetNickname extends Component {
   render() {
     console.log('this.state.vis :', this.state.visibleHeight);
     return (
-          <View style={[styles.outerContainer]} >
-              <View style={styles.container}>
+          <View style={[styles.outerContainer]}>
+              <SafeAreaView style={styles.container}>
                   <ScrollView  
                       showsVerticalScrollIndicator={false} 
                       ref={ref => this.scrollView = ref}
@@ -97,7 +98,7 @@ class SetNickname extends Component {
                         ></NicknameInput>            
                     </KeyboardAvoidingView>
                   </ScrollView>
-              </View>
+              </SafeAreaView>
               <TouchableOpacity             
                   disabled={!this.state.valid.completeButton} 
                   onPress={this.addUserInfo}
@@ -137,8 +138,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   container: {
-    flex:1,
-    paddingHorizontal: 20,
+    flex: 1,
+    marginHorizontal: 20,
   },
   title: {
     color: 'black',

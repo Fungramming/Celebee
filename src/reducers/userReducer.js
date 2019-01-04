@@ -16,7 +16,8 @@ const initialState = {
         email: '',
         photo: '../../../assets/user.png',
         follow_idol_id: [],
-        unfollow_idol_id: []
+        unfollow_idol_id: [],
+        idol_list: []
     },
     idolToggle: true,
     token: '',
@@ -43,7 +44,8 @@ const userReducer = (state = initialState, action) => {
                     email: '',
                     photo: '../../../assets/user.png',
                     follow_idol_id: [],
-                    unfollow_idol_id: []
+                    unfollow_idol_id: [],
+                    idol_list: []
                 },
                 idolToggle: true,
                 token: '',

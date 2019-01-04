@@ -32,6 +32,10 @@ class EditIdol extends Component {
           userToken: ''
         }
     }
+    
+    componentDidMount() {
+      console.log('this.state.follow_idol_id :', this.state.follow_idol_id);
+    }
 
     componentDidUpdate(prevProps) {
       if ( prevProps.userInfo.follow_idol_id !== this.props.userInfo.follow_idol_id || prevProps.userInfo.unfollow_idol_id !== this.props.userInfo.unfollow_idol_id) {
@@ -78,11 +82,14 @@ class EditIdol extends Component {
                 <Text>{toggleValue}</Text>
               </TouchableOpacity>
               <View style={ this.state.toggleIdol ? styles.followList : styles.followListFalse }>
+                {this.state.follow_idol_id.length === 0 ? 
+                  <Text style={styles.notFollow}>팔로우한 아이돌이 없습니다.</Text> : 
+                  null
+                }
                 <FlatList
                   showsVerticalScrollIndicator={false}
                   data={this.state.follow_idol_id}
                   renderItem={({item}) => {
-                    const toggleFalse = false
                     return <SelectIdolList name={item.idol_name} followNum={item.total_followers} toggleValid={false} id={item.id} token={token}></SelectIdolList>
                   }}
                   keyExtractor={(item, index) => index.toString()} >
@@ -91,6 +98,9 @@ class EditIdol extends Component {
 
               <Text style={styles.subTitle}>내가 팔로우하지 않는 아이돌</Text>
               <View style={this.state.toggleIdol ? styles.unfollowList : styles.unfollowListFalse}>
+              {this.state.unfollow_idol_id.length === 0 ? 
+                <Text style={styles.notFollow}>모든 아이돌을 팔로우 하고 있습니다.</Text> : 
+                
                 <View style={{flexDirection: 'row'}}>
                   <TouchableOpacity onPress={ () => this.SortByFollower() }>
                     <Text style={styles.selectFilterText}>인기순</Text>
@@ -99,9 +109,10 @@ class EditIdol extends Component {
                     <Text style={styles.selectFilterText}>가나다순</Text>
                   </TouchableOpacity>
                 </View>
-                {this.state.unfollow_idol_id.map((item, index) => (
-                  <SelectIdolList name={item.idol_name} followNum={item.total_followers} toggleValid={true} key={index} id={item.id} token={token}></SelectIdolList>
-                ))} 
+              }
+              {this.state.unfollow_idol_id.map((item, index) => (
+                <SelectIdolList name={item.idol_name} followNum={item.total_followers} toggleValid={true} key={index} id={item.id} token={token}></SelectIdolList>
+              ))} 
               </View>
             </ScrollView>
           </View>
@@ -149,6 +160,16 @@ const styles = StyleSheet.create({
     },
     unfollowListFalse: {
       marginBottom: 15
+    },
+    notFollow: {
+      color: '#777',
+      fontSize: 18,
+      textAlign: 'center'
+    },
+    allFollow: {
+      color: '#777',
+      fontSize: 18,
+      textAlign: 'center'
     },
     idolCard: {
         justifyContent: 'flex-start',
