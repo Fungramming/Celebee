@@ -66,7 +66,7 @@ export default class boardCard extends Component {
 const styles = StyleSheet.create({
   container: {
     borderWidth: 1,
-    width: "100%",
+    width: Dimensions.get('window').width,
     marginBottom: 15,
     paddingHorizontal: 15
   },
