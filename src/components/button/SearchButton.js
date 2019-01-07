@@ -23,7 +23,8 @@ export default class SearchButton extends Component {
     return (
       <View>
         <TouchableOpacity onPress={this.onPressSearch}>
-          <Image style={{width: 25, height: 25, marginLeft: 15}} source={require('../../../assets/search.png')} />
+          <Image style={{marginLeft: 10}} 
+            source={require('../../../assets/search.png')} />
         </TouchableOpacity>
       </View>
     )

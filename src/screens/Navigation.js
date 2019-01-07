@@ -227,6 +227,17 @@ export const SearchScreen = () => Navigation.setRoot({
   }
 })
 
+export const AlarmScreen = () => Navigation.setRoot({
+  root: {
+    component: {
+      name: ALARM_SCREEN,
+      passProps: {
+        text: '알림'
+      },
+    }
+  }
+})
+
 export const CommentsModal = () => Navigation.setRoot({
   root: {
     component: {
