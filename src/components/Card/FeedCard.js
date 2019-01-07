@@ -107,7 +107,7 @@ export default class FeedCard extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <ScheduleHeader detail={this.onToggleDetail}/>
+        <ScheduleHeader date={this.props.info.date} detail={this.onToggleDetail}/>
         {this.state.toggleDetail 
           ? 
           <View style={styles.feedDetail}>

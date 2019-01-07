@@ -178,14 +178,14 @@ export default Api = {
                     'token': payload.token
                 },
                 body: JSON.stringify({
-                    schedule_date: '2018-12-27',
-                    index: 1
+                    schedule_date: payload.date,
+                    index: payload.current_page
                 })
             })
             console.log('@@@@@@@response :', response);
             let data = JSON.parse(response._bodyInit)
             console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@data', data)
-            return data.schedules
+            return data
         }
         catch(e) {
             

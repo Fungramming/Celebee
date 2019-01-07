@@ -17,9 +17,6 @@ class SelectIdol extends Component {
     }
   }
 
-  componentDidMount() {
-  }
-
   componentDidUpdate(prevProps, prevState) {
     if ( prevProps.idol_list.length !== this.props.idol_list.length) {
         this.setState(prevState => ({

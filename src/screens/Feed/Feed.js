@@ -7,6 +7,7 @@ import {
   StatusBar, 
   ScrollView, 
   FlatList,
+  ListView,
   View, 
   Text, 
   StyleSheet, 
@@ -15,6 +16,7 @@ import {
   DatePickerIOS, 
   DatePickerAndroid,
   NativeModules,
+  RefreshControl
 } from "react-native";
 import Icon from 'react-native-vector-icons/Entypo';
 import { connect } from 'react-redux'
@@ -28,9 +30,8 @@ import SearchButton from '../../components/button/SearchButton'
 import { fetchFeedRequest } from "../../actions/feed";
 
 // 달력 출력 폼 설정
-  const today = (() => {
-    var d = new Date(),
-        month = '' + (d.getMonth() + 1),
+  const formDate = (d) => {   
+    let month = '' + (d.getMonth() + 1),
         day = '' + d.getDate(),
         year = d.getFullYear();
 
@@ -38,7 +39,7 @@ import { fetchFeedRequest } from "../../actions/feed";
     if (day.length < 2) day = '0' + day;
 
     return [year, month, day].join('-')
-  })()
+  }
 
   LocaleConfig.locales['KR'] = {
     monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
@@ -63,14 +64,20 @@ class Feed extends Component {
     Navigation.events().bindComponent(this);  
 
     this.state = { 
+      feedInfo: this.props.feedInfo,
       chosenDate: new Date(),
       follow_idol_id: this.props.userInfo.follow_idol_id,
       toggleDate: false,
       toggleDetail: false,
-      selectedDay: today,           
       testData: ["2010-10-10","2010-10-11"],
       refreshing: false,
-      token: this.props.token
+      token: this.props.token,
+      dataSource: new ListView.DataSource({
+        rowHasChanged: (row1, row2) => row1 !== row2 }),
+      cars : [
+        {name:'Datsun',color:'White'},
+        {name:'Camry',color:'Green'}
+      ]
     };
     this.setDate = this.setDate.bind(this);
     this.watchScroll = this.watchScroll.bind(this);
@@ -82,6 +89,28 @@ class Feed extends Component {
     this.onRefresh = this.onRefresh.bind(this)
     this.fetchFeed = this.fetchFeed.bind(this)
   }
+
+  componentDidMount(){
+    this.fetchFeed("next")
+  }
+
+  componentDidUpdate(prevProps){
+    console.log('1prevProps', prevProps)
+    console.log('2this.props', this.props)
+    if(prevProps.feedInfo.current_page !== this.props.feedInfo.current_page){
+      let updatedFeedInfo = prevProps.feedInfo.schedules.concat(this.props.feedInfo.schedules)
+      console.log('prevProps.feedInfo.schedules', prevProps.feedInfo.schedules)
+      console.log('this.props.feedInfo.schedules', this.props.feedInfo.schedules)
+      console.log('updatedFeedInfo', updatedFeedInfo)
+      this.setState(prevState => ({
+        ...prevState,
+        feedInfo: this.props.feedInfo.schedules
+      }))
+    }    
+    console.log('3this.state', this.state)
+  }
+
+  
 
   setDate(newDate) {
     this.setState({
@@ -126,11 +155,11 @@ class Feed extends Component {
   };
   
   watchScroll = (event) => {
-  const RCTUIManager = NativeModules.UIManager
-  const sv = this.refs['scrollView']
-  RCTUIManager.measure(sv.getInnerViewNode(), (...data) => {
-    console.log(data[5], 111)
-  })
+    const RCTUIManager = NativeModules.UIManager
+    const sv = this.refs['scrollView']
+    RCTUIManager.measure(sv.getInnerViewNode(), (...data) => {
+      console.log(data[5], 111)
+    })
     // 정확성이 떨어지는 코드
     // const nEvent = event.nativeEvent;
 
@@ -193,26 +222,60 @@ class Feed extends Component {
   }
   
   onEndReached() {
-    let newA = this.state.testData
-    this.setState(prevState => ({
-      ...prevState,
-      testData: [...prevState.testData, "2010-10-12", "2010-10-13"]
-    }));
+    console.log('aff111111111111', 111111111111)
+    // this.setState(prevState => ({
+    //   ...prevState,
+    //   testData: [...prevState.testData, "2010-10-12", "2010-10-13"]
+    // }));
+    
+    // this.fetchFeed("next")
   }
 
   onRefresh() {
-    console.log('111111111111111111111111111111111', 111111111111111111111111111111111)
+    // this.fetchFeed("prev")
   }
 
-  fetchFeed() {
-    console.log('this.state.chosenDate.toLocaleDateString', this.state.chosenDate) 
+  fetchFeed(obj) {
+    let valid = typeof this.state.feedInfo.schedules[0].date
+    // if(!valid){
+      let pageNum;
+      let date = formDate(this.state.chosenDate)
+
+      if(obj == "prev"){
+
+        pageNum = this.state.feedInfo.current_page - 1
+        this.setState(prevState => ({
+          ...prevState,
+          feedInfo: {
+            ...prevState.feedInfo,
+            current_page: this.state.feedInfo.current_page - 1
+          }
+        }))
+      } else if(obj == "next") {
+        pageNum = this.state.feedInfo.current_page + 1
+        this.setState(prevState => ({
+          ...prevState,
+          feedInfo: {
+            ...prevState.feedInfo,
+            current_page: this.state.feedInfo.current_page + 1
+          }
+        }))
+      }
+
+      let payload = {
+        token: this.state.token,
+        date : date,
+        current_page: pageNum
+      }    
+      // if(payload.current_page == 0){
+      //   payload.current_page = -1
+      // }
+      console.log('@@@payload', payload)
+      this.props.feed(payload)
+
+    // }
     
-    let payload = {
-      token: this.state.token,
-      date : "18.12.28"
-    }
-    
-    this.props.feed(payload)
+   
   }
 
   render() {
@@ -223,10 +286,7 @@ class Feed extends Component {
       <SafeAreaView>
         <View style={styles.container}>
           <StatusBar barStyle="dark-content"/>
-          <View style={styles.header}>
-            <TouchableOpacity onPress={this.fetchFeed}>
-              <Text>fetchFeed</Text>
-            </TouchableOpacity>
+          <View style={styles.header}>           
             <Text style={styles.date} onPress={this.onToggleDate}>
               {this.state.chosenDate.toLocaleDateString('ko-KR', options)}
               &nbsp;
@@ -253,25 +313,29 @@ class Feed extends Component {
           <IdolIndicator />
 
           <FlatList
-            data={this.state.testData}
+            data={this.state.feedInfo}
+            onScrollBeginDrag={() => console.log("start")}
             initialNumToRender={20}
-            onEndReachedThreshold={0.2}
+            onEndReachedThreshold={0.1}
             onEndReached={this.onEndReached}
-            refreshing={this.state.refreshing}
-            onRefresh={this.onRefresh}
-            showsVerticalScrollIndicator={false}
+            // showsVerticalScrollIndicator={false}
             renderItem={({ item }) => {
               return (
                 <FeedCard 
                   onLink={this.onPressLink} 
                   detail={this.onToggleDetail} 
-                  date={item}
+                  info={item}
                   componentId={this.props.componentId}
                   ></FeedCard>                              
                 )
             }}
-            keyExtractor={(index) => index.toString()}
+            keyExtractor={(item, index) => item.id.toString()}
           />
+          {/* <ListView
+            // refreshControl={this._refreshControl()}
+            dataSource={this.state.feedInfo.schedules}
+            renderRow={(car) => this._renderListView(car)}>
+          </ListView> */}
 
         </View>
       </SafeAreaView>
@@ -282,7 +346,7 @@ class Feed extends Component {
 const mapStateToProps = state => {
   return {
       userInfo: state.user.userInfo,   // Mount 될때 initialState 를 가져옴 , this.props 로. users 는 actios 에서의 users.js 의 이름
-      feedList: state.feed.schedule,
+      feedInfo: state.feed,
       token: state.user.token
   }
 }
