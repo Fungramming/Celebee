@@ -20,7 +20,7 @@ class MyPage extends Component {
         rightButtons: [
           {
             id: 'toSettingScreen',
-            icon: require('../../../assets/alarm.png'),
+            icon: require('../../../assets/feed.png'),
             testID: 'logoutButton',
             disableIconTint: true,
             showAsAction: 'always',

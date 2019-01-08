@@ -27,6 +27,7 @@ import FeedCard from '../../components/Card/FeedCard'
 import { FEED_CALENDAR_SCREEN, FEED_LINK_SCREEN, COMMENT_MODAL } from '../Navigation'
 import IdolIndicator from '../../../src/screens/Feed/components/IdolIndicator'
 import SearchButton from '../../components/button/SearchButton'
+import AlarmButton from '../../components/button/AlarmButton'
 import { fetchFeedRequest } from "../../actions/feed";
 
 // 달력 출력 폼 설정
@@ -296,6 +297,7 @@ class Feed extends Component {
             <TouchableOpacity onPress={this.onPressCalendar}>
               <Image style={styles.iconSize} source={require('../../../assets/calendar.png')} />
             </TouchableOpacity>
+            <AlarmButton componentId={this.props.componentId}/>
             <SearchButton componentId={this.props.componentId}/>
           </View>
 

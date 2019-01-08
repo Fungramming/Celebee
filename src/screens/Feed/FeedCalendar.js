@@ -25,6 +25,7 @@ import ScheduleHeader from '../../../src/screens/Feed/components/ScheduleHeader'
 import IdolIndicator from '../../../src/screens/Feed/components/IdolIndicator'
 import FeedCard from '../../components/Card/FeedCard'
 import SearchButton from '../../components/button/SearchButton'
+import AlarmButton from '../../components/button/AlarmButton'
 import { FEED_CALENDAR_SCREEN, FEED_LINK_SCREEN } from '../Navigation'
 
 // 달력 출력 폼 설정
@@ -145,7 +146,6 @@ class FeedCalendar extends Component {
   }
 
   onToggleModal() {
-    console.log('1111111111111', 1111111111111)
     this.setState(prevState => ({ 
       ...prevState,
       isFeedModalVisible: !this.state.isFeedModalVisible 
@@ -216,7 +216,10 @@ class FeedCalendar extends Component {
       <SafeAreaView>
         <StatusBar barStyle="dark-content"/>
         {/* header */}        
-        <View style={styles.header}>        
+        <View style={styles.header}>
+          <TouchableOpacity onPress={this.onBackButton}>
+            <Text>뒤로</Text>
+          </TouchableOpacity>
           <Text style={styles.date} onPress={this.onToggleDate}>
             {this.state.chosenDate.toLocaleDateString('ko-KR', options)}
             &nbsp;
@@ -226,6 +229,7 @@ class FeedCalendar extends Component {
           <TouchableOpacity onPress={this.onBackButton}>
             <Image style={styles.iconSize} source={require('../../../assets/feed.png')} />
           </TouchableOpacity>
+          <AlarmButton componentId={this.props.componentId}/>
           <SearchButton componentId={this.props.componentId}/>          
         </View>
         {this.state.toggleDate && Platform.OS == 'ios'

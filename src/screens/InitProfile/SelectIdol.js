@@ -84,8 +84,9 @@ class SelectIdol extends Component {
     const buttonBg = toggle ? styles.followBtn : styles.followingBtn
 
     return (
-      <View style={styles.container}>
-        <SafeAreaView>
+      <View style={styles.outerContainer}>
+        <SafeAreaView style={styles.container}>
+
           <ScrollView style={{marginHorizontal: 12,}} showsVerticalScrollIndicator={false}>
             <StatusBar 
               barStyle="dark-content"
@@ -126,11 +127,13 @@ class SelectIdol extends Component {
                   </View>
                 ))}
 
-          </ScrollView>        
-          <TouchableOpacity onPress={() => this.goToMain()}>
-              <Text style={styles.selectBtn}>Celebee 시작하기</Text>
-          </TouchableOpacity> 
+          </ScrollView>     
         </SafeAreaView>
+        
+        <TouchableOpacity onPress={() => this.goToMain()}>
+            <Text style={styles.selectBtn}>Celebee 시작하기</Text>
+        </TouchableOpacity> 
+
       </View>
     );
   }
@@ -156,13 +159,18 @@ const mapDispatchToProps = dispatch => {
 export default connect(mapStateToProps, mapDispatchToProps)(SelectIdol);
 
 const styles = StyleSheet.create({
+  outerContainer: {
+    backgroundColor: "#fefefe",
+    flex: 1,
+  },
   container: {
     flex: 1,
-    backgroundColor: '#fefefe'
+    backgroundColor: '#fefefe',
+    // paddingHorizontal: 5
   },
-  // headerTextWrap: {
-  //   marginTop: 60,
-  // },
+  headerTextWrap: {
+    marginTop: 10,
+  },
   headerText: {
     fontSize: 15,
     fontWeight: 'bold',
@@ -180,20 +188,20 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
   selectBtn: {
-    marginTop: 10,
-    // paddingTop: 20,
-    // paddingBottom: 20,
+    // marginTop: 10, 
+    paddingTop: 20,
+    paddingBottom: 20,
     color:'#fff',
     textAlign: 'center',
     fontSize: 20,
-    width: Dimensions.get('window').width,
-    height: 50,
+    // width: Dimensions.get('window').width,
     backgroundColor: '#722784'
   },
 
 
   idolCard: {
     flexDirection: 'row',
+    justifyContent: 'space-between',
     marginBottom: 5
   },
   idolPhoto: {

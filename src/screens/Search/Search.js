@@ -16,6 +16,19 @@ import { connect } from "react-redux";
 import Icon from 'react-native-vector-icons/AntDesign';
 
 class Search extends Component {
+
+  static options(passProps) {
+    return {
+      topBar: {
+        title: {
+          text: '검색',
+        },
+        visible: true,
+        animate: false,
+      }
+    };
+  }
+
   constructor(props){
     super(props)
     this.state = {
