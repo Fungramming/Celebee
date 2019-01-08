@@ -1,17 +1,6 @@
 import React, { Component } from 'react'
 import { StyleSheet, Text, View, FlatList, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
-
-class IdolList extends Component {
-  render() {
-    return (
-      <View>
-        <Text style={styles.idolName}>{this.props.name}</Text>
-      </View>
-    )
-  }
-}
-
 class IdolIndicator extends Component {
   constructor(props) {
     super(props);
@@ -28,7 +17,10 @@ class IdolIndicator extends Component {
     const {idolButton} = this.props
     console.log('inthis.props', this.props)
     return (
-      <View>
+      <View style={{flexDirection:'row'}}>
+        <TouchableOpacity onPress={()=> idolButton('all')}>
+          <Text>모두</Text>
+        </TouchableOpacity>
         <FlatList
           horizontal={true}
           showsHorizontalScrollIndicator={false}

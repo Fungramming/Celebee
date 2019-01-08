@@ -107,7 +107,11 @@ class Feed extends Component {
       console.log('3updatedFeedInfo', updatedFeedInfo)
       this.setState(prevState => ({
         ...prevState,
-        feedInfo: updatedFeedInfo
+        feedInfo: {
+          current_page: this.props.feedInfo.current_page, 
+          schedules: updatedFeedInfo,
+          filteredSchedules: updatedFeedInfo
+        }        
       }))
       console.log('4this.state', this.state)
     }    
@@ -166,7 +170,7 @@ class Feed extends Component {
     const RCTUIManager = NativeModules.UIManager
     const sv = this.refs['scrollView']
     RCTUIManager.measure(sv.getInnerViewNode(), (...data) => {
-      console.log(data[5], 111)
+      console.log(data[5])
     })
     // 정확성이 떨어지는 코드
     // const nEvent = event.nativeEvent;
@@ -185,8 +189,6 @@ class Feed extends Component {
 
     // console.log('this.state.scrollPosition :', this.state.scrollPosition);
   }
-
-  
 
   onPressLink() {
     Navigation.push(this.props.componentId, {
@@ -287,7 +289,36 @@ class Feed extends Component {
   }
 
   onPressIdolButton(obj){
-    console.log(obj)
+    console.log('obj', obj)
+    console.log('obj',typeof obj)
+    if(obj == 'all'){
+      this.setState(prevState=> ({
+        ...prevState,
+        feedInfo: {
+          ...prevState.feedInfo,
+          current_page: this.props.feedInfo.current_page, 
+          filteredSchedules: this.state.feedInfo.schedules
+        }  
+      }))
+      return
+    } else if(typeof obj == 'number' ){
+      let schedules = this.state.feedInfo.schedules
+      let filteredSchedules = []
+      schedules.filter((item) => {
+        if(obj == item['idol_id']){
+          filteredSchedules.push(item)
+        }
+      })      
+      this.setState(prevState=> ({
+        ...prevState,
+        feedInfo: {
+          ...prevState.feedInfo,
+          current_page: this.props.feedInfo.current_page, 
+          filteredSchedules: filteredSchedules
+        }  
+      }))
+      return 
+    }
   }
 
   render() {
@@ -325,12 +356,19 @@ class Feed extends Component {
 
           <IdolIndicator idolButton={this.onPressIdolButton}/>
           {/* <Text>{ JSON.stringify(this.state)}</Text>   */}
-          {this.state.feedInfo.current_page !== 0 ?
+          <ScrollView
+            ref="scrollView"
+            overScrollMode="always"
+            onScroll={this.watchScroll}>
+            {/* onScroll={(e)=>console.log(e)}> */}
+            {this.state.feedInfo.current_page !== 0 ?
              <FlatList
-             data={this.state.feedInfo}
+            //  ref="scrollView" 
+            //  onScroll={this.watchScroll}
+             data={this.state.feedInfo.filteredSchedules}
              keyExtractor={(item, index) => item.id.toString()}
             //  onScroll={this.watchScroll}
-             onScrollEndDrag={(e)=>  this.watchScroll(e)}
+            //  onScrollEndDrag={(e)=>  this.watchScroll(e)}
             //  onScroll={(e)=> this.watchScroll(e)}
              // onScrollBeginDrag={() => console.log('start')}
              // onScrollBeginDrag={() => this.fetchFeed("prev")}
@@ -345,37 +383,10 @@ class Feed extends Component {
                    componentId={this.props.componentId}
                    ></FeedCard>                              
                  )
-             }}
-           />
-            : null }
-         
-          {/* <FlatList
-            data={this.state.feedInfo}
-            onScrollBeginDrag={() => console.log("start")}
-            initialNumToRender={20}
-            // onEndReachedThreshold={0.1}
-            // onEndReached={this.onEndReached}
-            // showsVerticalScrollIndicator={false}
-            renderItem={({ item }) => {
-              return (
-                <FeedCard 
-                  onLink={this.onPressLink}
-                  onClose={this.onToggleModal}
-                  showCommentModal={true}
-                  detail={this.onToggleDetail} 
-                  info={item}
-                  componentId={this.props.componentId}
-                  ></FeedCard>                              
-                )
-            }}
-            keyExtractor={(item, index) => item.id.toString()}
-          /> */}
-          {/* <ListView
-            // refreshControl={this._refreshControl()}
-            dataSource={this.state.feedInfo.schedules}
-            renderRow={(car) => this._renderListView(car)}>
-          </ListView> */}
-
+              }}
+            />
+            : null }         
+          </ScrollView>
         </View>
       </SafeAreaView>
     );
