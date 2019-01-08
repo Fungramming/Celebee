@@ -9,7 +9,6 @@ import {
 } from "react-native";
 import Modal from "react-native-modal";
 import { Navigation } from 'react-native-navigation';
-import { connect } from 'react-redux'
 
 import FeedCard from '../../components/Card/FeedCard'
 import AlarmComment from './components/AlarmComment'
@@ -155,13 +154,8 @@ class Alarm extends Component {
     );
   }
 }
-const mapStateToProps = state => {
-  return {
-    isFeedModalVisible: state.feed.isFeedModalVisible
-  }
-}
 
-export default connect(mapStateToProps)(Alarm)
+export default Alarm
 
 const styles = StyleSheet.create({
   container: {

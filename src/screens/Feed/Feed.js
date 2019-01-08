@@ -72,7 +72,7 @@ class Feed extends Component {
       testData: ["2010-10-10","2010-10-11"],
       refreshing: false,
       token: this.props.token,
-      isFeedModalVisible: this.props.isFeedModalVisible
+      isFeedModalVisible: false
     };
     this.setDate = this.setDate.bind(this);
     this.watchScroll = this.watchScroll.bind(this);
@@ -298,7 +298,6 @@ const mapStateToProps = state => {
       userInfo: state.user.userInfo,   // Mount 될때 initialState 를 가져옴 , this.props 로. users 는 actios 에서의 users.js 의 이름
       feedList: state.feed.schedule,
       token: state.user.token,
-      isFeedModalVisible: state.feed.isFeedModalVisible
   }
 }
 

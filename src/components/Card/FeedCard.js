@@ -11,7 +11,6 @@ import {
   TouchableWithoutFeedback
   } from 'react-native'
 import { Navigation } from 'react-native-navigation'
-import { connect } from 'react-redux'
 import Modal from "react-native-modal";
 
 import Icon from 'react-native-vector-icons/Feather';
@@ -64,7 +63,7 @@ class FeedCard extends Component {
       ],
       toggleDetail: false,
       isCommentModalVisible: false,
-      isFeedModalVisible: this.props.isFeedModalVisible
+      isFeedModalVisible: false
     };
 
     this.onSwipe = this.onSwipe.bind(this)
@@ -75,7 +74,6 @@ class FeedCard extends Component {
   }
   
   componentDidMount() {
-    console.log('this.state.isFeedModalVisible :', this.state.isFeedModalVisible);
     this.setState(prevState=>({
       ...prevState,
       date: this.props.date
@@ -206,13 +204,7 @@ class FeedCard extends Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    isFeedModalVisible: state.feed.isFeedModalVisible
-  }
-}
-
-export default connect(mapStateToProps)(FeedCard)
+export default FeedCard
 
 const styles = StyleSheet.create({
   container: {
