@@ -78,17 +78,20 @@ class Feed extends Component {
       cars : [
         {name:'Datsun',color:'White'},
         {name:'Camry',color:'Green'}
-      ]
+      ],
+      isFeedModalVisible: false
     };
     this.setDate = this.setDate.bind(this);
     this.watchScroll = this.watchScroll.bind(this);
     this.onPressLink = this.onPressLink.bind(this)
     this.onPressCalendar = this.onPressCalendar.bind(this)
     // this.onToggleDetail = this.onToggleDetail.bind(this)
+    this.onToggleModal = this.onToggleModal.bind(this)
     this.onToggleDate = this.onToggleDate.bind(this)
     this.onEndReached = this.onEndReached.bind(this)
     this.onRefresh = this.onRefresh.bind(this)
     this.fetchFeed = this.fetchFeed.bind(this)
+    
   }
 
   componentDidMount(){
@@ -125,6 +128,13 @@ class Feed extends Component {
       ...prevState,
       toggleDetail: toggle
     }))
+  }
+
+  onToggleModal() {
+    this.setState(prevState => ({ 
+      ...prevState,
+      isFeedModalVisible: !this.state.isFeedModalVisible 
+    }));
   }
 
   onToggleDate() {
@@ -178,7 +188,9 @@ class Feed extends Component {
 
     // console.log('this.state.scrollPosition :', this.state.scrollPosition);
   }
+
   
+
   onPressLink() {
     Navigation.push(this.props.componentId, {
       component: {
@@ -237,45 +249,37 @@ class Feed extends Component {
   }
 
   fetchFeed(obj) {
-    let valid = typeof this.state.feedInfo.schedules[0].date
-    if(!valid){
-      let pageNum;
-      let date = formDate(this.state.chosenDate)
 
-      if(obj == "prev"){
+    let pageNum;
+    let date = formDate(this.state.chosenDate)
 
-        pageNum = this.state.feedInfo.current_page - 1
-        this.setState(prevState => ({
-          ...prevState,
-          feedInfo: {
-            ...prevState.feedInfo,
-            current_page: this.state.feedInfo.current_page - 1
-          }
-        }))
-      } else if(obj == "next") {
-        pageNum = this.state.feedInfo.current_page + 1
-        this.setState(prevState => ({
-          ...prevState,
-          feedInfo: {
-            ...prevState.feedInfo,
-            current_page: this.state.feedInfo.current_page + 1
-          }
-        }))
-      }
-
-      let payload = {
-        token: this.state.token,
-        date : date,
-        current_page: pageNum
-      }    
-      // if(payload.current_page == 0){
-      //   payload.current_page = -1
-      // }
-      console.log('@@@payload', payload)
-      this.props.feed(payload)
-
+    if(obj == "prev"){
+      pageNum = this.state.feedInfo.current_page - 1
+      this.setState(prevState => ({
+        ...prevState,
+        feedInfo: {
+          ...prevState.feedInfo,
+          current_page: this.state.feedInfo.current_page - 1
+        }
+      }))
+    } else if(obj == "next") {
+      pageNum = this.state.feedInfo.current_page + 1
+      this.setState(prevState => ({
+        ...prevState,
+        feedInfo: {
+          ...prevState.feedInfo,
+          current_page: this.state.feedInfo.current_page + 1
+        }
+      }))
     }
-    
+
+    let payload = {
+      token: this.state.token,
+      date : date,
+      current_page: pageNum
+    }    
+ 
+    this.props.feed(payload)    
    
   }
 
@@ -324,7 +328,9 @@ class Feed extends Component {
             renderItem={({ item }) => {
               return (
                 <FeedCard 
-                  onLink={this.onPressLink} 
+                  onLink={this.onPressLink}
+                  onClose={this.onToggleModal}
+                  showCommentModal={true}
                   detail={this.onToggleDetail} 
                   info={item}
                   componentId={this.props.componentId}
@@ -349,7 +355,7 @@ const mapStateToProps = state => {
   return {
       userInfo: state.user.userInfo,   // Mount 될때 initialState 를 가져옴 , this.props 로. users 는 actios 에서의 users.js 의 이름
       feedInfo: state.feed,
-      token: state.user.token
+      token: state.user.token,
   }
 }
 

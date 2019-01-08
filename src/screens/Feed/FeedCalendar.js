@@ -263,7 +263,7 @@ class FeedCalendar extends Component {
         <Modal isVisible={this.state.isFeedModalVisible} style={{justifyContent: "center", margin: 0}} deviceHeight={Dimensions.get('window').height}>
           <Text style={styles.feedToggleBtn} onPress={this.onToggleModal} />
           <View>
-            <FeedCard onLink={this.onPressLink} componentId={this.props.componentId}/>
+            <FeedCard onLink={this.onPressLink} onClose={this.onToggleModal} componentId={this.props.componentId}/>
           </View>
         </Modal>
       </SafeAreaView>

@@ -32,10 +32,6 @@ class EditIdol extends Component {
           userToken: ''
         }
     }
-    
-    componentDidMount() {
-      console.log('this.state.follow_idol_id :', this.state.follow_idol_id);
-    }
 
     componentDidUpdate(prevProps) {
       if ( prevProps.userInfo.follow_idol_id !== this.props.userInfo.follow_idol_id || prevProps.userInfo.unfollow_idol_id !== this.props.userInfo.unfollow_idol_id) {

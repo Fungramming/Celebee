@@ -9,12 +9,7 @@ class MyProfile extends Component {
         userInfo: this.props.userInfo
     }
   }  
-
-  componentDidMount() {
-    console.log('this.state.userInfo!!! :', this.state.userInfo);
-    console.log('typeof this.state.userInfo.photo :', typeof this.state.userInfo.photo);
-  }
-
+  
   componentDidUpdate(prevProps) {
     if ( prevProps.userInfo.nickname !== this.props.userInfo.nickname || prevProps.userInfo.photo !== this.props.userInfo.photo) {
       this.setState(prevState => ({

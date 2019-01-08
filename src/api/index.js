@@ -182,7 +182,6 @@ export default Api = {
                     index: payload.current_page
                 })
             })
-            console.log('@@@@@@@response :', response);
             let data = JSON.parse(response._bodyInit)
             console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@data', data)
             return data

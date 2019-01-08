@@ -141,7 +141,12 @@ class Alarm extends Component {
         <Modal isVisible={this.state.isFeedModalVisible} style={{justifyContent: "center", margin: 0}} deviceHeight={Dimensions.get('window').height}>
           <Text style={styles.feedToggleBtn} onPress={this.onToggleModal} />
           <View>
-            <FeedCard onLink={this.onPressLink} componentId={this.props.componentId} alarmVisible={this.state.scheduleHeaderAlarmVisible}/>
+            <FeedCard 
+              onLink={this.onPressLink} 
+              onClose={this.onToggleModal}
+              componentId={this.props.componentId} 
+              alarmVisible={this.state.scheduleHeaderAlarmVisible}
+            />
           </View>
         </Modal>
 
@@ -150,8 +155,7 @@ class Alarm extends Component {
   }
 }
 
-
-export default Alarm;
+export default Alarm
 
 const styles = StyleSheet.create({
   container: {

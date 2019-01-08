@@ -8,7 +8,6 @@ import { call, put, takeLatest } from 'redux-saga/effects'
 import Api from '../api'
 
 function* fetchFeedRequestSaga(action) {
-  console.log('#$#@$@#$#@$@action', action)
   try {
       // const payload = yield call(Api.fetchFeed)
       const payload = yield call(Api.fetchFeed, action.payload)

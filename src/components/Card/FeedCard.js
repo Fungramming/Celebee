@@ -11,9 +11,11 @@ import {
   TouchableWithoutFeedback
   } from 'react-native'
 import { Navigation } from 'react-native-navigation'
+import Modal from "react-native-modal";
 
 import Icon from 'react-native-vector-icons/Feather';
 import ScheduleHeader from '../../../src/screens/Feed/components/ScheduleHeader'
+import CommentModal from "../../components/Modal/CommentModal"
 import { COMMENTS_MODAL } from '../../screens/Navigation'
 
 class FeedItems extends Component {
@@ -26,7 +28,7 @@ class FeedItems extends Component {
     )
   }
 }
-export default class FeedCard extends Component {
+class FeedCard extends Component {
   constructor(props) {
     super(props);
     Navigation.events().bindComponent(this);  
@@ -60,15 +62,18 @@ export default class FeedCard extends Component {
         },
       ],
       toggleDetail: false,
+      isCommentModalVisible: false,
+      isFeedModalVisible: false
     };
 
+    this.onSwipe = this.onSwipe.bind(this)
     this.onPressLink = this.onPressLink.bind(this)
     this.onPressComment = this.onPressComment.bind(this)
     this.onToggleDetail = this.onToggleDetail.bind(this)
+    this.toggleModal = this.toggleModal.bind(this)
   }
   
   componentDidMount() {
-    console.log('this.props :', this.props);
     this.setState(prevState=>({
       ...prevState,
       date: this.props.date
@@ -81,11 +86,26 @@ export default class FeedCard extends Component {
   }
   
   onPressComment() {
-    Navigation.push(this.props.componentId, {
-      component: {
-        name: COMMENTS_MODAL,
-      }
-    })
+    if(this.props.showCommentModal) {
+      this.setState(prevState => ({
+        ...prevState,
+        isCommentModalVisible: true
+      }))
+    } else {
+      this.props.onClose()
+      Navigation.push(this.props.componentId, {
+        component: {
+          name: COMMENTS_MODAL,
+        }
+      })
+    }
+  }
+
+  onSwipe() {
+    this.setState(prevState => ({
+      ...prevState,
+      isCommentModalVisible: false
+    }))
   }
 
   onToggleDetail() {
@@ -102,6 +122,13 @@ export default class FeedCard extends Component {
       url: 'http://bam.tech',
       title: 'Wow, did you see that?'
     })
+  }
+
+  toggleModal() {
+    this.setState(prevState => ({ 
+      ...prevState,
+      isCommentModalVisible: false
+    }));
   }
 
   render() {
@@ -161,10 +188,23 @@ export default class FeedCard extends Component {
               <Image style={styles.iconSize} source={require('../../../assets/share.png')} />
             </TouchableOpacity>
         </View>
+
+        <Modal
+          style={{position: 'relative', justifyContent: "flex-end", margin: 0, }} backdropOpacity={0.2} deviceHeight={Dimensions.get('window').height}
+          isVisible={this.state.isCommentModalVisible}
+          onSwipe={ this.onSwipe }
+          swipeDirection="down"
+          >
+            <TouchableOpacity style={styles.alarmToggleBtn} onPress={this.toggleModal}></TouchableOpacity>
+            <CommentModal/>
+        </Modal>
+
       </View>
     )
   }
 }
+
+export default FeedCard
 
 const styles = StyleSheet.create({
   container: {
@@ -221,5 +261,12 @@ const styles = StyleSheet.create({
   iconSize: {
     width: 25,
     height: 25
-  }
+  },
+  alarmToggleBtn: {
+    paddingRight: 12,
+    paddingBottom: 5, 
+    height: 50, 
+    paddingLeft: Dimensions.get('window').width,
+    alignSelf: 'flex-end' 
+  },
 });
