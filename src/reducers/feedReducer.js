@@ -16,7 +16,6 @@ const initialState = {
             "video_feed": []
         },
     ],
-    isFeedModalVisible: false
 }
 
 const feedReducer = (state = initialState, action) => {
