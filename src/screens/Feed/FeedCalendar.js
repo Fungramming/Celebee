@@ -89,7 +89,7 @@ class FeedCalendar extends Component {
         '2018-12-19': {marked: true, dotColor: 'purple',}
       },
 
-      isFeedModalVisible: false
+      isFeedModalVisible: this.props.isFeedModalVisible
 
     };
     this.setDate = this.setDate.bind(this);
@@ -263,7 +263,7 @@ class FeedCalendar extends Component {
         <Modal isVisible={this.state.isFeedModalVisible} style={{justifyContent: "center", margin: 0}} deviceHeight={Dimensions.get('window').height}>
           <Text style={styles.feedToggleBtn} onPress={this.onToggleModal} />
           <View>
-            <FeedCard onLink={this.onPressLink} componentId={this.props.componentId}/>
+            <FeedCard onLink={this.onPressLink} onClose={this.onToggleModal} componentId={this.props.componentId}/>
           </View>
         </Modal>
       </SafeAreaView>
@@ -274,6 +274,7 @@ class FeedCalendar extends Component {
 const mapStateToProps = state => {
   return {
       userInfo: state.user.userInfo,   // Mount 될때 initialState 를 가져옴 , this.props 로. users 는 actios 에서의 users.js 의 이름
+      isFeedModalVisible: state.feed.isFeedModalVisible
   }
 }
 

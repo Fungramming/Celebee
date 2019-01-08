@@ -9,7 +9,6 @@ class ScheduleHeader extends Component {
     super(props)
     this.state = {
       isAlarmModalVisible: false,
-      isFeedModalVisible: false,
       oClock: false,
       fiveMinAgo: false,
       times: ['정시', '5분 전', '10분 전', '15분 전', '30분 전', '1시간 전', '2시간 전', '3시간 전', '12시간 전', '1일 전', '2일 전', '1주일 전',]
@@ -58,10 +57,6 @@ class ScheduleHeader extends Component {
                 <Image style={styles.iconSize} source={require('../../../../assets/alarm.png')}/>
               </TouchableOpacity> 
             }
-
-            {/* <TouchableOpacity style={styles.feedHeaderAlarm} onPress={this.toggleModal} >
-              <Image style={styles.iconSize} source={require('../../../../assets/alarm.png')}/>
-            </TouchableOpacity> */}
 
             {/* 알람 모달 */}
             <Modal 

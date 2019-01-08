@@ -21,7 +21,7 @@ const initialState = {
     },
     idolToggle: true,
     token: '',
-    userValid: ''
+    userValid: '',
 }
 
 const userReducer = (state = initialState, action) => {

@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import Modal from "react-native-modal";
 import { Navigation } from 'react-native-navigation';
+import { connect } from 'react-redux'
 
 import FeedCard from '../../components/Card/FeedCard'
 import AlarmComment from './components/AlarmComment'
@@ -141,7 +142,12 @@ class Alarm extends Component {
         <Modal isVisible={this.state.isFeedModalVisible} style={{justifyContent: "center", margin: 0}} deviceHeight={Dimensions.get('window').height}>
           <Text style={styles.feedToggleBtn} onPress={this.onToggleModal} />
           <View>
-            <FeedCard onLink={this.onPressLink} componentId={this.props.componentId} alarmVisible={this.state.scheduleHeaderAlarmVisible}/>
+            <FeedCard 
+              onLink={this.onPressLink} 
+              onClose={this.onToggleModal}
+              componentId={this.props.componentId} 
+              alarmVisible={this.state.scheduleHeaderAlarmVisible}
+            />
           </View>
         </Modal>
 
@@ -149,9 +155,13 @@ class Alarm extends Component {
     );
   }
 }
+const mapStateToProps = state => {
+  return {
+    isFeedModalVisible: state.feed.isFeedModalVisible
+  }
+}
 
-
-export default Alarm;
+export default connect(mapStateToProps)(Alarm)
 
 const styles = StyleSheet.create({
   container: {
