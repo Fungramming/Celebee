@@ -5,18 +5,19 @@ import {
 
 const initialState = {
     current_page: 0,    
-    schedules: [
-        {
-            "date": "",
-            "id": '',
-            "idol_id": '',
-            "news_feed": [],
-            "regi_time": "",
-            "sc_info": "",
-            "sc_name": "",
-            "video_feed": []
-        },
-    ],
+    schedules: []
+    // schedules: [
+    //     {
+    //         "date": "",
+    //         "id": '',
+    //         "idol_id": '',
+    //         "news_feed": [],
+    //         "regi_time": "",
+    //         "sc_info": "",
+    //         "sc_name": "",
+    //         "video_feed": []
+    //     },
+    // ],
 }
 
 const feedReducer = (state = initialState, action) => {

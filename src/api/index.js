@@ -170,21 +170,60 @@ export default Api = {
     fetchFeed : async (payload) => {
         try {
             console.log('@@!!!payload :', payload);
-            let response = await fetch( config + 'schedules/', {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                    'token': payload.token
-                },
-                body: JSON.stringify({
-                    schedule_date: payload.date,
-                    index: payload.current_page
+            if(payload.type == "default"){
+                let responseA = await fetch( config + 'schedules/', {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                        'token': payload.token
+                    },
+                    body: JSON.stringify({
+                        schedule_date: payload.date,
+                        index: -1
+                    })
                 })
-            })
-            let data = JSON.parse(response._bodyInit)
-            console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@data', data)
-            return data
+
+                let responseB = await fetch( config + 'schedules/', {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                        'token': payload.token
+                    },
+                    body: JSON.stringify({
+                        schedule_date: payload.date,
+                        index: 1
+                    })
+                })
+
+                let dataA = JSON.parse(responseA._bodyInit)
+                let dataB = JSON.parse(responseB._bodyInit)
+                let schedules = dataA.schedules.concat(dataB.schedules)
+                console.log('dataA', dataA)
+                console.log('dataB', dataB)
+                console.log('schedules :', schedules);
+                let data = {
+                    current_page: 1,
+                    schedules: schedules
+                }
+                return data                
+            } else {
+                let response = await fetch( config + 'schedules/', {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                        'token': payload.token
+                    },
+                    body: JSON.stringify({
+                        schedule_date: payload.date,
+                        index: payload.current_page
+                    })
+                })
+                let data = JSON.parse(response._bodyInit)
+                return data
+            }
         }
         catch(e) {
             

@@ -34,11 +34,11 @@ class ScheduleHeader extends Component {
   }
 
   render() {
-    const {onPressSchedule, detail, alarmVisible} = this.props
+    const {onPressSchedule, detail, alarmVisible, date, title, test} = this.props
     let toggleSchedule;
     if(detail) toggleSchedule = detail
     else if(onPressSchedule) toggleSchedule = onPressSchedule
-    
+      
     return (
       <View>
         <TouchableWithoutFeedback onPress={toggleSchedule} style={styles.feedHeader}>
@@ -48,8 +48,9 @@ class ScheduleHeader extends Component {
               style={styles.feedHeaderPhoto}
             />
               <View style={styles.feedHeaderTextWrap}>
-                <Text style={styles.feedHeaderText}> 스케줄, 기사 제목 영역 </Text>
-                <Text style={styles.feedHeaderSubText}> {this.props.date} | 스케줄 장소 및 방송 채널 입력 </Text>
+                <Text style={styles.feedHeaderText}> {title}</Text>
+                {/* <Text style={styles.feedHeaderText}> {test.date}</Text> */}
+                <Text style={styles.feedHeaderSubText}> {date} | 스케줄 장소 및 방송 채널 입력 </Text>
               </View>
 
             {this.props.alarmVisible === false ? null :

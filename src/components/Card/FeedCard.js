@@ -134,7 +134,12 @@ class FeedCard extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <ScheduleHeader date={this.props.info.date} detail={this.onToggleDetail} alarmVisible={this.props.alarmVisible}/>
+        <ScheduleHeader 
+        test={this.props.info}
+          title={this.props.info.schedule_name} 
+          date={this.props.info.date} 
+          detail={this.onToggleDetail} 
+          alarmVisible={this.props.alarmVisible}/>
         {this.state.toggleDetail 
           ? 
           <View style={styles.feedDetail}>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { StyleSheet, Text, View, FlatList } from 'react-native'
+import { StyleSheet, Text, View, FlatList, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
 
 class IdolList extends Component {
@@ -17,11 +17,16 @@ class IdolIndicator extends Component {
     super(props);
     this.state = { 
       follow_idol_id: this.props.userInfo.follow_idol_id,
-    };
+    }
   }
 
+  componentDidMount(){
+    console.log('!@this.state', this.state)
+  }
 
   render() {
+    const {idolButton} = this.props
+    console.log('inthis.props', this.props)
     return (
       <View>
         <FlatList
@@ -29,7 +34,13 @@ class IdolIndicator extends Component {
           showsHorizontalScrollIndicator={false}
           data={this.props.userInfo.follow_idol_id}
           renderItem={({item}) => {
-              return <IdolList name={item.idol_name}></IdolList> 
+              return (
+                <View>
+                  <TouchableOpacity onPress={()=> idolButton(item.id)}>
+                    <Text style={styles.idolName}>{item.idol_name}</Text>
+                  </TouchableOpacity>
+                </View>
+              )
           }}
           keyExtractor={(item, index) => index.toString()}
           style={

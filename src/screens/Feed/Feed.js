@@ -91,30 +91,27 @@ class Feed extends Component {
     this.onEndReached = this.onEndReached.bind(this)
     this.onRefresh = this.onRefresh.bind(this)
     this.fetchFeed = this.fetchFeed.bind(this)
-    
+    this.onPressIdolButton = this.onPressIdolButton.bind(this)
   }
 
   componentDidMount(){
-    this.fetchFeed("next")
+    // this.fetchFeed("prev")
+    this.fetchFeed("default")
   }
 
   componentDidUpdate(prevProps){
-    console.log('1prevProps', prevProps)
-    console.log('2this.props', this.props)
     if(prevProps.feedInfo.current_page !== this.props.feedInfo.current_page){
       let updatedFeedInfo = prevProps.feedInfo.schedules.concat(this.props.feedInfo.schedules)
-      console.log('prevProps.feedInfo.schedules', prevProps.feedInfo.schedules)
-      console.log('this.props.feedInfo.schedules', this.props.feedInfo.schedules)
-      console.log('updatedFeedInfo', updatedFeedInfo)
+      console.log('1prevProps.feedInfo.schedules', prevProps)
+      console.log('2this.props.feedInfo.schedules', this.props)
+      console.log('3updatedFeedInfo', updatedFeedInfo)
       this.setState(prevState => ({
         ...prevState,
-        feedInfo: this.props.feedInfo.schedules
+        feedInfo: updatedFeedInfo
       }))
+      console.log('4this.state', this.state)
     }    
-    console.log('3this.state', this.state)
   }
-
-  
 
   setDate(newDate) {
     this.setState({
@@ -249,17 +246,22 @@ class Feed extends Component {
   }
 
   fetchFeed(obj) {
-
+    console.log('obj :', obj);
     let pageNum;
     let date = formDate(this.state.chosenDate)
-
-    if(obj == "prev"){
-      pageNum = this.state.feedInfo.current_page - 1
+    let type;
+    if(obj == "default"){
+      type = "default"
+      pageNum = 0
+    } else if(obj == "prev"){  
+      pageNum = - 1
+      // pageNum = this.state.feedInfo.current_page - 1
       this.setState(prevState => ({
         ...prevState,
         feedInfo: {
           ...prevState.feedInfo,
-          current_page: this.state.feedInfo.current_page - 1
+          current_page: - 1
+          // current_page: this.state.feedInfo.current_page - 1
         }
       }))
     } else if(obj == "next") {
@@ -276,11 +278,16 @@ class Feed extends Component {
     let payload = {
       token: this.state.token,
       date : date,
+      type: type,
       current_page: pageNum
     }    
  
     this.props.feed(payload)    
    
+  }
+
+  onPressIdolButton(obj){
+    console.log(obj)
   }
 
   render() {
@@ -316,8 +323,32 @@ class Feed extends Component {
           : null
           }
 
-          <IdolIndicator />
-
+          <IdolIndicator idolButton={this.onPressIdolButton}/>
+          {/* <Text>{ JSON.stringify(this.state)}</Text>   */}
+          {this.state.feedInfo.current_page !== 0 ?
+             <FlatList
+             data={this.state.feedInfo}
+             keyExtractor={(item, index) => item.id.toString()}
+            //  onScroll={this.watchScroll}
+             onScrollEndDrag={(e)=>  this.watchScroll(e)}
+            //  onScroll={(e)=> this.watchScroll(e)}
+             // onScrollBeginDrag={() => console.log('start')}
+             // onScrollBeginDrag={() => this.fetchFeed("prev")}
+             renderItem={({ item }) => {
+               return (
+                 <FeedCard 
+                   onLink={this.onPressLink}
+                   onClose={this.onToggleModal}
+                   showCommentModal={true}
+                   detail={this.onToggleDetail} 
+                   info={item}
+                   componentId={this.props.componentId}
+                   ></FeedCard>                              
+                 )
+             }}
+           />
+            : null }
+         
           {/* <FlatList
             data={this.state.feedInfo}
             onScrollBeginDrag={() => console.log("start")}
