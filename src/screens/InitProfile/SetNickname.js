@@ -79,7 +79,6 @@ class SetNickname extends Component {
   }
   
   render() {
-    console.log('this.state.vis :', this.state.visibleHeight);
     return (
           <View style={[styles.outerContainer]}>
               <SafeAreaView style={styles.container}>

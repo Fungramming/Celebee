@@ -15,8 +15,8 @@ export default Api = {
                     uid: payload.uid, 
                 }),
             })
-            console.log('this response :', response);
             const result = JSON.parse(response._bodyInit)
+            console.log('checkUser result', result)
             if ( result.result === "fail" ) {
                 console.log('2 :', 2);
                 const result = {

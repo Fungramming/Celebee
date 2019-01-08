@@ -63,31 +63,31 @@ class Login extends Component {
     console.log('this.state :', this.state);
       console.log('4 prevProps.userValid :',  prevProps.userValid);
       console.log('5 this.props.userValid :', this.props.userValid);
-      console.log('this.state :', this.state);
+      console.log('6this.props.userInfo :', this.props.userInfo);
       if ( prevProps.userValid !== this.props.userValid) {
-        console.log('on@@@@@@@@@@@@@@@@@@@@@@@@@@')
+        console.log('onchange111', 111)
         this.setState(prevState=> ({
           ...prevState,
           userInfo: this.props.userInfo,
           userValid: this.props.userValid,
           token: this.props.token,
         }))
-        console.log('222 :', 222);
+        setTimeout(()=>{
+          this.navi()
+        }, 2000)
+
       }      
     }
 
-  checkUserRequest =  (token) => {
+  checkUserRequest = (token) => {
     this.props.checkUser(token)
-    setTimeout(()=>{
-      this.navi()
-    }, 1000)
   } 
 
-  navi = () => {
-    console.log('this.props.userValid :', this.props.userValid);
-    if( this.props.userValid == true){  //기존 유저
+  navi() {
+    console.log('11this.props.userValid :', this.state);
+    if( this.state.userValid == true){  //기존 유저
       MainApp()
-    }  else if( this.props.userValid == false && this.props.userInfo.nickname === "" ){  //새로운 유저
+    }  else if( this.state.userValid == false && this.state.userInfo.nickname === "" ){  //새로운 유저
       SetNicknameScreen()
     } 
   }

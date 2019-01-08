@@ -238,7 +238,7 @@ class Feed extends Component {
 
   fetchFeed(obj) {
     let valid = typeof this.state.feedInfo.schedules[0].date
-    // if(!valid){
+    if(!valid){
       let pageNum;
       let date = formDate(this.state.chosenDate)
 
@@ -274,7 +274,7 @@ class Feed extends Component {
       console.log('@@@payload', payload)
       this.props.feed(payload)
 
-    // }
+    }
     
    
   }
@@ -314,12 +314,12 @@ class Feed extends Component {
 
           <IdolIndicator />
 
-          <FlatList
+          {/* <FlatList
             data={this.state.feedInfo}
             onScrollBeginDrag={() => console.log("start")}
             initialNumToRender={20}
-            onEndReachedThreshold={0.1}
-            onEndReached={this.onEndReached}
+            // onEndReachedThreshold={0.1}
+            // onEndReached={this.onEndReached}
             // showsVerticalScrollIndicator={false}
             renderItem={({ item }) => {
               return (
@@ -332,7 +332,7 @@ class Feed extends Component {
                 )
             }}
             keyExtractor={(item, index) => item.id.toString()}
-          />
+          /> */}
           {/* <ListView
             // refreshControl={this._refreshControl()}
             dataSource={this.state.feedInfo.schedules}
