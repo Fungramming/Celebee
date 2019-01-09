@@ -16,7 +16,8 @@ import {
   DatePickerIOS, 
   DatePickerAndroid,
   NativeModules,
-  RefreshControl
+  RefreshControl,
+  SectionList
 } from "react-native";
 import Icon from 'react-native-vector-icons/Entypo';
 import { connect } from 'react-redux'
@@ -50,6 +51,7 @@ import { fetchFeedRequest } from "../../actions/feed";
   };
   LocaleConfig.defaultLocale = 'KR';
 
+
 class Feed extends Component {
   static options() {
     return {
@@ -63,7 +65,6 @@ class Feed extends Component {
   constructor(props) {
     super(props);
     Navigation.events().bindComponent(this);  
-
     this.state = { 
       feedInfo: this.props.feedInfo,
       chosenDate: new Date(),
@@ -73,8 +74,9 @@ class Feed extends Component {
       testData: ["2010-10-10","2010-10-11"],
       refreshing: false,
       token: this.props.token,
-      dataSource: new ListView.DataSource({
-        rowHasChanged: (row1, row2) => row1 !== row2 }),
+      dataSource: [],
+      // dataSource: new ListView.DataSource({
+      //   rowHasChanged: (row1, row2) => row1 !== row2 }),
       cars : [
         {name:'Datsun',color:'White'},
         {name:'Camry',color:'Green'}
@@ -92,6 +94,7 @@ class Feed extends Component {
     this.onRefresh = this.onRefresh.bind(this)
     this.fetchFeed = this.fetchFeed.bind(this)
     this.onPressIdolButton = this.onPressIdolButton.bind(this)
+
   }
 
   componentDidMount(){
@@ -105,15 +108,33 @@ class Feed extends Component {
       console.log('1prevProps.feedInfo.schedules', prevProps)
       console.log('2this.props.feedInfo.schedules', this.props)
       console.log('3updatedFeedInfo', updatedFeedInfo)
-      this.setState(prevState => ({
-        ...prevState,
-        feedInfo: {
-          current_page: this.props.feedInfo.current_page, 
-          schedules: updatedFeedInfo,
-          filteredSchedules: updatedFeedInfo
-        }        
-      }))
-      console.log('4this.state', this.state)
+
+      const getSectionData = (dataBlob, sectionId) => dataBlob[sectionId];
+      const getRowData = (dataBlob, sectionId, rowId) => dataBlob[`${rowId}`];
+
+      const ds = new ListView.DataSource({
+        rowHasChanged: (r1, r2) => r1 !== r2,
+        sectionHeaderHasChanged : (s1, s2) => s1 !== s2,
+        getSectionData,
+        getRowData,
+      });
+
+      let { dataBlob, sectionIds, rowIds, sectionDate} = this.formatData(updatedFeedInfo)
+      console.log('dataBlob, sectionIds, rowIds :', dataBlob, sectionIds, rowIds);
+      setTimeout(()=>{
+        console.log('111111', 111111)
+        this.setState(prevState => ({
+          ...prevState,
+          dataSource: ds.cloneWithRowsAndSections(dataBlob, sectionIds, rowIds),
+          feedInfo: {
+            current_page: this.props.feedInfo.current_page, 
+            schedules: updatedFeedInfo,
+            filteredSchedules: updatedFeedInfo,
+            sectionDate: sectionDate
+          }        
+        }))
+      }, 5000)
+      
     }    
   }
 
@@ -294,11 +315,12 @@ class Feed extends Component {
     if(obj == 'all'){
       this.setState(prevState=> ({
         ...prevState,
+        dataSource: ds.cloneWithRows(this.state.feedInfo.schedules),
         feedInfo: {
           ...prevState.feedInfo,
           current_page: this.props.feedInfo.current_page, 
-          filteredSchedules: this.state.feedInfo.schedules
-        }  
+          filteredSchedules: this.state.feedInfo.schedules,
+        }
       }))
       return
     } else if(typeof obj == 'number' ){
@@ -311,6 +333,7 @@ class Feed extends Component {
       })      
       this.setState(prevState=> ({
         ...prevState,
+        dataSource: ds.cloneWithRows(filteredSchedules),
         feedInfo: {
           ...prevState.feedInfo,
           current_page: this.props.feedInfo.current_page, 
@@ -320,28 +343,103 @@ class Feed extends Component {
       return 
     }
   }
+      
+  formatData(data) {
+    // We're sorting by alphabetically so we need the alphabet
+    // const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+    const date = [];
+    for(let i=0; i < data.length; i++){
+      date.push(data[i].date)
+    } 
+    const sectionDate = date.filter((value, idx, date) => date.indexOf(value) === idx);
+
+    // Need somewhere to store our data
+    const dataBlob = {};
+    const sectionIds = [];
+    const rowIds = [];
+
+    // Each section is going to represent a letter in the alphabet so we loop over the alphabet
+    for (let sectionId = 0; sectionId < sectionDate.length; sectionId++) {
+      // Get the character we're currently looking for
+      // const currentChar = sectionDate[sectionId];
+      const currentDate = date[sectionId]
+
+      // Get users whose first name starts with the current letter
+      // const users = data.filter((schedule) => schedule.date.indexOf(currentDate) === 0);
+      const schedules = data.filter((schedule) => schedule.date === currentDate);
+
+      // If there are any users who have a first name starting with the current letter then we'll
+      // add a new section otherwise we just skip over it
+      if (schedules.length > 0) {
+        // Add a section id to our array so the listview knows that we've got a new section
+        sectionIds.push(sectionId);
+
+        // Store any data we would want to display in the section header. In our case we want to show
+        // the current character
+        dataBlob[sectionId] = { date: currentDate };
+
+        // Setup a new array that we can store the row ids for this section
+        rowIds.push([]);
+
+        // Loop over the valid users for this section
+        for (let i = 0; i < schedules.length; i++) {
+          // Create a unique row id for the data blob that the listview can use for reference
+          const rowId = `${sectionId}:${i}`;
+
+          // Push the row id to the row ids array. This is what listview will reference to pull
+          // data from our data blob
+          rowIds[rowIds.length - 1].push(rowId);
+
+          // Store the data we care about for this row
+          dataBlob[rowId] = schedules[i];
+        }
+      }
+    }
+
+    return { dataBlob, sectionIds, rowIds, sectionDate };
+  }
+
 
   render() {
     // 날짜 출력 폼
     let options = { year: 'numeric', month: 'long', day: 'numeric' };  
 
+    const Row = (props) => (
+      <FeedCard 
+        onLink={this.onPressLink}
+        onClose={this.onToggleModal}
+        showCommentModal={true}
+        detail={this.onToggleDetail} 
+        info={props}
+        componentId={this.props.componentId}
+      ></FeedCard>     
+    );
+    
+    const SectionHeader = (props) => (
+      <View style={styles.stcontainer}>
+        <Text style={styles.text}>{props.date}</Text>
+      </View>
+    );
+
+
+
     return (
       <SafeAreaView>
         <View style={styles.container}>
           <StatusBar barStyle="dark-content"/>
-          <View style={styles.header}>           
+          {/* <View style={styles.header}>           
             <Text style={styles.date} onPress={this.onToggleDate}>
               {this.state.chosenDate.toLocaleDateString('ko-KR', options)}
               &nbsp;
               {Platform.OS == "android"?<Icon name="popup" size={22} /> :this.state.toggleDate ? <Image style={styles.iconSize} source={require('../../../assets/up.png')}/> : <Image style={styles.iconSize} source={require('../../../assets/down.png')}/> }
-              {/* {this.state.toggleDate ? <Icon name='chevron-up' size={22}/> : <Icon name='chevron-down' size={22}/>} */}
+              {this.state.toggleDate ? <Icon name='chevron-up' size={22}/> : <Icon name='chevron-down' size={22}/>}
             </Text>
             <TouchableOpacity onPress={this.onPressCalendar}>
               <Image style={styles.iconSize} source={require('../../../assets/calendar.png')} />
             </TouchableOpacity>
             <AlarmButton componentId={this.props.componentId}/>
             <SearchButton componentId={this.props.componentId}/>
-          </View>
+          </View> */}
 
           {this.state.toggleDate && Platform.OS == 'ios'
           ? <DatePickerIOS
@@ -354,37 +452,44 @@ class Feed extends Component {
           : null
           }
 
-          <IdolIndicator idolButton={this.onPressIdolButton}/>
-          {/* <Text>{ JSON.stringify(this.state)}</Text>   */}
+          {/* <IdolIndicator idolButton={this.onPressIdolButton}/> */}
           <ScrollView
             ref="scrollView"
             overScrollMode="always"
             onScroll={this.watchScroll}>
             {/* onScroll={(e)=>console.log(e)}> */}
             {this.state.feedInfo.current_page !== 0 ?
-             <FlatList
-            //  ref="scrollView" 
-            //  onScroll={this.watchScroll}
-             data={this.state.feedInfo.filteredSchedules}
-             keyExtractor={(item, index) => item.id.toString()}
-            //  onScroll={this.watchScroll}
-            //  onScrollEndDrag={(e)=>  this.watchScroll(e)}
-            //  onScroll={(e)=> this.watchScroll(e)}
-             // onScrollBeginDrag={() => console.log('start')}
-             // onScrollBeginDrag={() => this.fetchFeed("prev")}
-             renderItem={({ item }) => {
-               return (
-                 <FeedCard 
-                   onLink={this.onPressLink}
-                   onClose={this.onToggleModal}
-                   showCommentModal={true}
-                   detail={this.onToggleDetail} 
-                   info={item}
-                   componentId={this.props.componentId}
-                   ></FeedCard>                              
-                 )
-              }}
-            />
+            //  <FlatList
+            // //  ref="scrollView" 
+            // //  onScroll={this.watchScroll}
+            //  data={this.state.feedInfo.filteredSchedules}
+            //  keyExtractor={(item, index) => item.id.toString()}
+            // //  onScroll={this.watchScroll}
+            // //  onScrollEndDrag={(e)=>  this.watchScroll(e)}
+            // //  onScroll={(e)=> this.watchScroll(e)}
+            //  // onScrollBeginDrag={() => console.log('start')}
+            //  // onScrollBeginDrag={() => this.fetchFeed("prev")}
+            //  renderItem={({ item }) => {
+            //    return (
+            //      <FeedCard 
+            //        onLink={this.onPressLink}
+            //        onClose={this.onToggleModal}
+            //        showCommentModal={true}
+            //        detail={this.onToggleDetail} 
+            //        info={item}
+            //        componentId={this.props.componentId}
+            //        ></FeedCard>                              
+            //      )
+            //   }}
+            // />
+            <ListView            
+              dataSource={this.state.dataSource}
+              renderRow={(data) => <Row {...data} />}              
+              renderSectionHeader={(sectionData) => <SectionHeader {...sectionData} />}         
+              renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />}     
+              stickyHeaderIndices={this.state.feedInfo.sectionDate}
+              stickySectionHeadersEnabled={true}
+            />           
             : null }         
           </ScrollView>
         </View>
@@ -414,6 +519,20 @@ export default connect(mapStateToProps, mapDispatchToProps)(Feed)
 const styles = StyleSheet.create({
   container: {
     height: '100%',
+  },
+  separator: {
+    flex: 1,
+    height: StyleSheet.hairlineWidth,
+    backgroundColor: '#8E8E8E',
+  },
+  stcontainer: {
+    flex: 1,
+    padding: 8,
+    justifyContent: 'center',
+    backgroundColor: '#EAEAEA',
+  },
+  text: {
+    fontSize: 13,
   },
   calendar: {
     borderTopWidth: 1,
