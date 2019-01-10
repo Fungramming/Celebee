@@ -159,19 +159,21 @@ class Feed extends Component {
     }));
   }
 
-  onToggleDate() {
+  onToggleDate(date) {
     const toggle = !this.state.toggleDate;
     this.setState(prevState => ({
       ...prevState,
       toggleDate: toggle
     }))
     if(Platform.OS == "android") {
-      this.toggleDateAndroid()
+      this.toggleDateAndroid(date)
     }
   }
 
-  toggleDateAndroid = async () => {
+  toggleDateAndroid = async (date) => {
     try {
+      console.log('date!!', date)
+      console.log('this.state.chosenDate', this.state.chosenDate)
       const {
         action, year, month, day,
       } = await DatePickerAndroid.open({
@@ -417,11 +419,11 @@ class Feed extends Component {
     
     const SectionHeader = (props) => (
       <View style={styles.stcontainer}>
+        <TouchableOpacity onPress={()=>this.onToggleDate(props.date)}>
         <Text style={styles.text}>{props.date}</Text>
+        </TouchableOpacity>
       </View>
     );
-
-
 
     return (
       <SafeAreaView>
@@ -440,7 +442,7 @@ class Feed extends Component {
             <AlarmButton componentId={this.props.componentId}/>
             <SearchButton componentId={this.props.componentId}/>
           </View> */}
-
+         
           {this.state.toggleDate && Platform.OS == 'ios'
           ? <DatePickerIOS
             date={this.state.chosenDate}
@@ -453,10 +455,10 @@ class Feed extends Component {
           }
 
           {/* <IdolIndicator idolButton={this.onPressIdolButton}/> */}
-          <ScrollView
+          {/* <ScrollView
             ref="scrollView"
             overScrollMode="always"
-            onScroll={this.watchScroll}>
+            onScroll={this.watchScroll}> */}
             {/* onScroll={(e)=>console.log(e)}> */}
             {this.state.feedInfo.current_page !== 0 ?
             //  <FlatList
@@ -491,7 +493,23 @@ class Feed extends Component {
               stickySectionHeadersEnabled={true}
             />           
             : null }         
-          </ScrollView>
+          {/* </ScrollView> */}
+          <View style={styles.header}>           
+            {/* <Text style={styles.date} onPress={this.onToggleDate}>
+              {this.state.chosenDate.toLocaleDateString('ko-KR', options)}
+              &nbsp;
+              {Platform.OS == "android"?<Icon name="popup" size={22} /> :this.state.toggleDate ? <Image style={styles.iconSize} source={require('../../../assets/up.png')}/> : <Image style={styles.iconSize} source={require('../../../assets/down.png')}/> }
+              {this.state.toggleDate ? <Icon name='chevron-up' size={22}/> : <Icon name='chevron-down' size={22}/>}
+            </Text> */}
+            <TouchableOpacity onPress={this.onPressCalendar}>
+              <Image style={styles.iconSize} source={require('../../../assets/calendar.png')} />
+            </TouchableOpacity>
+            <AlarmButton componentId={this.props.componentId}/>
+            <SearchButton componentId={this.props.componentId}/>
+          </View>
+          <View style={{backgroundColor:'white',width: Dimensions.get('window').width, position:'absolute', top: 30, left:0}}>
+          <IdolIndicator idolButton={this.onPressIdolButton}/>
+          </View>
         </View>
       </SafeAreaView>
     );
@@ -527,9 +545,9 @@ const styles = StyleSheet.create({
   },
   stcontainer: {
     flex: 1,
-    padding: 8,
+    padding: 10,
     justifyContent: 'center',
-    backgroundColor: '#EAEAEA',
+    backgroundColor: 'white',
   },
   text: {
     fontSize: 13,
@@ -542,12 +560,13 @@ const styles = StyleSheet.create({
     height: 350
   },
   header: {
+    position:'absolute',
+    top:0,
+    right:0,
     paddingTop: 10,
     paddingBottom: 17,
     paddingHorizontal: 12,
     flexDirection:'row',
-    position: 'relative',
-    zIndex: 999
   },
   date: {
     fontSize: 20, 
@@ -559,7 +578,6 @@ const styles = StyleSheet.create({
     position: "relative",
     top: -107,
     left: 0,
-    zIndex: 998,
   },
   iconSize: {
     width: 25,
