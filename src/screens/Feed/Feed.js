@@ -23,6 +23,7 @@ import Icon from 'react-native-vector-icons/Entypo';
 import { connect } from 'react-redux'
 import { Calendar, LocaleConfig, CalendarList, Agenda } from 'react-native-calendars';
 import { Navigation } from 'react-native-navigation'
+import { FocusScrollView } from 'react-native-focus-scroll';
 
 import FeedCard from '../../components/Card/FeedCard'
 import { FEED_CALENDAR_SCREEN, FEED_LINK_SCREEN, COMMENT_MODAL } from '../Navigation'
@@ -94,12 +95,14 @@ class Feed extends Component {
     this.onRefresh = this.onRefresh.bind(this)
     this.fetchFeed = this.fetchFeed.bind(this)
     this.onPressIdolButton = this.onPressIdolButton.bind(this)
+    this.onFocus = this.onFocus.bind(this)
 
   }
 
   componentDidMount(){
     // this.fetchFeed("prev")
     this.fetchFeed("default")
+    console.log('this.state.filteredSchedules', this.state.filteredSchedules)
   }
 
   componentDidUpdate(prevProps){
@@ -270,6 +273,8 @@ class Feed extends Component {
     // this.fetchFeed("prev")
   }
 
+  
+
   fetchFeed(obj) {
     console.log('obj :', obj);
     let pageNum;
@@ -401,6 +406,14 @@ class Feed extends Component {
     return { dataBlob, sectionIds, rowIds, sectionDate };
   }
 
+  onFocus(name){
+    console.log('name', name)
+    this.setState(prevState => ({
+      ...prevState,
+      testChosenDate: name
+    }))
+  }
+
 
   render() {
     // 날짜 출력 폼
@@ -427,9 +440,11 @@ class Feed extends Component {
 
     return (
       <SafeAreaView>
+          {/* <IdolIndicator idolButton={this.onPressIdolButton}/> */}
         <View style={styles.container}>
           <StatusBar barStyle="dark-content"/>
-          {/* <View style={styles.header}>           
+          <View style={styles.header}>        
+            <Text>{this.state.testChosenDate}</Text>   
             <Text style={styles.date} onPress={this.onToggleDate}>
               {this.state.chosenDate.toLocaleDateString('ko-KR', options)}
               &nbsp;
@@ -441,7 +456,7 @@ class Feed extends Component {
             </TouchableOpacity>
             <AlarmButton componentId={this.props.componentId}/>
             <SearchButton componentId={this.props.componentId}/>
-          </View> */}
+          </View>
          
           {this.state.toggleDate && Platform.OS == 'ios'
           ? <DatePickerIOS
@@ -458,58 +473,58 @@ class Feed extends Component {
           {/* <ScrollView
             ref="scrollView"
             overScrollMode="always"
-            onScroll={this.watchScroll}> */}
-            {/* onScroll={(e)=>console.log(e)}> */}
+            // onScroll={this.watchScroll}
+            >
             {this.state.feedInfo.current_page !== 0 ?
-            //  <FlatList
-            // //  ref="scrollView" 
-            // //  onScroll={this.watchScroll}
-            //  data={this.state.feedInfo.filteredSchedules}
-            //  keyExtractor={(item, index) => item.id.toString()}
-            // //  onScroll={this.watchScroll}
-            // //  onScrollEndDrag={(e)=>  this.watchScroll(e)}
-            // //  onScroll={(e)=> this.watchScroll(e)}
-            //  // onScrollBeginDrag={() => console.log('start')}
-            //  // onScrollBeginDrag={() => this.fetchFeed("prev")}
-            //  renderItem={({ item }) => {
-            //    return (
-            //      <FeedCard 
-            //        onLink={this.onPressLink}
-            //        onClose={this.onToggleModal}
-            //        showCommentModal={true}
-            //        detail={this.onToggleDetail} 
-            //        info={item}
-            //        componentId={this.props.componentId}
-            //        ></FeedCard>                              
-            //      )
-            //   }}
-            // />
-            <ListView            
-              dataSource={this.state.dataSource}
-              renderRow={(data) => <Row {...data} />}              
-              renderSectionHeader={(sectionData) => <SectionHeader {...sectionData} />}         
-              renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />}     
-              stickyHeaderIndices={this.state.feedInfo.sectionDate}
-              stickySectionHeadersEnabled={true}
-            />           
+            <FlatList
+            //  ref="scrollView" 
+            //  onScroll={this.watchScroll}
+            data={this.state.feedInfo.filteredSchedules}
+            keyExtractor={(item, index) => item.id.toString()}
+            //  onScroll={this.watchScroll}
+            //  onScrollEndDrag={(e)=>  this.watchScroll(e)}
+            //  onScroll={(e)=> this.watchScroll(e)}
+             // onScrollBeginDrag={() => console.log('start')}
+             // onScrollBeginDrag={() => this.fetchFeed("prev")}
+             renderItem={({ item }) => {
+               return (
+                 <FeedCard 
+                    focus={this.onFocus}
+                    onLink={this.onPressLink}
+                    onClose={this.onToggleModal}
+                   showCommentModal={true}
+                   detail={this.onToggleDetail} 
+                   info={item}
+                   componentId={this.props.componentId}
+                   ></FeedCard>                              
+                 )
+              }}
+            />
+            // <ListView            
+            //   dataSource={this.state.dataSource}
+            //   renderRow={(data) => <Row {...data} />}              
+            //   renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />}     
+            //   stickyHeaderIndices={this.state.feedInfo.sectionDate}
+            //   stickySectionHeadersEnabled={true}
+            // />           
             : null }         
-          {/* </ScrollView> */}
-          <View style={styles.header}>           
-            {/* <Text style={styles.date} onPress={this.onToggleDate}>
-              {this.state.chosenDate.toLocaleDateString('ko-KR', options)}
-              &nbsp;
-              {Platform.OS == "android"?<Icon name="popup" size={22} /> :this.state.toggleDate ? <Image style={styles.iconSize} source={require('../../../assets/up.png')}/> : <Image style={styles.iconSize} source={require('../../../assets/down.png')}/> }
-              {this.state.toggleDate ? <Icon name='chevron-up' size={22}/> : <Icon name='chevron-down' size={22}/>}
-            </Text> */}
-            <TouchableOpacity onPress={this.onPressCalendar}>
-              <Image style={styles.iconSize} source={require('../../../assets/calendar.png')} />
-            </TouchableOpacity>
-            <AlarmButton componentId={this.props.componentId}/>
-            <SearchButton componentId={this.props.componentId}/>
-          </View>
-          <View style={{backgroundColor:'white',width: Dimensions.get('window').width, position:'absolute', top: 30, left:0}}>
-          <IdolIndicator idolButton={this.onPressIdolButton}/>
-          </View>
+          </ScrollView> */}
+          {this.state.feedInfo.current_page !== 0 ?
+          <FocusScrollView 
+            threshold={dim.height / 4}>
+              {this.state.feedInfo.filteredSchedules.map((schedule, index) => 
+                <FeedCard 
+                  key={index}
+                  focus={this.onFocus}
+                  onLink={this.onPressLink}
+                  onClose={this.onToggleModal}
+                  showCommentModal={true}
+                  detail={this.onToggleDetail} 
+                  info={schedule}
+                  componentId={this.props.componentId}                                
+                />)}
+          </FocusScrollView>
+          : null }
         </View>
       </SafeAreaView>
     );
@@ -533,6 +548,8 @@ const mapDispatchToProps = dispatch => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Feed)
+
+const dim = Dimensions.get("screen");
 
 const styles = StyleSheet.create({
   container: {
@@ -560,9 +577,9 @@ const styles = StyleSheet.create({
     height: 350
   },
   header: {
-    position:'absolute',
-    top:0,
-    right:0,
+    // position:'absolute',
+    // top:0,
+    // right:0,
     paddingTop: 10,
     paddingBottom: 17,
     paddingHorizontal: 12,

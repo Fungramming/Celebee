@@ -8,7 +8,9 @@ import {
   FlatList, 
   Dimensions, 
   TouchableOpacity, 
-  TouchableWithoutFeedback
+  TouchableWithoutFeedback,
+  AppState,
+  reactContext
   } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import Modal from "react-native-modal";
@@ -63,8 +65,10 @@ class FeedCard extends Component {
       ],
       toggleDetail: false,
       isCommentModalVisible: false,
-      isFeedModalVisible: false
+      isFeedModalVisible: false,
+      appState: AppState.currentState
     };
+    this.appeared = false;
 
     this.onSwipe = this.onSwipe.bind(this)
     this.onPressLink = this.onPressLink.bind(this)
@@ -73,15 +77,17 @@ class FeedCard extends Component {
     this.toggleModal = this.toggleModal.bind(this)
   }
   
-  componentDidMount() {
-    this.setState(prevState=>({
-      ...prevState,
-      date: this.props.date
-    }))
+  componentDidMount(){
+    console.log('this.props', this.props)
   }
-  
+
+  componentDidUpdate(prevProps){
+    if(prevProps.isFocused !== this.props.isFocused){
+        this.props.focus(this.props.info.date)
+    }
+  }
+
   onPressLink() {
-    console.log('this.props :', this.props);
     this.props.onLink()
   }
   
@@ -131,11 +137,12 @@ class FeedCard extends Component {
     }));
   }
 
-  render() {
+  render() {  
     return (
-      <View style={styles.container}>
-        <ScheduleHeader 
-        test={this.props.info}
+      <View style={styles.container} onLayout={this.props.onLayout}>
+     
+        <ScheduleHeader
+          test={this.props.info}
           title={this.props.info.schedule_name} 
           date={this.props.info.date} 
           detail={this.onToggleDetail} 
@@ -211,6 +218,7 @@ class FeedCard extends Component {
 
 export default FeedCard
 
+const dim = Dimensions.get("screen");
 const styles = StyleSheet.create({
   container: {
     paddingBottom: 25,
@@ -218,6 +226,8 @@ const styles = StyleSheet.create({
     flexDirection:'column',
     borderTopColor: '#f2f2f2',
     borderTopWidth: 1.25,
+    width: dim.width,
+    height: dim.height - 100,
     backgroundColor: '#fff'
   },
   feedDetail: {
