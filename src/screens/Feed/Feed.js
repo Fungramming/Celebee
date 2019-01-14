@@ -102,41 +102,23 @@ class Feed extends Component {
   componentDidMount(){
     // this.fetchFeed("prev")
     this.fetchFeed("default")
-    console.log('this.state.filteredSchedules', this.state.filteredSchedules)
   }
 
   componentDidUpdate(prevProps){
     if(prevProps.feedInfo.current_page !== this.props.feedInfo.current_page){
       let updatedFeedInfo = prevProps.feedInfo.schedules.concat(this.props.feedInfo.schedules)
-      console.log('1prevProps.feedInfo.schedules', prevProps)
-      console.log('2this.props.feedInfo.schedules', this.props)
-      console.log('3updatedFeedInfo', updatedFeedInfo)
-
-      const getSectionData = (dataBlob, sectionId) => dataBlob[sectionId];
-      const getRowData = (dataBlob, sectionId, rowId) => dataBlob[`${rowId}`];
-
-      const ds = new ListView.DataSource({
-        rowHasChanged: (r1, r2) => r1 !== r2,
-        sectionHeaderHasChanged : (s1, s2) => s1 !== s2,
-        getSectionData,
-        getRowData,
-      });
-
-      let { dataBlob, sectionIds, rowIds, sectionDate} = this.formatData(updatedFeedInfo)
-      console.log('dataBlob, sectionIds, rowIds :', dataBlob, sectionIds, rowIds);
+    
       setTimeout(()=>{
-        console.log('111111', 111111)
         this.setState(prevState => ({
           ...prevState,
-          dataSource: ds.cloneWithRowsAndSections(dataBlob, sectionIds, rowIds),
+          dataSource: updatedFeedInfo,
           feedInfo: {
             current_page: this.props.feedInfo.current_page, 
             schedules: updatedFeedInfo,
             filteredSchedules: updatedFeedInfo,
-            sectionDate: sectionDate
           }        
         }))
-      }, 5000)
+      }, 1000)
       
     }    
   }
@@ -175,8 +157,7 @@ class Feed extends Component {
 
   toggleDateAndroid = async (date) => {
     try {
-      console.log('date!!', date)
-      console.log('this.state.chosenDate', this.state.chosenDate)
+
       const {
         action, year, month, day,
       } = await DatePickerAndroid.open({
@@ -273,8 +254,6 @@ class Feed extends Component {
     // this.fetchFeed("prev")
   }
 
-  
-
   fetchFeed(obj) {
     console.log('obj :', obj);
     let pageNum;
@@ -340,7 +319,7 @@ class Feed extends Component {
       })      
       this.setState(prevState=> ({
         ...prevState,
-        dataSource: ds.cloneWithRows(filteredSchedules),
+        dataSource: filteredSchedules,
         feedInfo: {
           ...prevState.feedInfo,
           current_page: this.props.feedInfo.current_page, 
@@ -350,67 +329,12 @@ class Feed extends Component {
       return 
     }
   }
-      
-  formatData(data) {
-    // We're sorting by alphabetically so we need the alphabet
-    // const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
-    const date = [];
-    for(let i=0; i < data.length; i++){
-      date.push(data[i].date)
-    } 
-    const sectionDate = date.filter((value, idx, date) => date.indexOf(value) === idx);
 
-    // Need somewhere to store our data
-    const dataBlob = {};
-    const sectionIds = [];
-    const rowIds = [];
-
-    // Each section is going to represent a letter in the alphabet so we loop over the alphabet
-    for (let sectionId = 0; sectionId < sectionDate.length; sectionId++) {
-      // Get the character we're currently looking for
-      // const currentChar = sectionDate[sectionId];
-      const currentDate = date[sectionId]
-
-      // Get users whose first name starts with the current letter
-      // const users = data.filter((schedule) => schedule.date.indexOf(currentDate) === 0);
-      const schedules = data.filter((schedule) => schedule.date === currentDate);
-
-      // If there are any users who have a first name starting with the current letter then we'll
-      // add a new section otherwise we just skip over it
-      if (schedules.length > 0) {
-        // Add a section id to our array so the listview knows that we've got a new section
-        sectionIds.push(sectionId);
-
-        // Store any data we would want to display in the section header. In our case we want to show
-        // the current character
-        dataBlob[sectionId] = { date: currentDate };
-
-        // Setup a new array that we can store the row ids for this section
-        rowIds.push([]);
-
-        // Loop over the valid users for this section
-        for (let i = 0; i < schedules.length; i++) {
-          // Create a unique row id for the data blob that the listview can use for reference
-          const rowId = `${sectionId}:${i}`;
-
-          // Push the row id to the row ids array. This is what listview will reference to pull
-          // data from our data blob
-          rowIds[rowIds.length - 1].push(rowId);
-
-          // Store the data we care about for this row
-          dataBlob[rowId] = schedules[i];
-        }
-      }
-    }
-
-    return { dataBlob, sectionIds, rowIds, sectionDate };
-  }
-
-  onFocus(name){
-    console.log('name', name)
+  onFocus(d){
+    let date = new Date(d)
     this.setState(prevState => ({
       ...prevState,
-      testChosenDate: name
+      chosenDate: date
     }))
   }
 
@@ -444,7 +368,6 @@ class Feed extends Component {
         <View style={styles.container}>
           <StatusBar barStyle="dark-content"/>
           <View style={styles.header}>        
-            <Text>{this.state.testChosenDate}</Text>   
             <Text style={styles.date} onPress={this.onToggleDate}>
               {this.state.chosenDate.toLocaleDateString('ko-KR', options)}
               &nbsp;
@@ -470,45 +393,6 @@ class Feed extends Component {
           }
 
           {/* <IdolIndicator idolButton={this.onPressIdolButton}/> */}
-          {/* <ScrollView
-            ref="scrollView"
-            overScrollMode="always"
-            // onScroll={this.watchScroll}
-            >
-            {this.state.feedInfo.current_page !== 0 ?
-            <FlatList
-            //  ref="scrollView" 
-            //  onScroll={this.watchScroll}
-            data={this.state.feedInfo.filteredSchedules}
-            keyExtractor={(item, index) => item.id.toString()}
-            //  onScroll={this.watchScroll}
-            //  onScrollEndDrag={(e)=>  this.watchScroll(e)}
-            //  onScroll={(e)=> this.watchScroll(e)}
-             // onScrollBeginDrag={() => console.log('start')}
-             // onScrollBeginDrag={() => this.fetchFeed("prev")}
-             renderItem={({ item }) => {
-               return (
-                 <FeedCard 
-                    focus={this.onFocus}
-                    onLink={this.onPressLink}
-                    onClose={this.onToggleModal}
-                   showCommentModal={true}
-                   detail={this.onToggleDetail} 
-                   info={item}
-                   componentId={this.props.componentId}
-                   ></FeedCard>                              
-                 )
-              }}
-            />
-            // <ListView            
-            //   dataSource={this.state.dataSource}
-            //   renderRow={(data) => <Row {...data} />}              
-            //   renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />}     
-            //   stickyHeaderIndices={this.state.feedInfo.sectionDate}
-            //   stickySectionHeadersEnabled={true}
-            // />           
-            : null }         
-          </ScrollView> */}
           {this.state.feedInfo.current_page !== 0 ?
           <FocusScrollView 
             threshold={dim.height / 4}>
