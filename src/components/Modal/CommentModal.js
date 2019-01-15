@@ -97,19 +97,21 @@ class CommentModal extends Component {
             </View>
           </KeyboardAvoidingView>
         </ScrollView>
-        <View style={[styles.textInput, {backgroundColor: "#fefefe"}]}>
-          <TextInput 
-              ref={(input) => { this.textInput = input; }}
-              // style={styles.textInput} 
-              maxLength={12}
-              placeholder="댓글을 작성해보세요, 꿀 떨어짐"
-              onChangeText={(text) => this.checkNickname(text)}
-              returnKeyType="done"            
-            />
-          <TouchableOpacity onPress={this.onSubmit}>
-            <Text>게시</Text>
-          </TouchableOpacity>  
-        </View>
+        <KeyboardAvoidingView behavior="padding" enabled>
+          <View style={[styles.textInput, {backgroundColor: "#fefefe"}]}>
+            <TextInput 
+                ref={(input) => { this.textInput = input; }}
+                // style={styles.textInput} 
+                maxLength={12}
+                placeholder="댓글을 작성해보세요, 꿀 떨어짐"
+                onChangeText={(text) => this.checkNickname(text)}
+                returnKeyType="done"            
+              />
+            <TouchableOpacity onPress={this.onSubmit}>
+              <Text>게시</Text>
+            </TouchableOpacity>  
+          </View>
+        </KeyboardAvoidingView>
       </View>
     )
   }

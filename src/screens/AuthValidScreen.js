@@ -42,10 +42,12 @@ class AuthValidScreen extends Component {
     // AsyncStorage에 유저토큰 값 확인 후 유저 판별 함수 실행
     loadApp = async () => {
       try {
-        const user = await AsyncStorage.getItem('user') 
+        const user = await AsyncStorage.getItem('user')
         if( user !== null){
           this.props.checkUserRequest(JSON.parse(user))
-          MainApp()
+          setTimeout(()=>{
+            MainApp()
+          },1000)
         }  else if( user == null ){
           LoginApp()
         } 

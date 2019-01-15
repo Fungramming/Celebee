@@ -21,6 +21,53 @@ import PhotoInput from "../../components/Input/PhotoInput"
 import { SelectIdolScreen } from '../Navigation'
 
 class SetNickname extends Component { 
+  static options(passProps) {
+    console.log('@!passProps', passProps)
+    return {
+      // topBar: {
+      //   title: {
+      //     text: passProps.text,
+      //   },
+      //   visible: true,
+      //   animate: false,
+      //   rightButtons: [
+      //     {
+      //       id: 'toWriteScreen',
+      //       icon: require('../../../assets/board.png'),
+      //       testID: 'toWriteScreen',
+      //       disableIconTint: true,
+      //       showAsAction: 'always',
+      //       // buttonFontSize: 10,
+      //       // buttonFontWeight: '600',
+      //       color: '#262626',
+      //       weight: '100',
+      //       enabled: true,
+      //       disabledColor: 'grey'
+      //     },
+      //     {
+      //       id: 'toAlarmScreen',
+      //       icon: require('../../../assets/alarm.png'),
+      //       testID: 'toAlarmScreen',
+      //       disableIconTint: true,
+      //       showAsAction: 'always',
+      //       // buttonFontSize: 10,
+      //       // buttonFontWeight: '600',
+      //       color: '#262626',
+      //       weight: '100',
+      //       enabled: true,
+      //       disabledColor: 'grey'
+      //     },
+      //   ]
+      // }
+      topBar: {
+        visible: true, drawBehind: true, animate: true
+      },
+      bottomTabs: { 
+        visible: false, drawBehind: true,
+      }
+    };
+  }
+
   constructor(props) {
     super(props);
 
@@ -135,7 +182,7 @@ export default  connect(mapStateToProps,mapDispatchToProps)(SetNickname);
 
 const styles = StyleSheet.create({
   outerContainer: {
-    backgroundColor: "#fefefe",
+    // backgroundColor: "#fefefe",
     flex: 1,
   },
   container: {

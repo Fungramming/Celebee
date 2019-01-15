@@ -49,7 +49,7 @@ const userReducer = (state = initialState, action) => {
                 },
                 idolToggle: true,
                 token: '',
-                userValid: 'default'
+                userValid: 'default',
             }
         case CHECK_USER_REQUEST:
             return {  

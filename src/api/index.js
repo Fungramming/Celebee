@@ -16,7 +16,17 @@ export default Api = {
                 }),
             })
             const result = JSON.parse(response._bodyInit)
-            console.log('checkUser result', result)
+
+
+            let responseC = await fetch( config + 'idols/', {
+                method: 'GET'
+            })     
+            let idolList = JSON.parse(responseC._bodyInit)
+
+            for(let i = 0; i < idolList.idols.length; i++){
+                idolList.idols[i].toggle = false
+            }
+
             if ( result.result === "fail" ) {
                 console.log('2 :', 2);
                 const result = {
@@ -28,7 +38,7 @@ export default Api = {
                         photo: '../../../assets/user.png',
                         follow_idol_id: [],
                         unfollow_idol_id: [],
-                        idol_list: []
+                        idol_list: idolList.idols
                     },
                 }
                 return result                               
@@ -38,6 +48,7 @@ export default Api = {
                 if(userInfo.result.photo == null){
                     userInfo.result.photo = '../../../assets/user.png'
                 }
+                userInfo.result.idol_list = idolList.idols
                 const result = {
                     userValid: true,
                     userInfo: userInfo.result

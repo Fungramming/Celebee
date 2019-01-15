@@ -227,7 +227,7 @@ const styles = StyleSheet.create({
     borderTopColor: '#f2f2f2',
     borderTopWidth: 1.25,
     width: dim.width,
-    height: dim.height - 100,
+    // height: dim.height - 100,
     backgroundColor: '#fff'
   },
   feedDetail: {

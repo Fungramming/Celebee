@@ -16,3 +16,4 @@ export const CHECK_USER = "CHECK_USER";
 // FEED
 export const FETCH_FEED_REQUEST = "FETCH_FEED_REQUEST";
 export const FETCH_FEED = "FETCH_FEED";
+export const FEED_LOGOUT = "FEED_LOGOUT";

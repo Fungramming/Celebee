@@ -102,6 +102,7 @@ class Feed extends Component {
   componentDidMount(){
     // this.fetchFeed("prev")
     this.fetchFeed("default")
+    // console.log('this.props.feedInfo :', this.props.feedInfo);
   }
 
   componentDidUpdate(prevProps){
@@ -118,6 +119,7 @@ class Feed extends Component {
             filteredSchedules: updatedFeedInfo,
           }        
         }))
+        console.log('this.props.feedInfo :', this.props.feedInfo);
       }, 1000)
       
     }    
@@ -364,7 +366,6 @@ class Feed extends Component {
 
     return (
       <SafeAreaView>
-          {/* <IdolIndicator idolButton={this.onPressIdolButton}/> */}
         <View style={styles.container}>
           <StatusBar barStyle="dark-content"/>
           <View style={styles.header}>        
@@ -372,7 +373,7 @@ class Feed extends Component {
               {this.state.chosenDate.toLocaleDateString('ko-KR', options)}
               &nbsp;
               {Platform.OS == "android"?<Icon name="popup" size={22} /> :this.state.toggleDate ? <Image style={styles.iconSize} source={require('../../../assets/up.png')}/> : <Image style={styles.iconSize} source={require('../../../assets/down.png')}/> }
-              {this.state.toggleDate ? <Icon name='chevron-up' size={22}/> : <Icon name='chevron-down' size={22}/>}
+              {/* {this.state.toggleDate ? <Icon name='chevron-up' size={22}/> : <Icon name='chevron-down' size={22}/>} */}
             </Text>
             <TouchableOpacity onPress={this.onPressCalendar}>
               <Image style={styles.iconSize} source={require('../../../assets/calendar.png')} />
@@ -380,7 +381,7 @@ class Feed extends Component {
             <AlarmButton componentId={this.props.componentId}/>
             <SearchButton componentId={this.props.componentId}/>
           </View>
-         
+
           {this.state.toggleDate && Platform.OS == 'ios'
           ? <DatePickerIOS
             date={this.state.chosenDate}
@@ -391,8 +392,7 @@ class Feed extends Component {
           />
           : null
           }
-
-          {/* <IdolIndicator idolButton={this.onPressIdolButton}/> */}
+          <IdolIndicator idolButton={this.onPressIdolButton}/>
           {this.state.feedInfo.current_page !== 0 ?
           <FocusScrollView 
             threshold={dim.height / 4}>

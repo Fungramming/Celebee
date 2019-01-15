@@ -13,6 +13,8 @@ import Feed from './Feed/Feed'
 import FeedCalendar from './Feed/FeedCalendar'
 import FeedLink from './Feed/FeedLink'
 import Board from './Board/Board'
+import BoardList from './Board/BoardList'
+import BoardWrite from './Board/BoardWrite'
 import Comments from '../components/Modal/CommentModal'
 import Alarm from './Alarm/Alarm.js'
 import MyPage from './MyPage/MyPage' 
@@ -31,6 +33,8 @@ export const FEED_SCREEN = 'Celebee.FeedScreen';
 export const FEED_CALENDAR_SCREEN = 'Celebee.FeedCalendarScreen';
 export const FEED_LINK_SCREEN = 'Celebee.FeedLinkScreen'
 export const BOARD_SCREEN = 'Celebee.BoardScreen';
+export const BOARD_LIST_SCREEN = 'Celebee.BoardListScreen';
+export const BOARD_WRITE_SCREEN = 'Celebee.BoardWriteScreen';
 export const COMMENTS_MODAL = 'Celebee.CommentsModal';
 export const ALARM_SCREEN = 'Celebee.AlarmScreen';
 export const MYPAGE_SCREEN = 'Celebee.MyPageScreen';
@@ -50,6 +54,8 @@ Screens.set(FEED_SCREEN, Feed)
 Screens.set(FEED_CALENDAR_SCREEN, FeedCalendar)
 Screens.set(FEED_LINK_SCREEN, FeedLink)
 Screens.set(BOARD_SCREEN, Board)
+Screens.set(BOARD_LIST_SCREEN, BoardList)
+Screens.set(BOARD_WRITE_SCREEN, BoardWrite)
 Screens.set(COMMENTS_MODAL, Comments)
 Screens.set(ALARM_SCREEN, Alarm)
 Screens.set(MYPAGE_SCREEN, MyPage)
@@ -211,6 +217,28 @@ export const FeedLinkScreen = () => Navigation.setRoot({
       name: FEED_LINK_SCREEN,
       passProps: {
         text: 'feed link screen'
+      },
+    },
+  }
+});
+
+export const BoardListScreen = () => Navigation.setRoot({
+  root: {
+    component: {
+      name: BOARD_LIST_SCREEN,
+      passProps: {
+        text: 'board list screen'
+      },
+    },
+  }
+});
+
+export const BoardWriteScreen = () => Navigation.setRoot({
+  root: {
+    component: {
+      name: BOARD_WRITE_SCREEN,
+      passProps: {
+        text: 'board write screen'
       },
     },
   }

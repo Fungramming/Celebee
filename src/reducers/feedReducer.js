@@ -1,6 +1,7 @@
 import { 
     FETCH_FEED_REQUEST,
-    FETCH_FEED
+    FETCH_FEED,
+    FEED_LOGOUT
 } from '../actions/types'
 
 const initialState = {
@@ -33,6 +34,8 @@ const feedReducer = (state = initialState, action) => {
                 current_page: action.payload.current_page,
                 schedules: action.payload.schedules
             }
+        case FEED_LOGOUT:
+            return initialState
         default:
             return state;    
     }

@@ -9,6 +9,8 @@ import {
   TouchableOpacity 
 } from 'react-native'
 
+// import { BOARD_LIST_SCREEN } from '../../../src/screens/Navigation'
+
 export default class boardCard extends Component {
   constructor(props){
     super(props)
@@ -18,6 +20,16 @@ export default class boardCard extends Component {
       token: this.props.token      
     }    
   }
+
+  // onBoardListPress() {
+  //   Navigation.push(this.props.componentId, {
+  //     component: {
+  //       name: BOARD_LIST_SCREEN,       
+  //     }
+  //   })
+  //   console.log('Board List Screen@@@@@@@@@@@@@@ :');
+  // }
+
   render() {
     return (
       <View style={styles.container}>
@@ -65,10 +77,15 @@ export default class boardCard extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    borderWidth: 1,
     width: Dimensions.get('window').width,
     marginBottom: 15,
-    paddingHorizontal: 15
+    paddingHorizontal: 15,
+    borderTopWidth: 0.3,
+    borderBottomWidth: 0.3,
+    // shadowColor: '#000',
+    // shadowOffset: { width: 0, height: 5 },
+    // shadowOpacity: 1.5,
+    // shadowRadius: 5,  
   },
   header: {
     flexDirection: "row",

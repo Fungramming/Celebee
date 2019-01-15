@@ -11,6 +11,7 @@ import {
 import {LoginApp} from '../Navigation'
 import { connect } from "react-redux";
 import { logout, initUserInfo, checkUserRequest } from "../../actions/users";
+import { feedLogout } from "../../actions/feed";
 import firebase from 'firebase'
 
 class Setting extends Component {
@@ -20,6 +21,7 @@ class Setting extends Component {
 
   signOut = () => {
     this.props.logout()
+    this.props.feedLogout()
     AsyncStorage.clear()
     LoginApp()
   }
@@ -39,6 +41,7 @@ const mapStateToProps = state => {
   return {
       token: state.user.token,
       userValid: state.user.userValid,
+      feedInfo: state.feed
   }
 }
 const mapDispatchToProps = dispatch => {
@@ -46,6 +49,9 @@ const mapDispatchToProps = dispatch => {
     logout: (userInfo) => {
       dispatch(logout(userInfo))
     },
+    feedLogout: (feedInfo) => {
+      dispatch(feedLogout(feedInfo))
+    }
   }
 }
 
